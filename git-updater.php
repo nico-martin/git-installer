@@ -23,6 +23,9 @@ require_once 'src/Assets.php';
 require_once 'src/Settings.php';
 require_once 'src/AdminPage.php';
 require_once 'src/Package/GitPackages.php';
+require_once 'src/Package/provider/Provider.php';
+require_once 'src/Package/provider/Github.php';
+require_once 'src/Package/provider/Gitlab.php';
 
 function sayhelloGitUpdater(): \SayHello\GitUpdater\Plugin
 {

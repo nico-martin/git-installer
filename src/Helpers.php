@@ -43,35 +43,35 @@ class Helpers
             return false;
         }
 
-        $width  = intval($width);
+        $width = intval($width);
         $height = intval($height);
 
-        $src_img       = wp_get_attachment_image_src($attach_id, 'full');
+        $src_img = wp_get_attachment_image_src($attach_id, 'full');
         $src_img_ratio = $src_img[1] / $src_img[2];
-        $src_img_path  = get_attached_file($attach_id);
+        $src_img_path = get_attached_file($attach_id);
 
         /**
          * error: somehow file does not exist ¯\_(ツ)_/¯
          */
 
-        if ( ! file_exists($src_img_path)) {
+        if (!file_exists($src_img_path)) {
             return false;
         }
 
         $src_img_info = pathinfo($src_img_path);
 
         if ($crop) {
-            $new_width  = $width;
+            $new_width = $width;
             $new_height = $height;
         } elseif ($width / $height <= $src_img_ratio) {
-            $new_width  = $width;
+            $new_width = $width;
             $new_height = 1 / $src_img_ratio * $width;
         } else {
-            $new_width  = $height * $src_img_ratio;
+            $new_width = $height * $src_img_ratio;
             $new_height = $height;
         }
 
-        $new_width  = round($new_width);
+        $new_width = round($new_width);
         $new_height = round($new_height);
 
         $change_filetype = false;
@@ -83,7 +83,7 @@ class Helpers
          * return the source image if the requested is bigger than the original image
          */
 
-        if (($new_width > $src_img[1] || $new_height > $src_img[2]) && ! $change_filetype) {
+        if (($new_width > $src_img[1] || $new_height > $src_img[2]) && !$change_filetype) {
             return $src_img;
         }
 
@@ -93,7 +93,7 @@ class Helpers
         }
 
         $new_img_path = "{$src_img_info['dirname']}/{$src_img_info['filename']}-{$new_width}x{$new_height}.{$extension}";
-        $new_img_url  = str_replace(trailingslashit(ABSPATH), trailingslashit(get_site_url()), $new_img_path);
+        $new_img_url = str_replace(trailingslashit(ABSPATH), trailingslashit(get_site_url()), $new_img_path);
 
         /**
          * return if already exists
@@ -112,7 +112,7 @@ class Helpers
          */
 
         $image = wp_get_image_editor($src_img_path);
-        if ( ! is_wp_error($image)) {
+        if (!is_wp_error($image)) {
             $image->resize($width, $height, $crop);
             $image->save($new_img_path);
 
@@ -136,17 +136,8 @@ class Helpers
         return filter_var($string, FILTER_VALIDATE_URL);
     }
 
-    public static function getRestJson($url, $auth_header = false)
+    public static function getRestJson($url, $args = [])
     {
-        $args = [];
-        if ($auth_header) {
-            $args = [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $auth_header,
-                ]
-            ];
-        }
-
         $request = wp_remote_get($url, $args);
         if (is_wp_error($request)) {
             return false;
@@ -157,11 +148,11 @@ class Helpers
 
     public static function getContentFolder($url = false)
     {
-        $folder    = 'shgu';
+        $folder = 'shgu';
         $uploadDir = wp_get_upload_dir();
-        $baseUrl   = trailingslashit($uploadDir['baseurl']);
-        $baseDir   = trailingslashit($uploadDir['basedir']);
-        if ( ! is_dir($baseDir . $folder . '/')) {
+        $baseUrl = trailingslashit($uploadDir['baseurl']);
+        $baseDir = trailingslashit($uploadDir['basedir']);
+        if (!is_dir($baseDir . $folder . '/')) {
             mkdir($baseDir . $folder . '/');
         }
 
@@ -174,7 +165,7 @@ class Helpers
 
     public static function checkForFunction($func, $notification = true)
     {
-        if ( ! function_exists($func)) {
+        if (!function_exists($func)) {
             $message = 'The function <code>' . $func . '()</code> is not available. Some Parts of <b>' . sayhelloGitUpdater()->name . '</b> won\'t work as expected.';
             if ($notification) {
                 self::showAdminNotification($message);
@@ -189,12 +180,19 @@ class Helpers
     public static function showAdminNotification($message, $type = 'error')
     {
         $key = md5("{$type}: {$message}");
-        if ( ! in_array($key, self::$activeNotifications)) {
+        if (!in_array($key, self::$activeNotifications)) {
             add_action('admin_notices', function () use ($message, $type) {
                 $class = "notice notice-{$type}";
                 printf('<div class="%1$s"><p>%2$s</p></div>', $class, $message);
             });
             self::$activeNotifications[] = $key;
         }
+    }
+
+    public static function print($e)
+    {
+        echo '<pre style="margin-left: 200px">';
+        print_r($e);
+        echo '</pre>';
     }
 }

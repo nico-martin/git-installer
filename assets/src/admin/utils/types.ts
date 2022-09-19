@@ -21,7 +21,9 @@ export type IMenuItems = Record<
 
 export interface IGitPackage {
   deployKey: string;
+  key: string;
   name: string;
+  baseUrl: string;
   theme: boolean;
   hoster: string;
   version: string;

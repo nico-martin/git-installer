@@ -14,7 +14,9 @@ const RepositoryListView = ({
   className = '',
 }: {
   repository: IGitPackage;
-  setRepositories: (packages: IGitPackages) => void;
+  setRepositories: (
+    packages: IGitPackages | ((prevState: IGitPackages) => IGitPackages)
+  ) => void;
   className?: string;
 }) => {
   const { addToast } = useToast();
@@ -45,8 +47,25 @@ const RepositoryListView = ({
       });
   };
 
+  console.log(repository);
+
   const updateRepo = () => {
     setLoadingUpdate(true);
+    apiGet<IGitPackage>(
+      `${VARS.restPluginNamespace}/git-packages-deploy/${repository.name}/?key=${repository.deployKey}`
+    )
+      .then((resp) =>
+        setRepositories((packages) =>
+          packages.map((p) => (p.url === resp.url ? resp : p))
+        )
+      )
+      .catch((e) =>
+        addToast({
+          message: __('Update fehlgeschlagen'),
+          type: NOTICE_TYPES.ERROR,
+        })
+      )
+      .finally(() => setLoadingUpdate(false));
   };
 
   return (
@@ -54,15 +73,15 @@ const RepositoryListView = ({
       <div className={styles.infos}>
         <h3 className={styles.name}>
           <Icon icon={repository.hoster} className={styles.nameHoster} />
-          {repository.theme ? __('Theme:', 'wpm-staging') + ' ' : ''}
+          {repository.theme ? __('Theme:', 'shgu') + ' ' : ''}
           {repository.name}
         </h3>
         <p className={styles.version}>
-          {sprintf(__('Version: %s', 'wpm-staging'), repository.version)}
+          {sprintf(__('Version: %s', 'shgu'), repository.version)}
         </p>
         <p className={styles.repo}>{repository.url.repository}</p>
         <p className={styles.pushToDeploy}>
-          {__('Push to Deploy URL', 'wpm-staging')}:{' '}
+          {__('Push to Deploy URL', 'shgu')}:
           <input
             className={styles.pushToDeployInput}
             value={updateUrl}
@@ -75,8 +94,8 @@ const RepositoryListView = ({
               onClick={() => {
                 addToast({
                   message: __(
-                    'Push to Deploy URL copied to clipboard',
-                    'wpm-staging'
+                    'Push to Deploy URL wurde in die Zwischenablage kopiert',
+                    'shgu'
                   ),
                   type: NOTICE_TYPES.SUCCESS,
                 });
@@ -95,14 +114,14 @@ const RepositoryListView = ({
           loading={loadingUpdate}
           onClick={updateRepo}
         >
-          {__('Update', 'wpm-staging')}
+          {__('Update', 'shgu')}
         </Button>
         <Button
           buttonType="delete"
           loading={loadingDelete}
           onClick={deleteRepo}
         >
-          {__('Delete', 'wpm-staging')}
+          {__('Delete', 'shgu')}
         </Button>
       </div>
     </div>

@@ -32718,14 +32718,14 @@ var AddRepositoryForm = function (_a) {
                 setLoading(false);
             });
         }) },
-        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryUrl", label: (0, i18n_1.__)('Repository URL', 'wpm-staging'), Input: theme_1.InputText, rules: {
-                required: (0, i18n_1.__)('Das ist ein Pflichtfeld', 'wpm-staging'),
+        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryUrl", label: (0, i18n_1.__)('Repository URL', 'shgu'), Input: theme_1.InputText, rules: {
+                required: (0, i18n_1.__)('Das ist ein Pflichtfeld', 'shgu'),
                 pattern: {
                     value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
-                    message: (0, i18n_1.__)('Die URL muss zu einem Github, Gitlab oder Bitbucket Repository führen', 'wpm-staging'),
+                    message: (0, i18n_1.__)('Die URL muss zu einem Github, Gitlab oder Bitbucket Repository führen', 'shgu'),
                 },
             } }),
-        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryIsTheme", label: (0, i18n_1.__)('Als Theme installieren', 'wpm-staging'), Input: theme_1.InputCheckbox }),
+        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryIsTheme", label: (0, i18n_1.__)('Als Theme installieren', 'shgu'), Input: theme_1.InputCheckbox }),
         react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading })));
 };
 exports["default"] = AddRepositoryForm;
@@ -32779,33 +32779,46 @@ var RepositoryListView = function (_a) {
             setLoadingDelete(false);
         });
     };
+    console.log(repository);
     var updateRepo = function () {
         setLoadingUpdate(true);
+        (0, apiFetch_1.apiGet)(constants_1.VARS.restPluginNamespace + "/git-packages-deploy/" + repository.name + "/?key=" + repository.deployKey)
+            .then(function (resp) {
+            return setRepositories(function (packages) {
+                return packages.map(function (p) { return (p.url === resp.url ? resp : p); });
+            });
+        })
+            .catch(function (e) {
+            return addToast({
+                message: (0, i18n_1.__)('Update fehlgeschlagen'),
+                type: theme_1.NOTICE_TYPES.ERROR,
+            });
+        })
+            .finally(function () { return setLoadingUpdate(false); });
     };
     return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, RepositoryListView_css_1.default.root) },
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.infos },
             react_1.default.createElement("h3", { className: RepositoryListView_css_1.default.name },
                 react_1.default.createElement(theme_1.Icon, { icon: repository.hoster, className: RepositoryListView_css_1.default.nameHoster }),
-                repository.theme ? (0, i18n_1.__)('Theme:', 'wpm-staging') + ' ' : '',
+                repository.theme ? (0, i18n_1.__)('Theme:', 'shgu') + ' ' : '',
                 repository.name),
-            react_1.default.createElement("p", { className: RepositoryListView_css_1.default.version }, (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'wpm-staging'), repository.version)),
+            react_1.default.createElement("p", { className: RepositoryListView_css_1.default.version }, (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgu'), repository.version)),
             react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo }, repository.url.repository),
             react_1.default.createElement("p", { className: RepositoryListView_css_1.default.pushToDeploy },
-                (0, i18n_1.__)('Push to Deploy URL', 'wpm-staging'),
+                (0, i18n_1.__)('Push to Deploy URL', 'shgu'),
                 ":",
-                ' ',
                 react_1.default.createElement("input", { className: RepositoryListView_css_1.default.pushToDeployInput, value: updateUrl, type: "text", disabled: true }),
                 Boolean(navigator.clipboard) && (react_1.default.createElement("button", { className: RepositoryListView_css_1.default.copyButton, onClick: function () {
                         addToast({
-                            message: (0, i18n_1.__)('Push to Deploy URL copied to clipboard', 'wpm-staging'),
+                            message: (0, i18n_1.__)('Push to Deploy URL wurde in die Zwischenablage kopiert', 'shgu'),
                             type: theme_1.NOTICE_TYPES.SUCCESS,
                         });
                         navigator.clipboard.writeText(updateUrl);
                     }, title: "Copy" },
                     react_1.default.createElement(theme_1.Icon, { icon: "copy" }))))),
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.controls },
-            react_1.default.createElement(theme_1.Button, { buttonType: "primary", loading: loadingUpdate, onClick: updateRepo }, (0, i18n_1.__)('Update', 'wpm-staging')),
-            react_1.default.createElement(theme_1.Button, { buttonType: "delete", loading: loadingDelete, onClick: deleteRepo }, (0, i18n_1.__)('Delete', 'wpm-staging')))));
+            react_1.default.createElement(theme_1.Button, { buttonType: "primary", loading: loadingUpdate, onClick: updateRepo }, (0, i18n_1.__)('Update', 'shgu')),
+            react_1.default.createElement(theme_1.Button, { buttonType: "delete", loading: loadingDelete, onClick: deleteRepo }, (0, i18n_1.__)('Delete', 'shgu')))));
 };
 exports["default"] = RepositoryListView;
 
@@ -32836,10 +32849,10 @@ var PageGitPackages = function () {
     var _a = (0, settings_1.useSettingsForm)(settings_1.settingsKeys.filter(function (key) { return key.indexOf('git-packages') === 0; })), form = _a.form, submit = _a.submit, error = _a.error, loading = _a.loading, updateFieldValue = _a.updateFieldValue, savedSettings = _a.savedSettings;
     var _b = react_1.default.useState(constants_1.VARS.gitPackages), repositories = _b[0], setRepositories = _b[1];
     return (react_1.default.createElement(theme_1.PageContent, null,
-        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Git Repositories', 'wpm-staging') }, repositories.length === 0 ? (react_1.default.createElement("p", null, (0, i18n_1.__)('Es wurden noch keine Repositories gespeichert', 'wpm-staging'))) : (repositories.map(function (repo, i) { return (react_1.default.createElement(RepositoryListView_1.default, { key: i, repository: repo, setRepositories: setRepositories, className: PageGitPackages_css_1.default.repository })); }))),
-        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Repository hinzufügen', 'wpm-staging'), canToggleKey: "add-package" },
+        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Git Repositories', 'shgu') }, repositories.length === 0 ? (react_1.default.createElement("p", null, (0, i18n_1.__)('Es wurden noch keine Repositories gespeichert', 'shgu'))) : (repositories.map(function (repo, i) { return (react_1.default.createElement(RepositoryListView_1.default, { key: i, repository: repo, setRepositories: setRepositories, className: PageGitPackages_css_1.default.repository })); }))),
+        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Repository hinzufügen', 'shgu'), canToggleKey: "add-package" },
             react_1.default.createElement(AddRepositoryForm_1.default, { setRepositories: setRepositories })),
-        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Zugriffskontrolle', 'wpm-staging'), canToggleKey: "git-packages" },
+        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Zugriffskontrolle', 'shgu'), canToggleKey: "git-packages" },
             react_1.default.createElement(theme_1.Form, { onSubmit: submit },
                 react_1.default.createElement(theme_1.FormElement, { form: form, name: "git-packages-gitlab-token", Input: theme_1.InputText }),
                 react_1.default.createElement(theme_1.FormElement, { form: form, name: "git-packages-github-token", Input: theme_1.InputText }),

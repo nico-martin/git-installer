@@ -65,15 +65,15 @@ const AddRepositoryForm = ({
       <FormElement
         form={form}
         name="repositoryUrl"
-        label={__('Repository URL', 'wpm-staging')}
+        label={__('Repository URL', 'shgu')}
         Input={InputText}
         rules={{
-          required: __('Das ist ein Pflichtfeld', 'wpm-staging'),
+          required: __('Das ist ein Pflichtfeld', 'shgu'),
           pattern: {
             value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
             message: __(
               'Die URL muss zu einem Github, Gitlab oder Bitbucket Repository führen',
-              'wpm-staging'
+              'shgu'
             ),
           },
         }}
@@ -81,7 +81,7 @@ const AddRepositoryForm = ({
       <FormElement
         form={form}
         name="repositoryIsTheme"
-        label={__('Als Theme installieren', 'wpm-staging')}
+        label={__('Als Theme installieren', 'shgu')}
         Input={InputCheckbox}
       />
       <FormControls type="submit" loading={loading} />

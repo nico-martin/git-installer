@@ -33,11 +33,9 @@ const PageGitPackages = () => {
 
   return (
     <PageContent>
-      <Card title={__('Git Repositories', 'wpm-staging')}>
+      <Card title={__('Git Repositories', 'shgu')}>
         {repositories.length === 0 ? (
-          <p>
-            {__('Es wurden noch keine Repositories gespeichert', 'wpm-staging')}
-          </p>
+          <p>{__('Es wurden noch keine Repositories gespeichert', 'shgu')}</p>
         ) : (
           repositories.map((repo, i) => (
             <RepositoryListView
@@ -50,15 +48,12 @@ const PageGitPackages = () => {
         )}
       </Card>
       <Card
-        title={__('Repository hinzufügen', 'wpm-staging')}
+        title={__('Repository hinzufügen', 'shgu')}
         canToggleKey="add-package"
       >
         <AddRepositoryForm setRepositories={setRepositories} />
       </Card>
-      <Card
-        title={__('Zugriffskontrolle', 'wpm-staging')}
-        canToggleKey="git-packages"
-      >
+      <Card title={__('Zugriffskontrolle', 'shgu')} canToggleKey="git-packages">
         <Form onSubmit={submit}>
           <FormElement
             form={form}
