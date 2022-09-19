@@ -1,0 +1,11 @@
+.page {
+  padding-top: 0 !important;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.content {
+  margin-top: 16px;
+}

@@ -1,0 +1,73 @@
+{
+  "name": "sayhello-git-updater",
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "prod": "webpack -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org:sayhellogmbh/shp_git-updater.git"
+  },
+  "dependencies": {
+    "@types/wordpress__components": "^9.8.6",
+    "@types/wordpress__i18n": "^3.11.0",
+    "dayjs": "^1.10.7",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^6.14.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/register": "^7.12.10",
+    "@teamsupercell/typings-for-css-modules-loader": "^2.4.0",
+    "@trivago/prettier-plugin-sort-imports": "^2.0.2",
+    "autoprefixer": "^10.2.6",
+    "babel-eslint": "^10.1.0",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^9.0.1",
+    "css-loader": "^5.2.6",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "mini-css-extract-plugin": "^2.1.0",
+    "postcss": "^8.3.5",
+    "postcss-loader": "^6.1.1",
+    "postcss-mixins": "^8.1.0",
+    "postcss-nested": "^5.0.5",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "^2.3.2",
+    "prettier-stylelint": "^0.4.2",
+    "raw-loader": "^4.0.2",
+    "style-loader": "^3.0.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^22.0.0",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5",
+    "webpack": "^5.44.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-livereload-plugin": "^3.0.2"
+  },
+  "author": "Nico Martin",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://bitbucket.org/sayhellogmbh/shp_git-updater/issues"
+  },
+  "homepage": "https://bitbucket.org/sayhellogmbh/shp_git-updater#README",
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "importOrder": [
+      "^@wordpress/(.*)$",
+      "^[./]"
+    ]
+  }
+}

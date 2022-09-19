@@ -1,0 +1,49 @@
+.root {
+  display: flex;
+  justify-content: space-between;
+}
+
+.infos {
+  p {
+    margin: 0.8em 0 0 0;
+
+    &.version {
+      margin-top: 0.4rem;
+    }
+  }
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+
+  & > * + * {
+    margin-top: 1em;
+  }
+}
+
+.name {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.nameHoster {
+  margin-right: 0.5rem;
+  font-size: 1.2em;
+}
+
+.version {
+  font-size: 0.8rem;
+}
+
+.repo {
+}
+
+.pushToDeploy {
+  font-size: 0.7rem;
+  input {
+    font-size: 0.7rem;
+  }
+}

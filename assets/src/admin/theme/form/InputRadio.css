@@ -1,0 +1,6 @@
+.element + .element {
+  margin-top: 0.3em;
+}
+
+.input {}
+.label {}

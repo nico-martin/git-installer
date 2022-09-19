@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    vertical-align: top;
+    margin-top: var(--wpmstaging-form-spacing);
+}
+
+.containerStacked {
+    display: block;
+}
+
+.labelContainer {
+    width: var(--wpmstaging-form-label-width);
+    margin-right: var(--wpmstaging-form-spacing);
+    display: block;
+}
+
+.containerStacked .labelContainer {
+    margin-right: 0;
+    width: 100%;
+    margin-bottom: var(--wpmstaging-form-spacing-xsmall);
+}
+
+.description {
+    color: #676767;
+    margin-top: 0.2em;
+
+    p {
+        font-size: 0.8em;
+    }
+}
+
+.label {
+    font-weight: bold;
+}
+
+.content {
+    flex: 1 1 auto;
+}
+
+.input:not([type="checkbox"]) {
+    width: 100% !important;
+    max-width: 100%;
+}
+
+.error {
+    color: #dc3232;
+    font-size: 0.8em !important;
+}

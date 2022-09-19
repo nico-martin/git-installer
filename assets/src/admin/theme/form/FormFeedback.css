@@ -1,0 +1,7 @@
+.td {
+  padding: 20px 0 !important;
+}
+
+.wrapper {
+  margin-top: var(--wpmstaging-form-spacing);
+}

@@ -1,0 +1,83 @@
+.root {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  max-width: 400px;
+  width: 90%;
+}
+
+.toast {
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 300ms;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & + .toast {
+    margin-top: 10px;
+  }
+}
+
+.toastFadeIn {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toastFadeOut {
+  transform: translateY(50%);
+  opacity: 0;
+}
+
+.remove {
+  background-color: transparent;
+  border: none;
+  //outline: none;
+  padding: 0.5em;
+  margin-top: 0 !important;
+  cursor: pointer;
+  align-self: flex-start;
+
+  &:hover .removeInner {
+    background-color: #d63638;
+  }
+}
+
+.removeInner {
+  width: 1em;
+  height: 1em;
+  background-color: #787c82;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  position: relative;
+  text-indent: -9999px;
+  display: block;
+
+  &:after,
+  &:before {
+    content: '';
+    display: block;
+    width: 70%;
+    height: 2px;
+    background-color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%) rotate(45deg);
+  }
+
+  &:before {
+    transform: translateY(-50%) translateX(-50%) rotate(-45deg);
+  }
+}
+
+.button {
+  cursor: pointer;
+  text-transform: uppercase;
+
+  & + .button {
+    margin-left: 1em;
+  }
+}
