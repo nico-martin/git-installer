@@ -23,16 +23,10 @@ import RepositoryListView from './GitPackages/RepositoryListView';
 import styles from './PageGitPackages.css';
 
 const PageGitPackages = () => {
-  const {
-    form,
-    submit,
-    error,
-    loading,
-    updateFieldValue,
-    savedSettings,
-  } = useSettingsForm(
-    settingsKeys.filter((key) => key.indexOf('git-packages') === 0)
-  );
+  const { form, submit, error, loading, updateFieldValue, savedSettings } =
+    useSettingsForm(
+      settingsKeys.filter((key) => key.indexOf('git-packages') === 0)
+    );
   const [repositories, setRepositories] = React.useState<IGitPackages>(
     VARS.gitPackages
   );
@@ -55,7 +49,10 @@ const PageGitPackages = () => {
           ))
         )}
       </Card>
-      <Card title={__('Repository hinzufügen', 'wpm-staging')}>
+      <Card
+        title={__('Repository hinzufügen', 'wpm-staging')}
+        canToggleKey="add-package"
+      >
         <AddRepositoryForm setRepositories={setRepositories} />
       </Card>
       <Card

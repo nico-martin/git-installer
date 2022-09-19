@@ -980,10 +980,28 @@
 
 .RepositoryListView__pushToDeploy--1T2yZ {
   font-size: 0.7rem;
+  display: flex;
+  align-items: center;
 }
 
-.RepositoryListView__pushToDeploy--1T2yZ input {
-    font-size: 0.7rem;
+.RepositoryListView__pushToDeployInput--30Exa {
+  margin-left: 1em;
+  font-size: 0.7rem;
+  width: 200px;
+}
+
+.RepositoryListView__copyButton--FrZQ5 {
+  font-size: 1.5em;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.3;
+  margin-left: 0.5em;
+}
+
+.RepositoryListView__copyButton--FrZQ5:hover {
+    opacity: 0.6;
   }
 
 /*!********************************************************************************************************************************************************************!*\

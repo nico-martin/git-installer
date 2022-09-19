@@ -12,6 +12,7 @@ var map = {
 	"./icons/apple.svg": "./assets/dist/static/admin/icons/apple.svg",
 	"./icons/check-outline.svg": "./assets/dist/static/admin/icons/check-outline.svg",
 	"./icons/chrome.svg": "./assets/dist/static/admin/icons/chrome.svg",
+	"./icons/copy.svg": "./assets/dist/static/admin/icons/copy.svg",
 	"./icons/desktop.svg": "./assets/dist/static/admin/icons/desktop.svg",
 	"./icons/edge.svg": "./assets/dist/static/admin/icons/edge.svg",
 	"./icons/firefox.svg": "./assets/dist/static/admin/icons/firefox.svg",
@@ -94,7 +95,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","pushToDeploy":"RepositoryListView__pushToDeploy--1T2yZ"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","pushToDeploy":"RepositoryListView__pushToDeploy--1T2yZ","pushToDeployInput":"RepositoryListView__pushToDeployInput--30Exa","copyButton":"RepositoryListView__copyButton--FrZQ5"});
 
 /***/ }),
 
@@ -624,6 +625,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<svg viewBox=\"0 0 24 24\">\r\n    <path fill=\"currentColor\"\r\n          d=\"M12,20L15.46,14H15.45C15.79,13.4 16,12.73 16,12C16,10.8 15.46,9.73 14.62,9H19.41C19.79,9.93 20,10.94 20,12A8,8 0 0,1 12,20M4,12C4,10.54 4.39,9.18 5.07,8L8.54,14H8.55C9.24,15.19 10.5,16 12,16C12.45,16 12.88,15.91 13.29,15.77L10.89,19.91C7,19.37 4,16.04 4,12M15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9A3,3 0 0,1 15,12M12,4C14.96,4 17.54,5.61 18.92,8H12C10.06,8 8.45,9.38 8.08,11.21L5.7,7.08C7.16,5.21 9.44,4 12,4M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z\"/>\r\n</svg>");
+
+/***/ }),
+
+/***/ "./assets/dist/static/admin/icons/copy.svg":
+/*!*************************************************!*\
+  !*** ./assets/dist/static/admin/icons/copy.svg ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<svg viewBox=\"0 0 24 24\">\r\n    <path fill=\"currentColor\"\r\n          d=\"M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z\"/>\r\n</svg>\r\n");
 
 /***/ }),
 
@@ -32778,7 +32794,15 @@ var RepositoryListView = function (_a) {
                 (0, i18n_1.__)('Push to Deploy URL', 'wpm-staging'),
                 ":",
                 ' ',
-                react_1.default.createElement("input", { value: updateUrl, type: "text", disabled: true }))),
+                react_1.default.createElement("input", { className: RepositoryListView_css_1.default.pushToDeployInput, value: updateUrl, type: "text", disabled: true }),
+                Boolean(navigator.clipboard) && (react_1.default.createElement("button", { className: RepositoryListView_css_1.default.copyButton, onClick: function () {
+                        addToast({
+                            message: (0, i18n_1.__)('Push to Deploy URL copied to clipboard', 'wpm-staging'),
+                            type: theme_1.NOTICE_TYPES.SUCCESS,
+                        });
+                        navigator.clipboard.writeText(updateUrl);
+                    }, title: "Copy" },
+                    react_1.default.createElement(theme_1.Icon, { icon: "copy" }))))),
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.controls },
             react_1.default.createElement(theme_1.Button, { buttonType: "primary", loading: loadingUpdate, onClick: updateRepo }, (0, i18n_1.__)('Update', 'wpm-staging')),
             react_1.default.createElement(theme_1.Button, { buttonType: "delete", loading: loadingDelete, onClick: deleteRepo }, (0, i18n_1.__)('Delete', 'wpm-staging')))));
@@ -32813,7 +32837,7 @@ var PageGitPackages = function () {
     var _b = react_1.default.useState(constants_1.VARS.gitPackages), repositories = _b[0], setRepositories = _b[1];
     return (react_1.default.createElement(theme_1.PageContent, null,
         react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Git Repositories', 'wpm-staging') }, repositories.length === 0 ? (react_1.default.createElement("p", null, (0, i18n_1.__)('Es wurden noch keine Repositories gespeichert', 'wpm-staging'))) : (repositories.map(function (repo, i) { return (react_1.default.createElement(RepositoryListView_1.default, { key: i, repository: repo, setRepositories: setRepositories, className: PageGitPackages_css_1.default.repository })); }))),
-        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Repository hinzufügen', 'wpm-staging') },
+        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Repository hinzufügen', 'wpm-staging'), canToggleKey: "add-package" },
             react_1.default.createElement(AddRepositoryForm_1.default, { setRepositories: setRepositories })),
         react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Zugriffskontrolle', 'wpm-staging'), canToggleKey: "git-packages" },
             react_1.default.createElement(theme_1.Form, { onSubmit: submit },

@@ -43,7 +43,26 @@
 
 .pushToDeploy {
   font-size: 0.7rem;
-  input {
-    font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+}
+
+.pushToDeployInput {
+  margin-left: 1em;
+  font-size: 0.7rem;
+  width: 200px;
+}
+
+.copyButton {
+  font-size: 1.5em;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.3;
+  margin-left: 0.5em;
+
+  &:hover {
+    opacity: 0.6;
   }
 }

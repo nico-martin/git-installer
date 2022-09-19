@@ -21,7 +21,6 @@ const RepositoryListView = ({
   const [loadingDelete, setLoadingDelete] = React.useState<boolean>(false);
   const [loadingUpdate, setLoadingUpdate] = React.useState<boolean>(false);
   const updateUrl = `${VARS.restPluginBase}git-packages-deploy/${repository.name}/?key=${repository.deployKey}`;
-
   const deleteRepo = () => {
     setLoadingDelete(true);
     apiDelete<{
@@ -64,7 +63,30 @@ const RepositoryListView = ({
         <p className={styles.repo}>{repository.url.repository}</p>
         <p className={styles.pushToDeploy}>
           {__('Push to Deploy URL', 'wpm-staging')}:{' '}
-          <input value={updateUrl} type="text" disabled />
+          <input
+            className={styles.pushToDeployInput}
+            value={updateUrl}
+            type="text"
+            disabled
+          />
+          {Boolean(navigator.clipboard) && (
+            <button
+              className={styles.copyButton}
+              onClick={() => {
+                addToast({
+                  message: __(
+                    'Push to Deploy URL copied to clipboard',
+                    'wpm-staging'
+                  ),
+                  type: NOTICE_TYPES.SUCCESS,
+                });
+                navigator.clipboard.writeText(updateUrl);
+              }}
+              title="Copy"
+            >
+              <Icon icon="copy" />
+            </button>
+          )}
         </p>
       </div>
       <div className={styles.controls}>
