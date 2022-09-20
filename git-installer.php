@@ -1,10 +1,10 @@
 <?php
 
 /*
-Plugin Name: Git Installer
+Plugin Name: Git Installer (Alpha)
 Plugin URI: https://bitbucket.org/sayhellogmbh/shp_git-installer
 Description: Install and Update Plugins and Themes from Github, Gitlab and Bitbucket
-Author: Nico Martin - Say Hello GmbH
+Author: Nico Martin - mail@nico.dev
 Author URI: https://nico.dev
 Version: 0.0.1
 Text Domain: shgi
