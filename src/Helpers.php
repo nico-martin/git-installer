@@ -1,6 +1,6 @@
 <?php
 
-namespace SayHello\GitUpdater;
+namespace SayHello\GitInstaller;
 
 class Helpers
 {
@@ -146,7 +146,7 @@ class Helpers
         $code = wp_remote_retrieve_response_code($request);
         if ($code >= 300) {
             return new \WP_Error('remote_get_error', sprintf(
-                    __('Ungültige Anfrage an %s', 'shgu'),
+                    __('Ungültige Anfrage an %s', 'shgi'),
                     '<code>' . $url . '</code>')
             );
         }
@@ -155,7 +155,7 @@ class Helpers
 
         if (!$json) {
             return new \WP_Error('json_parse_error', sprintf(
-                    __('Anfrage an %s konnte nicht verarbeitet werden', 'shgu'),
+                    __('Anfrage an %s konnte nicht verarbeitet werden', 'shgi'),
                     '<code>' . $url . '</code>')
             );
         }
@@ -165,7 +165,7 @@ class Helpers
 
     public static function getContentFolder($url = false)
     {
-        $folder = 'shgu';
+        $folder = 'shgi';
         $uploadDir = wp_get_upload_dir();
         $baseUrl = trailingslashit($uploadDir['baseurl']);
         $baseDir = trailingslashit($uploadDir['basedir']);
@@ -183,7 +183,7 @@ class Helpers
     public static function checkForFunction($func, $notification = true)
     {
         if (!function_exists($func)) {
-            $message = 'The function <code>' . $func . '()</code> is not available. Some Parts of <b>' . sayhelloGitUpdater()->name . '</b> won\'t work as expected.';
+            $message = 'The function <code>' . $func . '()</code> is not available. Some Parts of <b>' . sayhelloGitInstaller()->name . '</b> won\'t work as expected.';
             if ($notification) {
                 self::showAdminNotification($message);
             }

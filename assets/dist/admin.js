@@ -32577,11 +32577,11 @@ var settings_1 = __webpack_require__(/*! ./settings */ "./assets/src/admin/setti
 var theme_1 = __webpack_require__(/*! ./theme */ "./assets/src/admin/theme/index.ts");
 var pluginStrings_1 = __webpack_require__(/*! ./utils/pluginStrings */ "./assets/src/admin/utils/pluginStrings.ts");
 var router_1 = __webpack_require__(/*! ./utils/router */ "./assets/src/admin/utils/router.tsx");
-var app = document.querySelector('#shgu-app');
-var shadowbox = document.querySelector('#shgu-shadowbox');
+var app = document.querySelector('#shgi-app');
+var shadowbox = document.querySelector('#shgi-shadowbox');
 if (!shadowbox) {
     var elem = document.createElement('div');
-    elem.id = 'shgu-shadowbox';
+    elem.id = 'shgi-shadowbox';
     document.body.appendChild(elem);
 }
 var App = function () { return (react_1.default.createElement(theme_1.Page, { title: (0, pluginStrings_1.pluginString)('plugin.name') },
@@ -32751,25 +32751,25 @@ var RepositoryListView = function (_a) {
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.infos },
             react_1.default.createElement("h3", { className: RepositoryListView_css_1.default.name },
                 react_1.default.createElement(theme_1.Icon, { icon: repository.provider, className: RepositoryListView_css_1.default.nameHoster }),
-                repository.theme ? (0, i18n_1.__)('Theme:', 'shgu') + ' ' : '',
+                repository.theme ? (0, i18n_1.__)('Theme:', 'shgi') + ' ' : '',
                 repository.name),
-            react_1.default.createElement("p", { className: RepositoryListView_css_1.default.version }, (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgu'), repository.version)),
+            react_1.default.createElement("p", { className: RepositoryListView_css_1.default.version }, (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgi'), repository.version)),
             react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo }, repository.baseUrl),
             react_1.default.createElement("p", { className: RepositoryListView_css_1.default.pushToDeploy },
-                (0, i18n_1.__)('Push to Deploy URL', 'shgu'),
+                (0, i18n_1.__)('Push to Deploy URL', 'shgi'),
                 ":",
                 react_1.default.createElement("input", { className: RepositoryListView_css_1.default.pushToDeployInput, value: updateUrl, type: "text", disabled: true }),
                 Boolean(navigator.clipboard) && (react_1.default.createElement("button", { className: RepositoryListView_css_1.default.copyButton, onClick: function () {
                         addToast({
-                            message: (0, i18n_1.__)('Push to Deploy URL wurde in die Zwischenablage kopiert', 'shgu'),
+                            message: (0, i18n_1.__)('Push to Deploy URL wurde in die Zwischenablage kopiert', 'shgi'),
                             type: theme_1.NOTICE_TYPES.SUCCESS,
                         });
                         navigator.clipboard.writeText(updateUrl);
                     }, title: "Copy" },
                     react_1.default.createElement(theme_1.Icon, { icon: "copy" }))))),
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.controls },
-            react_1.default.createElement(theme_1.Button, { buttonType: "primary", loading: loadingUpdate, onClick: updateRepo }, (0, i18n_1.__)('Update', 'shgu')),
-            react_1.default.createElement(theme_1.Button, { buttonType: "delete", loading: loadingDelete, onClick: deleteRepo }, (0, i18n_1.__)('Delete', 'shgu')))));
+            react_1.default.createElement(theme_1.Button, { buttonType: "primary", loading: loadingUpdate, onClick: updateRepo }, (0, i18n_1.__)('Update', 'shgi')),
+            react_1.default.createElement(theme_1.Button, { buttonType: "delete", loading: loadingDelete, onClick: deleteRepo }, (0, i18n_1.__)('Delete', 'shgi')))));
 };
 exports["default"] = RepositoryListView;
 
@@ -32864,20 +32864,20 @@ var AddRepositoryForm = function (_a) {
                 setLoading(false);
             });
         }) },
-        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryUrl", label: (0, i18n_1.__)('Repository URL', 'shgu'), Input: theme_1.InputText, disabled: true, rules: {
-                required: (0, i18n_1.__)('Das ist ein Pflichtfeld', 'shgu'),
+        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryUrl", label: (0, i18n_1.__)('Repository URL', 'shgi'), Input: theme_1.InputText, disabled: true, rules: {
+                required: (0, i18n_1.__)('Das ist ein Pflichtfeld', 'shgi'),
                 pattern: {
                     value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
-                    message: (0, i18n_1.__)('Die URL muss zu einem Github, Gitlab oder Bitbucket Repository führen', 'shgu'),
+                    message: (0, i18n_1.__)('Die URL muss zu einem Github, Gitlab oder Bitbucket Repository führen', 'shgi'),
                 },
             } }),
-        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryIsTheme", label: (0, i18n_1.__)('Als Theme installieren', 'shgu'), Input: theme_1.InputCheckbox }),
-        react_1.default.createElement(theme_1.FormElement, { form: form, name: "activeBranch", label: (0, i18n_1.__)('Branch', 'shgu'), Input: theme_1.InputSelect, options: Object.values(repository.branches).reduce(function (acc, branch) {
+        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryIsTheme", label: (0, i18n_1.__)('Als Theme installieren', 'shgi'), Input: theme_1.InputCheckbox }),
+        react_1.default.createElement(theme_1.FormElement, { form: form, name: "activeBranch", label: (0, i18n_1.__)('Branch', 'shgi'), Input: theme_1.InputSelect, options: Object.values(repository.branches).reduce(function (acc, branch) {
                 var _a;
                 return (__assign(__assign({}, acc), (_a = {}, _a[branch.name] = branch.name, _a)));
             }, {}) }),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR }, error)),
-        react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: (0, i18n_1.__)('Installieren', 'shgu') })));
+        react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: (0, i18n_1.__)('Installieren', 'shgi') })));
 };
 exports["default"] = AddRepositoryForm;
 
@@ -32919,7 +32919,7 @@ var CheckRepoForm = function (_a) {
                 .then(function (pkg) {
                 var exists = Boolean(repositoryKeys.find(function (key) { return key === pkg.key; }));
                 if (exists) {
-                    setError((0, i18n_1.__)('Das Repository wurde bereits installiert', 'shgu'));
+                    setError((0, i18n_1.__)('Das Repository wurde bereits installiert', 'shgi'));
                 }
                 else {
                     setData(pkg);
@@ -32930,15 +32930,15 @@ var CheckRepoForm = function (_a) {
                 setLoading(false);
             });
         }) },
-        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryUrl", label: (0, i18n_1.__)('Repository URL', 'shgu'), Input: theme_1.InputText, rules: {
-                required: (0, i18n_1.__)('Das ist ein Pflichtfeld', 'shgu'),
+        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryUrl", label: (0, i18n_1.__)('Repository URL', 'shgi'), Input: theme_1.InputText, rules: {
+                required: (0, i18n_1.__)('Das ist ein Pflichtfeld', 'shgi'),
                 pattern: {
                     value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
-                    message: (0, i18n_1.__)('Die URL muss zu einem Github, Gitlab oder Bitbucket Repository führen', 'shgu'),
+                    message: (0, i18n_1.__)('Die URL muss zu einem Github, Gitlab oder Bitbucket Repository führen', 'shgi'),
                 },
             } }),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR }, error)),
-        react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: (0, i18n_1.__)('URL überpfüfen', 'shgu') })));
+        react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: (0, i18n_1.__)('URL überpfüfen', 'shgi') })));
 };
 exports["default"] = CheckRepoForm;
 
@@ -32970,12 +32970,12 @@ var PageGitPackages = function () {
     var _b = (0, settings_1.useSettingsForm)(settings_1.settingsKeys.filter(function (key) { return key.indexOf('git-packages') === 0; })), form = _b.form, submit = _b.submit, error = _b.error, loading = _b.loading;
     var _c = react_1.default.useState(constants_1.VARS.gitPackages), repositories = _c[0], setRepositories = _c[1];
     return (react_1.default.createElement(theme_1.PageContent, null,
-        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Git Repositories', 'shgu'), rightContent: repositories.length !== 0 && (react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('Repository hinzufügen', 'shgu'))) }, repositories.length === 0 ? (react_1.default.createElement("div", { className: PageGitPackages_css_1.default.empty },
-            react_1.default.createElement("p", null, (0, i18n_1.__)('Es wurden noch keine Repositories gespeichert', 'shgu')),
-            react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('Repository hinzufügen', 'shgu')))) : (repositories.map(function (repo, i) { return (react_1.default.createElement(RepositoryListView_1.default, { key: i, repository: repo, setRepositories: setRepositories, className: PageGitPackages_css_1.default.repository })); }))),
-        addPackageModal && (react_1.default.createElement(theme_1.ShadowBox, { title: (0, i18n_1.__)('Repository hinzufügen', 'shgu'), close: function () { return setAddPackageModal(false); }, size: "medium" },
+        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Git Repositories', 'shgi'), rightContent: repositories.length !== 0 && (react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('Repository hinzufügen', 'shgi'))) }, repositories.length === 0 ? (react_1.default.createElement("div", { className: PageGitPackages_css_1.default.empty },
+            react_1.default.createElement("p", null, (0, i18n_1.__)('Es wurden noch keine Repositories gespeichert', 'shgi')),
+            react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('Repository hinzufügen', 'shgi')))) : (repositories.map(function (repo, i) { return (react_1.default.createElement(RepositoryListView_1.default, { key: i, repository: repo, setRepositories: setRepositories, className: PageGitPackages_css_1.default.repository })); }))),
+        addPackageModal && (react_1.default.createElement(theme_1.ShadowBox, { title: (0, i18n_1.__)('Repository hinzufügen', 'shgi'), close: function () { return setAddPackageModal(false); }, size: "medium" },
             react_1.default.createElement(AddRepository_1.default, { repositoryKeys: repositories.map(function (r) { return r.key; }), setRepositories: setRepositories, onFinish: function () { return setAddPackageModal(false); } }))),
-        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Zugriffskontrolle', 'shgu'), canToggleKey: "git-packages" },
+        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Zugriffskontrolle', 'shgi'), canToggleKey: "git-packages" },
             react_1.default.createElement(theme_1.Form, { onSubmit: submit },
                 react_1.default.createElement("h3", null, "Gitlab"),
                 react_1.default.createElement(theme_1.FormElement, { form: form, name: "git-packages-gitlab-token", Input: theme_1.InputText, type: "password" }),
@@ -33213,7 +33213,7 @@ var index_1 = __webpack_require__(/*! ../index */ "./assets/src/admin/theme/inde
 var ShadowBox_css_1 = __importDefault(__webpack_require__(/*! ./ShadowBox.css */ "./assets/src/admin/theme/ShadowBox/ShadowBox.css"));
 var Portal = function (_a) {
     var children = _a.children;
-    return react_dom_1.default.createPortal(children, document.querySelector('#shgu-shadowbox'));
+    return react_dom_1.default.createPortal(children, document.querySelector('#shgi-shadowbox'));
 };
 exports["default"] = (function (_a) {
     var _b;
@@ -34552,7 +34552,7 @@ exports["default"] = (function () {
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.VARS = void 0;
-exports.VARS = window.shguJsVars;
+exports.VARS = window.shgiJsVars;
 
 
 /***/ }),

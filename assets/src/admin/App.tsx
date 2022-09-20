@@ -9,11 +9,11 @@ import { VARS } from './utils/constants';
 import { pluginString } from './utils/pluginStrings';
 import { Route, RouterProvider } from './utils/router';
 
-const app = document.querySelector('#shgu-app');
-const shadowbox = document.querySelector('#shgu-shadowbox');
+const app = document.querySelector('#shgi-app');
+const shadowbox = document.querySelector('#shgi-shadowbox');
 if (!shadowbox) {
   const elem = document.createElement('div');
-  elem.id = 'shgu-shadowbox';
+  elem.id = 'shgi-shadowbox';
   document.body.appendChild(elem);
 }
 

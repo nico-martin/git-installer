@@ -75,15 +75,15 @@ const RepositoryListView = ({
       <div className={styles.infos}>
         <h3 className={styles.name}>
           <Icon icon={repository.provider} className={styles.nameHoster} />
-          {repository.theme ? __('Theme:', 'shgu') + ' ' : ''}
+          {repository.theme ? __('Theme:', 'shgi') + ' ' : ''}
           {repository.name}
         </h3>
         <p className={styles.version}>
-          {sprintf(__('Version: %s', 'shgu'), repository.version)}
+          {sprintf(__('Version: %s', 'shgi'), repository.version)}
         </p>
         <p className={styles.repo}>{repository.baseUrl}</p>
         <p className={styles.pushToDeploy}>
-          {__('Push to Deploy URL', 'shgu')}:
+          {__('Push to Deploy URL', 'shgi')}:
           <input
             className={styles.pushToDeployInput}
             value={updateUrl}
@@ -97,7 +97,7 @@ const RepositoryListView = ({
                 addToast({
                   message: __(
                     'Push to Deploy URL wurde in die Zwischenablage kopiert',
-                    'shgu'
+                    'shgi'
                   ),
                   type: NOTICE_TYPES.SUCCESS,
                 });
@@ -116,14 +116,14 @@ const RepositoryListView = ({
           loading={loadingUpdate}
           onClick={updateRepo}
         >
-          {__('Update', 'shgu')}
+          {__('Update', 'shgi')}
         </Button>
         <Button
           buttonType="delete"
           loading={loadingDelete}
           onClick={deleteRepo}
         >
-          {__('Delete', 'shgu')}
+          {__('Delete', 'shgi')}
         </Button>
       </div>
     </div>

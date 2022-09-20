@@ -1,6 +1,6 @@
 <?php
 
-namespace SayHello\GitUpdater;
+namespace SayHello\GitInstaller;
 
 class Assets
 {
@@ -16,33 +16,33 @@ class Assets
         $defaults = [
             'ajaxUrl'             => admin_url('admin-ajax.php'),
             'homeUrl'             => trailingslashit(get_site_url()),
-            'pluginPrefix'        => sayhelloGitUpdater()->prefix,
-            'generalError'        => __('An unexpected error occured', 'shgu'),
+            'pluginPrefix'        => sayhelloGitInstaller()->prefix,
+            'generalError'        => __('An unexpected error occured', 'shgi'),
             'restBase'            => trailingslashit(get_rest_url()),
-            'restPluginBase'      => trailingslashit(get_rest_url() . sayhelloGitUpdater()->api_namespace),
-            'restPluginNamespace' => sayhelloGitUpdater()->api_namespace,
+            'restPluginBase'      => trailingslashit(get_rest_url() . sayhelloGitInstaller()->api_namespace),
+            'restPluginNamespace' => sayhelloGitInstaller()->api_namespace,
         ];
-        $vars     = json_encode(apply_filters('shgu/Assets/FooterJS', $defaults));
+        $vars     = json_encode(apply_filters('shgi/Assets/FooterJS', $defaults));
         echo '<script>' . PHP_EOL;
-        echo "var shguUiJsVars = {$vars};";
+        echo "var shgiUiJsVars = {$vars};";
         echo '</script>' . PHP_EOL;
     }
 
     public function addAssets()
     {
         /*
-        $script_version = sayhelloGitUpdater()->version;
-        $dir_uri        = trailingslashit(plugin_dir_url(sayhelloGitUpdater()->file));
+        $script_version = sayhelloGitInstaller()->version;
+        $dir_uri        = trailingslashit(plugin_dir_url(sayhelloGitInstaller()->file));
 
         wp_enqueue_style(
-            sayhelloGitUpdater()->prefix . '-ui-installprompt',
+            sayhelloGitInstaller()->prefix . '-ui-installprompt',
             $dir_uri . 'assets/dist/ui-installprompt.css',
             [],
             $script_version
         );
 
         wp_enqueue_script(
-            sayhelloGitUpdater()->prefix . '-ui-installprompt',
+            sayhelloGitInstaller()->prefix . '-ui-installprompt',
             $dir_uri . 'assets/dist/ui-installprompt.js',
             [],
             $script_version,
@@ -53,8 +53,8 @@ class Assets
 
     public function addAdminAssets()
     {
-        $script_version = sayhelloGitUpdater()->version;
-        $dir_uri        = trailingslashit(plugin_dir_url(sayhelloGitUpdater()->file));
+        $script_version = sayhelloGitInstaller()->version;
+        $dir_uri        = trailingslashit(plugin_dir_url(sayhelloGitInstaller()->file));
 
         wp_enqueue_media();
         wp_enqueue_style('wp-components');
@@ -75,21 +75,21 @@ class Assets
         );*/
 
         wp_enqueue_style(
-            sayhelloGitUpdater()->prefix . '-roboto',
+            sayhelloGitInstaller()->prefix . '-roboto',
             $dir_uri . 'assets/fonts/roboto.css',
             [],
             $script_version
         );
 
         wp_enqueue_style(
-            sayhelloGitUpdater()->prefix . '-admin-style',
+            sayhelloGitInstaller()->prefix . '-admin-style',
             $dir_uri . 'assets/dist/admin.css',
-            [sayhelloGitUpdater()->prefix . '-roboto'],
+            [sayhelloGitInstaller()->prefix . '-roboto'],
             $script_version
         );
 
         wp_enqueue_script(
-            sayhelloGitUpdater()->prefix . '-admin-script',
+            sayhelloGitInstaller()->prefix . '-admin-script',
             $dir_uri . 'assets/dist/admin.js',
             [
                 'react',
@@ -108,20 +108,20 @@ class Assets
         $defaults = [
             'ajaxUrl'             => admin_url('admin-ajax.php'),
             'homeUrl'             => trailingslashit(get_site_url()),
-            'pluginUrl'           => trailingslashit(plugin_dir_url(sayhelloGitUpdater()->file)),
-            'pluginPrefix'        => sayhelloGitUpdater()->prefix,
-            'generalError'        => __('An unexpected error occured', 'shgu'),
-            'settings'            => sayhelloGitUpdater()->Settings->getSettings(),
-            'settingsData'        => sayhelloGitUpdater()->Settings->getSettings(),
+            'pluginUrl'           => trailingslashit(plugin_dir_url(sayhelloGitInstaller()->file)),
+            'pluginPrefix'        => sayhelloGitInstaller()->prefix,
+            'generalError'        => __('An unexpected error occured', 'shgi'),
+            'settings'            => sayhelloGitInstaller()->Settings->getSettings(),
+            'settingsData'        => sayhelloGitInstaller()->Settings->getSettings(),
             'restBase'            => trailingslashit(get_rest_url()),
-            'restPluginBase'      => trailingslashit(get_rest_url() . sayhelloGitUpdater()->api_namespace),
-            'restPluginNamespace' => sayhelloGitUpdater()->api_namespace,
-            'pluginStrings'       => apply_filters('shgu/PluginStrings', []),
+            'restPluginBase'      => trailingslashit(get_rest_url() . sayhelloGitInstaller()->api_namespace),
+            'restPluginNamespace' => sayhelloGitInstaller()->api_namespace,
+            'pluginStrings'       => apply_filters('shgi/PluginStrings', []),
             'nonce'               => wp_create_nonce('wp_rest'),
         ];
 
-        $vars = json_encode(apply_filters('shgu/Assets/AdminFooterJS', $defaults));
+        $vars = json_encode(apply_filters('shgi/Assets/AdminFooterJS', $defaults));
 
-        wp_add_inline_script(sayhelloGitUpdater()->prefix . '-admin-script', "var shguJsVars = {$vars};", 'before');
+        wp_add_inline_script(sayhelloGitInstaller()->prefix . '-admin-script', "var shgiJsVars = {$vars};", 'before');
     }
 }

@@ -31,26 +31,26 @@ const PageGitPackages = () => {
   return (
     <PageContent>
       <Card
-        title={__('Git Repositories', 'shgu')}
+        title={__('Git Repositories', 'shgi')}
         rightContent={
           repositories.length !== 0 && (
             <Button
               buttonType="primary"
               onClick={() => setAddPackageModal(true)}
             >
-              {__('Repository hinzufügen', 'shgu')}
+              {__('Repository hinzufügen', 'shgi')}
             </Button>
           )
         }
       >
         {repositories.length === 0 ? (
           <div className={styles.empty}>
-            <p>{__('Es wurden noch keine Repositories gespeichert', 'shgu')}</p>
+            <p>{__('Es wurden noch keine Repositories gespeichert', 'shgi')}</p>
             <Button
               buttonType="primary"
               onClick={() => setAddPackageModal(true)}
             >
-              {__('Repository hinzufügen', 'shgu')}
+              {__('Repository hinzufügen', 'shgi')}
             </Button>
           </div>
         ) : (
@@ -66,7 +66,7 @@ const PageGitPackages = () => {
       </Card>
       {addPackageModal && (
         <ShadowBox
-          title={__('Repository hinzufügen', 'shgu')}
+          title={__('Repository hinzufügen', 'shgi')}
           close={() => setAddPackageModal(false)}
           size="medium"
         >
@@ -77,7 +77,7 @@ const PageGitPackages = () => {
           />
         </ShadowBox>
       )}
-      <Card title={__('Zugriffskontrolle', 'shgu')} canToggleKey="git-packages">
+      <Card title={__('Zugriffskontrolle', 'shgi')} canToggleKey="git-packages">
         <Form onSubmit={submit}>
           <h3>Gitlab</h3>
           <FormElement

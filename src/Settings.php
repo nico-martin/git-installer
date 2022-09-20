@@ -1,11 +1,11 @@
 <?php
 
-namespace SayHello\GitUpdater;
+namespace SayHello\GitInstaller;
 
 class Settings
 {
 
-    public static $key = 'shgu-settings';
+    public static $key = 'shgi-settings';
     public $registered_settings = [];
 
     public function __construct()
@@ -19,12 +19,12 @@ class Settings
 
     public function getRegisteredSettings()
     {
-        return apply_filters('shgu/Settings/register', $this->registered_settings);
+        return apply_filters('shgi/Settings/register', $this->registered_settings);
     }
 
     public function registerRoute()
     {
-        register_rest_route(sayhelloGitUpdater()->api_namespace, 'settings', [
+        register_rest_route(sayhelloGitInstaller()->api_namespace, 'settings', [
             'methods'             => 'POST',
             'callback'            => [$this, 'apiUpdateSetting'],
             'permission_callback' => function () {
@@ -32,7 +32,7 @@ class Settings
             }
         ]);
 
-        register_rest_route(sayhelloGitUpdater()->api_namespace, 'settings', [
+        register_rest_route(sayhelloGitInstaller()->api_namespace, 'settings', [
             'methods'             => 'GET',
             'callback'            => [$this, 'apiGetSettings'],
             'permission_callback' => function () {
@@ -157,7 +157,7 @@ class Settings
         $oldValues = $this->getSettings();
         update_option(self::$key, array_merge($options, $settings));
         $newValues = $this->getSettings();
-        do_action('shgu/Settings/afterUpdate', $oldValues, $newValues);
+        do_action('shgi/Settings/afterUpdate', $oldValues, $newValues);
 
         return $newValues;
     }
@@ -168,7 +168,7 @@ class Settings
         if ( ! array_key_exists($key, $registered_settings)) {
             return new \WP_Error(
                 'invalid_setting',
-                sprintf(__('Invalid Settings key "%s"', 'shgu'), $key)
+                sprintf(__('Invalid Settings key "%s"', 'shgi'), $key)
             );
         }
 
@@ -179,7 +179,7 @@ class Settings
         if ('' !== $validate) {
             return new \WP_Error(
                 'invalid_setting_value',
-                sprintf(__('%s: %s', 'shgu'), $key, $validate)
+                sprintf(__('%s: %s', 'shgi'), $key, $validate)
             );
         }
 

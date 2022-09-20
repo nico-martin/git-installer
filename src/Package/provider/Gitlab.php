@@ -1,8 +1,8 @@
 <?php
 
-namespace SayHello\GitUpdater\Package\Provider;
+namespace SayHello\GitInstaller\Package\Provider;
 
-use SayHello\GitUpdater\Helpers;
+use SayHello\GitInstaller\Helpers;
 
 class Gitlab extends Provider
 {
@@ -39,7 +39,7 @@ class Gitlab extends Provider
         if (!self::validateUrl($url)) {
             return new \WP_Error(
                 'invalid_url',
-                sprintf(__('"%s" ist kein gültiges Gitlab Repository', 'shgu'), $url)
+                sprintf(__('"%s" ist kein gültiges Gitlab Repository', 'shgi'), $url)
             );
         }
 
@@ -88,7 +88,7 @@ class Gitlab extends Provider
 
     public static function authenticateRequest($url, $args = [])
     {
-        $gitlabToken = sayhelloGitUpdater()->Settings->getSingleSettingValue('git-packages-gitlab-token');
+        $gitlabToken = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-gitlab-token');
         if (strpos($url, 'private_token=') === false) {
             if (strpos($url, '?') === false) {
                 $url = $url . '?private_token=' . $gitlabToken;

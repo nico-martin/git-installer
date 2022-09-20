@@ -2,7 +2,7 @@ import { ISettings, IPluginStrings, IMenuItems, IGitPackages } from './types';
 
 declare global {
   interface Window {
-    shguJsVars: {
+    shgiJsVars: {
       ajaxUrl: string;
       homeUrl: string;
       adminUrl: string;
@@ -24,4 +24,4 @@ declare global {
   }
 }
 
-export const VARS = window.shguJsVars;
+export const VARS = window.shgiJsVars;

@@ -1,6 +1,6 @@
 <?php
 
-namespace SayHello\GitUpdater\Package\Provider;
+namespace SayHello\GitInstaller\Package\Provider;
 
 class Provider
 {

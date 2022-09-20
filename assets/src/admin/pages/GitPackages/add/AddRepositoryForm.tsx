@@ -71,16 +71,16 @@ const AddRepositoryForm: React.FC<{
       <FormElement
         form={form}
         name="repositoryUrl"
-        label={__('Repository URL', 'shgu')}
+        label={__('Repository URL', 'shgi')}
         Input={InputText}
         disabled
         rules={{
-          required: __('Das ist ein Pflichtfeld', 'shgu'),
+          required: __('Das ist ein Pflichtfeld', 'shgi'),
           pattern: {
             value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
             message: __(
               'Die URL muss zu einem Github, Gitlab oder Bitbucket Repository führen',
-              'shgu'
+              'shgi'
             ),
           },
         }}
@@ -88,13 +88,13 @@ const AddRepositoryForm: React.FC<{
       <FormElement
         form={form}
         name="repositoryIsTheme"
-        label={__('Als Theme installieren', 'shgu')}
+        label={__('Als Theme installieren', 'shgi')}
         Input={InputCheckbox}
       />
       <FormElement
         form={form}
         name="activeBranch"
-        label={__('Branch', 'shgu')}
+        label={__('Branch', 'shgi')}
         Input={InputSelect}
         options={Object.values(repository.branches).reduce(
           (acc, branch: IGitPackageBranch) => ({
@@ -110,7 +110,7 @@ const AddRepositoryForm: React.FC<{
       <FormControls
         type="submit"
         loading={loading}
-        value={__('Installieren', 'shgu')}
+        value={__('Installieren', 'shgi')}
       />
     </Form>
   );

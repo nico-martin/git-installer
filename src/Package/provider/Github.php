@@ -1,8 +1,8 @@
 <?php
 
-namespace SayHello\GitUpdater\Package\Provider;
+namespace SayHello\GitInstaller\Package\Provider;
 
-use SayHello\GitUpdater\Helpers;
+use SayHello\GitInstaller\Helpers;
 
 class Github extends Provider
 {
@@ -38,7 +38,7 @@ class Github extends Provider
         if (!self::validateUrl($url)) {
             return new \WP_Error(
                 'invalid_url',
-                sprintf(__('"%s" ist kein gültiges Github Repository', 'shgu'), $url)
+                sprintf(__('"%s" ist kein gültiges Github Repository', 'shgi'), $url)
             );
         }
 
@@ -87,7 +87,7 @@ class Github extends Provider
 
     public static function authenticateRequest($url, $args = [])
     {
-        $github_auth_header = sayhelloGitUpdater()->Settings->getSingleSettingValue('git-packages-github-token');
+        $github_auth_header = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-github-token');
         if ($github_auth_header) {
             $args = [
                 'headers' => [

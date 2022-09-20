@@ -1,8 +1,8 @@
 <?php
 
-namespace SayHello\GitUpdater\Package\Provider;
+namespace SayHello\GitInstaller\Package\Provider;
 
-use SayHello\GitUpdater\Helpers;
+use SayHello\GitInstaller\Helpers;
 
 class Bitbucket extends Provider
 {
@@ -38,7 +38,7 @@ class Bitbucket extends Provider
         if (!self::validateUrl($url)) {
             return new \WP_Error(
                 'invalid_url',
-                sprintf(__('"%s" ist kein gültiges Bitbucket Repository', 'shgu'), $url)
+                sprintf(__('"%s" ist kein gültiges Bitbucket Repository', 'shgi'), $url)
             );
         }
 
@@ -87,8 +87,8 @@ class Bitbucket extends Provider
 
     public static function authenticateRequest($url, $args = [])
     {
-        $token = sayhelloGitUpdater()->Settings->getSingleSettingValue('git-packages-bitbucket-token');
-        $user = sayhelloGitUpdater()->Settings->getSingleSettingValue('git-packages-bitbucket-user');
+        $token = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-bitbucket-token');
+        $user = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-bitbucket-user');
         if ($token && $user) {
             $args = [
                 'headers' => [

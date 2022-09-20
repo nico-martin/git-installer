@@ -1,6 +1,6 @@
 <?php
 
-namespace SayHello\GitUpdater;
+namespace SayHello\GitInstaller;
 
 class Plugin
 {
@@ -17,7 +17,7 @@ class Plugin
     public $upload_dir = '';
     public $upload_url = '';
 
-    public $option_key = 'shgu_data';
+    public $option_key = 'shgi_data';
 
     public $AdminPage;
     public $Assets;
@@ -30,8 +30,8 @@ class Plugin
         if (!isset(self::$instance) && !(self::$instance instanceof Plugin)) {
             self::$instance = new Plugin();
 
-            if (get_option(sayhelloGitUpdater()->option_key)) {
-                $data = get_option(sayhelloGitUpdater()->option_key);
+            if (get_option(sayhelloGitInstaller()->option_key)) {
+                $data = get_option(sayhelloGitInstaller()->option_key);
             } elseif (function_exists('get_plugin_data')) {
                 $data = get_plugin_data($file);
             } else {
@@ -42,7 +42,7 @@ class Plugin
             self::$instance->name = $data['Name'];
             self::$instance->version = $data['Version'];
 
-            self::$instance->prefix = 'shgu';
+            self::$instance->prefix = 'shgi';
             self::$instance->api_namespace = 'sayhello-wp-manage/v1';
             self::$instance->debug = true;
             self::$instance->file = $file;
@@ -57,10 +57,10 @@ class Plugin
     {
         add_action('plugins_loaded', [$this, 'loadPluginTextdomain']);
         add_action('admin_init', [$this, 'updatePluginData']);
-        register_deactivation_hook(sayhelloGitUpdater()->file, [$this, 'deactivate']);
-        register_activation_hook(sayhelloGitUpdater()->file, [$this, 'activate']);
+        register_deactivation_hook(sayhelloGitInstaller()->file, [$this, 'deactivate']);
+        register_activation_hook(sayhelloGitInstaller()->file, [$this, 'activate']);
 
-        add_filter('shgu/PluginStrings', [$this, 'pluginStrings']);
+        add_filter('shgi/PluginStrings', [$this, 'pluginStrings']);
     }
 
     /**
@@ -71,7 +71,7 @@ class Plugin
         load_plugin_textdomain(
             'progressive-wp',
             false,
-            dirname(plugin_basename(sayhelloGitUpdater()->file)) . '/languages'
+            dirname(plugin_basename(sayhelloGitInstaller()->file)) . '/languages'
         );
     }
 
@@ -81,37 +81,37 @@ class Plugin
     public function updatePluginData()
     {
 
-        $db_data = get_option(sayhelloGitUpdater()->option_key);
-        $file_data = get_plugin_data(sayhelloGitUpdater()->file);
+        $db_data = get_option(sayhelloGitInstaller()->option_key);
+        $file_data = get_plugin_data(sayhelloGitInstaller()->file);
 
         if (!$db_data || version_compare($file_data['Version'], $db_data['Version'], '>')) {
 
-            sayhelloGitUpdater()->name = $file_data['Name'];
-            sayhelloGitUpdater()->version = $file_data['Version'];
+            sayhelloGitInstaller()->name = $file_data['Name'];
+            sayhelloGitInstaller()->version = $file_data['Version'];
 
-            update_option(sayhelloGitUpdater()->option_key, $file_data);
+            update_option(sayhelloGitInstaller()->option_key, $file_data);
             if (!$db_data) {
-                do_action('shgu_on_first_activate');
+                do_action('shgi_on_first_activate');
             } else {
-                do_action('shgu_on_update', $db_data['Version'], $file_data['Version']);
+                do_action('shgi_on_update', $db_data['Version'], $file_data['Version']);
             }
         }
     }
 
     public function activate()
     {
-        do_action('shgu_on_activate');
+        do_action('shgi_on_activate');
     }
 
     public function deactivate()
     {
-        do_action('shgu_on_deactivate');
-        delete_option(sayhelloGitUpdater()->option_key);
+        do_action('shgi_on_deactivate');
+        delete_option(sayhelloGitInstaller()->option_key);
     }
 
     public function pluginStrings($strings)
     {
-        $strings['plugin.name'] = sayhelloGitUpdater()->name;
+        $strings['plugin.name'] = sayhelloGitInstaller()->name;
 
         return $strings;
     }

@@ -1,13 +1,13 @@
 <?php
 
-namespace SayHello\GitUpdater\Package;
+namespace SayHello\GitInstaller\Package;
 
-use SayHello\GitUpdater\Helpers;
+use SayHello\GitInstaller\Helpers;
 
 class GitPackages
 {
-    public $repo_option = 'sayhello-git-updater-git-repositories';
-    public $deploy_option = 'sayhello-git-updater-git-deploy';
+    public $repo_option = 'sayhello-git-installer-git-repositories';
+    public $deploy_option = 'sayhello-git-installer-git-deploy';
 
     public function run()
     {
@@ -15,11 +15,11 @@ class GitPackages
             return;
         }
 
-        add_filter('shgu/AdminPage/Menu', [$this, 'menu']);
-        add_filter('shgu/Settings/register', [$this, 'settings']);
-        add_filter('shgu/Assets/AdminFooterJS', [$this, 'footerJsVars']);
+        add_filter('shgi/AdminPage/Menu', [$this, 'menu']);
+        add_filter('shgi/Settings/register', [$this, 'settings']);
+        add_filter('shgi/Assets/AdminFooterJS', [$this, 'footerJsVars']);
 
-        add_action('shgu/GitPackages/DoAfterUpdate', [$this, 'maybeDoComposerInstall']);
+        add_action('shgi/GitPackages/DoAfterUpdate', [$this, 'maybeDoComposerInstall']);
 
         /**
          * Rest
@@ -30,7 +30,7 @@ class GitPackages
     public function menu($menu)
     {
         $menu['git-packages'] = [
-            'title' => __('Git Packages', 'shgu'),
+            'title' => __('Git Packages', 'shgi'),
         ];
 
         return $menu;
@@ -40,25 +40,25 @@ class GitPackages
     {
         $settings['git-packages-gitlab-token'] = [
             'default' => '',
-            'label' => __('Acces Token', 'shgu'),
+            'label' => __('Acces Token', 'shgi'),
             'validate' => null,
         ];
 
         $settings['git-packages-github-token'] = [
             'default' => '',
-            'label' => __('Personal Acces Token', 'shgu'),
+            'label' => __('Personal Acces Token', 'shgi'),
             'validate' => null,
         ];
 
         $settings['git-packages-bitbucket-token'] = [
             'default' => '',
-            'label' => __('App-Passwort', 'shgu'),
+            'label' => __('App-Passwort', 'shgi'),
             'validate' => null,
         ];
 
         $settings['git-packages-bitbucket-user'] = [
             'default' => '',
-            'label' => __('User', 'shgu'),
+            'label' => __('User', 'shgi'),
             'validate' => null,
         ];
 
@@ -105,7 +105,7 @@ class GitPackages
 
     public function registerRoute()
     {
-        register_rest_route(sayhelloGitUpdater()->api_namespace, 'git-packages', [
+        register_rest_route(sayhelloGitInstaller()->api_namespace, 'git-packages', [
             'methods' => 'GET',
             'callback' => [$this, 'getRepos'],
             'permission_callback' => function () {
@@ -113,7 +113,7 @@ class GitPackages
             }
         ]);
 
-        register_rest_route(sayhelloGitUpdater()->api_namespace, 'git-packages', [
+        register_rest_route(sayhelloGitInstaller()->api_namespace, 'git-packages', [
             'methods' => 'PUT',
             'callback' => [$this, 'addRepo'],
             'permission_callback' => function () {
@@ -121,7 +121,7 @@ class GitPackages
             }
         ]);
 
-        register_rest_route(sayhelloGitUpdater()->api_namespace, 'git-packages/(?P<slug>\S+)/', [
+        register_rest_route(sayhelloGitInstaller()->api_namespace, 'git-packages/(?P<slug>\S+)/', [
             'methods' => 'DELETE',
             'callback' => [$this, 'deleteRepo'],
             'args' => [
@@ -132,7 +132,7 @@ class GitPackages
             }
         ]);
 
-        register_rest_route(sayhelloGitUpdater()->api_namespace, 'git-packages-deploy/(?P<slug>\S+)/', [
+        register_rest_route(sayhelloGitInstaller()->api_namespace, 'git-packages-deploy/(?P<slug>\S+)/', [
             'methods' => 'GET',
             'callback' => [$this, 'pushToDeploy'],
             'args' => [
@@ -140,7 +140,7 @@ class GitPackages
             ],
         ]);
 
-        register_rest_route(sayhelloGitUpdater()->api_namespace, 'git-packages-check/(?P<url>\S+)/', [
+        register_rest_route(sayhelloGitInstaller()->api_namespace, 'git-packages-check/(?P<url>\S+)/', [
             'methods' => 'GET',
             'callback' => [$this, 'checkGitUrl'],
             'args' => [
@@ -172,7 +172,7 @@ class GitPackages
 
         return [
             'message' => sprintf(
-                __('"%s" wurde erfolgreich installiert', 'shgu'),
+                __('"%s" wurde erfolgreich installiert', 'shgi'),
                 $repoData['key']
             ),
             'packages' => $this->getPackages(),
@@ -182,7 +182,7 @@ class GitPackages
     public function pushToDeploy($data)
     {
         if (!array_key_exists('key', $_GET)) {
-            return new \WP_Error('wrong_request', __('Ungültige Anfrage: kein Key gefunden', 'shgu'), [
+            return new \WP_Error('wrong_request', __('Ungültige Anfrage: kein Key gefunden', 'shgi'), [
                 'status' => 403,
             ]);
         }
@@ -190,7 +190,7 @@ class GitPackages
         $key = $data['slug'];
         $deployKeys = get_option($this->deploy_option, []);
         if (!array_key_exists($key, $deployKeys) || $_GET['key'] != $deployKeys[$key]) {
-            return new \WP_Error('wrong_request', __('Ungültige Anfrage: ungültiger Key', 'shgu'), [
+            return new \WP_Error('wrong_request', __('Ungültige Anfrage: ungültiger Key', 'shgi'), [
                 'status' => 403,
             ]);
         }
@@ -211,9 +211,9 @@ class GitPackages
         $key = $data['slug'];
         if (!array_key_exists($key, $repos)) {
             return new \WP_Error(
-                'shgu_repo_not_found',
+                'shgi_repo_not_found',
                 sprintf(
-                    __('Paket %s konnte nicht geupdated werden: Das Packet existiert nicht', 'shgu'),
+                    __('Paket %s konnte nicht geupdated werden: Das Packet existiert nicht', 'shgi'),
                     '<code>' . $key . '</code>'
                 )
             );
@@ -224,7 +224,7 @@ class GitPackages
         update_option($this->repo_option, $repos);
 
         return [
-            'message' => sprintf(__('"%s" wurde erfolgreich gelöscht', 'shgu'), $key),
+            'message' => sprintf(__('"%s" wurde erfolgreich gelöscht', 'shgi'), $key),
             'packages' => $this->getPackages(),
         ];
     }
@@ -236,7 +236,7 @@ class GitPackages
         if (!$provider) return new \WP_Error(
             'repository_not_found',
             sprintf(
-                __('Packet %s konnte nicht nicht gefunden werden', 'shgu'),
+                __('Packet %s konnte nicht nicht gefunden werden', 'shgi'),
                 '<code>' . $url . '</code>'
             ), [
             'status' => 404,
@@ -255,7 +255,7 @@ class GitPackages
         if (!$provider) {
             return new \WP_Error(
                 'invalid_git_host',
-                sprintf(__('"%s" ist kein unterstützter Git Hoster', 'shgu'), $url)
+                sprintf(__('"%s" ist kein unterstützter Git Hoster', 'shgi'), $url)
             );
         }
 
@@ -333,9 +333,9 @@ class GitPackages
 
         if (!array_key_exists($key, $packages)) {
             return new \WP_Error(
-                'shgu_repo_not_found',
+                'shgi_repo_not_found',
                 sprintf(
-                    __('Packet %s konnte nicht geupdated werden: Das Packet existiert nicht', 'shgu'),
+                    __('Packet %s konnte nicht geupdated werden: Das Packet existiert nicht', 'shgi'),
                     '<code>' . $key . '</code>'
                 ),
             );
@@ -353,9 +353,9 @@ class GitPackages
 
         if (is_wp_error($request) || wp_remote_retrieve_response_code($request) >= 300) {
             return new \WP_Error(
-                'shgu_repo_not_fetched',
+                'shgi_repo_not_fetched',
                 sprintf(
-                    __('Archiv %s konnte nicht kopiert werden', 'shgu'),
+                    __('Archiv %s konnte nicht kopiert werden', 'shgi'),
                     '<code>' . $zipUrl . '</code>'
                 )
             );
@@ -366,9 +366,9 @@ class GitPackages
         $res = $zip->open($tempDir . $key . '.zip');
         if ($res !== true) {
             return new \WP_Error(
-                'shgu_repo_unzip_failed',
+                'shgi_repo_unzip_failed',
                 sprintf(
-                    __('%s konnte nicht entpackt werden', 'shgu'),
+                    __('%s konnte nicht entpackt werden', 'shgi'),
                     '<code>' . $zipUrl . '</code>'
                 )
             );
@@ -393,12 +393,12 @@ class GitPackages
                 'rename_repo_failed',
                 __(
                     'Der Ordner konnte nicht kopiert werden. Möglicherweise konnte der alte Ordner nicht ganz geleert werden.',
-                    'shgu'
+                    'shgi'
                 )
             );
         }
 
-        do_action('shgu/GitPackages/DoAfterUpdate', $oldDir);
+        do_action('shgi/GitPackages/DoAfterUpdate', $oldDir);
 
         return true;
     }

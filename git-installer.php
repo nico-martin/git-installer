@@ -1,20 +1,20 @@
 <?php
 
 /*
-Plugin Name: Git Updater
+Plugin Name: Git Installer
 Plugin URI: https://bitbucket.org/sayhellogmbh/shp_git-updater
 Description: Install and Update Plugins and Themes from Github, Gitlab and Bitbucket
 Author: Nico Martin - Say Hello GmbH
 Author URI: https://nico.dev
 Version: 0.0.1
-Text Domain: shgu
+Text Domain: shgi
 Domain Path: /languages
 */
 
 defined('ABSPATH') or die();
 
 add_action('init', function () {
-    load_plugin_textdomain('shgu', false, basename(dirname(__FILE__)) . '/languages');
+    load_plugin_textdomain('shgi', false, basename(dirname(__FILE__)) . '/languages');
 });
 
 require_once 'src/Helpers.php';
@@ -28,26 +28,26 @@ require_once 'src/Package/provider/Github.php';
 require_once 'src/Package/provider/Gitlab.php';
 require_once 'src/Package/provider/Bitbucket.php';
 
-function sayhelloGitUpdater(): \SayHello\GitUpdater\Plugin
+function sayhelloGitInstaller(): \SayHello\GitInstaller\Plugin
 {
-    return SayHello\GitUpdater\Plugin::getInstance(__FILE__);
+    return SayHello\GitInstaller\Plugin::getInstance(__FILE__);
 }
 
-sayhelloGitUpdater()->Assets = new SayHello\GitUpdater\Assets();
-sayhelloGitUpdater()->Assets->run();
+sayhelloGitInstaller()->Assets = new SayHello\GitInstaller\Assets();
+sayhelloGitInstaller()->Assets->run();
 
-sayhelloGitUpdater()->Settings = new SayHello\GitUpdater\Settings();
-sayhelloGitUpdater()->Settings->run();
+sayhelloGitInstaller()->Settings = new SayHello\GitInstaller\Settings();
+sayhelloGitInstaller()->Settings->run();
 
-sayhelloGitUpdater()->AdminPage = new SayHello\GitUpdater\AdminPage();
-sayhelloGitUpdater()->AdminPage->run();
+sayhelloGitInstaller()->AdminPage = new SayHello\GitInstaller\AdminPage();
+sayhelloGitInstaller()->AdminPage->run();
 
 /**
  * Packages
  */
 
-sayhelloGitUpdater()->GitPackages = new SayHello\GitUpdater\Package\GitPackages();
-sayhelloGitUpdater()->GitPackages->run();
+sayhelloGitInstaller()->GitPackages = new SayHello\GitInstaller\Package\GitPackages();
+sayhelloGitInstaller()->GitPackages->run();
 
 
 

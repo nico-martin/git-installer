@@ -1,12 +1,12 @@
 {
-  "name": "sayhello-git-updater",
+  "name": "sayhello-git-installer",
   "scripts": {
     "dev": "webpack --mode development --watch",
     "prod": "webpack -p"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org:sayhellogmbh/shp_git-updater.git"
+    "url": "git+ssh://git@bitbucket.org:sayhellogmbh/shp_git-installer.git"
   },
   "dependencies": {
     "@types/wordpress__components": "^9.8.6",
@@ -54,9 +54,9 @@
   "author": "Nico Martin",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://bitbucket.org/sayhellogmbh/shp_git-updater/issues"
+    "url": "https://bitbucket.org/sayhellogmbh/shp_git-installer/issues"
   },
-  "homepage": "https://bitbucket.org/sayhellogmbh/shp_git-updater#README",
+  "homepage": "https://bitbucket.org/sayhellogmbh/shp_git-installer#README",
   "babel": {
     "presets": [
       "@babel/preset-env"
