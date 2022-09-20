@@ -3,3 +3,8 @@
   padding-top: var(--wpmstaging-form-spacing);
   border-top: 1px solid #ccd0d4;
 }
+
+.empty {
+  text-align: center;
+  padding: 1rem 0 3rem 0;
+}

@@ -329,7 +329,7 @@ class GitPackages
 
     private function updatePackage($key)
     {
-        $packages = $this->getPackages(true);
+        $packages = $this->getPackages(false);
 
         if (!array_key_exists($key, $packages)) {
             return new \WP_Error(

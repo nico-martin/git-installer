@@ -2,40 +2,57 @@ import React from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 import { useSettingsForm, settingsKeys } from '../settings';
 import {
+  Button,
   Card,
   Form,
   FormControls,
   FormElement,
   FormFeedback,
-  InputCheckbox,
   InputText,
-  InputTextarea,
-  Loader,
   NOTICE_TYPES,
   PageContent,
+  ShadowBox,
 } from '../theme';
-import { apiGet } from '../utils/apiFetch';
 import { VARS } from '../utils/constants';
-import dayjs from '../utils/dayjs';
 import { IGitPackages, ISettings } from '../utils/types';
-import AddRepositoryForm from './GitPackages/AddRepositoryForm';
 import RepositoryListView from './GitPackages/RepositoryListView';
+import AddRepository from './GitPackages/add/AddRepository';
 import styles from './PageGitPackages.css';
 
 const PageGitPackages = () => {
-  const { form, submit, error, loading, updateFieldValue, savedSettings } =
-    useSettingsForm(
-      settingsKeys.filter((key) => key.indexOf('git-packages') === 0)
-    );
+  const [addPackageModal, setAddPackageModal] = React.useState<boolean>(false);
+  const { form, submit, error, loading } = useSettingsForm(
+    settingsKeys.filter((key) => key.indexOf('git-packages') === 0)
+  );
   const [repositories, setRepositories] = React.useState<IGitPackages>(
     VARS.gitPackages
   );
 
   return (
     <PageContent>
-      <Card title={__('Git Repositories', 'shgu')}>
+      <Card
+        title={__('Git Repositories', 'shgu')}
+        rightContent={
+          repositories.length !== 0 && (
+            <Button
+              buttonType="primary"
+              onClick={() => setAddPackageModal(true)}
+            >
+              {__('Repository hinzufügen', 'shgu')}
+            </Button>
+          )
+        }
+      >
         {repositories.length === 0 ? (
-          <p>{__('Es wurden noch keine Repositories gespeichert', 'shgu')}</p>
+          <div className={styles.empty}>
+            <p>{__('Es wurden noch keine Repositories gespeichert', 'shgu')}</p>
+            <Button
+              buttonType="primary"
+              onClick={() => setAddPackageModal(true)}
+            >
+              {__('Repository hinzufügen', 'shgu')}
+            </Button>
+          </div>
         ) : (
           repositories.map((repo, i) => (
             <RepositoryListView
@@ -47,12 +64,19 @@ const PageGitPackages = () => {
           ))
         )}
       </Card>
-      <Card
-        title={__('Repository hinzufügen', 'shgu')}
-        canToggleKey="add-package"
-      >
-        <AddRepositoryForm setRepositories={setRepositories} />
-      </Card>
+      {addPackageModal && (
+        <ShadowBox
+          title={__('Repository hinzufügen', 'shgu')}
+          close={() => setAddPackageModal(false)}
+          size="medium"
+        >
+          <AddRepository
+            repositoryKeys={repositories.map((r) => r.key)}
+            setRepositories={setRepositories}
+            onFinish={() => setAddPackageModal(false)}
+          />
+        </ShadowBox>
+      )}
       <Card title={__('Zugriffskontrolle', 'shgu')} canToggleKey="git-packages">
         <Form onSubmit={submit}>
           <h3>Gitlab</h3>
@@ -60,12 +84,14 @@ const PageGitPackages = () => {
             form={form}
             name="git-packages-gitlab-token"
             Input={InputText}
+            type="password"
           />
           <h3>Github</h3>
           <FormElement
             form={form}
             name="git-packages-github-token"
             Input={InputText}
+            type="password"
           />
           <h3>Bitbucket</h3>
           <FormElement
@@ -77,6 +103,7 @@ const PageGitPackages = () => {
             form={form}
             name="git-packages-bitbucket-token"
             Input={InputText}
+            type="password"
           />
           {error !== '' && (
             <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />

@@ -49,12 +49,18 @@ const RepositoryListView = ({
 
   const updateRepo = () => {
     setLoadingUpdate(true);
-    apiGet<IGitPackage>(updateUrl)
-      .then((resp) =>
+    apiGet<IGitPackage>(
+      `${VARS.restPluginNamespace}/git-packages-deploy/${repository.key}/?key=${repository.deployKey}`
+    )
+      .then((resp) => {
+        addToast({
+          message: __('Update erfolgreich'),
+          type: NOTICE_TYPES.SUCCESS,
+        });
         setRepositories((packages) =>
           packages.map((p) => (p.key === resp.key ? resp : p))
-        )
-      )
+        );
+      })
       .catch((e) =>
         addToast({
           message: __('Update fehlgeschlagen'),

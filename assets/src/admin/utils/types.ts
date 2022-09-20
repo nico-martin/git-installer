@@ -26,17 +26,20 @@ export interface IGitPackageBranch {
   default: boolean;
 }
 
-export interface IGitPackage {
-  deployKey: string;
-  theme: boolean;
-  version: string;
+export interface IGitPackageRaw {
   key: string;
   name: string;
-  provate: boolean;
+  private: boolean;
   provider: string;
   branches: Record<string, IGitPackageBranch>;
   baseUrl: string;
   apiUrl: string;
+}
+
+export interface IGitPackage extends IGitPackageRaw {
+  deployKey: string;
+  theme: boolean;
+  version: string;
 }
 
 export type IGitPackages = Array<IGitPackage>;

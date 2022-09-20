@@ -6,7 +6,7 @@ import { Card } from '../index';
 import styles from './ShadowBox.css';
 
 const Portal = ({ children }: { children?: any }) =>
-  ReactDOM.createPortal(children, document.querySelector('#pwp-shadowbox'));
+  ReactDOM.createPortal(children, document.querySelector('#shgu-shadowbox'));
 
 export default ({
   title,

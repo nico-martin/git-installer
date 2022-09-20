@@ -4,18 +4,20 @@ import { isCardClosed, setCardClosed } from '../../utils/localstorage';
 import contentStyles from '../Content.css';
 import styles from './Card.css';
 
-const Card = ({
-  className = '',
-  canToggleKey = '',
-  title = '',
-  children,
-  toggleButtonClose,
-}: {
+const Card: React.FC<{
   className?: string;
   canToggleKey?: string;
   title?: string;
   children?: any;
   toggleButtonClose?: Function;
+  rightContent?: JSX.Element;
+}> = ({
+  className = '',
+  canToggleKey = '',
+  title = '',
+  children,
+  toggleButtonClose,
+  rightContent = null,
 }) => {
   const [open, setOpen] = React.useState<boolean>(!isCardClosed(canToggleKey));
 
@@ -54,6 +56,9 @@ const Card = ({
                 })}
               />
             </button>
+          )}
+          {rightContent && (
+            <div className={styles.headingRightContent}>{rightContent}</div>
           )}
         </div>
       )}

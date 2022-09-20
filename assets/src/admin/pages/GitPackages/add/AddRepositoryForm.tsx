@@ -1,33 +1,43 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { __, sprintf } from '@wordpress/i18n';
-import { useToast } from '../../components/toast/toastContext';
+import { __ } from '@wordpress/i18n';
+import { useToast } from '../../../components/toast/toastContext';
 import {
   Form,
   FormControls,
   FormElement,
   FormFeedback,
   InputCheckbox,
+  InputSelect,
   InputText,
   NOTICE_TYPES,
-} from '../../theme';
-import { apiPut } from '../../utils/apiFetch';
-import { VARS } from '../../utils/constants';
-import { IGitPackages } from '../../utils/types';
+} from '../../../theme';
+import { apiGet, apiPut } from '../../../utils/apiFetch';
+import { VARS } from '../../../utils/constants';
+import {
+  IGitPackageRaw,
+  IGitPackages,
+  IGitPackageBranch,
+} from '../../../utils/types';
 
-const AddRepositoryForm = ({
-  setRepositories,
-}: {
+const AddRepositoryForm: React.FC<{
   setRepositories: (packages: IGitPackages) => void;
-}) => {
+  onFinish: () => void;
+  repository: IGitPackageRaw;
+}> = ({ setRepositories, onFinish, repository }) => {
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<string>('');
   const form = useForm<{
     repositoryUrl: string;
     repositoryIsTheme: boolean;
+    activeBranch: string;
   }>({
     defaultValues: {
-      repositoryUrl: '',
+      repositoryUrl: repository.baseUrl,
       repositoryIsTheme: false,
+      activeBranch:
+        Object.values(repository.branches).find((branch) => branch.default)
+          .name || null,
     },
   });
   const { addToast } = useToast();
@@ -45,18 +55,14 @@ const AddRepositoryForm = ({
         )
           .then((resp) => {
             setRepositories(resp.packages);
+            onFinish();
             addToast({
               message: resp.message,
               type: NOTICE_TYPES.SUCCESS,
             });
             form.setValue('repositoryUrl', '');
           })
-          .catch((e) => {
-            addToast({
-              message: e,
-              type: NOTICE_TYPES.ERROR,
-            });
-          })
+          .catch((e) => setError(e))
           .finally(() => {
             setLoading(false);
           });
@@ -67,6 +73,7 @@ const AddRepositoryForm = ({
         name="repositoryUrl"
         label={__('Repository URL', 'shgu')}
         Input={InputText}
+        disabled
         rules={{
           required: __('Das ist ein Pflichtfeld', 'shgu'),
           pattern: {
@@ -84,7 +91,27 @@ const AddRepositoryForm = ({
         label={__('Als Theme installieren', 'shgu')}
         Input={InputCheckbox}
       />
-      <FormControls type="submit" loading={loading} />
+      <FormElement
+        form={form}
+        name="activeBranch"
+        label={__('Branch', 'shgu')}
+        Input={InputSelect}
+        options={Object.values(repository.branches).reduce(
+          (acc, branch: IGitPackageBranch) => ({
+            ...acc,
+            [branch.name]: branch.name,
+          }),
+          {}
+        )}
+      />
+      {error !== '' && (
+        <FormFeedback type={NOTICE_TYPES.ERROR}>{error}</FormFeedback>
+      )}
+      <FormControls
+        type="submit"
+        loading={loading}
+        value={__('Installieren', 'shgu')}
+      />
     </Form>
   );
 };

@@ -65,66 +65,70 @@
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/layout/Card.css ***!
   \****************************************************************************************************************************************************************/
 .Card__card--3pcSL {
-    position: relative;
-    border: 1px solid #ccd0d4;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-    background: #fff;
+  position: relative;
+  border: 1px solid #ccd0d4;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  background: #fff;
 }
 
 .Card__heading--3ezs4 {
-    margin: 0;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 !important;
+  margin: 0;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 !important;
 }
 
 .Card__heading--3ezs4:after {
-        content: '';
-        position: absolute;
-        border-bottom: 1px solid #ccd0d4;
-        bottom: 0;
-        right: 0;
-        left: 0;
-    }
+    content: '';
+    position: absolute;
+    border-bottom: 1px solid #ccd0d4;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
 
 .Card__title--258Vk {
-    margin: 0;
-    padding: var(--wpmstaging-form-spacing-small) var(--wpmstaging-form-spacing);
+  margin: 0;
+  padding: var(--wpmstaging-form-spacing-small) var(--wpmstaging-form-spacing);
 }
 
 .Card__toggleButton--1-4jS {
-    background-color: transparent;
-    border: 1px solid transparent;
-    width: 1.6rem;
-    height: 1.6rem;
-    padding: 0;
-    margin: 0 var(--wpmstaging-form-spacing) 0 0;
-    border-radius: 50%;
-    position: relative;
-    cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  margin: 0 var(--wpmstaging-form-spacing) 0 0;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
 }
 
 .Card__toggleButton--1-4jS:hover {
-        background-color: #efefef;
-        border-color: #9f9f9f;
-    }
+    background-color: #efefef;
+    border-color: #9f9f9f;
+  }
 
 .Card__toggleButtonIcon--EDZqS {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%) scale(0.8);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%) scale(0.8);
 }
 
 .Card__content--UvNPu {
-    padding: var(--wpmstaging-form-spacing);
+  padding: var(--wpmstaging-form-spacing);
 }
 
 .Card__cardClosed--g-FMj .Card__content--UvNPu {
-        display: none;
-    }
+    display: none;
+  }
+
+.Card__headingRightContent--l69EV {
+  margin-right: var(--wpmstaging-form-spacing);
+}
 
 /*!******************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/layout/Notice.css ***!
@@ -177,97 +181,94 @@
 /*!************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/ShadowBox/ShadowBox.css ***!
   \************************************************************************************************************************************************************************/
-
 .ShadowBox__shadowbox--A77Fe {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    top: 0;
-    z-index: 9999;
-    transition: opacity 0.2s ease-in;
-    will-change: opacity;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  z-index: 9992;
+  transition: opacity 0.2s ease-in;
+  will-change: opacity;
 }
 
 .ShadowBox__shadow--14WR3 {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    top: 0;
-    background-color: #000;
-    cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  background-color: #000;
+  cursor: pointer;
 }
 
 .ShadowBox__header--3nkw1 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    background-color: #fff;
-    padding: var(--wpmstaging-form-spacing);
-    z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  padding: var(--wpmstaging-form-spacing);
+  z-index: 10;
 }
 
 .ShadowBox__title--3JE3h {
-    display: flex;
-    vertical-align: center;
+  display: flex;
+  vertical-align: center;
 }
 
 .ShadowBox__box--2wqRB {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    max-height: calc(100vh - (var(--wpmstaging-form-spacing) * 2));
-    width: 900px;
-    max-width: calc(100vw - (var(--wpmstaging-form-spacing) * 2));
-    background-color: #fff;
-    transition: opacity 0.2s ease-in;
-    will-change: transform;
-    overflow: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  max-height: calc(100vh - (var(--wpmstaging-form-spacing) * 2));
+  width: 900px;
+  max-width: calc(100vw - (var(--wpmstaging-form-spacing) * 2));
+  background-color: #fff;
+  transition: opacity 0.2s ease-in;
+  will-change: transform;
+  overflow: auto;
 }
 
 .ShadowBox__shadowboxSmall--C1fkF .ShadowBox__box--2wqRB {
-        width: 450px;
-    }
+    width: 450px;
+  }
 
 .ShadowBox__shadowboxMedium--lSHdx .ShadowBox__box--2wqRB {
-        width: 650px;
-    }
+    width: 650px;
+  }
 
 .ShadowBox__content--2XuV8 {
-    padding: var(--wpmstaging-form-spacing);
+  padding: var(--wpmstaging-form-spacing);
 }
 
 .ShadowBox__loader--3YJXn {
-    margin: 6vh auto 10vh auto;
-    font-size: 2rem;
-    width: 2rem;
+  margin: 6vh auto 10vh auto;
+  font-size: 2rem;
+  width: 2rem;
 }
 
 .ShadowBox__box--2wqRB,
 .ShadowBox__shadow--14WR3 {
-    opacity: 0;
-    will-change: opacity;
-    transition: all 200ms ease-in-out;
+  opacity: 0;
+  will-change: opacity;
+  transition: all 200ms ease-in-out;
 }
 
 .ShadowBox__box--2wqRB {
-    transform: translateX(-50%) translateY(-30%) scale(0.9);
+  transform: translateX(-50%) translateY(-30%) scale(0.9);
 }
 
-
 .ShadowBox__shadowbox--A77Fe[data-visible='true'] .ShadowBox__box--2wqRB {
-        opacity: 1;
-        transform: translateX(-50%) translateY(-50%) scale(1);
-    }
-
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%) scale(1);
+  }
 
 .ShadowBox__shadowbox--A77Fe[data-visible='true'] .ShadowBox__shadow--14WR3 {
-        opacity: 0.7;
-    }
+    opacity: 0.7;
+  }
 
 /*!*****************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/navigation/TabNavigation.css ***!
@@ -856,6 +857,7 @@
   right: 20px;
   max-width: 400px;
   width: 90%;
+  z-index: 9999;
 }
 
 .toastContext__toast--1NZHL {
@@ -1011,6 +1013,11 @@
   margin-top: var(--wpmstaging-form-spacing);
   padding-top: var(--wpmstaging-form-spacing);
   border-top: 1px solid #ccd0d4;
+}
+
+.PageGitPackages__empty--2R5NE {
+  text-align: center;
+  padding: 1rem 0 3rem 0;
 }
 
 

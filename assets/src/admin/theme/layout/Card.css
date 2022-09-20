@@ -1,63 +1,67 @@
 .card {
-    position: relative;
-    border: 1px solid #ccd0d4;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-    background: #fff;
+  position: relative;
+  border: 1px solid #ccd0d4;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  background: #fff;
 }
 
 .heading {
-    margin: 0;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 !important;
+  margin: 0;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 !important;
 
-    &:after {
-        content: '';
-        position: absolute;
-        border-bottom: 1px solid #ccd0d4;
-        bottom: 0;
-        right: 0;
-        left: 0;
-    }
+  &:after {
+    content: '';
+    position: absolute;
+    border-bottom: 1px solid #ccd0d4;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
 }
 
 .title {
-    margin: 0;
-    padding: var(--wpmstaging-form-spacing-small) var(--wpmstaging-form-spacing);
+  margin: 0;
+  padding: var(--wpmstaging-form-spacing-small) var(--wpmstaging-form-spacing);
 }
 
 .toggleButton {
-    background-color: transparent;
-    border: 1px solid transparent;
-    width: 1.6rem;
-    height: 1.6rem;
-    padding: 0;
-    margin: 0 var(--wpmstaging-form-spacing) 0 0;
-    border-radius: 50%;
-    position: relative;
-    cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  margin: 0 var(--wpmstaging-form-spacing) 0 0;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
 
-    &:hover {
-        background-color: #efefef;
-        border-color: #9f9f9f;
-    }
+  &:hover {
+    background-color: #efefef;
+    border-color: #9f9f9f;
+  }
 }
 
 .toggleButtonIcon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%) scale(0.8);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%) scale(0.8);
 }
 
 .content {
-    padding: var(--wpmstaging-form-spacing);
+  padding: var(--wpmstaging-form-spacing);
 }
 
 .cardClosed {
-    .content {
-        display: none;
-    }
+  .content {
+    display: none;
+  }
+}
+
+.headingRightContent {
+  margin-right: var(--wpmstaging-form-spacing);
 }
