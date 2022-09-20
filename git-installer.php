@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Git Installer
-Plugin URI: https://bitbucket.org/sayhellogmbh/shp_git-updater
+Plugin URI: https://bitbucket.org/sayhellogmbh/shp_git-installer
 Description: Install and Update Plugins and Themes from Github, Gitlab and Bitbucket
 Author: Nico Martin - Say Hello GmbH
 Author URI: https://nico.dev
