@@ -32758,10 +32758,10 @@ var RepositoryListView = function (_a) {
     var addToast = (0, toastContext_1.useToast)().addToast;
     var _c = react_1.default.useState(false), loadingDelete = _c[0], setLoadingDelete = _c[1];
     var _d = react_1.default.useState(false), loadingUpdate = _d[0], setLoadingUpdate = _d[1];
-    var updateUrl = constants_1.VARS.restPluginBase + "git-packages-deploy/" + repository.name + "/?key=" + repository.deployKey;
+    var updateUrl = constants_1.VARS.restPluginBase + "git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey;
     var deleteRepo = function () {
         setLoadingDelete(true);
-        (0, apiFetch_1.apiDelete)(constants_1.VARS.restPluginNamespace + "/git-packages/" + repository.name)
+        (0, apiFetch_1.apiDelete)(constants_1.VARS.restPluginNamespace + "/git-packages/" + repository.key)
             .then(function (resp) {
             addToast({
                 message: resp.message,
@@ -32779,13 +32779,12 @@ var RepositoryListView = function (_a) {
             setLoadingDelete(false);
         });
     };
-    console.log(repository);
     var updateRepo = function () {
         setLoadingUpdate(true);
-        (0, apiFetch_1.apiGet)(constants_1.VARS.restPluginNamespace + "/git-packages-deploy/" + repository.name + "/?key=" + repository.deployKey)
+        (0, apiFetch_1.apiGet)(updateUrl)
             .then(function (resp) {
             return setRepositories(function (packages) {
-                return packages.map(function (p) { return (p.url === resp.url ? resp : p); });
+                return packages.map(function (p) { return (p.key === resp.key ? resp : p); });
             });
         })
             .catch(function (e) {
@@ -32799,11 +32798,11 @@ var RepositoryListView = function (_a) {
     return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, RepositoryListView_css_1.default.root) },
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.infos },
             react_1.default.createElement("h3", { className: RepositoryListView_css_1.default.name },
-                react_1.default.createElement(theme_1.Icon, { icon: repository.hoster, className: RepositoryListView_css_1.default.nameHoster }),
+                react_1.default.createElement(theme_1.Icon, { icon: repository.provider, className: RepositoryListView_css_1.default.nameHoster }),
                 repository.theme ? (0, i18n_1.__)('Theme:', 'shgu') + ' ' : '',
                 repository.name),
             react_1.default.createElement("p", { className: RepositoryListView_css_1.default.version }, (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgu'), repository.version)),
-            react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo }, repository.url.repository),
+            react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo }, repository.baseUrl),
             react_1.default.createElement("p", { className: RepositoryListView_css_1.default.pushToDeploy },
                 (0, i18n_1.__)('Push to Deploy URL', 'shgu'),
                 ":",
@@ -32854,8 +32853,13 @@ var PageGitPackages = function () {
             react_1.default.createElement(AddRepositoryForm_1.default, { setRepositories: setRepositories })),
         react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Zugriffskontrolle', 'shgu'), canToggleKey: "git-packages" },
             react_1.default.createElement(theme_1.Form, { onSubmit: submit },
+                react_1.default.createElement("h3", null, "Gitlab"),
                 react_1.default.createElement(theme_1.FormElement, { form: form, name: "git-packages-gitlab-token", Input: theme_1.InputText }),
+                react_1.default.createElement("h3", null, "Github"),
                 react_1.default.createElement(theme_1.FormElement, { form: form, name: "git-packages-github-token", Input: theme_1.InputText }),
+                react_1.default.createElement("h3", null, "Bitbucket"),
+                react_1.default.createElement(theme_1.FormElement, { form: form, name: "git-packages-bitbucket-user", Input: theme_1.InputText }),
+                react_1.default.createElement(theme_1.FormElement, { form: form, name: "git-packages-bitbucket-token", Input: theme_1.InputText }),
                 error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR, message: error })),
                 react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading })))));
 };

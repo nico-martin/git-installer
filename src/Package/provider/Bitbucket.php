@@ -4,17 +4,17 @@ namespace SayHello\GitUpdater\Package\Provider;
 
 use SayHello\GitUpdater\Helpers;
 
-class Github extends Provider
+class Bitbucket extends Provider
 {
-    public static $provider = 'github';
+    public static $provider = 'bitbucket';
 
     public static function validateUrl($url)
     {
-        $parsed = self::parseGithubUrl($url);
-        return $parsed['host'] === 'github.com' && isset($parsed['owner']) && isset($parsed['repo']);
+        $parsed = self::parseBitbucketUrl($url);
+        return $parsed['host'] === 'bitbucket.org' && isset($parsed['workspace']) && isset($parsed['repo']);
     }
 
-    private static function parseGithubUrl($url)
+    private static function parseBitbucketUrl($url)
     {
         $parsed = parse_url($url);
         $parsed['params'] = array_values(
@@ -28,7 +28,7 @@ class Github extends Provider
 
         return [
             'host' => $parsed['host'],
-            'owner' => $parsed['params'][0],
+            'workspace' => $parsed['params'][0],
             'repo' => $parsed['params'][1]
         ];
     }
@@ -38,47 +38,47 @@ class Github extends Provider
         if (!self::validateUrl($url)) {
             return new \WP_Error(
                 'invalid_url',
-                sprintf(__('"%s" ist kein gültiges Github Repository', 'shgu'), $url)
+                sprintf(__('"%s" ist kein gültiges Bitbucket Repository', 'shgu'), $url)
             );
         }
 
-        $parsedUrl = self::parseGithubUrl($url);
-        // https://api.github.com/repos/SayHelloGmbH/progressive-wordpress
-        $apiUrl = "https://api.github.com/repos/{$parsedUrl['owner']}/{$parsedUrl['repo']}";
+        $parsedUrl = self::parseBitbucketUrl($url);
+        // https://api.bitbucket.org/2.0/repositories/sayhellogmbh/shp-widget-medienjobs
+        $apiUrl = "https://api.bitbucket.org/2.0/repositories/{$parsedUrl['workspace']}/{$parsedUrl['repo']}";
         $auth = self::authenticateRequest($apiUrl);
 
         $response = Helpers::getRestJson($auth[0], $auth[1]);
         if (is_wp_error($response)) return $response;
 
-        $branches = self::getBranches($parsedUrl['owner'], $parsedUrl['repo'], $response['default_branch']);
+        $branches = self::getBranches($parsedUrl['workspace'], $parsedUrl['repo'], $response['mainbranch']['name']);
 
         if (is_wp_error($branches)) return $branches;
 
         return [
             'key' => $parsedUrl['repo'],
             'name' => $response['name'],
-            'private' => $response['private'],
+            'private' => $response['is_private'],
             'provider' => self::$provider,
             'branches' => $branches,
-            'baseUrl' => "https://github.com/{$parsedUrl['owner']}/{$parsedUrl['repo']}",
+            'baseUrl' => $response['links']['html']['href'],
             'apiUrl' => $apiUrl,
         ];
     }
 
-    private static function getBranches($owner, $repo, $defaultBranch)
+    private static function getBranches($workspace, $repo, $defaultBranch)
     {
-        $apiUrl = "https://api.github.com/repos/{$owner}/{$repo}";
-        $apiBranchesUrl = "{$apiUrl}/branches";
+        $apiUrl = "https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}";
+        $apiBranchesUrl = "{$apiUrl}/refs/branches?pagelen=100";
         $auth = self::authenticateRequest($apiBranchesUrl);
         $response = Helpers::getRestJson($auth[0], $auth[1]);
         if (is_wp_error($response)) return $response;
 
         $branches = [];
-        foreach ($response as $branch) {
+        foreach ($response['values'] as $branch) {
             $branches[$branch['name']] = [
                 'name' => $branch['name'],
-                'url' => "https://github.com/{$owner}/{$repo}/tree/{$branch['name']}",
-                'zip' => "{$apiUrl}/zipball/{$branch['name']}",
+                'url' => $branch['links']['html']['href'],
+                'zip' => "https://bitbucket.org/{$workspace}/{$repo}/get/{$branch['name']}.zip",
                 'default' => $branch['name'] === $defaultBranch,
             ];
         }
@@ -87,11 +87,12 @@ class Github extends Provider
 
     public static function authenticateRequest($url, $args = [])
     {
-        $github_auth_header = sayhelloGitUpdater()->Settings->getSingleSettingValue('git-packages-github-token');
-        if ($github_auth_header) {
+        $token = sayhelloGitUpdater()->Settings->getSingleSettingValue('git-packages-bitbucket-token');
+        $user = sayhelloGitUpdater()->Settings->getSingleSettingValue('git-packages-bitbucket-user');
+        if ($token && $user) {
             $args = [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $github_auth_header,
+                    'Authorization' => 'Basic ' . base64_encode("{$user}:{$token}"),
                 ]
             ];
         }
@@ -104,17 +105,17 @@ class Github extends Provider
         return new class {
             public function validateUrl($url)
             {
-                return Github::validateUrl($url);
+                return Bitbucket::validateUrl($url);
             }
 
             public function getInfos($url)
             {
-                return Github::getInfos($url);
+                return Bitbucket::getInfos($url);
             }
 
             public function authenticateRequest($url, $args = [])
             {
-                return Github::authenticateRequest($url, $args);
+                return Bitbucket::authenticateRequest($url, $args);
             }
         };
     }

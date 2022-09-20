@@ -10,59 +10,80 @@ class Gitlab extends Provider
 
     public static function validateUrl($url)
     {
-        return strpos($url, 'https://gitlab.com/') === 0;
+        $parsed = self::parseGitlabUrl($url);
+        return $parsed['host'] === 'gitlab.com' && isset($parsed['id']);
     }
 
-    public static function getInfos($url, $theme = false)
+    private static function parseGitlabUrl($url)
     {
-        $base = 'https://gitlab.com/';
-        if (strpos($url, $base) !== 0) {
-            return new \WP_Error(
-                'invalid_gitlab_url',
-                sprintf(__('"%s" ist kein GitLab URL', 'shgu'), $base)
-            );
-        }
+        $parsed = parse_url($url);
+        $parsed['params'] = array_values(
+            array_filter(
+                explode('/', $parsed['path']),
+                function ($e) {
+                    return $e !== '';
+                }
+            )
+        );
 
-        $gitlabID = urlencode(str_replace($base, '', $url));
-        $apiUrl = 'https://gitlab.com/api/v4/projects/' . $gitlabID;
-        $auth = self::authenticateRequest($apiUrl);
-        $response = Helpers::getRestJson($auth[0], $auth[1]);
-
-        if (!$response) {
-            return new \WP_Error(
-                'invalid_json',
-                sprintf(
-                    __('Anfrage an %s konnte nicht verarbeitet werden', 'shgu'),
-                    '<code>' . $apiUrl . '</code>'
-                )
-            );
-        }
-
-        if (array_key_exists('message', $response)) {
-            return new \WP_Error(
-                'invalid_response',
-                sprintf(
-                    __('API Informationen konnten nicht abgerufen werden: %s', 'shgu'),
-                    '<code>' . $apiUrl . '</code>'
-                )
-            );
-        }
-
-        $dir = self::getLastUrlParam($url);
 
         return [
-            'key' => $dir,
-            'name' => $response['name'],
-            'theme' => $theme,
-            'baseUrl' => $url,
-            'hoster' => self::$provider,
-            'url' => [
-                'repository' => $response['web_url'],
-                'zip' => trailingslashit($apiUrl) . 'repository/archive.zip',
-                'api' => $apiUrl,
-
-            ],
+            'host' => $parsed['host'],
+            'id' => urlencode(implode('/', $parsed['params'])),
+            'repo' => end($parsed['params']),
         ];
+    }
+
+    public static function getInfos($url)
+    {
+        if (!self::validateUrl($url)) {
+            return new \WP_Error(
+                'invalid_url',
+                sprintf(__('"%s" ist kein gültiges Gitlab Repository', 'shgu'), $url)
+            );
+        }
+
+        $parsedUrl = self::parseGitlabUrl($url);
+        // https://gitlab.com/api/v4/projects/say-hello%2Fplugins%2Fhello-cookies
+        $apiUrl = 'https://gitlab.com/api/v4/projects/' . $parsedUrl['id'];
+        $auth = self::authenticateRequest($apiUrl);
+
+        $response = Helpers::getRestJson($auth[0], $auth[1]);
+        if (is_wp_error($response)) return $response;
+
+        $branches = self::getBranches($parsedUrl['id']);
+
+        if (is_wp_error($branches)) return $branches;
+
+        return [
+            'key' => $parsedUrl['repo'],
+            'name' => $response['name'],
+            'private' => $response['visibility'] === 'private',
+            'provider' => self::$provider,
+            'branches' => $branches,
+            'baseUrl' => $response['web_url'],
+            'apiUrl' => $apiUrl,
+        ];
+    }
+
+    private static function getBranches($id)
+    {
+        $apiUrl = 'https://gitlab.com/api/v4/projects/' . $id;
+        $apiBranchesUrl = "{$apiUrl}/repository/branches";
+        $auth = self::authenticateRequest($apiBranchesUrl);
+        $response = Helpers::getRestJson($auth[0], $auth[1]);
+        if (is_wp_error($response)) return $response;
+
+        $branches = [];
+        foreach ($response as $branch) {
+            $branches[$branch['name']] = [
+                'name' => $branch['name'],
+                'url' => $branch['web_url'],
+                'zip' => trailingslashit($apiUrl) . 'repository/archive.zip?sha=' . $branch['name'],
+                'default' => $branch['default'],
+            ];
+        }
+        return $branches;
     }
 
     public static function authenticateRequest($url, $args = [])
@@ -77,5 +98,25 @@ class Gitlab extends Provider
         }
 
         return [$url, $args];
+    }
+
+    public static function export()
+    {
+        return new class {
+            public function validateUrl($url)
+            {
+                return Gitlab::validateUrl($url);
+            }
+
+            public function getInfos($url)
+            {
+                return Gitlab::getInfos($url);
+            }
+
+            public function authenticateRequest($url, $args = [])
+            {
+                return Gitlab::authenticateRequest($url, $args);
+            }
+        };
     }
 }

@@ -6,10 +6,6 @@ use SayHello\GitUpdater\Helpers;
 
 class GitPackages
 {
-    /**
-     * ToDo: add bitbucket workflow
-     * todo: Add branch setting for Repo
-     */
     public $repo_option = 'sayhello-git-updater-git-repositories';
     public $deploy_option = 'sayhello-git-updater-git-deploy';
 
@@ -44,13 +40,25 @@ class GitPackages
     {
         $settings['git-packages-gitlab-token'] = [
             'default' => '',
-            'label' => __('GitLab Acces Token', 'shgu'),
+            'label' => __('Acces Token', 'shgu'),
             'validate' => null,
         ];
 
         $settings['git-packages-github-token'] = [
             'default' => '',
-            'label' => __('GitHub Personal Acces Token', 'shgu'),
+            'label' => __('Personal Acces Token', 'shgu'),
+            'validate' => null,
+        ];
+
+        $settings['git-packages-bitbucket-token'] = [
+            'default' => '',
+            'label' => __('App-Passwort', 'shgu'),
+            'validate' => null,
+        ];
+
+        $settings['git-packages-bitbucket-user'] = [
+            'default' => '',
+            'label' => __('User', 'shgu'),
             'validate' => null,
         ];
 
@@ -62,42 +70,6 @@ class GitPackages
         $vars['gitPackages'] = $this->getPackages();
 
         return $vars;
-    }
-
-    public function updateInfos($url, $theme = false)
-    {
-        $repo = null;
-        if (Provider\Github::validateUrl($url)) {
-            $repo = Provider\Github::getInfos($url, $theme);
-        } elseif (Provider\Gitlab::validateUrl($url)) {
-            $repo = Provider\Gitlab::getInfos($url, $theme);
-        }
-
-        if (is_wp_error($repo)) {
-            return new \WP_Error(
-                $repo->get_error_code(),
-                $repo->get_error_message()
-            );
-        }
-
-        if (!$repo) {
-            return new \WP_Error(
-                'invalid_git_host',
-                sprintf(__('"%s" ist kein unterstützter Git Hoster', 'shgu'), $url)
-            );
-        }
-
-        $repos = get_option($this->repo_option, []);
-        $deployKeys = get_option($this->deploy_option, []);
-        if (!array_key_exists($repo['key'], $deployKeys)) {
-            $deployKeys[$repo['key']] = wp_generate_password(40, false);
-            update_option($this->deploy_option, $deployKeys);
-        }
-        $repos[$repo['key']] = $repo;
-
-        update_option($this->repo_option, $repos);
-
-        return $repo;
     }
 
     public function maybeDoComposerInstall($dir)
@@ -167,6 +139,17 @@ class GitPackages
                 'slug',
             ],
         ]);
+
+        register_rest_route(sayhelloGitUpdater()->api_namespace, 'git-packages-check/(?P<url>\S+)/', [
+            'methods' => 'GET',
+            'callback' => [$this, 'checkGitUrl'],
+            'args' => [
+                'url',
+            ],
+            'permission_callback' => function () {
+                return current_user_can(Helpers::$authAdmin);
+            }
+        ]);
     }
 
     public function getRepos()
@@ -177,37 +160,20 @@ class GitPackages
     public function addRepo($data)
     {
         $params = $data->get_params();
-        $error = false;
         $repo_url = $params['url'];
         $theme = $params['theme'];
+        $activeBranch = $params['activeBranch'];
 
-        $repo = $this->updateInfos($repo_url, $theme);
+        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme);
+        if (is_wp_error($repoData)) return $repoData;
 
-        if (is_wp_error($repo)) {
-            $error = $repo->get_error_message();
-        }
-
-        if (!$error) {
-            $update = $this->updatePackage($repo['key']);
-            if (is_wp_error($update)) {
-                $error = $update->get_error_message();
-            }
-        }
-
-        if ($error) {
-            return new \WP_Error(
-                'repo_install_failed',
-                $error,
-                [
-                    'status' => 409,
-                ]
-            );
-        }
+        $update = $this->updatePackage($repoData['key']);
+        if (is_wp_error($update)) return $update;
 
         return [
             'message' => sprintf(
                 __('"%s" wurde erfolgreich installiert', 'shgu'),
-                $repo['key']
+                $repoData['key']
             ),
             'packages' => $this->getPackages(),
         ];
@@ -241,7 +207,7 @@ class GitPackages
 
     public function deleteRepo($data)
     {
-        $repos = get_option($this->repo_option, []);
+        $repos = $this->getPackages(false);
         $key = $data['slug'];
         if (!array_key_exists($key, $repos)) {
             return new \WP_Error(
@@ -252,6 +218,7 @@ class GitPackages
                 )
             );
         }
+        $this->rrmdir($this->getPackageDir($key));
 
         unset($repos[$key]);
         update_option($this->repo_option, $repos);
@@ -262,9 +229,65 @@ class GitPackages
         ];
     }
 
+    public function checkGitUrl($data)
+    {
+        $url = base64_decode($data['url']);
+        $provider = self::getProvider('', $url);
+        if (!$provider) return new \WP_Error(
+            'repository_not_found',
+            sprintf(
+                __('Packet %s konnte nicht nicht gefunden werden', 'shgu'),
+                '<code>' . $url . '</code>'
+            ), [
+            'status' => 404,
+        ]);
+
+        return $provider->getInfos($url);
+    }
+
     /**
      * Helpers
      */
+
+    public function updateInfos($url, $activeBranch, $theme = false)
+    {
+        $provider = self::getProvider('', $url);
+        if (!$provider) {
+            return new \WP_Error(
+                'invalid_git_host',
+                sprintf(__('"%s" ist kein unterstützter Git Hoster', 'shgu'), $url)
+            );
+        }
+
+        $repoData = $provider->getInfos($url);
+
+        if (is_wp_error($repoData)) return $repoData;
+
+        if (!array_key_exists($activeBranch, $repoData['branches'])) {
+            $activeBranch = array_values(
+                array_filter(
+                    $repoData['branches'],
+                    function ($branch) {
+                        return $branch['default'];
+                    }
+                )
+            )[0]['name'];
+        }
+
+        $repositories = get_option($this->repo_option, []);
+        $deployKeysOption = get_option($this->deploy_option, []);
+        if (!array_key_exists($repoData['key'], $deployKeysOption)) {
+            $deployKeysOption[$repoData['key']] = wp_generate_password(40, false);
+            update_option($this->deploy_option, $deployKeysOption);
+        }
+        $repositories[$repoData['key']] = $repoData;
+        $repositories[$repoData['key']]['theme'] = $theme;
+        $repositories[$repoData['key']]['activeBranch'] = $activeBranch;
+
+        update_option($this->repo_option, $repositories);
+
+        return $repoData;
+    }
 
     private function getPackages($array = true)
     {
@@ -306,7 +329,7 @@ class GitPackages
 
     private function updatePackage($key)
     {
-        $packages = get_option($this->repo_option, []);
+        $packages = $this->getPackages(true);
 
         if (!array_key_exists($key, $packages)) {
             return new \WP_Error(
@@ -314,29 +337,21 @@ class GitPackages
                 sprintf(
                     __('Packet %s konnte nicht geupdated werden: Das Packet existiert nicht', 'shgu'),
                     '<code>' . $key . '</code>'
-                )
+                ),
             );
         }
 
         $package = $packages[$key];
         $tempDir = Helpers::getContentFolder() . 'temp/';
-        if (!is_dir($tempDir)) {
-            mkdir($tempDir);
-        }
+        if (!is_dir($tempDir)) mkdir($tempDir);
 
-        $zipUrl = $package['url']['zip'];
-        $request = [$zipUrl, []];
-        if (Provider\Github::validateUrl($package['baseUrl'])) {
-            $request = Provider\Github::authenticateRequest($zipUrl);
-        } elseif (Provider\Gitlab::validateUrl($package['baseUrl'])) {
-            $request = Provider\Gitlab::authenticateRequest($zipUrl);
-        }
-
-        //Helpers::print($request);
+        $zipUrl = $package['branches'][$package['activeBranch']]['zip'];
+        $provider = self::getProvider($package['provider']);
+        $request = $provider->authenticateRequest($zipUrl);
 
         $request = wp_remote_get($request[0], $request[1]);
 
-        if (is_wp_error($request)) {
+        if (is_wp_error($request) || wp_remote_retrieve_response_code($request) >= 300) {
             return new \WP_Error(
                 'shgu_repo_not_fetched',
                 sprintf(
@@ -408,7 +423,7 @@ class GitPackages
 
     private function getPackageDir($key)
     {
-        $packages = get_option($this->repo_option, []);
+        $packages = $this->getPackages(false);
         if (!array_key_exists($key, $packages)) {
             return false;
         }
@@ -419,5 +434,17 @@ class GitPackages
         }
 
         return trailingslashit(WP_PLUGIN_DIR) . $key;
+    }
+
+    private static function getProvider($provider = '', $url = '')
+    {
+        if ($provider === Provider\Github::$provider || Provider\Github::validateUrl($url)) {
+            return Provider\Github::export();
+        } elseif ($provider === Provider\Gitlab::$provider || Provider\Gitlab::validateUrl($url)) {
+            return Provider\Gitlab::export();
+        } elseif ($provider === Provider\Bitbucket::$provider || Provider\Bitbucket::validateUrl($url)) {
+            return Provider\Bitbucket::export();
+        }
+        return null;
     }
 }

@@ -26,6 +26,7 @@ require_once 'src/Package/GitPackages.php';
 require_once 'src/Package/provider/Provider.php';
 require_once 'src/Package/provider/Github.php';
 require_once 'src/Package/provider/Gitlab.php';
+require_once 'src/Package/provider/Bitbucket.php';
 
 function sayhelloGitUpdater(): \SayHello\GitUpdater\Plugin
 {

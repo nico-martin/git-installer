@@ -55,14 +55,27 @@ const PageGitPackages = () => {
       </Card>
       <Card title={__('Zugriffskontrolle', 'shgu')} canToggleKey="git-packages">
         <Form onSubmit={submit}>
+          <h3>Gitlab</h3>
           <FormElement
             form={form}
             name="git-packages-gitlab-token"
             Input={InputText}
           />
+          <h3>Github</h3>
           <FormElement
             form={form}
             name="git-packages-github-token"
+            Input={InputText}
+          />
+          <h3>Bitbucket</h3>
+          <FormElement
+            form={form}
+            name="git-packages-bitbucket-user"
+            Input={InputText}
+          />
+          <FormElement
+            form={form}
+            name="git-packages-bitbucket-token"
             Input={InputText}
           />
           {error !== '' && (

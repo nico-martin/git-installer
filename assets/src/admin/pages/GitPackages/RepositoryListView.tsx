@@ -22,13 +22,13 @@ const RepositoryListView = ({
   const { addToast } = useToast();
   const [loadingDelete, setLoadingDelete] = React.useState<boolean>(false);
   const [loadingUpdate, setLoadingUpdate] = React.useState<boolean>(false);
-  const updateUrl = `${VARS.restPluginBase}git-packages-deploy/${repository.name}/?key=${repository.deployKey}`;
+  const updateUrl = `${VARS.restPluginBase}git-packages-deploy/${repository.key}/?key=${repository.deployKey}`;
   const deleteRepo = () => {
     setLoadingDelete(true);
     apiDelete<{
       message: string;
       packages: IGitPackages;
-    }>(`${VARS.restPluginNamespace}/git-packages/${repository.name}`)
+    }>(`${VARS.restPluginNamespace}/git-packages/${repository.key}`)
       .then((resp) => {
         addToast({
           message: resp.message,
@@ -47,16 +47,12 @@ const RepositoryListView = ({
       });
   };
 
-  console.log(repository);
-
   const updateRepo = () => {
     setLoadingUpdate(true);
-    apiGet<IGitPackage>(
-      `${VARS.restPluginNamespace}/git-packages-deploy/${repository.name}/?key=${repository.deployKey}`
-    )
+    apiGet<IGitPackage>(updateUrl)
       .then((resp) =>
         setRepositories((packages) =>
-          packages.map((p) => (p.url === resp.url ? resp : p))
+          packages.map((p) => (p.key === resp.key ? resp : p))
         )
       )
       .catch((e) =>
@@ -72,14 +68,14 @@ const RepositoryListView = ({
     <div className={cn(className, styles.root)}>
       <div className={styles.infos}>
         <h3 className={styles.name}>
-          <Icon icon={repository.hoster} className={styles.nameHoster} />
+          <Icon icon={repository.provider} className={styles.nameHoster} />
           {repository.theme ? __('Theme:', 'shgu') + ' ' : ''}
           {repository.name}
         </h3>
         <p className={styles.version}>
           {sprintf(__('Version: %s', 'shgu'), repository.version)}
         </p>
-        <p className={styles.repo}>{repository.url.repository}</p>
+        <p className={styles.repo}>{repository.baseUrl}</p>
         <p className={styles.pushToDeploy}>
           {__('Push to Deploy URL', 'shgu')}:
           <input

@@ -19,19 +19,24 @@ export type IMenuItems = Record<
   }
 >;
 
+export interface IGitPackageBranch {
+  name: string;
+  url: string;
+  zip: string;
+  default: boolean;
+}
+
 export interface IGitPackage {
   deployKey: string;
+  theme: boolean;
+  version: string;
   key: string;
   name: string;
+  provate: boolean;
+  provider: string;
+  branches: Record<string, IGitPackageBranch>;
   baseUrl: string;
-  theme: boolean;
-  hoster: string;
-  version: string;
-  url: {
-    api: string;
-    repository: string;
-    zip: string;
-  };
+  apiUrl: string;
 }
 
 export type IGitPackages = Array<IGitPackage>;

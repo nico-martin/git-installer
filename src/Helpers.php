@@ -140,10 +140,27 @@ class Helpers
     {
         $request = wp_remote_get($url, $args);
         if (is_wp_error($request)) {
-            return false;
+            return $request;
         }
 
-        return json_decode(wp_remote_retrieve_body($request), true);
+        $code = wp_remote_retrieve_response_code($request);
+        if ($code >= 300) {
+            return new \WP_Error('remote_get_error', sprintf(
+                    __('Ungültige Anfrage an %s', 'shgu'),
+                    '<code>' . $url . '</code>')
+            );
+        }
+
+        $json = json_decode(wp_remote_retrieve_body($request), true);
+
+        if (!$json) {
+            return new \WP_Error('json_parse_error', sprintf(
+                    __('Anfrage an %s konnte nicht verarbeitet werden', 'shgu'),
+                    '<code>' . $url . '</code>')
+            );
+        }
+
+        return $json;
     }
 
     public static function getContentFolder($url = false)
