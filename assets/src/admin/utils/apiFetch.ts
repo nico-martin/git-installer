@@ -43,12 +43,8 @@ const authFetch = <T>({
       },
     })
       .then((resp) => Promise.all([resp, resp.json()]))
-      .then(([resp, data]) => {
-        if (resp.status < 300) {
-          resolve(data);
-        } else {
-          reject(data.message);
-        }
-      })
+      .then(([resp, data]) =>
+        resp.status < 300 ? resolve(data) : reject(data.message)
+      )
       .catch((e) => reject(VARS.generalError));
   });

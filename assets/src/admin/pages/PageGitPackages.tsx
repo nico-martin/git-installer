@@ -34,8 +34,6 @@ const PageGitPackages = () => {
     VARS.gitPackages
   );
 
-  console.log(form.watch());
-
   return (
     <PageContent>
       {/*<TestForm />*/}

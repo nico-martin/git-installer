@@ -31062,7 +31062,6 @@ var PageGitPackages = function () {
     var _a = react_1.default.useState(false), addPackageModal = _a[0], setAddPackageModal = _a[1];
     var _b = (0, settings_1.useSettingsForm)(settings_1.settingsKeys.filter(function (key) { return key.indexOf('git-packages') === 0; })), form = _b.form, submit = _b.submit, error = _b.error, loading = _b.loading;
     var _c = react_1.default.useState(constants_1.VARS.gitPackages), repositories = _c[0], setRepositories = _c[1];
-    console.log(form.watch());
     return (react_1.default.createElement(theme_1.PageContent, null,
         react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Git Repositories', 'shgi'), rightContent: repositories.length !== 0 && (react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('Repository hinzufügen', 'shgi'))) }, repositories.length === 0 ? (react_1.default.createElement("div", { className: PageGitPackages_css_1.default.empty },
             react_1.default.createElement("p", null, (0, i18n_1.__)('Es wurden noch keine Repositories gespeichert', 'shgi')),
@@ -32618,12 +32617,7 @@ var authFetch = function (_a) {
             .then(function (resp) { return Promise.all([resp, resp.json()]); })
             .then(function (_a) {
             var resp = _a[0], data = _a[1];
-            if (resp.status < 300) {
-                resolve(data);
-            }
-            else {
-                reject(data.message);
-            }
+            return resp.status < 300 ? resolve(data) : reject(data.message);
         })
             .catch(function (e) { return reject(constants_1.VARS.generalError); });
     });

@@ -25,16 +25,16 @@ class Settings
     public function registerRoute()
     {
         register_rest_route(sayhelloGitInstaller()->api_namespace, 'settings', [
-            'methods'             => 'POST',
-            'callback'            => [$this, 'apiUpdateSetting'],
+            'methods' => 'POST',
+            'callback' => [$this, 'apiUpdateSetting'],
             'permission_callback' => function () {
                 return current_user_can(Helpers::$authAdmin);
             }
         ]);
 
         register_rest_route(sayhelloGitInstaller()->api_namespace, 'settings', [
-            'methods'             => 'GET',
-            'callback'            => [$this, 'apiGetSettings'],
+            'methods' => 'GET',
+            'callback' => [$this, 'apiGetSettings'],
             'permission_callback' => function () {
                 return current_user_can(Helpers::$authAdmin);
             }
@@ -43,12 +43,19 @@ class Settings
 
     public function apiUpdateSetting($req)
     {
-        return $this->updateSettings($req->get_params());
+        $params = [];
+        foreach ($req->get_params() as $key => $value) {
+            if (array_key_exists($key, $this->getRegisteredSettings())) {
+                $params[$key] = $value;
+            }
+        }
+
+        return $this->updateSettings($params);
     }
 
     public function apiGetSettings()
     {
-        $return              = [];
+        $return = [];
         $valid_settings_keys = array_keys($this->getRegisteredSettings());
         foreach ($valid_settings_keys as $key) {
             $return[$key] = $this->getSingleSetting($key, $this->getSettings());
@@ -60,7 +67,7 @@ class Settings
     public function regsterSettings($key, $default_value, $validation)
     {
         $this->getRegisteredSettings()[$key] = [
-            'default'  => $default_value,
+            'default' => $default_value,
             'validate' => $validation ? function ($value) use ($validation) {
                 return $validation($value);
             } : null,
@@ -69,7 +76,7 @@ class Settings
 
     public function getSettings($keys_to_return = [])
     {
-        $saved_options       = get_option(self::$key, []);
+        $saved_options = get_option(self::$key, []);
         $registered_settings = $this->getRegisteredSettings();
 
         if (count($keys_to_return) === 0) {
@@ -79,11 +86,11 @@ class Settings
         $settings_to_return = [];
         foreach ($keys_to_return as $settings_key) {
             $settings_to_return[$settings_key] = [
-                'value'  => array_key_exists(
+                'value' => array_key_exists(
                     $settings_key,
                     $saved_options
                 ) ? $saved_options[$settings_key] : $registered_settings[$settings_key]['default'],
-                'label'  => array_key_exists(
+                'label' => array_key_exists(
                     'label',
                     $registered_settings[$settings_key]
                 ) ? $registered_settings[$settings_key]['label'] : '',
@@ -99,7 +106,7 @@ class Settings
 
     public function getSingleSetting($key, $all_settings = null)
     {
-        if ( ! array_key_exists($key, $this->getRegisteredSettings())) {
+        if (!array_key_exists($key, $this->getRegisteredSettings())) {
             return null;
         }
 
@@ -113,7 +120,7 @@ class Settings
     public function getSingleSettingValue($key)
     {
         $setting = $this->getSingleSetting($key);
-        if ( ! $setting) {
+        if (!$setting) {
             return null;
         }
 
@@ -144,7 +151,7 @@ class Settings
                 $message,
                 [
                     'status' => 400,
-                    'data'   => $errors,
+                    'data' => $errors,
                 ]
             );
         }
@@ -165,7 +172,7 @@ class Settings
     public function validateSetting($key, $value)
     {
         $registered_settings = $this->getRegisteredSettings();
-        if ( ! array_key_exists($key, $registered_settings)) {
+        if (!array_key_exists($key, $registered_settings)) {
             return new \WP_Error(
                 'invalid_setting',
                 sprintf(__('Invalid Settings key "%s"', 'shgi'), $key)
