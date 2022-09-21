@@ -62,10 +62,19 @@ const InputText = React.forwardRef<
         : value;
     }, [masked, value, editMode]);
 
-    const { onBlur, setting, ...otherProps } = props;
+    const { onBlur, onClick, setting, ...otherProps } = props;
+
+    const activateEditMode = () => {
+      setEditMode(true);
+      // @ts-ignore
+      window.setTimeout(() => innerRef?.current?.focus(), 10);
+    };
 
     return (
-      <div className={cn(className, styles.container)}>
+      <div
+        className={cn(className, styles.container)}
+        onClick={() => masked && !editMode && activateEditMode()}
+      >
         <input
           name={name}
           className={cn(classNameInput)}
@@ -85,15 +94,7 @@ const InputText = React.forwardRef<
           <button
             className={styles.editButton}
             type="button"
-            onClick={() => {
-              if (editMode) {
-                setEditMode(false);
-              } else {
-                setEditMode(true);
-                // @ts-ignore
-                window.setTimeout(() => innerRef?.current?.focus(), 10);
-              }
-            }}
+            onClick={() => (editMode ? setEditMode(false) : activateEditMode())}
             title="edit"
           >
             <Icon icon={editMode ? 'pencil' : 'pencil-outline'} />

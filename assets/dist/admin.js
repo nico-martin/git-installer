@@ -31793,22 +31793,18 @@ var InputText = react_1.default.forwardRef(function (_a, ref) {
             ? new Array(replaceCount).fill('*').join('') + value.slice(replaceCount)
             : value;
     }, [masked, value, editMode]);
-    var onBlur = props.onBlur, setting = props.setting, otherProps = __rest(props, ["onBlur", "setting"]);
-    return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, InputText_css_1.default.container) },
+    var onBlur = props.onBlur, onClick = props.onClick, setting = props.setting, otherProps = __rest(props, ["onBlur", "onClick", "setting"]);
+    var activateEditMode = function () {
+        setEditMode(true);
+        // @ts-ignore
+        window.setTimeout(function () { var _a; return (_a = innerRef === null || innerRef === void 0 ? void 0 : innerRef.current) === null || _a === void 0 ? void 0 : _a.focus(); }, 10);
+    };
+    return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, InputText_css_1.default.container), onClick: function () { return masked && !editMode && activateEditMode(); } },
         react_1.default.createElement("input", __assign({ name: name, className: (0, classnames_1.default)(classNameInput), id: name, value: maskedValue, onChange: function (e) { return setValue(e.target.value); }, type: type, ref: innerRef, disabled: disabled || (masked && !editMode), onBlur: function (e) {
                 e.target.value !== '' && setEditMode(false);
                 //onBlur(e);
             } }, otherProps)),
-        masked && (react_1.default.createElement("button", { className: InputText_css_1.default.editButton, type: "button", onClick: function () {
-                if (editMode) {
-                    setEditMode(false);
-                }
-                else {
-                    setEditMode(true);
-                    // @ts-ignore
-                    window.setTimeout(function () { var _a; return (_a = innerRef === null || innerRef === void 0 ? void 0 : innerRef.current) === null || _a === void 0 ? void 0 : _a.focus(); }, 10);
-                }
-            }, title: "edit" },
+        masked && (react_1.default.createElement("button", { className: InputText_css_1.default.editButton, type: "button", onClick: function () { return (editMode ? setEditMode(false) : activateEditMode()); }, title: "edit" },
             react_1.default.createElement(index_1.Icon, { icon: editMode ? 'pencil' : 'pencil-outline' })))));
 });
 exports["default"] = InputText;
