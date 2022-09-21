@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form/dist/types';
 import { apiGet, apiPost, pluginNamespace } from '../utils/apiFetch';
 import { VARS } from '../utils/constants';
 import {
@@ -7,7 +8,7 @@ import {
   filterObject,
   keyValueFromSettings,
 } from '../utils/objects';
-import { ISettings } from '../utils/types';
+import { ISettings, ISettingValue } from '../utils/types';
 
 const event = new Event('settings');
 
@@ -78,7 +79,7 @@ export const SettingsProvider = ({ children }: { children?: any }) => {
 export const useSettingsForm = (
   keys: string[] = []
 ): {
-  form: any;
+  form: UseFormReturn<Record<string, ISettingValue>>;
   submit: Function;
   error: string;
   loading: boolean;
@@ -105,14 +106,15 @@ export const useSettingsForm = (
     [filteredSettings]
   );
 
-  const form = useForm({
+  const form = useForm<Record<string, ISettingValue>>({
     defaultValues,
   });
 
-  const values: Record<string, any> = form.watch(Object.keys(defaultValues));
+  const values: Record<string, any> = form.watch();
   React.useEffect(() => {
-    !compareObjects(keyValueFromSettings(filteredSettings), values) &&
+    if (!compareObjects(keyValueFromSettings(filteredSettings), values)) {
       setSettings(values);
+    }
   }, [values]);
 
   const submit = form.handleSubmit((data) => {
@@ -154,9 +156,8 @@ export const useSettingsForm = (
 };
 
 export const useSettingsDiff = (keys: string[] = []): boolean => {
-  const { settings = {}, savedSettings = {} } = React.useContext(
-    SettingsContext
-  );
+  const { settings = {}, savedSettings = {} } =
+    React.useContext(SettingsContext);
 
   return !compareObjects(
     filterObject(settings, keys),

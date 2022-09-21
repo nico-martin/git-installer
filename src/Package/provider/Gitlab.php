@@ -89,11 +89,13 @@ class Gitlab extends Provider
     public static function authenticateRequest($url, $args = [])
     {
         $gitlabToken = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-gitlab-token');
-        if (strpos($url, 'private_token=') === false) {
-            if (strpos($url, '?') === false) {
-                $url = $url . '?private_token=' . $gitlabToken;
-            } else {
-                $url = $url . '&private_token=' . $gitlabToken;
+        if ($gitlabToken) {
+            if (strpos($url, 'private_token=') === false) {
+                if (strpos($url, '?') === false) {
+                    $url = $url . '?private_token=' . $gitlabToken;
+                } else {
+                    $url = $url . '&private_token=' . $gitlabToken;
+                }
             }
         }
 

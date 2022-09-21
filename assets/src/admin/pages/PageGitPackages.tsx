@@ -1,6 +1,7 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { __, sprintf } from '@wordpress/i18n';
-import { useSettingsForm, settingsKeys } from '../settings';
+import { useSettingsForm, settingsKeys, useSettings } from '../settings';
 import {
   Button,
   Card,
@@ -8,6 +9,9 @@ import {
   FormControls,
   FormElement,
   FormFeedback,
+  InputCheckbox,
+  InputRadio,
+  InputSelect,
   InputText,
   NOTICE_TYPES,
   PageContent,
@@ -18,18 +22,23 @@ import { IGitPackages, ISettings } from '../utils/types';
 import RepositoryListView from './GitPackages/RepositoryListView';
 import AddRepository from './GitPackages/add/AddRepository';
 import styles from './PageGitPackages.css';
+import TestForm from './TestForm';
 
 const PageGitPackages = () => {
   const [addPackageModal, setAddPackageModal] = React.useState<boolean>(false);
   const { form, submit, error, loading } = useSettingsForm(
     settingsKeys.filter((key) => key.indexOf('git-packages') === 0)
   );
+
   const [repositories, setRepositories] = React.useState<IGitPackages>(
     VARS.gitPackages
   );
 
+  console.log(form.watch());
+
   return (
     <PageContent>
+      {/*<TestForm />*/}
       <Card
         title={__('Git Repositories', 'shgi')}
         rightContent={
@@ -84,14 +93,16 @@ const PageGitPackages = () => {
             form={form}
             name="git-packages-gitlab-token"
             Input={InputText}
-            type="password"
+            type="text"
+            masked
           />
           <h3>Github</h3>
           <FormElement
             form={form}
             name="git-packages-github-token"
             Input={InputText}
-            type="password"
+            type="text"
+            masked
           />
           <h3>Bitbucket</h3>
           <FormElement
@@ -103,7 +114,8 @@ const PageGitPackages = () => {
             form={form}
             name="git-packages-bitbucket-token"
             Input={InputText}
-            type="password"
+            type="text"
+            masked
           />
           {error !== '' && (
             <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />

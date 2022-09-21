@@ -677,6 +677,23 @@
   margin-top: var(--wpmstaging-form-spacing);
 }
 
+/*!*******************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/InputText.css ***!
+  \*******************************************************************************************************************************************************************/
+.InputText__container--2qMJx {
+  display: flex;
+  align-items: center;
+}
+
+.InputText__editButton--1c1nY {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
 /*!********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/InputRadio.css ***!
   \********************************************************************************************************************************************************************/
@@ -684,8 +701,11 @@
   margin-top: 0.3em;
 }
 
-.InputRadio__input--2ts8w {}
-.InputRadio__label--3fxrw {}
+.InputRadio__input--2ts8w {
+}
+
+.InputRadio__label--3fxrw {
+}
 
 /*!*********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/InputUpload.css ***!

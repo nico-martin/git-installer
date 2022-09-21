@@ -29,23 +29,15 @@ const FormElement = ({
   stacked?: boolean;
   [key: string]: any;
 }) => {
-  const { field } = form
-    ? useController({
-        control: form.control,
-        name,
-        rules,
-      })
-    : {
-        field: {
-          onChange: () => {},
-        },
-      };
+  const { field } = useController({
+    control: form.control,
+    name,
+    rules,
+  });
+
   const { [name]: setting } = useSettings([name]);
 
-  const error = React.useMemo(
-    () => (form && name in form.errors ? form.errors[name] : null),
-    [form, name]
-  );
+  const error = form?.formState?.errors ? form?.formState?.errors[name] : null;
 
   return (
     <div
@@ -55,7 +47,7 @@ const FormElement = ({
     >
       <div className={styles.labelContainer}>
         <label htmlFor={name} className={styles.label}>
-          {label || setting.label}
+          {label || setting?.label}
           {'required' in rules && '*'}
         </label>
         {Description && <div className={styles.description}>{Description}</div>}
@@ -63,7 +55,8 @@ const FormElement = ({
       <div className={styles.content}>
         <Input
           name={name}
-          className={cn(styles.input, inputClassName)}
+          className={cn()}
+          classNameInput={cn(styles.input, inputClassName)}
           setting={setting}
           {...field}
           {...inputProps}
