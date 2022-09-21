@@ -89,6 +89,7 @@ class Github extends Provider
     {
         $github_auth_header = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-github-token');
         if ($github_auth_header) {
+            $github_auth_header = Provider::trimString($github_auth_header);
             $args = [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $github_auth_header,

@@ -48,6 +48,3 @@ sayhelloGitInstaller()->AdminPage->run();
 
 sayhelloGitInstaller()->GitPackages = new SayHello\GitInstaller\Package\GitPackages();
 sayhelloGitInstaller()->GitPackages->run();
-
-
-

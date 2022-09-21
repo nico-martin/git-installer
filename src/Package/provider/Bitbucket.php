@@ -90,6 +90,7 @@ class Bitbucket extends Provider
         $token = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-bitbucket-token');
         $user = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-bitbucket-user');
         if ($token && $user) {
+            $token = Provider::trimString($token);
             $args = [
                 'headers' => [
                     'Authorization' => 'Basic ' . base64_encode("{$user}:{$token}"),

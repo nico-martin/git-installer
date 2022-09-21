@@ -90,6 +90,7 @@ class Gitlab extends Provider
     {
         $gitlabToken = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-gitlab-token');
         if ($gitlabToken) {
+            $gitlabToken = Provider::trimString($gitlabToken);
             if (strpos($url, 'private_token=') === false) {
                 if (strpos($url, '?') === false) {
                     $url = $url . '?private_token=' . $gitlabToken;
