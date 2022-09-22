@@ -1,5 +1,6 @@
 {
-  "name": "sayhello-git-installer",
+  "name": "git-installer",
+  "version": "0.0.2",
   "scripts": {
     "dev": "webpack --mode development --watch",
     "prod": "webpack -p"
@@ -23,6 +24,8 @@
     "@babel/register": "^7.12.10",
     "@teamsupercell/typings-for-css-modules-loader": "^2.4.0",
     "@trivago/prettier-plugin-sort-imports": "^2.0.2",
+    "adm-zip": "^0.5.9",
+    "archiver": "^5.3.1",
     "autoprefixer": "^10.2.6",
     "babel-eslint": "^10.1.0",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
