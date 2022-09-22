@@ -3,7 +3,9 @@ import cn from './classnames';
 import { VARS } from './constants';
 import { IMenuItems } from './types';
 
-const URL_BASE = `${VARS.adminUrl}admin.php?page=${VARS.pluginPrefix}-`;
+const URL_BASE = VARS.multisite
+  ? `${VARS.adminUrl}network/admin.php?page=${VARS.pluginPrefix}-`
+  : `${VARS.adminUrl}admin.php?page=${VARS.pluginPrefix}-`;
 const EVENT = 'wpmstaging-history-change';
 const historyChangeEvent = new Event(EVENT);
 
@@ -29,6 +31,7 @@ export const RouterProvider = ({ children }: { children?: any }) => {
   const [location, setLocation] = React.useState<string>(
     getLocationFromUrl(window.location.href)
   );
+
   const [menuItems, setMenuItems] = React.useState<IMenuItems>(VARS.menu);
 
   React.useEffect(() => {

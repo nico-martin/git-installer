@@ -32544,6 +32544,7 @@ var TabNavigation = function (_a) {
     var _b = _a.className, className = _b === void 0 ? '' : _b;
     var _c = (0, router_1.useLocation)(), page = _c.page, _d = _c.hash, activeHash = _d === void 0 ? null : _d;
     var menuItems = (0, router_1.useMenu)().menuItems;
+    console.log({ page: page, menuItems: menuItems });
     var activeSubmenu = react_1.default.useMemo(function () {
         var _a;
         return !menuItems[page].submenu ||
@@ -32859,15 +32860,17 @@ exports.Route = exports.Link = exports.useMenu = exports.useLocation = exports.R
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var classnames_1 = __importDefault(__webpack_require__(/*! ./classnames */ "./assets/src/admin/utils/classnames.ts"));
 var constants_1 = __webpack_require__(/*! ./constants */ "./assets/src/admin/utils/constants.ts");
-var URL_BASE = constants_1.VARS.adminUrl + "admin.php?page=" + constants_1.VARS.pluginPrefix + "-";
+var URL_BASE = constants_1.VARS.multisite ? constants_1.VARS.adminUrl + "network/admin.php?page=" + constants_1.VARS.pluginPrefix + "-" : constants_1.VARS.adminUrl + "admin.php?page=" + constants_1.VARS.pluginPrefix + "-";
 var EVENT = 'wpmstaging-history-change';
 var historyChangeEvent = new Event(EVENT);
 var getLocationFromUrl = function (url) { return url.replace(URL_BASE, ''); };
 var RouterContext = react_1.default.createContext({
     location: '',
-    setLocation: function () { },
+    setLocation: function () {
+    },
     menuItems: {},
-    setMenuItems: function () { },
+    setMenuItems: function () {
+    },
 });
 var subMenuItems = document.querySelectorAll('#toplevel_page_wpmstaging-settings ul.wp-submenu a');
 var RouterProvider = function (_a) {

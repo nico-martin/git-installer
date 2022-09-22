@@ -8,7 +8,7 @@ const archiveName = `${name}-${version.replace(
 )}-${new Date().getTime()}`;
 
 const archiver = require('archiver');
-const output = fs.createWriteStream(`${archiveName}.zip`);
+const output = fs.createWriteStream(`releases/${archiveName}.zip`);
 const archive = archiver('zip', {
   zlib: { level: 9 },
 });

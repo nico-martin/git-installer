@@ -15,6 +15,7 @@ declare global {
       restPluginNamespace: string;
       pluginStrings: IPluginStrings;
       nonce: string;
+      multisite: boolean;
       settingsParentKey: string;
       menu: IMenuItems;
       passwordProtectedDeactivated: number;

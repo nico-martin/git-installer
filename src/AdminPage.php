@@ -18,7 +18,11 @@ class AdminPage
 
     public function run()
     {
-        add_action('admin_menu', [$this, 'menu']);
+        if (is_multisite()) {
+            add_action('network_admin_menu', [$this, 'menu']);
+        } else {
+            add_action('admin_menu', [$this, 'menu']);
+        }
         add_filter('shgi/Assets/AdminFooterJS', [$this, 'footerVars']);
     }
 

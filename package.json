@@ -24,7 +24,6 @@
     "@babel/register": "^7.12.10",
     "@teamsupercell/typings-for-css-modules-loader": "^2.4.0",
     "@trivago/prettier-plugin-sort-imports": "^2.0.2",
-    "adm-zip": "^0.5.9",
     "archiver": "^5.3.1",
     "autoprefixer": "^10.2.6",
     "babel-eslint": "^10.1.0",

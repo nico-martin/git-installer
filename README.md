@@ -18,6 +18,7 @@
 
 ## Changelog
 ### 0.0.2
+- added multisite support
 - improved Auth-Key handling
 - delete invalid characters from Auth-Keys
 - Bugfix: works now with permalink settings "Plain"
