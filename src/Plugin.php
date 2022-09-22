@@ -43,7 +43,7 @@ class Plugin
             self::$instance->version = $data['Version'];
 
             self::$instance->prefix = 'shgi';
-            self::$instance->api_namespace = 'sayhello-wp-manage/v1';
+            self::$instance->api_namespace = 'git-installer/v1';
             self::$instance->debug = true;
             self::$instance->file = $file;
 
