@@ -75,11 +75,11 @@ const AddRepositoryForm: React.FC<{
         Input={InputText}
         disabled
         rules={{
-          required: __('Das ist ein Pflichtfeld', 'shgi'),
+          required: __('Required field', 'shgi'),
           pattern: {
             value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
             message: __(
-              'Die URL muss zu einem Github, Gitlab oder Bitbucket Repository führen',
+              'The URL must lead to a Github, Gitlab or Bitbucket repository',
               'shgi'
             ),
           },
@@ -88,7 +88,7 @@ const AddRepositoryForm: React.FC<{
       <FormElement
         form={form}
         name="repositoryIsTheme"
-        label={__('Als Theme installieren', 'shgi')}
+        label={__('Install as Theme', 'shgi')}
         Input={InputCheckbox}
       />
       <FormElement
@@ -110,7 +110,7 @@ const AddRepositoryForm: React.FC<{
       <FormControls
         type="submit"
         loading={loading}
-        value={__('Installieren', 'shgi')}
+        value={__('Install', 'shgi')}
       />
     </Form>
   );

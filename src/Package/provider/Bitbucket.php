@@ -38,7 +38,7 @@ class Bitbucket extends Provider
         if (!self::validateUrl($url)) {
             return new \WP_Error(
                 'invalid_url',
-                sprintf(__('"%s" ist kein gültiges Bitbucket Repository', 'shgi'), $url)
+                sprintf(__('"%s" is not a valid Bitbucket repository', 'shgi'), $url)
             );
         }
 

@@ -41,7 +41,7 @@ const CheckRepoForm: React.FC<{
               repositoryKeys.find((key) => key === pkg.key)
             );
             if (exists) {
-              setError(__('Das Repository wurde bereits installiert', 'shgi'));
+              setError(__('The repository has already been installed', 'shgi'));
             } else {
               setData(pkg);
             }
@@ -58,7 +58,7 @@ const CheckRepoForm: React.FC<{
         label={__('Repository URL', 'shgi')}
         Input={InputText}
         rules={{
-          required: __('Das ist ein Pflichtfeld', 'shgi'),
+          required: __('Required field', 'shgi'),
           pattern: {
             value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
             message: __(

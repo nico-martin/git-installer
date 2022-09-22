@@ -54,7 +54,7 @@ const RepositoryListView = ({
     )
       .then((resp) => {
         addToast({
-          message: __('Update erfolgreich'),
+          message: __('Update successful'),
           type: NOTICE_TYPES.SUCCESS,
         });
         setRepositories((packages) =>
@@ -63,7 +63,7 @@ const RepositoryListView = ({
       })
       .catch((e) =>
         addToast({
-          message: __('Update fehlgeschlagen'),
+          message: __('Update failed'),
           type: NOTICE_TYPES.ERROR,
         })
       )

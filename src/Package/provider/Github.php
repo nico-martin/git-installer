@@ -38,7 +38,7 @@ class Github extends Provider
         if (!self::validateUrl($url)) {
             return new \WP_Error(
                 'invalid_url',
-                sprintf(__('"%s" ist kein gültiges Github Repository', 'shgi'), $url)
+                sprintf(__('"%s" is not a valid Github repository', 'shgi'), $url)
             );
         }
 

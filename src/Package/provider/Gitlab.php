@@ -39,7 +39,7 @@ class Gitlab extends Provider
         if (!self::validateUrl($url)) {
             return new \WP_Error(
                 'invalid_url',
-                sprintf(__('"%s" ist kein gültiges Gitlab Repository', 'shgi'), $url)
+                sprintf(__('"%s" is not a valid Gitlab repository', 'shgi'), $url)
             );
         }
 

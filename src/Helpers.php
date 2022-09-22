@@ -146,7 +146,7 @@ class Helpers
         $code = wp_remote_retrieve_response_code($request);
         if ($code >= 300) {
             return new \WP_Error('remote_get_error', sprintf(
-                    __('Ungültige Anfrage an %s', 'shgi'),
+                    __('Invalid request to %s', 'shgi'),
                     '<code>' . $url . '</code>')
             );
         }
@@ -155,7 +155,7 @@ class Helpers
 
         if (!$json) {
             return new \WP_Error('json_parse_error', sprintf(
-                    __('Anfrage an %s konnte nicht verarbeitet werden', 'shgi'),
+                    __('Request to %s could not be processed', 'shgi'),
                     '<code>' . $url . '</code>')
             );
         }

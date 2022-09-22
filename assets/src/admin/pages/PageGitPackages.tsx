@@ -45,19 +45,19 @@ const PageGitPackages = () => {
               buttonType="primary"
               onClick={() => setAddPackageModal(true)}
             >
-              {__('Repository hinzufügen', 'shgi')}
+              {__('add Repository', 'shgi')}
             </Button>
           )
         }
       >
         {repositories.length === 0 ? (
           <div className={styles.empty}>
-            <p>{__('Es wurden noch keine Repositories gespeichert', 'shgi')}</p>
+            <p>{__('No repositories have been added yet.', 'shgi')}</p>
             <Button
               buttonType="primary"
               onClick={() => setAddPackageModal(true)}
             >
-              {__('Repository hinzufügen', 'shgi')}
+              {__('add Repository', 'shgi')}
             </Button>
           </div>
         ) : (
@@ -73,7 +73,7 @@ const PageGitPackages = () => {
       </Card>
       {addPackageModal && (
         <ShadowBox
-          title={__('Repository hinzufügen', 'shgi')}
+          title={__('add Repository', 'shgi')}
           close={() => setAddPackageModal(false)}
           size="medium"
         >
@@ -84,7 +84,7 @@ const PageGitPackages = () => {
           />
         </ShadowBox>
       )}
-      <Card title={__('Zugriffskontrolle', 'shgi')} canToggleKey="git-packages">
+      <Card title={__('Access control', 'shgi')} canToggleKey="git-packages">
         <Form onSubmit={submit}>
           <h3>Gitlab</h3>
           <FormElement

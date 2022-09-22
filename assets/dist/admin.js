@@ -30825,7 +30825,7 @@ var RepositoryListView = function (_a) {
         (0, apiFetch_1.apiGet)(constants_1.VARS.restPluginNamespace + "/git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey)
             .then(function (resp) {
             addToast({
-                message: (0, i18n_1.__)('Update erfolgreich'),
+                message: (0, i18n_1.__)('Update successful'),
                 type: theme_1.NOTICE_TYPES.SUCCESS,
             });
             setRepositories(function (packages) {
@@ -30834,7 +30834,7 @@ var RepositoryListView = function (_a) {
         })
             .catch(function (e) {
             return addToast({
-                message: (0, i18n_1.__)('Update fehlgeschlagen'),
+                message: (0, i18n_1.__)('Update failed'),
                 type: theme_1.NOTICE_TYPES.ERROR,
             });
         })
@@ -30958,19 +30958,19 @@ var AddRepositoryForm = function (_a) {
             });
         }) },
         react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryUrl", label: (0, i18n_1.__)('Repository URL', 'shgi'), Input: theme_1.InputText, disabled: true, rules: {
-                required: (0, i18n_1.__)('Das ist ein Pflichtfeld', 'shgi'),
+                required: (0, i18n_1.__)('Required field', 'shgi'),
                 pattern: {
                     value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
-                    message: (0, i18n_1.__)('Die URL muss zu einem Github, Gitlab oder Bitbucket Repository führen', 'shgi'),
+                    message: (0, i18n_1.__)('The URL must lead to a Github, Gitlab or Bitbucket repository', 'shgi'),
                 },
             } }),
-        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryIsTheme", label: (0, i18n_1.__)('Als Theme installieren', 'shgi'), Input: theme_1.InputCheckbox }),
+        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryIsTheme", label: (0, i18n_1.__)('Install as Theme', 'shgi'), Input: theme_1.InputCheckbox }),
         react_1.default.createElement(theme_1.FormElement, { form: form, name: "activeBranch", label: (0, i18n_1.__)('Branch', 'shgi'), Input: theme_1.InputSelect, options: Object.values(repository.branches).reduce(function (acc, branch) {
                 var _a;
                 return (__assign(__assign({}, acc), (_a = {}, _a[branch.name] = branch.name, _a)));
             }, {}) }),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR }, error)),
-        react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: (0, i18n_1.__)('Installieren', 'shgi') })));
+        react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: (0, i18n_1.__)('Install', 'shgi') })));
 };
 exports["default"] = AddRepositoryForm;
 
@@ -31012,7 +31012,7 @@ var CheckRepoForm = function (_a) {
                 .then(function (pkg) {
                 var exists = Boolean(repositoryKeys.find(function (key) { return key === pkg.key; }));
                 if (exists) {
-                    setError((0, i18n_1.__)('Das Repository wurde bereits installiert', 'shgi'));
+                    setError((0, i18n_1.__)('The repository has already been installed', 'shgi'));
                 }
                 else {
                     setData(pkg);
@@ -31024,7 +31024,7 @@ var CheckRepoForm = function (_a) {
             });
         }) },
         react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryUrl", label: (0, i18n_1.__)('Repository URL', 'shgi'), Input: theme_1.InputText, rules: {
-                required: (0, i18n_1.__)('Das ist ein Pflichtfeld', 'shgi'),
+                required: (0, i18n_1.__)('Required field', 'shgi'),
                 pattern: {
                     value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
                     message: (0, i18n_1.__)('Die URL muss zu einem Github, Gitlab oder Bitbucket Repository führen', 'shgi'),
@@ -31063,12 +31063,12 @@ var PageGitPackages = function () {
     var _b = (0, settings_1.useSettingsForm)(settings_1.settingsKeys.filter(function (key) { return key.indexOf('git-packages') === 0; })), form = _b.form, submit = _b.submit, error = _b.error, loading = _b.loading;
     var _c = react_1.default.useState(constants_1.VARS.gitPackages), repositories = _c[0], setRepositories = _c[1];
     return (react_1.default.createElement(theme_1.PageContent, null,
-        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Git Repositories', 'shgi'), rightContent: repositories.length !== 0 && (react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('Repository hinzufügen', 'shgi'))) }, repositories.length === 0 ? (react_1.default.createElement("div", { className: PageGitPackages_css_1.default.empty },
-            react_1.default.createElement("p", null, (0, i18n_1.__)('Es wurden noch keine Repositories gespeichert', 'shgi')),
-            react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('Repository hinzufügen', 'shgi')))) : (repositories.map(function (repo, i) { return (react_1.default.createElement(RepositoryListView_1.default, { key: i, repository: repo, setRepositories: setRepositories, className: PageGitPackages_css_1.default.repository })); }))),
-        addPackageModal && (react_1.default.createElement(theme_1.ShadowBox, { title: (0, i18n_1.__)('Repository hinzufügen', 'shgi'), close: function () { return setAddPackageModal(false); }, size: "medium" },
+        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Git Repositories', 'shgi'), rightContent: repositories.length !== 0 && (react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('add Repository', 'shgi'))) }, repositories.length === 0 ? (react_1.default.createElement("div", { className: PageGitPackages_css_1.default.empty },
+            react_1.default.createElement("p", null, (0, i18n_1.__)('No repositories have been added yet.', 'shgi')),
+            react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('add Repository', 'shgi')))) : (repositories.map(function (repo, i) { return (react_1.default.createElement(RepositoryListView_1.default, { key: i, repository: repo, setRepositories: setRepositories, className: PageGitPackages_css_1.default.repository })); }))),
+        addPackageModal && (react_1.default.createElement(theme_1.ShadowBox, { title: (0, i18n_1.__)('add Repository', 'shgi'), close: function () { return setAddPackageModal(false); }, size: "medium" },
             react_1.default.createElement(AddRepository_1.default, { repositoryKeys: repositories.map(function (r) { return r.key; }), setRepositories: setRepositories, onFinish: function () { return setAddPackageModal(false); } }))),
-        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Zugriffskontrolle', 'shgi'), canToggleKey: "git-packages" },
+        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Access control', 'shgi'), canToggleKey: "git-packages" },
             react_1.default.createElement(theme_1.Form, { onSubmit: submit },
                 react_1.default.createElement("h3", null, "Gitlab"),
                 react_1.default.createElement(theme_1.FormElement, { form: form, name: "git-packages-gitlab-token", Input: theme_1.InputText, type: "text", masked: true }),
@@ -32544,7 +32544,6 @@ var TabNavigation = function (_a) {
     var _b = _a.className, className = _b === void 0 ? '' : _b;
     var _c = (0, router_1.useLocation)(), page = _c.page, _d = _c.hash, activeHash = _d === void 0 ? null : _d;
     var menuItems = (0, router_1.useMenu)().menuItems;
-    console.log({ page: page, menuItems: menuItems });
     var activeSubmenu = react_1.default.useMemo(function () {
         var _a;
         return !menuItems[page].submenu ||
@@ -32860,17 +32859,17 @@ exports.Route = exports.Link = exports.useMenu = exports.useLocation = exports.R
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var classnames_1 = __importDefault(__webpack_require__(/*! ./classnames */ "./assets/src/admin/utils/classnames.ts"));
 var constants_1 = __webpack_require__(/*! ./constants */ "./assets/src/admin/utils/constants.ts");
-var URL_BASE = constants_1.VARS.multisite ? constants_1.VARS.adminUrl + "network/admin.php?page=" + constants_1.VARS.pluginPrefix + "-" : constants_1.VARS.adminUrl + "admin.php?page=" + constants_1.VARS.pluginPrefix + "-";
+var URL_BASE = constants_1.VARS.multisite
+    ? constants_1.VARS.adminUrl + "network/admin.php?page=" + constants_1.VARS.pluginPrefix + "-"
+    : constants_1.VARS.adminUrl + "admin.php?page=" + constants_1.VARS.pluginPrefix + "-";
 var EVENT = 'wpmstaging-history-change';
 var historyChangeEvent = new Event(EVENT);
 var getLocationFromUrl = function (url) { return url.replace(URL_BASE, ''); };
 var RouterContext = react_1.default.createContext({
     location: '',
-    setLocation: function () {
-    },
+    setLocation: function () { },
     menuItems: {},
-    setMenuItems: function () {
-    },
+    setMenuItems: function () { },
 });
 var subMenuItems = document.querySelectorAll('#toplevel_page_wpmstaging-settings ul.wp-submenu a');
 var RouterProvider = function (_a) {

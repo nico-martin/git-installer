@@ -52,7 +52,7 @@ class GitPackages
 
         $settings['git-packages-bitbucket-token'] = [
             'default' => '',
-            'label' => __('App-Passwort', 'shgi'),
+            'label' => __('App-Password', 'shgi'),
             'validate' => null,
         ];
 
@@ -172,7 +172,7 @@ class GitPackages
 
         return [
             'message' => sprintf(
-                __('"%s" wurde erfolgreich installiert', 'shgi'),
+                __('"%s" was installed successfully', 'shgi'),
                 $repoData['key']
             ),
             'packages' => $this->getPackages(),
@@ -182,7 +182,7 @@ class GitPackages
     public function pushToDeploy($data)
     {
         if (!array_key_exists('key', $_GET)) {
-            return new \WP_Error('wrong_request', __('Ungültige Anfrage: kein Key gefunden', 'shgi'), [
+            return new \WP_Error('wrong_request', __('Invalid request: no key found', 'shgi'), [
                 'status' => 403,
             ]);
         }
@@ -190,7 +190,7 @@ class GitPackages
         $key = $data['slug'];
         $deployKeys = get_option($this->deploy_option, []);
         if (!array_key_exists($key, $deployKeys) || $_GET['key'] != $deployKeys[$key]) {
-            return new \WP_Error('wrong_request', __('Ungültige Anfrage: ungültiger Key', 'shgi'), [
+            return new \WP_Error('wrong_request', __('Invalid request: invalid key', 'shgi'), [
                 'status' => 403,
             ]);
         }
@@ -213,7 +213,7 @@ class GitPackages
             return new \WP_Error(
                 'shgi_repo_not_found',
                 sprintf(
-                    __('Paket %s konnte nicht geupdated werden: Das Packet existiert nicht', 'shgi'),
+                    __('Package %s could not be updated: The package does not exist', 'shgi'),
                     '<code>' . $key . '</code>'
                 )
             );
@@ -224,7 +224,7 @@ class GitPackages
         update_option($this->repo_option, $repos);
 
         return [
-            'message' => sprintf(__('"%s" wurde erfolgreich gelöscht', 'shgi'), $key),
+            'message' => sprintf(__('"%s" was deleted successfully', 'shgi'), $key),
             'packages' => $this->getPackages(),
         ];
     }
@@ -236,7 +236,7 @@ class GitPackages
         if (!$provider) return new \WP_Error(
             'repository_not_found',
             sprintf(
-                __('Packet %s konnte nicht nicht gefunden werden', 'shgi'),
+                __('Package %s could not be found', 'shgi'),
                 '<code>' . $url . '</code>'
             ), [
             'status' => 404,
@@ -255,7 +255,7 @@ class GitPackages
         if (!$provider) {
             return new \WP_Error(
                 'invalid_git_host',
-                sprintf(__('"%s" ist kein unterstützter Git Hoster', 'shgi'), $url)
+                sprintf(__('"%s" is not a supported Git hoster', 'shgi'), $url)
             );
         }
 
@@ -335,7 +335,7 @@ class GitPackages
             return new \WP_Error(
                 'shgi_repo_not_found',
                 sprintf(
-                    __('Packet %s konnte nicht geupdated werden: Das Packet existiert nicht', 'shgi'),
+                    __('Package %s could not be updated: The package does not exist', 'shgi'),
                     '<code>' . $key . '</code>'
                 ),
             );
@@ -355,7 +355,7 @@ class GitPackages
             return new \WP_Error(
                 'shgi_repo_not_fetched',
                 sprintf(
-                    __('Archiv %s konnte nicht kopiert werden', 'shgi'),
+                    __('Archive %s could not be copied', 'shgi'),
                     '<code>' . $zipUrl . '</code>'
                 )
             );
@@ -368,7 +368,7 @@ class GitPackages
             return new \WP_Error(
                 'shgi_repo_unzip_failed',
                 sprintf(
-                    __('%s konnte nicht entpackt werden', 'shgi'),
+                    __('%s could not be unpacked', 'shgi'),
                     '<code>' . $zipUrl . '</code>'
                 )
             );
@@ -392,7 +392,7 @@ class GitPackages
             return new \WP_Error(
                 'rename_repo_failed',
                 __(
-                    'Der Ordner konnte nicht kopiert werden. Möglicherweise konnte der alte Ordner nicht ganz geleert werden.',
+                    'The folder could not be copied. Possibly the old folder could not be emptied completely.',
                     'shgi'
                 )
             );
