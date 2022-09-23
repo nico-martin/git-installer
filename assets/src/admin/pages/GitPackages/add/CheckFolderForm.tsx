@@ -1,6 +1,7 @@
+import { Message } from 'postcss';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useToast } from '../../../components/toast/toastContext';
 import {
   Form,
@@ -10,6 +11,7 @@ import {
   InputCheckbox,
   InputSelect,
   InputText,
+  Notice,
   NOTICE_TYPES,
 } from '../../../theme';
 import { apiGet, apiPost, apiPut } from '../../../utils/apiFetch';
@@ -22,37 +24,49 @@ import {
 } from '../../../utils/types';
 
 const AddRepositoryForm: React.FC<{
-  wpData: IGitWordPressPackage;
-  activeBranch: string;
+  repository: IGitPackageRaw;
   setRepositories: (packages: IGitPackages) => void;
   onFinish: () => void;
-  repository: IGitPackageRaw;
-}> = ({ wpData, activeBranch, setRepositories, onFinish, repository }) => {
+}> = ({ repository, setRepositories, onFinish }) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
+  const { addToast } = useToast();
+
   const form = useForm<{
     repositoryUrl: string;
     activeBranch: string;
   }>({
     defaultValues: {
       repositoryUrl: repository.baseUrl,
-      activeBranch: activeBranch,
+      activeBranch:
+        Object.values(repository.branches).find((branch) => branch.default)
+          .name || null,
     },
   });
-  const { addToast } = useToast();
+
+  const checkFolder = (data: { repositoryUrl: string; activeBranch: string }) =>
+    apiPost<IGitWordPressPackage>(
+      VARS.restPluginNamespace + '/git-packages-dir',
+      {
+        url: data.repositoryUrl,
+        branch: data.activeBranch,
+      }
+    ).then((resp) =>
+      apiPut<{ message: string; packages: IGitPackages }>(
+        VARS.restPluginNamespace + '/git-packages',
+        {
+          url: data.repositoryUrl,
+          theme: resp.type === 'theme',
+          activeBranch: data.activeBranch,
+        }
+      )
+    );
 
   return (
     <Form
       onSubmit={form.handleSubmit((data) => {
         setLoading(true);
-        apiPut<{ message: string; packages: IGitPackages }>(
-          VARS.restPluginNamespace + '/git-packages',
-          {
-            url: data.repositoryUrl,
-            theme: wpData.type === 'theme',
-            activeBranch: data.activeBranch,
-          }
-        )
+        checkFolder(data)
           .then((resp) => {
             setRepositories(resp.packages);
             onFinish();
@@ -89,7 +103,6 @@ const AddRepositoryForm: React.FC<{
         form={form}
         name="activeBranch"
         label={__('Branch', 'shgi')}
-        disabled
         Input={InputSelect}
         options={Object.values(repository.branches).reduce(
           (acc, branch: IGitPackageBranch) => ({
@@ -105,7 +118,7 @@ const AddRepositoryForm: React.FC<{
       <FormControls
         type="submit"
         loading={loading}
-        value={__('Install', 'shgi')}
+        value={__('Check installation', 'shgi')}
       />
     </Form>
   );

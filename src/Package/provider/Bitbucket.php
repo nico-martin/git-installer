@@ -65,7 +65,7 @@ class Bitbucket extends Provider
         ];
     }
 
-    private static function getBranches($workspace, $repo, $defaultBranch)
+    private static function getBranches($workspace, $repo, $defaultBranch = '')
     {
         $apiUrl = "https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}";
         $apiBranchesUrl = "{$apiUrl}/refs/branches?pagelen=100";
@@ -80,9 +80,46 @@ class Bitbucket extends Provider
                 'url' => $branch['links']['html']['href'],
                 'zip' => "https://bitbucket.org/{$workspace}/{$repo}/get/{$branch['name']}.zip",
                 'default' => $branch['name'] === $defaultBranch,
+                'hash' => $branch['target']['hash'],
             ];
         }
         return $branches;
+    }
+
+    private static function getRepoFolderFiles($workspace, $repo, $branch, $folder = '')
+    {
+        $branchHash = self::getBranches($workspace, $repo)[$branch]['hash'];
+        //return "https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}/src/{$branchHash}";
+        $auth = self::authenticateRequest("https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}/src/{$branchHash}/$folder");
+        $response = Helpers::getRestJson($auth[0], $auth[1]);
+        $files = array_values(
+            array_filter(
+                $response['values'],
+                function ($element) use ($folder) {
+                    if ($element['type'] !== 'commit_file') return false;
+                    if (!str_starts_with($element['path'], $folder)) return false;
+                    if ($element['path'] === 'style.css') return true;
+                    $relativePath = substr($element['path'], strlen($folder));
+                    if (str_contains($relativePath, '/')) return false;
+                    return str_ends_with($relativePath, '.php');
+                }
+            )
+        );
+
+        return array_map(function ($element) use ($folder) {
+            $auth = self::authenticateRequest($element['links']['self']['href']);
+            $response = Helpers::fetchPlainText($auth[0], $auth[1]);
+            return [
+                'file' => substr($element['path'], strlen($folder)),
+                'content' => is_wp_error($response) ? null : $response,
+            ];
+        }, $files);
+    }
+
+    public static function validateDir($url, $branch, $dir)
+    {
+        $parsed = self::parseBitbucketUrl($url);
+        return self::getRepoFolderFiles($parsed['workspace'], $parsed['repo'], $branch, $dir);
     }
 
     public static function authenticateRequest($url, $args = [])
@@ -117,6 +154,11 @@ class Bitbucket extends Provider
             public function authenticateRequest($url, $args = [])
             {
                 return Bitbucket::authenticateRequest($url, $args);
+            }
+
+            public function validateDir($url, $branch, $dir = '')
+            {
+                return Bitbucket::validateDir($url, $branch, $dir);
             }
         };
     }

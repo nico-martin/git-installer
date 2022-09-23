@@ -11,12 +11,14 @@ import {
 } from '../../../theme';
 import { apiGet } from '../../../utils/apiFetch';
 import { VARS } from '../../../utils/constants';
-import { IGitPackageRaw } from '../../../utils/types';
+import { IGitPackageRaw, IGitWordPressPackage } from '../../../utils/types';
 
 const CheckRepoForm: React.FC<{
   setData: (data: IGitPackageRaw) => void;
   repositoryKeys: Array<string>;
 }> = ({ setData, repositoryKeys }) => {
+  const [wpData, setWpData] = React.useState<IGitWordPressPackage>(null);
+  const [activeBranch, setActiveBranch] = React.useState<string>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
   const form = useForm<{

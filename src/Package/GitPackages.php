@@ -150,6 +150,17 @@ class GitPackages
                 return current_user_can(Helpers::$authAdmin);
             }
         ]);
+
+        register_rest_route(sayhelloGitInstaller()->api_namespace, 'git-packages-dir/', [
+            'methods' => 'POST',
+            'callback' => [$this, 'checkGitDir'],
+            'args' => [
+                'url',
+            ],
+            'permission_callback' => function () {
+                return current_user_can(Helpers::$authAdmin);
+            }
+        ]);
     }
 
     public function getRepos()
@@ -243,6 +254,64 @@ class GitPackages
         ]);
 
         return $provider->getInfos($url);
+    }
+
+    public function checkGitDir($data)
+    {
+        $params = $data->get_params();
+        $url = $params['url'];
+        $dir = $params['dir'];
+        if (!$dir) $dir = '';
+        $branch = $params['branch'];
+
+        $provider = self::getProvider('', $url);
+        if (!$provider) return new \WP_Error(
+            'repository_not_found',
+            sprintf(
+                __('Package %s could not be found', 'shgi'),
+                '<code>' . $url . '</code>'
+            ), [
+            'status' => 404,
+        ]);
+
+        $files = array_map(
+            function ($element) {
+                $element['parsed'] = self::parseHeader($element['content']);
+                return $element;
+            },
+            $provider->validateDir($url, $branch, $dir)
+        );
+
+        $theme = array_filter($files, function ($file) {
+            return $file['file'] === 'style.css' && boolval($file['parsed']['theme']);
+        });
+
+        $plugin = array_filter($files, function ($file) {
+            return boolval($file['parsed']['plugin']);
+        });
+
+        if (count($theme) !== 0) {
+            return [
+                'type' => 'theme',
+                'name' => $theme[0]['parsed']['theme']
+            ];
+        }
+
+        if (count($plugin) !== 0) {
+            return [
+                'type' => 'plugin',
+                'name' => $plugin[0]['parsed']['plugin']
+            ];
+        }
+
+        return new \WP_Error(
+            'package_not_found',
+            __('No Theme or Plugin found', 'shgi'),
+            [
+                'status' => 400,
+                'files' => $provider->validateDir($url, $branch, $dir)
+            ]
+        );
     }
 
     /**
@@ -446,5 +515,26 @@ class GitPackages
             return Provider\Bitbucket::export();
         }
         return null;
+    }
+
+    private static function parseHeader($fileData)
+    {
+        $fileData = str_replace("\r", "\n", $fileData);
+        $allHeaders = [];
+
+        foreach (
+            [
+                'theme' => 'Theme Name',
+                'plugin' => 'Plugin Name',
+            ] as $field => $regex
+        ) {
+            if (preg_match('/^(?:[ \t]*<\?php)?[ \t\/*#@]*' . preg_quote($regex, '/') . ':(.*)$/mi', $fileData, $match) && $match[1]) {
+                $allHeaders[$field] = _cleanup_header_comment($match[1]);
+            } else {
+                $allHeaders[$field] = '';
+            }
+        }
+
+        return $allHeaders;
     }
 }

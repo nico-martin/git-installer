@@ -85,6 +85,40 @@ class Github extends Provider
         return $branches;
     }
 
+    private static function getRepoFolderFiles($owner, $repo, $branch, $folder = '')
+    {
+        $auth = self::authenticateRequest("https://api.github.com/repos/{$owner}/{$repo}/git/trees/{$branch}?recursive=1");
+        $response = Helpers::getRestJson($auth[0], $auth[1]);
+        $files = array_values(
+            array_filter(
+                $response['tree'],
+                function ($element) use ($folder) {
+                    if ($element['type'] !== 'blob') return false;
+                    if (!str_starts_with($element['path'], $folder)) return false;
+                    if ($element['path'] === 'style.css') return true;
+                    $relativePath = substr($element['path'], strlen($folder));
+                    if (str_contains($relativePath, '/')) return false;
+                    return str_ends_with($relativePath, '.php');
+                }
+            )
+        );
+
+        return array_map(function ($element) use ($folder) {
+            $auth = self::authenticateRequest($element['url']);
+            $response = Helpers::getRestJson($auth[0], $auth[1]);
+            return [
+                'file' => substr($element['path'], strlen($folder)),
+                'content' => base64_decode($response['content']),
+            ];
+        }, $files);
+    }
+
+    public static function validateDir($url, $branch, $dir)
+    {
+        $parsed = self::parseGithubUrl($url);
+        return self::getRepoFolderFiles($parsed['owner'], $parsed['repo'], $branch, $dir);
+    }
+
     public static function authenticateRequest($url, $args = [])
     {
         $github_auth_header = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-github-token');
@@ -116,6 +150,11 @@ class Github extends Provider
             public function authenticateRequest($url, $args = [])
             {
                 return Github::authenticateRequest($url, $args);
+            }
+
+            public function validateDir($url, $branch, $dir = '')
+            {
+                return Github::validateDir($url, $branch, $dir);
             }
         };
     }

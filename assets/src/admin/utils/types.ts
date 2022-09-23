@@ -43,3 +43,8 @@ export interface IGitPackage extends IGitPackageRaw {
 }
 
 export type IGitPackages = Array<IGitPackage>;
+
+export interface IGitWordPressPackage {
+  type: 'theme' | 'plugin';
+  name: string;
+}

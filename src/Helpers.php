@@ -138,6 +138,20 @@ class Helpers
 
     public static function getRestJson($url, $args = [])
     {
+        $json = json_decode(self::fetchPlainText($url, $args), true);
+
+        if (!$json) {
+            return new \WP_Error('json_parse_error', sprintf(
+                    __('Request to %s could not be processed', 'shgi'),
+                    '<code>' . $url . '</code>')
+            );
+        }
+
+        return $json;
+    }
+
+    public static function fetchPlainText($url, $args = [])
+    {
         $request = wp_remote_get($url, $args);
         if (is_wp_error($request)) {
             return $request;
@@ -151,16 +165,7 @@ class Helpers
             );
         }
 
-        $json = json_decode(wp_remote_retrieve_body($request), true);
-
-        if (!$json) {
-            return new \WP_Error('json_parse_error', sprintf(
-                    __('Request to %s could not be processed', 'shgi'),
-                    '<code>' . $url . '</code>')
-            );
-        }
-
-        return $json;
+        return wp_remote_retrieve_body($request);
     }
 
     public static function getContentFolder($url = false)

@@ -42,4 +42,14 @@ class Provider
     {
         return preg_replace('/[^a-zA-Z_\-0-9]/', '', $string);
     }
+
+    public static function isPluginMainFile($file)
+    {
+        // parse the file (string) and check wether its a valid plugin header
+    }
+
+    public static function isThemeStyleCSS($file)
+    {
+        // parse the file (string) and check wether its a valid theme styles.css
+    }
 }

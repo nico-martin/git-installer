@@ -30882,22 +30882,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var AddRepositoryForm_1 = __importDefault(__webpack_require__(/*! ./AddRepositoryForm */ "./assets/src/admin/pages/GitPackages/add/AddRepositoryForm.tsx"));
+var CheckFolderForm_1 = __importDefault(__webpack_require__(/*! ./CheckFolderForm */ "./assets/src/admin/pages/GitPackages/add/CheckFolderForm.tsx"));
 var CheckRepoForm_1 = __importDefault(__webpack_require__(/*! ./CheckRepoForm */ "./assets/src/admin/pages/GitPackages/add/CheckRepoForm.tsx"));
 var AddRepository = function (_a) {
     var _b = _a.className, className = _b === void 0 ? '' : _b, repositoryKeys = _a.repositoryKeys, setRepositories = _a.setRepositories, _c = _a.onFinish, onFinish = _c === void 0 ? null : _c;
     var _d = react_1.default.useState(null), repoData = _d[0], setRepoData = _d[1];
-    return (react_1.default.createElement("div", { className: className }, repoData ? (react_1.default.createElement(AddRepositoryForm_1.default, { setRepositories: setRepositories, onFinish: onFinish, repository: repoData })) : (react_1.default.createElement(CheckRepoForm_1.default, { setData: setRepoData, repositoryKeys: repositoryKeys }))));
+    return (react_1.default.createElement("div", { className: className }, repoData ? (react_1.default.createElement(CheckFolderForm_1.default, { repository: repoData, setRepositories: setRepositories, onFinish: onFinish })) : (react_1.default.createElement(CheckRepoForm_1.default, { setData: setRepoData, repositoryKeys: repositoryKeys }))));
 };
 exports["default"] = AddRepository;
 
 
 /***/ }),
 
-/***/ "./assets/src/admin/pages/GitPackages/add/AddRepositoryForm.tsx":
-/*!**********************************************************************!*\
-  !*** ./assets/src/admin/pages/GitPackages/add/AddRepositoryForm.tsx ***!
-  \**********************************************************************/
+/***/ "./assets/src/admin/pages/GitPackages/add/CheckFolderForm.tsx":
+/*!********************************************************************!*\
+  !*** ./assets/src/admin/pages/GitPackages/add/CheckFolderForm.tsx ***!
+  \********************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -30925,24 +30925,32 @@ var theme_1 = __webpack_require__(/*! ../../../theme */ "./assets/src/admin/them
 var apiFetch_1 = __webpack_require__(/*! ../../../utils/apiFetch */ "./assets/src/admin/utils/apiFetch.ts");
 var constants_1 = __webpack_require__(/*! ../../../utils/constants */ "./assets/src/admin/utils/constants.ts");
 var AddRepositoryForm = function (_a) {
-    var setRepositories = _a.setRepositories, onFinish = _a.onFinish, repository = _a.repository;
+    var repository = _a.repository, setRepositories = _a.setRepositories, onFinish = _a.onFinish;
     var _b = react_1.default.useState(false), loading = _b[0], setLoading = _b[1];
     var _c = react_1.default.useState(''), error = _c[0], setError = _c[1];
+    var addToast = (0, toastContext_1.useToast)().addToast;
     var form = (0, react_hook_form_1.useForm)({
         defaultValues: {
             repositoryUrl: repository.baseUrl,
-            repositoryIsTheme: false,
             activeBranch: Object.values(repository.branches).find(function (branch) { return branch.default; })
                 .name || null,
         },
     });
-    var addToast = (0, toastContext_1.useToast)().addToast;
+    var checkFolder = function (data) {
+        return (0, apiFetch_1.apiPost)(constants_1.VARS.restPluginNamespace + '/git-packages-dir', {
+            url: data.repositoryUrl,
+            branch: data.activeBranch,
+        }).then(function (resp) {
+            return (0, apiFetch_1.apiPut)(constants_1.VARS.restPluginNamespace + '/git-packages', {
+                url: data.repositoryUrl,
+                theme: resp.type === 'theme',
+                activeBranch: data.activeBranch,
+            });
+        });
+    };
     return (react_1.default.createElement(theme_1.Form, { onSubmit: form.handleSubmit(function (data) {
             setLoading(true);
-            (0, apiFetch_1.apiPut)(constants_1.VARS.restPluginNamespace + '/git-packages', {
-                url: data.repositoryUrl,
-                theme: data.repositoryIsTheme,
-            })
+            checkFolder(data)
                 .then(function (resp) {
                 setRepositories(resp.packages);
                 onFinish();
@@ -30964,13 +30972,12 @@ var AddRepositoryForm = function (_a) {
                     message: (0, i18n_1.__)('The URL must lead to a Github, Gitlab or Bitbucket repository', 'shgi'),
                 },
             } }),
-        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryIsTheme", label: (0, i18n_1.__)('Install as Theme', 'shgi'), Input: theme_1.InputCheckbox }),
         react_1.default.createElement(theme_1.FormElement, { form: form, name: "activeBranch", label: (0, i18n_1.__)('Branch', 'shgi'), Input: theme_1.InputSelect, options: Object.values(repository.branches).reduce(function (acc, branch) {
                 var _a;
                 return (__assign(__assign({}, acc), (_a = {}, _a[branch.name] = branch.name, _a)));
             }, {}) }),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR }, error)),
-        react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: (0, i18n_1.__)('Install', 'shgi') })));
+        react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: (0, i18n_1.__)('Check installation', 'shgi') })));
 };
 exports["default"] = AddRepositoryForm;
 
@@ -30997,8 +31004,10 @@ var apiFetch_1 = __webpack_require__(/*! ../../../utils/apiFetch */ "./assets/sr
 var constants_1 = __webpack_require__(/*! ../../../utils/constants */ "./assets/src/admin/utils/constants.ts");
 var CheckRepoForm = function (_a) {
     var setData = _a.setData, repositoryKeys = _a.repositoryKeys;
-    var _b = react_1.default.useState(false), loading = _b[0], setLoading = _b[1];
-    var _c = react_1.default.useState(''), error = _c[0], setError = _c[1];
+    var _b = react_1.default.useState(null), wpData = _b[0], setWpData = _b[1];
+    var _c = react_1.default.useState(null), activeBranch = _c[0], setActiveBranch = _c[1];
+    var _d = react_1.default.useState(false), loading = _d[0], setLoading = _d[1];
+    var _e = react_1.default.useState(''), error = _e[0], setError = _e[1];
     var form = (0, react_hook_form_1.useForm)({
         defaultValues: {
             repositoryUrl: '',

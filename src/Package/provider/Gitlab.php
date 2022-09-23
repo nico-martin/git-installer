@@ -120,6 +120,11 @@ class Gitlab extends Provider
             {
                 return Gitlab::authenticateRequest($url, $args);
             }
+
+            public function validateDir($url, $dir = '')
+            {
+                return [];
+            }
         };
     }
 }

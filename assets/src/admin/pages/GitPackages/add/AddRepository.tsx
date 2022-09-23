@@ -1,6 +1,11 @@
 import React from 'react';
-import { IGitPackageRaw, IGitPackages } from '../../../utils/types';
-import AddRepositoryForm from './AddRepositoryForm';
+import {
+  IGitPackageRaw,
+  IGitPackages,
+  IGitWordPressPackage,
+} from '../../../utils/types';
+import AddFolderForm from './AddRepositoryForm';
+import CheckFolderForm from './CheckFolderForm';
 import CheckRepoForm from './CheckRepoForm';
 
 const AddRepository: React.FC<{
@@ -14,10 +19,10 @@ const AddRepository: React.FC<{
   return (
     <div className={className}>
       {repoData ? (
-        <AddRepositoryForm
+        <CheckFolderForm
+          repository={repoData}
           setRepositories={setRepositories}
           onFinish={onFinish}
-          repository={repoData}
         />
       ) : (
         <CheckRepoForm setData={setRepoData} repositoryKeys={repositoryKeys} />
