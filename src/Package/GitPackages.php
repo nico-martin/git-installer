@@ -68,6 +68,7 @@ class GitPackages
     public function footerJsVars($vars)
     {
         $vars['gitPackages'] = $this->getPackages();
+        $vars['mustUsePlugins'] = self::useMustUsePlugins();
 
         return $vars;
     }
@@ -174,8 +175,9 @@ class GitPackages
         $repo_url = $params['url'];
         $theme = $params['theme'];
         $activeBranch = $params['activeBranch'];
+        $saveAsMustUsePlugin = $params['saveAsMustUsePlugin'];
 
-        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme);
+        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin);
         if (is_wp_error($repoData)) return $repoData;
 
         $update = $this->updatePackage($repoData['key']);
@@ -318,7 +320,7 @@ class GitPackages
      * Helpers
      */
 
-    public function updateInfos($url, $activeBranch, $theme = false)
+    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false)
     {
         $provider = self::getProvider('', $url);
         if (!$provider) {
@@ -351,6 +353,7 @@ class GitPackages
         }
         $repositories[$repoData['key']] = $repoData;
         $repositories[$repoData['key']]['theme'] = $theme;
+        $repositories[$repoData['key']]['saveAsMustUsePlugin'] = $saveAsMustUsePlugin;
         $repositories[$repoData['key']]['activeBranch'] = $activeBranch;
 
         update_option($this->repo_option, $repositories);
@@ -502,6 +505,11 @@ class GitPackages
             return trailingslashit(get_theme_root()) . $key;
         }
 
+        if ($package['saveAsMustUsePlugin']) {
+            if (!is_dir(trailingslashit(WPMU_PLUGIN_DIR))) mkdir(trailingslashit(WPMU_PLUGIN_DIR));
+            return trailingslashit(WPMU_PLUGIN_DIR) . $key;
+        }
+
         return trailingslashit(WP_PLUGIN_DIR) . $key;
     }
 
@@ -536,5 +544,10 @@ class GitPackages
         }
 
         return $allHeaders;
+    }
+
+    private static function useMustUsePlugins()
+    {
+        return apply_filters('shgi/Repositories/MustUsePlugins', false);
     }
 }

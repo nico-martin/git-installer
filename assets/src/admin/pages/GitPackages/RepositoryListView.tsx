@@ -77,6 +77,7 @@ const RepositoryListView = ({
           <Icon icon={repository.provider} className={styles.nameHoster} />
           {repository.theme ? __('Theme:', 'shgi') + ' ' : ''}
           {repository.name}
+          {repository.saveAsMustUsePlugin ? ' (MU)' : ''}
         </h3>
         <p className={styles.version}>
           {sprintf(__('Version: %s', 'shgi'), repository.version)}

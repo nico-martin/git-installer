@@ -7,7 +7,6 @@ import {
   FormControls,
   FormElement,
   FormFeedback,
-  InputCheckbox,
   InputSelect,
   InputText,
   NOTICE_TYPES,
@@ -21,47 +20,99 @@ import {
   IGitWordPressPackage,
 } from '../../../utils/types';
 
-const AddRepositoryForm: React.FC<{
-  wpData: IGitWordPressPackage;
+interface FormDataI {
+  repositoryUrl: string;
+  savePluginAs: string;
   activeBranch: string;
+}
+
+const AddRepositoryForm: React.FC<{
+  repository: IGitPackageRaw;
   setRepositories: (packages: IGitPackages) => void;
   onFinish: () => void;
-  repository: IGitPackageRaw;
-}> = ({ wpData, activeBranch, setRepositories, onFinish, repository }) => {
+}> = ({ repository, setRepositories, onFinish }) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
-  const form = useForm<{
-    repositoryUrl: string;
-    activeBranch: string;
-  }>({
+  const [wpPackage, setWpPackage] = React.useState<IGitWordPressPackage>(null);
+  const { addToast } = useToast();
+
+  const form = useForm<FormDataI>({
     defaultValues: {
       repositoryUrl: repository.baseUrl,
-      activeBranch: activeBranch,
+      savePluginAs: '',
+      activeBranch:
+        Object.values(repository.branches).find((branch) => branch.default)
+          .name || null,
     },
   });
-  const { addToast } = useToast();
+
+  const checkFolder = (
+    repositoryUrl: string,
+    activeBranch: string
+  ): Promise<IGitWordPressPackage> =>
+    new Promise((resolve, reject) =>
+      wpPackage
+        ? resolve(wpPackage)
+        : apiPost<IGitWordPressPackage>(
+            VARS.restPluginNamespace + '/git-packages-dir',
+            {
+              url: repositoryUrl,
+              branch: activeBranch,
+            }
+          )
+            .then((resp) => {
+              setWpPackage(resp);
+              resolve(resp);
+            })
+            .catch(reject)
+    );
+
+  const addPackage = (
+    repositoryUrl: string,
+    activeBranch: string,
+    saveAsMustUsePlugin: boolean,
+    isPlugin: boolean
+  ) =>
+    apiPut<{ message: string; packages: IGitPackages }>(
+      VARS.restPluginNamespace + '/git-packages',
+      {
+        url: repositoryUrl,
+        theme: !isPlugin,
+        saveAsMustUsePlugin: VARS.mustUsePlugins && saveAsMustUsePlugin,
+        activeBranch: activeBranch,
+      }
+    );
 
   return (
     <Form
       onSubmit={form.handleSubmit((data) => {
         setLoading(true);
-        apiPut<{ message: string; packages: IGitPackages }>(
-          VARS.restPluginNamespace + '/git-packages',
-          {
-            url: data.repositoryUrl,
-            theme: wpData.type === 'theme',
-            activeBranch: data.activeBranch,
-          }
-        )
-          .then((resp) => {
-            setRepositories(resp.packages);
-            onFinish();
-            addToast({
-              message: resp.message,
-              type: NOTICE_TYPES.SUCCESS,
-            });
-            form.setValue('repositoryUrl', '');
-          })
+        checkFolder(data.repositoryUrl, data.activeBranch)
+          .then((resp) =>
+            VARS.mustUsePlugins &&
+            resp.type === 'plugin' &&
+            data.savePluginAs === ''
+              ? setLoading(false)
+              : addPackage(
+                  data.repositoryUrl,
+                  data.activeBranch,
+                  data.savePluginAs === 'mustUse',
+                  resp.type === 'plugin'
+                )
+                  .then((resp) => {
+                    setRepositories(resp.packages);
+                    onFinish();
+                    addToast({
+                      message: resp.message,
+                      type: NOTICE_TYPES.SUCCESS,
+                    });
+                    form.setValue('repositoryUrl', '');
+                  })
+                  .catch((e) => setError(e))
+                  .finally(() => {
+                    setLoading(false);
+                  })
+          )
           .catch((e) => setError(e))
           .finally(() => {
             setLoading(false);
@@ -89,7 +140,6 @@ const AddRepositoryForm: React.FC<{
         form={form}
         name="activeBranch"
         label={__('Branch', 'shgi')}
-        disabled
         Input={InputSelect}
         options={Object.values(repository.branches).reduce(
           (acc, branch: IGitPackageBranch) => ({
@@ -99,13 +149,26 @@ const AddRepositoryForm: React.FC<{
           {}
         )}
       />
+      {VARS.mustUsePlugins && wpPackage?.type === 'plugin' && (
+        <FormElement
+          form={form}
+          name="savePluginAs"
+          label={__('Save plugin as', 'shgi')}
+          Input={InputSelect}
+          options={{
+            ['']: __('select..', 'shgi'),
+            normal: __('Normal Plugin', 'shgi'),
+            mustUse: __('Must Use Plugin', 'shgi'),
+          }}
+        />
+      )}
       {error !== '' && (
         <FormFeedback type={NOTICE_TYPES.ERROR}>{error}</FormFeedback>
       )}
       <FormControls
         type="submit"
         loading={loading}
-        value={__('Install', 'shgi')}
+        value={__('Check installation', 'shgi')}
       />
     </Form>
   );

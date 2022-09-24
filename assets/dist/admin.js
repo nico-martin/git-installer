@@ -30845,7 +30845,8 @@ var RepositoryListView = function (_a) {
             react_1.default.createElement("h3", { className: RepositoryListView_css_1.default.name },
                 react_1.default.createElement(theme_1.Icon, { icon: repository.provider, className: RepositoryListView_css_1.default.nameHoster }),
                 repository.theme ? (0, i18n_1.__)('Theme:', 'shgi') + ' ' : '',
-                repository.name),
+                repository.name,
+                repository.saveAsMustUsePlugin ? ' (MU)' : ''),
             react_1.default.createElement("p", { className: RepositoryListView_css_1.default.version }, (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgi'), repository.version)),
             react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo }, repository.baseUrl),
             react_1.default.createElement("p", { className: RepositoryListView_css_1.default.pushToDeploy },
@@ -30882,22 +30883,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var CheckFolderForm_1 = __importDefault(__webpack_require__(/*! ./CheckFolderForm */ "./assets/src/admin/pages/GitPackages/add/CheckFolderForm.tsx"));
+var AddRepositoryForm_1 = __importDefault(__webpack_require__(/*! ./AddRepositoryForm */ "./assets/src/admin/pages/GitPackages/add/AddRepositoryForm.tsx"));
 var CheckRepoForm_1 = __importDefault(__webpack_require__(/*! ./CheckRepoForm */ "./assets/src/admin/pages/GitPackages/add/CheckRepoForm.tsx"));
 var AddRepository = function (_a) {
     var _b = _a.className, className = _b === void 0 ? '' : _b, repositoryKeys = _a.repositoryKeys, setRepositories = _a.setRepositories, _c = _a.onFinish, onFinish = _c === void 0 ? null : _c;
     var _d = react_1.default.useState(null), repoData = _d[0], setRepoData = _d[1];
-    return (react_1.default.createElement("div", { className: className }, repoData ? (react_1.default.createElement(CheckFolderForm_1.default, { repository: repoData, setRepositories: setRepositories, onFinish: onFinish })) : (react_1.default.createElement(CheckRepoForm_1.default, { setData: setRepoData, repositoryKeys: repositoryKeys }))));
+    return (react_1.default.createElement("div", { className: className }, repoData ? (react_1.default.createElement(AddRepositoryForm_1.default, { repository: repoData, setRepositories: setRepositories, onFinish: onFinish })) : (react_1.default.createElement(CheckRepoForm_1.default, { setData: setRepoData, repositoryKeys: repositoryKeys }))));
 };
 exports["default"] = AddRepository;
 
 
 /***/ }),
 
-/***/ "./assets/src/admin/pages/GitPackages/add/CheckFolderForm.tsx":
-/*!********************************************************************!*\
-  !*** ./assets/src/admin/pages/GitPackages/add/CheckFolderForm.tsx ***!
-  \********************************************************************/
+/***/ "./assets/src/admin/pages/GitPackages/add/AddRepositoryForm.tsx":
+/*!**********************************************************************!*\
+  !*** ./assets/src/admin/pages/GitPackages/add/AddRepositoryForm.tsx ***!
+  \**********************************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -30925,40 +30926,65 @@ var theme_1 = __webpack_require__(/*! ../../../theme */ "./assets/src/admin/them
 var apiFetch_1 = __webpack_require__(/*! ../../../utils/apiFetch */ "./assets/src/admin/utils/apiFetch.ts");
 var constants_1 = __webpack_require__(/*! ../../../utils/constants */ "./assets/src/admin/utils/constants.ts");
 var AddRepositoryForm = function (_a) {
+    var _b;
     var repository = _a.repository, setRepositories = _a.setRepositories, onFinish = _a.onFinish;
-    var _b = react_1.default.useState(false), loading = _b[0], setLoading = _b[1];
-    var _c = react_1.default.useState(''), error = _c[0], setError = _c[1];
+    var _c = react_1.default.useState(false), loading = _c[0], setLoading = _c[1];
+    var _d = react_1.default.useState(''), error = _d[0], setError = _d[1];
+    var _e = react_1.default.useState(null), wpPackage = _e[0], setWpPackage = _e[1];
     var addToast = (0, toastContext_1.useToast)().addToast;
     var form = (0, react_hook_form_1.useForm)({
         defaultValues: {
             repositoryUrl: repository.baseUrl,
+            savePluginAs: '',
             activeBranch: Object.values(repository.branches).find(function (branch) { return branch.default; })
                 .name || null,
         },
     });
-    var checkFolder = function (data) {
-        return (0, apiFetch_1.apiPost)(constants_1.VARS.restPluginNamespace + '/git-packages-dir', {
-            url: data.repositoryUrl,
-            branch: data.activeBranch,
-        }).then(function (resp) {
-            return (0, apiFetch_1.apiPut)(constants_1.VARS.restPluginNamespace + '/git-packages', {
-                url: data.repositoryUrl,
-                theme: resp.type === 'theme',
-                activeBranch: data.activeBranch,
-            });
+    var checkFolder = function (repositoryUrl, activeBranch) {
+        return new Promise(function (resolve, reject) {
+            return wpPackage
+                ? resolve(wpPackage)
+                : (0, apiFetch_1.apiPost)(constants_1.VARS.restPluginNamespace + '/git-packages-dir', {
+                    url: repositoryUrl,
+                    branch: activeBranch,
+                })
+                    .then(function (resp) {
+                    setWpPackage(resp);
+                    resolve(resp);
+                })
+                    .catch(reject);
+        });
+    };
+    var addPackage = function (repositoryUrl, activeBranch, saveAsMustUsePlugin, isPlugin) {
+        return (0, apiFetch_1.apiPut)(constants_1.VARS.restPluginNamespace + '/git-packages', {
+            url: repositoryUrl,
+            theme: !isPlugin,
+            saveAsMustUsePlugin: constants_1.VARS.mustUsePlugins && saveAsMustUsePlugin,
+            activeBranch: activeBranch,
         });
     };
     return (react_1.default.createElement(theme_1.Form, { onSubmit: form.handleSubmit(function (data) {
             setLoading(true);
-            checkFolder(data)
+            checkFolder(data.repositoryUrl, data.activeBranch)
                 .then(function (resp) {
-                setRepositories(resp.packages);
-                onFinish();
-                addToast({
-                    message: resp.message,
-                    type: theme_1.NOTICE_TYPES.SUCCESS,
-                });
-                form.setValue('repositoryUrl', '');
+                return constants_1.VARS.mustUsePlugins &&
+                    resp.type === 'plugin' &&
+                    data.savePluginAs === ''
+                    ? setLoading(false)
+                    : addPackage(data.repositoryUrl, data.activeBranch, data.savePluginAs === 'mustUse', resp.type === 'plugin')
+                        .then(function (resp) {
+                        setRepositories(resp.packages);
+                        onFinish();
+                        addToast({
+                            message: resp.message,
+                            type: theme_1.NOTICE_TYPES.SUCCESS,
+                        });
+                        form.setValue('repositoryUrl', '');
+                    })
+                        .catch(function (e) { return setError(e); })
+                        .finally(function () {
+                        setLoading(false);
+                    });
             })
                 .catch(function (e) { return setError(e); })
                 .finally(function () {
@@ -30976,6 +31002,11 @@ var AddRepositoryForm = function (_a) {
                 var _a;
                 return (__assign(__assign({}, acc), (_a = {}, _a[branch.name] = branch.name, _a)));
             }, {}) }),
+        constants_1.VARS.mustUsePlugins && (wpPackage === null || wpPackage === void 0 ? void 0 : wpPackage.type) === 'plugin' && (react_1.default.createElement(theme_1.FormElement, { form: form, name: "savePluginAs", label: (0, i18n_1.__)('Save plugin as', 'shgi'), Input: theme_1.InputSelect, options: (_b = {},
+                _b[''] = (0, i18n_1.__)('select..', 'shgi'),
+                _b.normal = (0, i18n_1.__)('Normal Plugin', 'shgi'),
+                _b.mustUse = (0, i18n_1.__)('Must Use Plugin', 'shgi'),
+                _b) })),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR }, error)),
         react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: (0, i18n_1.__)('Check installation', 'shgi') })));
 };

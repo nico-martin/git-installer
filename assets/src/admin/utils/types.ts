@@ -39,6 +39,7 @@ export interface IGitPackageRaw {
 export interface IGitPackage extends IGitPackageRaw {
   deployKey: string;
   theme: boolean;
+  saveAsMustUsePlugin: boolean;
   version: string;
 }
 

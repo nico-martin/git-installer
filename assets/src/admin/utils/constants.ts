@@ -21,6 +21,7 @@ declare global {
       passwordProtectedDeactivated: number;
       passwordProtectedSkipTo: string;
       gitPackages: IGitPackages;
+      mustUsePlugins: boolean;
     };
   }
 }

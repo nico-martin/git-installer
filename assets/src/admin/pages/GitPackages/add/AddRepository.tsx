@@ -4,8 +4,7 @@ import {
   IGitPackages,
   IGitWordPressPackage,
 } from '../../../utils/types';
-import AddFolderForm from './AddRepositoryForm';
-import CheckFolderForm from './CheckFolderForm';
+import AddRepositoryForm from './AddRepositoryForm';
 import CheckRepoForm from './CheckRepoForm';
 
 const AddRepository: React.FC<{
@@ -19,7 +18,7 @@ const AddRepository: React.FC<{
   return (
     <div className={className}>
       {repoData ? (
-        <CheckFolderForm
+        <AddRepositoryForm
           repository={repoData}
           setRepositories={setRepositories}
           onFinish={onFinish}

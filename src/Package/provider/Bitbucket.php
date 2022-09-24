@@ -90,7 +90,7 @@ class Bitbucket extends Provider
     {
         $branchHash = self::getBranches($workspace, $repo)[$branch]['hash'];
         //return "https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}/src/{$branchHash}";
-        $auth = self::authenticateRequest("https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}/src/{$branchHash}/$folder");
+        $auth = self::authenticateRequest("https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}/src/{$branchHash}/$folder?pagelen=99");
         $response = Helpers::getRestJson($auth[0], $auth[1]);
         $files = array_values(
             array_filter(
