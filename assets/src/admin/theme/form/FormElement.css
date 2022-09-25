@@ -1,48 +1,58 @@
 .container {
-    display: flex;
-    vertical-align: top;
-    margin-top: var(--wpmstaging-form-spacing);
+  display: flex;
+  vertical-align: top;
+  margin-top: var(--wpmstaging-form-spacing);
 }
 
 .containerStacked {
-    display: block;
+  display: block;
 }
 
 .labelContainer {
-    width: var(--wpmstaging-form-label-width);
-    margin-right: var(--wpmstaging-form-spacing);
-    display: block;
+  width: var(--wpmstaging-form-label-width);
+  margin-right: var(--wpmstaging-form-spacing);
+  display: block;
+  flex-shrink: 0;
 }
 
 .containerStacked .labelContainer {
-    margin-right: 0;
-    width: 100%;
-    margin-bottom: var(--wpmstaging-form-spacing-xsmall);
+  margin-right: 0;
+  width: 100%;
+  margin-bottom: var(--wpmstaging-form-spacing-xsmall);
 }
 
 .description {
-    color: #676767;
-    margin-top: 0.2em;
+  color: #676767;
+  margin-top: 0.2em;
 
-    p {
-        font-size: 0.8em;
+  p {
+    font-size: 0.9em;
+    margin: 0.7em 0 0 0;
+
+    code {
+      font-size: 0.9em;
     }
+
+    & + p {
+      margin: 0.3em 0 0 0;
+    }
+  }
 }
 
 .label {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .content {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
-.input:not([type="checkbox"]) {
-    width: 100% !important;
-    max-width: 100%;
+.input:not([type='checkbox']) {
+  width: 100% !important;
+  max-width: 100%;
 }
 
 .error {
-    color: #dc3232;
-    font-size: 0.8em !important;
+  color: #dc3232;
+  font-size: 0.8em !important;
 }

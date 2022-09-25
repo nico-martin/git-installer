@@ -1,0 +1,30 @@
+.stepHeading {
+  display: flex;
+  margin-left: calc(var(--wpmstaging-form-spacing-xsmall) * -1);
+  margin-right: calc(var(--wpmstaging-form-spacing-xsmall) * -1);
+  width: calc(100% + var(--wpmstaging-form-spacing-xsmall) * 2);
+}
+
+.stepHeadingElement {
+  padding: 0 var(--wpmstaging-form-spacing-xsmall);
+}
+
+.stepHeadingElementVisited .stepHeadingElementTitle {
+  border-bottom-color: #007cba;
+  color: #007cba;
+}
+
+.stepHeadingElementActive .stepHeadingElementTitle {
+  font-weight: bold;
+}
+
+.stepHeadingElementTitle {
+  border-bottom: 3px solid #3c434a;
+  margin: 0;
+  padding-bottom: var(--wpmstaging-form-spacing-xsmall);
+}
+
+.stepForm {
+  padding: calc(2 * var(--wpmstaging-form-spacing)) 0
+    var(--wpmstaging-form-spacing) 0;
+}

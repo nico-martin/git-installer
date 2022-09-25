@@ -8,17 +8,14 @@ import {
   FormFeedback,
   InputText,
   NOTICE_TYPES,
-} from '../../../theme';
-import { apiGet } from '../../../utils/apiFetch';
-import { VARS } from '../../../utils/constants';
-import { IGitPackageRaw, IGitWordPressPackage } from '../../../utils/types';
+} from '../../../../theme';
+import { AddRepositoryFormPropsI } from '../AddRepository';
 
-const CheckRepoForm: React.FC<{
-  setData: (data: IGitPackageRaw) => void;
-  repositoryKeys: Array<string>;
-}> = ({ setData, repositoryKeys }) => {
-  const [wpData, setWpData] = React.useState<IGitWordPressPackage>(null);
-  const [activeBranch, setActiveBranch] = React.useState<string>(null);
+const CheckRepoForm: React.FC<AddRepositoryFormPropsI> = ({
+  promise,
+  submit,
+  className = '',
+}) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
   const form = useForm<{
@@ -33,26 +30,12 @@ const CheckRepoForm: React.FC<{
     <Form
       onSubmit={form.handleSubmit((data) => {
         setLoading(true);
-        apiGet<IGitPackageRaw>(
-          VARS.restPluginNamespace +
-            '/git-packages-check/' +
-            btoa(data.repositoryUrl)
-        )
-          .then((pkg) => {
-            const exists = Boolean(
-              repositoryKeys.find((key) => key === pkg.key)
-            );
-            if (exists) {
-              setError(__('The repository has already been installed', 'shgi'));
-            } else {
-              setData(pkg);
-            }
-          })
+        promise(data.repositoryUrl)
+          .then()
           .catch((e) => setError(e))
-          .finally(() => {
-            setLoading(false);
-          });
+          .finally(() => setLoading(false));
       })}
+      className={className}
     >
       <FormElement
         form={form}
@@ -64,7 +47,7 @@ const CheckRepoForm: React.FC<{
           pattern: {
             value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
             message: __(
-              'Die URL muss zu einem Github, Gitlab oder Bitbucket Repository führen',
+              'The URL must lead to a Github, Gitlab or Bitbucket repository',
               'shgi'
             ),
           },
@@ -76,7 +59,8 @@ const CheckRepoForm: React.FC<{
       <FormControls
         type="submit"
         loading={loading}
-        value={__('URL überpfüfen', 'shgi')}
+        value={submit}
+        align="right"
       />
     </Form>
   );

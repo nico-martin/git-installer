@@ -4,30 +4,32 @@ import { useSettings } from '../../settings';
 import cn from '../../utils/classnames';
 import styles from './FormElement.css';
 
-const FormElement = ({
-  form,
-  label,
-  name,
-  rules = {},
-  Input,
-  Description,
-  className = '',
-  inputClassName = '',
-  sanitizeValue = (value) => value,
-  stacked = false,
-  ...inputProps
-}: {
+const FormElement: React.FC<{
   form?: any;
   label?: string;
   name: string;
   rules?: any;
   Input?: any;
-  Description?: any;
+  Description?: JSX.Element;
+  DescriptionInput?: JSX.Element;
   className?: string;
   inputClassName?: string;
   sanitizeValue?: Function;
   stacked?: boolean;
   [key: string]: any;
+}> = ({
+  form,
+  label,
+  name,
+  rules = {},
+  Input,
+  Description = null,
+  DescriptionInput = null,
+  className = '',
+  inputClassName = '',
+  sanitizeValue = (value) => value,
+  stacked = false,
+  ...inputProps
 }) => {
   const { field } = useController({
     control: form.control,
@@ -63,6 +65,9 @@ const FormElement = ({
           onBlur={(e) => e && field.onChange(sanitizeValue(e.target.value))}
         />
         {error && <p className={styles.error}>{error.message}</p>}
+        {DescriptionInput && (
+          <div className={styles.description}>{DescriptionInput}</div>
+        )}
       </div>
     </div>
   );

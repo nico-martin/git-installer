@@ -1,7 +1,6 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
 import { __, sprintf } from '@wordpress/i18n';
-import { useSettingsForm, settingsKeys, useSettings } from '../settings';
+import { useSettingsForm, settingsKeys } from '../settings';
 import {
   Button,
   Card,
@@ -9,9 +8,6 @@ import {
   FormControls,
   FormElement,
   FormFeedback,
-  InputCheckbox,
-  InputRadio,
-  InputSelect,
   InputText,
   NOTICE_TYPES,
   PageContent,
@@ -86,14 +82,6 @@ const PageGitPackages = () => {
       )}
       <Card title={__('Access control', 'shgi')} canToggleKey="git-packages">
         <Form onSubmit={submit}>
-          <h3>Gitlab</h3>
-          <FormElement
-            form={form}
-            name="git-packages-gitlab-token"
-            Input={InputText}
-            type="text"
-            masked
-          />
           <h3>Github</h3>
           <FormElement
             form={form}
@@ -101,6 +89,66 @@ const PageGitPackages = () => {
             Input={InputText}
             type="text"
             masked
+            DescriptionInput={
+              <React.Fragment>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: sprintf(
+                      __(
+                        'You can generate your personal acces token here: %s',
+                        'shgi'
+                      ),
+                      '<a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer">https://github.com/settings/tokens</a>'
+                    ),
+                  }}
+                />
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: sprintf(
+                      __(
+                        'The token must have access rights at least for the scope %s.',
+                        'shgi'
+                      ),
+                      '<code>api</code>'
+                    ),
+                  }}
+                />
+              </React.Fragment>
+            }
+          />
+          <h3>Gitlab</h3>
+          <FormElement
+            form={form}
+            name="git-packages-gitlab-token"
+            Input={InputText}
+            type="text"
+            masked
+            DescriptionInput={
+              <React.Fragment>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: sprintf(
+                      __(
+                        'You can generate your personal acces token here: %s',
+                        'shgi'
+                      ),
+                      '<a href="https://gitlab.com/-/profile/personal_access_tokens" target="_blank" rel="noreferrer">https://gitlab.com/-/profile/personal_access_tokens</a>'
+                    ),
+                  }}
+                />
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: sprintf(
+                      __(
+                        'The token must have access rights at least for the scope %s.',
+                        'shgi'
+                      ),
+                      '<code>read_api</code>'
+                    ),
+                  }}
+                />
+              </React.Fragment>
+            }
           />
           <h3>Bitbucket</h3>
           <FormElement
@@ -114,6 +162,29 @@ const PageGitPackages = () => {
             Input={InputText}
             type="text"
             masked
+            DescriptionInput={
+              <React.Fragment>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: sprintf(
+                      __('You can generate your app password here: %s', 'shgi'),
+                      '<a href="https://bitbucket.org/account/settings/app-passwords/" target="_blank" rel="noreferrer">https://bitbucket.org/account/settings/app-passwords/</a>'
+                    ),
+                  }}
+                />
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: sprintf(
+                      __(
+                        'The app password must have at least the permission %s.',
+                        'shgi'
+                      ),
+                      '<code>Repositorys: read</code>'
+                    ),
+                  }}
+                />
+              </React.Fragment>
+            }
           />
           {error !== '' && (
             <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
