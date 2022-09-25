@@ -1,16 +1,19 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import {
   Form,
   FormControls,
   FormElement,
   FormFeedback,
   InputSelect,
+  Loader,
   NOTICE_TYPES,
 } from '../../../../theme';
+import cn from '../../../../utils/classnames';
 import { VARS } from '../../../../utils/constants';
 import { AddRepositoryFormPropsI } from '../AddRepository';
+import styles from './RunInstallationForm.css';
 
 const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
   promise,
@@ -42,13 +45,38 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
     showMustUseForm && install(false);
   }, []);
 
-  return (
+  const desc = <p>Das Theme</p>;
+
+  return loading ? (
+    <div className={cn(className, styles.loadingComp)}>
+      <p
+        dangerouslySetInnerHTML={{
+          __html: sprintf(
+            __('The %s "%s" is being installed'),
+            wpPackage.type === 'plugin' ? 'Plugin' : 'Theme',
+            `<b>${wpPackage.name}</b>`
+          ),
+        }}
+      />
+      <Loader className={styles.loader} size={3} />
+    </div>
+  ) : (
     <Form
       onSubmit={form.handleSubmit((data) =>
         install(data.savePluginAs === 'mustUse')
       )}
       className={className}
     >
+      <p
+        dangerouslySetInnerHTML={{
+          __html: sprintf(
+            __(
+              'The plugin "%s" is ready for installation. Now please define whether the plugin should be installed as a "must use plugin" or as a normal plugin.'
+            ),
+            `<b>${wpPackage.name}</b>`
+          ),
+        }}
+      />
       <FormElement
         form={form}
         name="savePluginAs"
@@ -61,7 +89,7 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
         }}
       />
       {error !== '' && (
-        <FormFeedback type={NOTICE_TYPES.ERROR}>{error}</FormFeedback>
+        <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
       )}
       <FormControls
         type="submit"

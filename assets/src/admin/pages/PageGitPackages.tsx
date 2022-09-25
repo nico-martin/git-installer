@@ -53,7 +53,7 @@ const PageGitPackages = () => {
               buttonType="primary"
               onClick={() => setAddPackageModal(true)}
             >
-              {__('add Repository', 'shgi')}
+              {__('Add Repository', 'shgi')}
             </Button>
           </div>
         ) : (

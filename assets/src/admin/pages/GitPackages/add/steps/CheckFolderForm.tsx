@@ -7,6 +7,7 @@ import {
   FormElement,
   FormFeedback,
   InputSelect,
+  InputText,
   NOTICE_TYPES,
 } from '../../../../theme';
 import { IGitPackageBranch } from '../../../../utils/types';
@@ -21,8 +22,9 @@ const CheckFolderForm: React.FC<AddRepositoryFormPropsI> = ({
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
 
-  const form = useForm<{ activeBranch: string }>({
+  const form = useForm<{ activeBranch: string; repositoryUrl: string }>({
     defaultValues: {
+      repositoryUrl: repoData.baseUrl,
       activeBranch:
         Object.values(repoData.branches).find((branch) => branch.default)
           .name || null,
@@ -42,6 +44,13 @@ const CheckFolderForm: React.FC<AddRepositoryFormPropsI> = ({
     >
       <FormElement
         form={form}
+        name="repositoryUrl"
+        label={__('Repository URL', 'shgi')}
+        Input={InputText}
+        disabled
+      />
+      <FormElement
+        form={form}
         name="activeBranch"
         label={__('Branch', 'shgi')}
         Input={InputSelect}
@@ -54,7 +63,7 @@ const CheckFolderForm: React.FC<AddRepositoryFormPropsI> = ({
         )}
       />
       {error !== '' && (
-        <FormFeedback type={NOTICE_TYPES.ERROR}>{error}</FormFeedback>
+        <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
       )}
       <FormControls
         type="submit"

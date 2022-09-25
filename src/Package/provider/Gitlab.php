@@ -141,6 +141,16 @@ class Gitlab extends Provider
     public static function export()
     {
         return new class {
+            public function name()
+            {
+                return 'Gitlab';
+            }
+
+            public function hasToken()
+            {
+                return boolval(sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-gitlab-token'));
+            }
+
             public function validateUrl($url)
             {
                 return Gitlab::validateUrl($url);

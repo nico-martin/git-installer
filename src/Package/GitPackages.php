@@ -249,13 +249,27 @@ class GitPackages
         if (!$provider) return new \WP_Error(
             'repository_not_found',
             sprintf(
-                __('Package %s could not be found', 'shgi'),
+                __("Package %s could not be found. Please make sure it's a valid URL to a Github, Gitlab or Bitbucket repository", 'shgi'),
                 '<code>' . $url . '</code>'
             ), [
             'status' => 404,
         ]);
 
-        return $provider->getInfos($url);
+        $infos = $provider->getInfos($url);
+        if (is_wp_error($infos)) {
+            return new \WP_Error(
+                'repo_validation_failed',
+                sprintf(
+                    $provider->hasToken() ?
+                        __('Either it is not a valid %s repository URL, or it is private and the deposited token does not have the required permissions.', 'shgi') :
+                        __('Either it is not a valid %s repository URL, or it is Private. In this case, you would have to add a corresponding token under "Access control".', 'shgi'),
+                    $provider->name()
+                ),
+                ['status' => 404]
+            );
+        }
+
+        return $infos;
     }
 
     public function checkGitDir($data)
@@ -308,10 +322,10 @@ class GitPackages
 
         return new \WP_Error(
             'package_not_found',
-            __('No Theme or Plugin found', 'shgi'),
+            sprintf(__('No valid WordPress Theme (style.css with "Theme Name" header) or WordPress Plugin (Plugin PHP file with "Plugin Name" header) was found in the %s folder of the repository.', 'shgi'), ($dir) ? $dir : 'root'),
             [
                 'status' => 400,
-                'files' => $provider->validateDir($url, $branch, $dir)
+                'files' => $provider->validateDir($url, $branch, $dir),
             ]
         );
     }

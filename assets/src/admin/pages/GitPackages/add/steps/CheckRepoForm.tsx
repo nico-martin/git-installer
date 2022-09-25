@@ -54,7 +54,7 @@ const CheckRepoForm: React.FC<AddRepositoryFormPropsI> = ({
         }}
       />
       {error !== '' && (
-        <FormFeedback type={NOTICE_TYPES.ERROR}>{error}</FormFeedback>
+        <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
       )}
       <FormControls
         type="submit"

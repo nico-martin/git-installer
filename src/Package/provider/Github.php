@@ -137,6 +137,16 @@ class Github extends Provider
     public static function export()
     {
         return new class {
+            public function name()
+            {
+                return 'Github';
+            }
+
+            public function hasToken()
+            {
+                return boolval(sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-github-token'));
+            }
+
             public function validateUrl($url)
             {
                 return Github::validateUrl($url);

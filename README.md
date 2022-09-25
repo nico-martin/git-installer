@@ -17,6 +17,14 @@
 | **Install from subdirectories**                                                                                                                       |           ❌           |      ⌛       |
 | **Check directory**<br />Validates a Repository and checks wether a valid WordPress theme or plugin is found.                                         |           ✅           |      ✅       |
 
+## Docs
+### Must Use Plugin
+Activate "Must Use Plugin" support
+```php
+add_filter('shgi/Repositories/MustUsePlugins', '__return_true');
+```
+Now you are able to select the target folder for your plugin before the installation.
+
 ## Changelog
 ### 0.0.2
 - added automatic check for plugins and themes

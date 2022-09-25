@@ -141,6 +141,16 @@ class Bitbucket extends Provider
     public static function export()
     {
         return new class {
+            public function name()
+            {
+                return 'Bitbucket';
+            }
+
+            public function hasToken()
+            {
+                return boolval(sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-bitbucket-token'));
+            }
+
             public function validateUrl($url)
             {
                 return Bitbucket::validateUrl($url);

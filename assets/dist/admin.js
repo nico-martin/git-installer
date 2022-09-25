@@ -118,6 +118,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./assets/src/admin/pages/GitPackages/add/steps/RunInstallationForm.css":
+/*!******************************************************************************!*\
+  !*** ./assets/src/admin/pages/GitPackages/add/steps/RunInstallationForm.css ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// extracted by mini-css-extract-plugin
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"loadingComp":"RunInstallationForm__loadingComp--1uj5p","loader":"RunInstallationForm__loader--295rc"});
+
+/***/ }),
+
 /***/ "./assets/src/admin/pages/PageGitPackages.css":
 /*!****************************************************!*\
   !*** ./assets/src/admin/pages/PageGitPackages.css ***!
@@ -31039,6 +31055,7 @@ var CheckFolderForm = function (_a) {
     var _d = react_1.default.useState(''), error = _d[0], setError = _d[1];
     var form = (0, react_hook_form_1.useForm)({
         defaultValues: {
+            repositoryUrl: repoData.baseUrl,
             activeBranch: Object.values(repoData.branches).find(function (branch) { return branch.default; })
                 .name || null,
         },
@@ -31050,11 +31067,12 @@ var CheckFolderForm = function (_a) {
                 .catch(function (e) { return setError(e); })
                 .finally(function () { return setLoading(false); });
         }), className: className },
+        react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryUrl", label: (0, i18n_1.__)('Repository URL', 'shgi'), Input: theme_1.InputText, disabled: true }),
         react_1.default.createElement(theme_1.FormElement, { form: form, name: "activeBranch", label: (0, i18n_1.__)('Branch', 'shgi'), Input: theme_1.InputSelect, options: Object.values(repoData.branches).reduce(function (acc, branch) {
                 var _a;
                 return (__assign(__assign({}, acc), (_a = {}, _a[branch.name] = branch.name, _a)));
             }, {}) }),
-        error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR }, error)),
+        error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR, message: error })),
         react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: submit, align: "right" })));
 };
 exports["default"] = CheckFolderForm;
@@ -31101,7 +31119,7 @@ var CheckRepoForm = function (_a) {
                     message: (0, i18n_1.__)('The URL must lead to a Github, Gitlab or Bitbucket repository', 'shgi'),
                 },
             } }),
-        error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR }, error)),
+        error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR, message: error })),
         react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: submit, align: "right" })));
 };
 exports["default"] = CheckRepoForm;
@@ -31125,7 +31143,9 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 var react_hook_form_1 = __webpack_require__(/*! react-hook-form */ "./node_modules/react-hook-form/dist/index.cjs.js");
 var i18n_1 = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 var theme_1 = __webpack_require__(/*! ../../../../theme */ "./assets/src/admin/theme/index.ts");
+var classnames_1 = __importDefault(__webpack_require__(/*! ../../../../utils/classnames */ "./assets/src/admin/utils/classnames.ts"));
 var constants_1 = __webpack_require__(/*! ../../../../utils/constants */ "./assets/src/admin/utils/constants.ts");
+var RunInstallationForm_css_1 = __importDefault(__webpack_require__(/*! ./RunInstallationForm.css */ "./assets/src/admin/pages/GitPackages/add/steps/RunInstallationForm.css"));
 var RunInstallationForm = function (_a) {
     var _b;
     var promise = _a.promise, submit = _a.submit, repoData = _a.repoData, wpPackage = _a.wpPackage, _c = _a.className, className = _c === void 0 ? '' : _c;
@@ -31148,15 +31168,23 @@ var RunInstallationForm = function (_a) {
     react_1.default.useEffect(function () {
         showMustUseForm && install(false);
     }, []);
-    return (react_1.default.createElement(theme_1.Form, { onSubmit: form.handleSubmit(function (data) {
+    var desc = react_1.default.createElement("p", null, "Das Theme");
+    return loading ? (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, RunInstallationForm_css_1.default.loadingComp) },
+        react_1.default.createElement("p", { dangerouslySetInnerHTML: {
+                __html: (0, i18n_1.sprintf)((0, i18n_1.__)('The %s "%s" is being installed'), wpPackage.type === 'plugin' ? 'Plugin' : 'Theme', "<b>" + wpPackage.name + "</b>"),
+            } }),
+        react_1.default.createElement(theme_1.Loader, { className: RunInstallationForm_css_1.default.loader, size: 3 }))) : (react_1.default.createElement(theme_1.Form, { onSubmit: form.handleSubmit(function (data) {
             return install(data.savePluginAs === 'mustUse');
         }), className: className },
+        react_1.default.createElement("p", { dangerouslySetInnerHTML: {
+                __html: (0, i18n_1.sprintf)((0, i18n_1.__)('The plugin "%s" is ready for installation. Now please define whether the plugin should be installed as a "must use plugin" or as a normal plugin.'), "<b>" + wpPackage.name + "</b>"),
+            } }),
         react_1.default.createElement(theme_1.FormElement, { form: form, name: "savePluginAs", label: (0, i18n_1.__)('Save plugin as', 'shgi'), Input: theme_1.InputSelect, options: (_b = {},
                 _b[''] = (0, i18n_1.__)('select..', 'shgi'),
                 _b.normal = (0, i18n_1.__)('Normal Plugin', 'shgi'),
                 _b.mustUse = (0, i18n_1.__)('Must Use Plugin', 'shgi'),
                 _b) }),
-        error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR }, error)),
+        error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR, message: error })),
         react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: submit, align: "right" })));
 };
 exports["default"] = RunInstallationForm;
@@ -31191,7 +31219,7 @@ var PageGitPackages = function () {
     return (react_1.default.createElement(theme_1.PageContent, null,
         react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Git Repositories', 'shgi'), rightContent: repositories.length !== 0 && (react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('add Repository', 'shgi'))) }, repositories.length === 0 ? (react_1.default.createElement("div", { className: PageGitPackages_css_1.default.empty },
             react_1.default.createElement("p", null, (0, i18n_1.__)('No repositories have been added yet.', 'shgi')),
-            react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('add Repository', 'shgi')))) : (repositories.map(function (repo, i) { return (react_1.default.createElement(RepositoryListView_1.default, { key: i, repository: repo, setRepositories: setRepositories, className: PageGitPackages_css_1.default.repository })); }))),
+            react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('Add Repository', 'shgi')))) : (repositories.map(function (repo, i) { return (react_1.default.createElement(RepositoryListView_1.default, { key: i, repository: repo, setRepositories: setRepositories, className: PageGitPackages_css_1.default.repository })); }))),
         addPackageModal && (react_1.default.createElement(theme_1.ShadowBox, { title: (0, i18n_1.__)('add Repository', 'shgi'), close: function () { return setAddPackageModal(false); }, size: "medium" },
             react_1.default.createElement(AddRepository_1.default, { repositoryKeys: repositories.map(function (r) { return r.key; }), setRepositories: setRepositories, onFinish: function () { return setAddPackageModal(false); } }))),
         react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Access control', 'shgi'), canToggleKey: "git-packages" },
