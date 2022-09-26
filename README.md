@@ -11,7 +11,7 @@
 | - Bitbucket                                                                                                                                           |           ✅           |      ✅       |
 | **Push to deploy URL**                                                                                                                                |           ✅           |      ✅       |
 | **Private Repositories**                                                                                                                              |           ❌           |      ✅       |
-| **Must Use Plugin support**<br />*[https://wordpress.org/support/article/must-use-plugins/](https://wordpress.org/support/article/must-use-plugins/)* |           ⌛           |      ⌛       |
+| **Must Use Plugin support**<br />*[https://wordpress.org/support/article/must-use-plugins/](https://wordpress.org/support/article/must-use-plugins/)* |           ✅           |      ✅       |
 | **Branches**                                                                                                                                          |  only default branch  |  any branch  |
 | **Multisite**                                                                                                                                         |           ✅           |      ✅       |
 | **Install from subdirectories**                                                                                                                       |           ❌           |      ⌛       |
@@ -27,6 +27,8 @@ Now you are able to select the target folder for your plugin before the installa
 
 ## Changelog
 ### 0.0.2
+- added support for [Must Use Plugins](https://wordpress.org/support/article/must-use-plugins/)
+- improvements for error messages
 - added automatic check for plugins and themes
 - added multisite support
 - improved Auth-Key handling
