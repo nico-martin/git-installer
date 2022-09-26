@@ -26,6 +26,8 @@ add_filter('shgi/Repositories/MustUsePlugins', '__return_true');
 Now you are able to select the target folder for your plugin before the installation.
 
 ## Changelog
+### 0.0.4
+
 ### 0.0.3
 - added support for Plugins or Themes from subdirectories
 - fixed "Version: null" bug after install
