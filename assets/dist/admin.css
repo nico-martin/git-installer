@@ -694,6 +694,18 @@
 .InputText__container--2qMJx {
   display: flex;
   align-items: center;
+  position: relative;
+}
+
+  .InputText__container--2qMJx:before {
+    content: attr(data-prepend);
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+.InputText__input--3ix2C {
 }
 
 .InputText__editButton--1c1nY {

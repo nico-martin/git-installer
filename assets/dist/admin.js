@@ -322,7 +322,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"container":"InputText__container--2qMJx","editButton":"InputText__editButton--1c1nY"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"container":"InputText__container--2qMJx","input":"InputText__input--3ix2C","editButton":"InputText__editButton--1c1nY"});
 
 /***/ }),
 
@@ -30881,6 +30881,9 @@ var RepositoryListView = function (_a) {
                 repository.saveAsMustUsePlugin ? ' (MU)' : ''),
             react_1.default.createElement("p", { className: RepositoryListView_css_1.default.version }, (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgi'), repository.version)),
             react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo }, repository.baseUrl),
+            repository.dir && (react_1.default.createElement("p", { dangerouslySetInnerHTML: {
+                    __html: (0, i18n_1.sprintf)((0, i18n_1.__)('Directory: %s', 'shgi'), "<code>./" + repository.dir + "</code>"),
+                } })),
             react_1.default.createElement("p", { className: RepositoryListView_css_1.default.pushToDeploy },
                 (0, i18n_1.__)('Push to Deploy URL', 'shgi'),
                 ":",
@@ -30930,7 +30933,8 @@ var AddRepository = function (_a) {
     var _d = react_1.default.useState(null), repositoryUrl = _d[0], setRepositoryUrl = _d[1];
     var _e = react_1.default.useState(null), repoData = _e[0], setRepoData = _e[1];
     var _f = react_1.default.useState(null), activeBranch = _f[0], setActiveBranch = _f[1];
-    var _g = react_1.default.useState(null), wpPackage = _g[0], setWpPackage = _g[1];
+    var _g = react_1.default.useState(null), dir = _g[0], setDir = _g[1];
+    var _h = react_1.default.useState(null), wpPackage = _h[0], setWpPackage = _h[1];
     var addToast = (0, toastContext_1.useToast)().addToast;
     var steps = [
         {
@@ -30959,14 +30963,16 @@ var AddRepository = function (_a) {
         {
             title: (0, i18n_1.__)('Branch', 'shgi'),
             Form: CheckFolderForm_1.default,
-            promise: function (activeBranch) {
+            promise: function (activeBranch, dir) {
                 return new Promise(function (resolve, reject) {
                     return (0, apiFetch_1.apiPost)(constants_1.VARS.restPluginNamespace + '/git-packages-dir', {
                         url: repositoryUrl,
                         branch: activeBranch,
+                        dir: dir,
                     })
                         .then(function (resp) {
                         setActiveBranch(activeBranch);
+                        setDir(dir);
                         setWpPackage(resp);
                         resolve(true);
                     })
@@ -30985,6 +30991,7 @@ var AddRepository = function (_a) {
                         theme: wpPackage.type === 'theme',
                         saveAsMustUsePlugin: constants_1.VARS.mustUsePlugins && saveAsMustUsePlugin,
                         activeBranch: activeBranch,
+                        dir: dir,
                     })
                         .then(function (resp) {
                         setRepositories(resp.packages);
@@ -31058,11 +31065,12 @@ var CheckFolderForm = function (_a) {
             repositoryUrl: repoData.baseUrl,
             activeBranch: Object.values(repoData.branches).find(function (branch) { return branch.default; })
                 .name || null,
+            dir: '',
         },
     });
     return (react_1.default.createElement(theme_1.Form, { onSubmit: form.handleSubmit(function (data) {
             setLoading(true);
-            promise(data.activeBranch)
+            promise(data.activeBranch, data.dir)
                 .then()
                 .catch(function (e) { return setError(e); })
                 .finally(function () { return setLoading(false); });
@@ -31072,6 +31080,7 @@ var CheckFolderForm = function (_a) {
                 var _a;
                 return (__assign(__assign({}, acc), (_a = {}, _a[branch.name] = branch.name, _a)));
             }, {}) }),
+        react_1.default.createElement(theme_1.FormElement, { form: form, name: "dir", label: (0, i18n_1.__)('Directory', 'shgi'), Input: theme_1.InputText, prepend: "./", prependWidth: "0.6em" }),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR, message: error })),
         react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: submit, align: "right" })));
 };
@@ -31950,10 +31959,10 @@ var classnames_1 = __importDefault(__webpack_require__(/*! ../../utils/classname
 var index_1 = __webpack_require__(/*! ../index */ "./assets/src/admin/theme/index.ts");
 var InputText_css_1 = __importDefault(__webpack_require__(/*! ./InputText.css */ "./assets/src/admin/theme/form/InputText.css"));
 var InputText = react_1.default.forwardRef(function (_a, ref) {
-    var name = _a.name, _b = _a.value, formValue = _b === void 0 ? '' : _b, _c = _a.className, className = _c === void 0 ? '' : _c, _d = _a.classNameInput, classNameInput = _d === void 0 ? '' : _d, _e = _a.type, type = _e === void 0 ? 'text' : _e, _f = _a.masked, masked = _f === void 0 ? false : _f, _g = _a.onChange, onChange = _g === void 0 ? function () { } : _g, _h = _a.disabled, disabled = _h === void 0 ? false : _h, props = __rest(_a, ["name", "value", "className", "classNameInput", "type", "masked", "onChange", "disabled"]);
+    var name = _a.name, _b = _a.value, formValue = _b === void 0 ? '' : _b, _c = _a.className, className = _c === void 0 ? '' : _c, _d = _a.classNameInput, classNameInput = _d === void 0 ? '' : _d, _e = _a.type, type = _e === void 0 ? 'text' : _e, _f = _a.masked, masked = _f === void 0 ? false : _f, _g = _a.onChange, onChange = _g === void 0 ? function () { } : _g, _h = _a.disabled, disabled = _h === void 0 ? false : _h, _j = _a.prepend, prepend = _j === void 0 ? '' : _j, _k = _a.prependWidth, prependWidth = _k === void 0 ? null : _k, props = __rest(_a, ["name", "value", "className", "classNameInput", "type", "masked", "onChange", "disabled", "prepend", "prependWidth"]);
     var innerRef = react_1.default.useRef(ref);
-    var _j = react_1.default.useState(formValue), value = _j[0], setValue = _j[1];
-    var _k = react_1.default.useState(value === ''), editMode = _k[0], setEditMode = _k[1];
+    var _l = react_1.default.useState(formValue), value = _l[0], setValue = _l[1];
+    var _m = react_1.default.useState(value === ''), editMode = _m[0], setEditMode = _m[1];
     react_1.default.useEffect(function () {
         (!masked || editMode) && onChange(value);
     }, [value]);
@@ -31971,8 +31980,10 @@ var InputText = react_1.default.forwardRef(function (_a, ref) {
         // @ts-ignore
         window.setTimeout(function () { var _a; return (_a = innerRef === null || innerRef === void 0 ? void 0 : innerRef.current) === null || _a === void 0 ? void 0 : _a.focus(); }, 10);
     };
-    return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, InputText_css_1.default.container), onClick: function () { return masked && !editMode && activateEditMode(); } },
-        react_1.default.createElement("input", __assign({ name: name, className: (0, classnames_1.default)(classNameInput), id: name, value: maskedValue, onChange: function (e) { return setValue(e.target.value); }, type: type, ref: innerRef, disabled: disabled || (masked && !editMode), onBlur: function (e) {
+    return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, InputText_css_1.default.container), onClick: function () { return masked && !editMode && activateEditMode(); }, "data-prepend": prepend },
+        react_1.default.createElement("input", __assign({ name: name, className: (0, classnames_1.default)(classNameInput, InputText_css_1.default.input), style: {
+                paddingLeft: "calc(8px + " + (prependWidth ? prependWidth : prepend.length + 'ch') + ")",
+            }, id: name, value: maskedValue, onChange: function (e) { return setValue(e.target.value); }, type: type, ref: innerRef, disabled: disabled || (masked && !editMode), onBlur: function (e) {
                 e.target.value !== '' && setEditMode(false);
                 //onBlur(e);
             } }, otherProps)),

@@ -29,6 +29,8 @@ const InputText = React.forwardRef<
       | 'url'
       | 'week';
     onChange: (value: string) => void;
+    prepend: string;
+    prependWidth: string;
     [key: string]: any;
   } & ReturnType<UseFormRegister<any>>
 >(
@@ -42,6 +44,8 @@ const InputText = React.forwardRef<
       masked = false,
       onChange = () => {},
       disabled = false,
+      prepend = '',
+      prependWidth = null,
       ...props
     },
     ref
@@ -74,10 +78,16 @@ const InputText = React.forwardRef<
       <div
         className={cn(className, styles.container)}
         onClick={() => masked && !editMode && activateEditMode()}
+        data-prepend={prepend}
       >
         <input
           name={name}
-          className={cn(classNameInput)}
+          className={cn(classNameInput, styles.input)}
+          style={{
+            paddingLeft: `calc(8px + ${
+              prependWidth ? prependWidth : prepend.length + 'ch'
+            })`,
+          }}
           id={name}
           value={maskedValue}
           onChange={(e) => setValue(e.target.value)}

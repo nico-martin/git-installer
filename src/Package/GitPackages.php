@@ -157,6 +157,8 @@ class GitPackages
             'callback' => [$this, 'checkGitDir'],
             'args' => [
                 'url',
+                'branch',
+                'dir'
             ],
             'permission_callback' => function () {
                 return current_user_can(Helpers::$authAdmin);
@@ -176,12 +178,15 @@ class GitPackages
         $theme = $params['theme'];
         $activeBranch = $params['activeBranch'];
         $saveAsMustUsePlugin = $params['saveAsMustUsePlugin'];
+        $dir = self::sanitizeDir($params['dir']);
 
-        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin);
+        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin, $dir);
         if (is_wp_error($repoData)) return $repoData;
 
         $update = $this->updatePackage($repoData['key']);
         if (is_wp_error($update)) return $update;
+
+        wp_cache_flush();
 
         return [
             'message' => sprintf(
@@ -189,6 +194,7 @@ class GitPackages
                 $repoData['key']
             ),
             'packages' => $this->getPackages(),
+            'dir' => $dir,
         ];
     }
 
@@ -212,6 +218,7 @@ class GitPackages
         if (is_wp_error($update)) {
             return new \WP_Error($update->get_error_code(), $update->get_error_message(), [
                 'status' => 409,
+                'd' => $update->get_all_error_data(),
             ]);
         }
 
@@ -276,8 +283,7 @@ class GitPackages
     {
         $params = $data->get_params();
         $url = $params['url'];
-        $dir = $params['dir'];
-        if (!$dir) $dir = '';
+        $dir = self::sanitizeDir($params['dir']);
         $branch = $params['branch'];
 
         $provider = self::getProvider('', $url);
@@ -334,7 +340,7 @@ class GitPackages
      * Helpers
      */
 
-    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false)
+    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false, $dir = '')
     {
         $provider = self::getProvider('', $url);
         if (!$provider) {
@@ -369,6 +375,7 @@ class GitPackages
         $repositories[$repoData['key']]['theme'] = $theme;
         $repositories[$repoData['key']]['saveAsMustUsePlugin'] = $saveAsMustUsePlugin;
         $repositories[$repoData['key']]['activeBranch'] = $activeBranch;
+        $repositories[$repoData['key']]['dir'] = $dir;
 
         update_option($this->repo_option, $repositories);
 
@@ -386,6 +393,7 @@ class GitPackages
 
         foreach ($repos as $dir => $repo) {
             $version = null;
+            $return_repos[$dir] = $repo;
 
             if ($repo['theme']) {
                 if (array_key_exists($dir, $themes)) {
@@ -405,7 +413,6 @@ class GitPackages
                 $version = $plugin ? $plugin['Version'] : null;
             }
 
-            $return_repos[$dir] = $repo;
             $return_repos[$dir]['deployKey'] = $deployKeys[$dir];
             $return_repos[$dir]['version'] = $version;
         }
@@ -467,11 +474,16 @@ class GitPackages
         $packageDir = $subDirs[0];
         $oldDir = $this->getPackageDir($key);
 
-        if (is_dir($oldDir)) {
-            $this->rrmdir($oldDir);
-        }
+        if (is_dir($oldDir)) $this->rrmdir($oldDir);
 
-        $renamed = rename(trailingslashit($packageDir), $oldDir);
+        $renamed = rename(
+            self::unleadingslashit(
+                trailingslashit(
+                    $packageDir . ($package['dir'] ? '/' . $package['dir'] : '')
+                )
+            ),
+            $oldDir
+        );
         $this->rrmdir($tempDir);
 
         if (!$renamed) {
@@ -563,5 +575,16 @@ class GitPackages
     private static function useMustUsePlugins()
     {
         return apply_filters('shgi/Repositories/MustUsePlugins', false);
+    }
+
+    private static function sanitizeDir($dir)
+    {
+        if (!$dir) return '';
+        return trailingslashit($dir);
+    }
+
+    private static function unleadingslashit($str)
+    {
+        return ltrim($str, '/');
     }
 }

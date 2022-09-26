@@ -22,12 +22,17 @@ const CheckFolderForm: React.FC<AddRepositoryFormPropsI> = ({
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>('');
 
-  const form = useForm<{ activeBranch: string; repositoryUrl: string }>({
+  const form = useForm<{
+    activeBranch: string;
+    repositoryUrl: string;
+    dir: string;
+  }>({
     defaultValues: {
       repositoryUrl: repoData.baseUrl,
       activeBranch:
         Object.values(repoData.branches).find((branch) => branch.default)
           .name || null,
+      dir: '',
     },
   });
 
@@ -35,7 +40,7 @@ const CheckFolderForm: React.FC<AddRepositoryFormPropsI> = ({
     <Form
       onSubmit={form.handleSubmit((data) => {
         setLoading(true);
-        promise(data.activeBranch)
+        promise(data.activeBranch, data.dir)
           .then()
           .catch((e) => setError(e))
           .finally(() => setLoading(false));
@@ -61,6 +66,14 @@ const CheckFolderForm: React.FC<AddRepositoryFormPropsI> = ({
           }),
           {}
         )}
+      />
+      <FormElement
+        form={form}
+        name="dir"
+        label={__('Directory', 'shgi')}
+        Input={InputText}
+        prepend="./"
+        prependWidth="0.6em"
       />
       {error !== '' && (
         <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />

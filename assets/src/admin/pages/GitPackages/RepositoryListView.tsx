@@ -83,6 +83,16 @@ const RepositoryListView = ({
           {sprintf(__('Version: %s', 'shgi'), repository.version)}
         </p>
         <p className={styles.repo}>{repository.baseUrl}</p>
+        {repository.dir && (
+          <p
+            dangerouslySetInnerHTML={{
+              __html: sprintf(
+                __('Directory: %s', 'shgi'),
+                `<code>./${repository.dir}</code>`
+              ),
+            }}
+          />
+        )}
         <p className={styles.pushToDeploy}>
           {__('Push to Deploy URL', 'shgi')}:
           <input

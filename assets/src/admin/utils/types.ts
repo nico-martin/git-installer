@@ -41,6 +41,7 @@ export interface IGitPackage extends IGitPackageRaw {
   theme: boolean;
   saveAsMustUsePlugin: boolean;
   version: string;
+  dir: string;
 }
 
 export type IGitPackages = Array<IGitPackage>;

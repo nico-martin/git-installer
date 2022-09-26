@@ -16,7 +16,7 @@ import CheckRepoForm from './steps/CheckRepoForm';
 import RunInstallationForm from './steps/RunInstallationForm';
 
 export interface AddRepositoryFormPropsI {
-  promise: <T>(T) => Promise<boolean>;
+  promise: (a: string, b: string) => Promise<boolean>;
   submit: string;
   repoData: IGitPackageRaw;
   wpPackage: IGitWordPressPackage;
@@ -26,7 +26,7 @@ export interface AddRepositoryFormPropsI {
 interface StepI {
   title: string;
   Form: React.FC<AddRepositoryFormPropsI>;
-  promise: <T>(T) => Promise<boolean>;
+  promise: (a: string, b: string) => Promise<boolean>;
   submit: string;
 }
 
@@ -38,7 +38,8 @@ const AddRepository: React.FC<{
 }> = ({ className = '', repositoryKeys, setRepositories, onFinish = null }) => {
   const [repositoryUrl, setRepositoryUrl] = React.useState<string>(null);
   const [repoData, setRepoData] = React.useState<IGitPackageRaw>(null);
-  const [activeBranch, setActiveBranch] = React.useState<IGitPackageRaw>(null);
+  const [activeBranch, setActiveBranch] = React.useState<string>(null);
+  const [dir, setDir] = React.useState<string>(null);
   const [wpPackage, setWpPackage] = React.useState<IGitWordPressPackage>(null);
   const { addToast } = useToast();
 
@@ -69,17 +70,19 @@ const AddRepository: React.FC<{
     {
       title: __('Branch', 'shgi'),
       Form: CheckFolderForm,
-      promise: (activeBranch) =>
+      promise: (activeBranch, dir) =>
         new Promise((resolve, reject) =>
           apiPost<IGitWordPressPackage>(
             VARS.restPluginNamespace + '/git-packages-dir',
             {
               url: repositoryUrl,
               branch: activeBranch,
+              dir,
             }
           )
             .then((resp) => {
               setActiveBranch(activeBranch);
+              setDir(dir);
               setWpPackage(resp);
               resolve(true);
             })
@@ -98,7 +101,8 @@ const AddRepository: React.FC<{
               url: repositoryUrl,
               theme: wpPackage.type === 'theme',
               saveAsMustUsePlugin: VARS.mustUsePlugins && saveAsMustUsePlugin,
-              activeBranch: activeBranch,
+              activeBranch,
+              dir,
             }
           )
             .then((resp) => {
