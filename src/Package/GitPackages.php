@@ -474,7 +474,9 @@ class GitPackages
         $packageDir = $subDirs[0];
         $oldDir = $this->getPackageDir($key);
 
-        if (is_dir($oldDir)) $this->rrmdir($oldDir);
+        if (is_dir($oldDir)) {
+            $this->rrmdir($oldDir);
+        }
 
         $renamed = rename(
             self::unleadingslashit(

@@ -30,7 +30,7 @@ const CheckRepoForm: React.FC<AddRepositoryFormPropsI> = ({
     <Form
       onSubmit={form.handleSubmit((data) => {
         setLoading(true);
-        promise(data.repositoryUrl)
+        promise(data.repositoryUrl, null)
           .then()
           .catch((e) => setError(e))
           .finally(() => setLoading(false));

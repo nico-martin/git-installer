@@ -3,7 +3,8 @@
   "version": "0.0.3",
   "scripts": {
     "dev": "webpack --mode development --watch",
-    "prod": "webpack -p"
+    "prod": "webpack --mode production",
+    "build-release": "npm run prod && node scripts/zip.js"
   },
   "repository": {
     "type": "git",
