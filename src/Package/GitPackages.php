@@ -75,7 +75,7 @@ class GitPackages
             return;
         }
 
-        if (!Helpers::checkForFunction('shell_exec')) {
+        if (!Helpers::checkForFunction('shell_exec', false)) {
             return;
         }
 
