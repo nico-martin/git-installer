@@ -2,6 +2,8 @@
 
 namespace SayHello\GitInstaller;
 
+use SayHello\GitInstaller\Package\GitPackages;
+
 class Plugin
 {
 

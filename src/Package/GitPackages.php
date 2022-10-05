@@ -11,10 +11,6 @@ class GitPackages
 
     public function run()
     {
-        if (!Helpers::checkForFunction('shell_exec')) {
-            return;
-        }
-
         add_filter('shgi/AdminPage/Menu', [$this, 'menu']);
         add_filter('shgi/Settings/register', [$this, 'settings']);
         add_filter('shgi/Assets/AdminFooterJS', [$this, 'footerJsVars']);
@@ -76,6 +72,10 @@ class GitPackages
     public function maybeDoComposerInstall($dir)
     {
         if (!file_exists(trailingslashit($dir) . 'composer.json')) {
+            return;
+        }
+
+        if (!Helpers::checkForFunction('shell_exec')) {
             return;
         }
 
@@ -315,14 +315,14 @@ class GitPackages
         if (count($theme) !== 0) {
             return [
                 'type' => 'theme',
-                'name' => $theme[0]['parsed']['theme']
+                'name' => $theme[0]['parsed']['theme'],
             ];
         }
 
         if (count($plugin) !== 0) {
             return [
                 'type' => 'plugin',
-                'name' => $plugin[0]['parsed']['plugin']
+                'name' => $plugin[0]['parsed']['plugin'],
             ];
         }
 
