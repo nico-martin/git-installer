@@ -35,7 +35,7 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
 
   const install = (savePluginAsMU: boolean = false) => {
     setLoading(true);
-    promise(savePluginAsMU)
+    promise(savePluginAsMU, null)
       .then()
       .catch((e) => setError(e))
       .finally(() => setLoading(false));

@@ -16,7 +16,7 @@ import CheckRepoForm from './steps/CheckRepoForm';
 import RunInstallationForm from './steps/RunInstallationForm';
 
 export interface AddRepositoryFormPropsI {
-  promise: (a: string, b: string) => Promise<boolean>;
+  promise: (a: string | boolean, b?: string) => Promise<boolean>;
   submit: string;
   repoData: IGitPackageRaw;
   wpPackage: IGitWordPressPackage;
@@ -26,7 +26,7 @@ export interface AddRepositoryFormPropsI {
 interface StepI {
   title: string;
   Form: React.FC<AddRepositoryFormPropsI>;
-  promise: (a: string, b: string) => Promise<boolean>;
+  promise: (a: string | boolean, b?: string) => Promise<boolean>;
   submit: string;
 }
 
@@ -52,13 +52,13 @@ const AddRepository: React.FC<{
           apiGet<IGitPackageRaw>(
             VARS.restPluginNamespace +
               '/git-packages-check/' +
-              btoa(repositoryUrl)
+              btoa(repositoryUrl.toString())
           )
             .then((resp) => {
               if (repositoryKeys.indexOf(resp.key) !== -1) {
                 reject(__('The package has already been installed', 'shgi'));
               } else {
-                setRepositoryUrl(repositoryUrl);
+                setRepositoryUrl(repositoryUrl.toString());
                 setRepoData(resp);
                 resolve(true);
               }
@@ -81,7 +81,7 @@ const AddRepository: React.FC<{
             }
           )
             .then((resp) => {
-              setActiveBranch(activeBranch);
+              setActiveBranch(activeBranch.toString());
               setDir(dir);
               setWpPackage(resp);
               resolve(true);
