@@ -2,11 +2,11 @@
 
 /*
 Plugin Name: Git Installer (Alpha)
-Plugin URI: https://bitbucket.org/sayhellogmbh/shp_git-installer
+Plugin URI: https://github.com/SayHelloGmbH/git-installer
 Description: Install and Update Plugins and Themes from Github, Gitlab and Bitbucket
 Author: Nico Martin - mail@nico.dev
 Author URI: https://nico.dev
-Version: 0.0.4
+Version: 0.0.5
 Text Domain: shgi
 Domain Path: /languages
 */

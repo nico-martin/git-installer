@@ -26,6 +26,8 @@ add_filter('shgi/Repositories/MustUsePlugins', '__return_true');
 Now you are able to select the target folder for your plugin before the installation.
 
 ## Changelog
+### 0.0.5
+
 ### 0.0.4
 - warning if REST API access is disabled
 - overwrite existing packages on install
@@ -46,3 +48,6 @@ Now you are able to select the target folder for your plugin before the installa
 
 ### 0.0.1
 - initial release
+## Author
+Nico Martin   
+[nico.dev](https://nico.dev) - [github.com/nico-martin](https://github.com/nico-martin)
