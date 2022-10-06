@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
+import { EcosystemProvider } from './components/ecosystem/EcosystemContext';
 import { ToastProvider } from './components/toast/toastContext';
 import PageGitPackages from './pages/PageGitPackages';
 import { SettingsProvider } from './settings';
 import { Page, TabNavigation } from './theme';
-import { VARS } from './utils/constants';
 import { pluginString } from './utils/pluginStrings';
 import { Route, RouterProvider } from './utils/router';
 
@@ -31,7 +31,9 @@ if (app) {
     <ToastProvider>
       <SettingsProvider>
         <RouterProvider>
-          <App />
+          <EcosystemProvider>
+            <App />
+          </EcosystemProvider>
         </RouterProvider>
       </SettingsProvider>
     </ToastProvider>,

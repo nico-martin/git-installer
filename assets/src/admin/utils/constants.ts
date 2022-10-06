@@ -22,6 +22,7 @@ declare global {
       passwordProtectedSkipTo: string;
       gitPackages: IGitPackages;
       mustUsePlugins: boolean;
+      activePlugins: Array<string>;
     };
   }
 }
