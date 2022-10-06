@@ -27,6 +27,9 @@ Now you are able to select the target folder for your plugin before the installa
 
 ## Changelog
 ### 0.0.4
+- warning if REST API access is disabled
+- overwrite existing packages on install
+- fixed a couple of bugs
 
 ### 0.0.3
 - added support for Plugins or Themes from subdirectories
