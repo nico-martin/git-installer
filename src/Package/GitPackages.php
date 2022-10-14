@@ -3,9 +3,11 @@
 namespace SayHello\GitInstaller\Package;
 
 use SayHello\GitInstaller\Helpers;
+use SayHello\GitInstaller\FsHelpers;
 
 class GitPackages
 {
+
     public $repo_option = 'sayhello-git-installer-git-repositories';
     public $deploy_option = 'sayhello-git-installer-git-deploy';
 
@@ -187,6 +189,7 @@ class GitPackages
         if (is_wp_error($update)) return $update;
 
         wp_cache_flush();
+        search_theme_directories(true); // flush theme cache
 
         return [
             'message' => sprintf(
@@ -238,7 +241,7 @@ class GitPackages
                 )
             );
         }
-        $this->rrmdir($this->getPackageDir($key));
+        FsHelpers::removeDir($this->getPackageDir($key));
 
         unset($repos[$key]);
         update_option($this->repo_option, $repos);
@@ -263,18 +266,16 @@ class GitPackages
         ]);
 
         $infos = $provider->getInfos($url);
-        if (is_wp_error($infos)) {
-            return new \WP_Error(
-                'repo_validation_failed',
-                sprintf(
-                    $provider->hasToken() ?
-                        __('Either it is not a valid %s repository URL, or it is private and the deposited token does not have the required permissions.', 'shgi') :
-                        __('Either it is not a valid %s repository URL, or it is Private. In this case, you would have to add a corresponding token under "Access control".', 'shgi'),
-                    $provider->name()
-                ),
-                ['status' => 404]
-            );
-        }
+        if (is_wp_error($infos)) return new \WP_Error(
+            'repo_validation_failed',
+            sprintf(
+                $provider->hasToken() ?
+                    __('Either it is not a valid %s repository URL, or it is private and the deposited token does not have the required permissions.', 'shgi') :
+                    __('Either it is not a valid %s repository URL, or it is Private. In this case, you would have to add a corresponding token under "Access control".', 'shgi'),
+                $provider->name()
+            ),
+            ['status' => 404]
+        );
 
         return $infos;
     }
@@ -304,18 +305,19 @@ class GitPackages
             $provider->validateDir($url, $branch, $dir)
         );
 
-        $theme = array_filter($files, function ($file) {
+        $theme = array_values(array_filter($files, function ($file) {
             return $file['file'] === 'style.css' && boolval($file['parsed']['theme']);
-        });
+        }));
 
-        $plugin = array_filter($files, function ($file) {
+        $plugin = array_values(array_filter($files, function ($file) {
             return boolval($file['parsed']['plugin']);
-        });
+        }));
 
         if (count($theme) !== 0) {
             return [
                 'type' => 'theme',
                 'name' => $theme[0]['parsed']['theme'],
+                'theme' => $theme,
             ];
         }
 
@@ -424,15 +426,13 @@ class GitPackages
     {
         $packages = $this->getPackages(false);
 
-        if (!array_key_exists($key, $packages)) {
-            return new \WP_Error(
-                'shgi_repo_not_found',
-                sprintf(
-                    __('Package %s could not be updated: The package does not exist', 'shgi'),
-                    '<code>' . $key . '</code>'
-                ),
-            );
-        }
+        if (!array_key_exists($key, $packages)) return new \WP_Error(
+            'shgi_repo_not_found',
+            sprintf(
+                __('Package %s could not be updated: The package does not exist', 'shgi'),
+                '"' . $key . '"'
+            ),
+        );
 
         $package = $packages[$key];
         $tempDir = Helpers::getContentFolder() . 'temp/';
@@ -444,49 +444,32 @@ class GitPackages
 
         $request = wp_remote_get($request[0], $request[1]);
 
-        if (is_wp_error($request) || wp_remote_retrieve_response_code($request) >= 300) {
-            return new \WP_Error(
-                'shgi_repo_not_fetched',
-                sprintf(
-                    __('Archive %s could not be copied', 'shgi'),
-                    '<code>' . $zipUrl . '</code>'
-                )
-            );
-        }
+        if (is_wp_error($request) || wp_remote_retrieve_response_code($request) >= 300) return new \WP_Error(
+            'shgi_repo_not_fetched',
+            sprintf(
+                __('Archive %s could not be copied', 'shgi'),
+                '<code>' . $zipUrl . '</code>'
+            )
+        );
 
         file_put_contents($tempDir . $key . '.zip', wp_remote_retrieve_body($request));
-        $zip = new \ZipArchive;
-        $res = $zip->open($tempDir . $key . '.zip');
-        if ($res !== true) {
-            return new \WP_Error(
-                'shgi_repo_unzip_failed',
-                sprintf(
-                    __('%s could not be unpacked', 'shgi'),
-                    '<code>' . $zipUrl . '</code>'
-                )
-            );
-        }
-        $zip->extractTo($tempDir . $key . '/');
-        $zip->close();
-        unlink($tempDir . $key . '.zip');
+
+        $unzip = FsHelpers::unzip($tempDir . $key . '.zip', $tempDir . $key . '/');
+        if (is_wp_error($unzip)) return $unzip;
 
         $subDirs = glob($tempDir . $key . '/*', GLOB_ONLYDIR);
         $packageDir = $subDirs[0];
         $oldDir = $this->getPackageDir($key);
 
         if (is_dir($oldDir)) {
-            $this->rrmdir($oldDir);
+            FsHelpers::removeDir($oldDir);
         }
 
-        $renamed = rename(
-            self::unleadingslashit(
-                trailingslashit(
-                    $packageDir . ($package['dir'] ? '/' . $package['dir'] : '')
-                )
-            ),
+        $renamed = FsHelpers::moveDir(
+            trailingslashit($packageDir) . ($package['dir'] ? trailingslashit($package['dir']) : ''),
             $oldDir
         );
-        $this->rrmdir($tempDir);
+        FsHelpers::removeDir($tempDir);
 
         if (!$renamed) {
             return new \WP_Error(
@@ -494,31 +477,16 @@ class GitPackages
                 __(
                     'The folder could not be copied. Possibly the old folder could not be emptied completely.',
                     'shgi'
-                )
+                ), [
+                    'from' => trailingslashit($packageDir) . ($package['dir'] ? trailingslashit($package['dir']) : ''),
+                    'to' => $oldDir,
+                ]
             );
         }
 
         do_action('shgi/GitPackages/DoAfterUpdate', $oldDir);
 
         return true;
-    }
-
-    private function rrmdir($dir)
-    {
-        if (is_dir($dir)) {
-            $objects = scandir($dir);
-            foreach ($objects as $object) {
-                if ($object != "." && $object != "..") {
-                    if (filetype($dir . "/" . $object) == "dir") {
-                        $this->rrmdir($dir . "/" . $object);
-                    } else {
-                        unlink($dir . "/" . $object);
-                    }
-                }
-            }
-            reset($objects);
-            rmdir($dir);
-        }
     }
 
     private function getPackageDir($key)

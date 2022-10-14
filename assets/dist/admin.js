@@ -98,7 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","pushToDeploy":"RepositoryListView__pushToDeploy--1T2yZ","pushToDeployInput":"RepositoryListView__pushToDeployInput--30Exa","copyButton":"RepositoryListView__copyButton--FrZQ5"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","pushToDeploy":"RepositoryListView__pushToDeploy--1T2yZ","pushToDeployInput":"RepositoryListView__pushToDeployInput--30Exa","copyButton":"RepositoryListView__copyButton--FrZQ5","error":"RepositoryListView__error--13_UO"});
 
 /***/ }),
 
@@ -30943,23 +30943,26 @@ var RepositoryListView = function (_a) {
                 repository.theme ? (0, i18n_1.__)('Theme:', 'shgi') + ' ' : '',
                 repository.name,
                 repository.saveAsMustUsePlugin ? ' (MU)' : ''),
-            react_1.default.createElement("p", { className: RepositoryListView_css_1.default.version }, (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgi'), repository.version)),
-            react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo }, repository.baseUrl),
-            repository.dir && (react_1.default.createElement("p", { dangerouslySetInnerHTML: {
-                    __html: (0, i18n_1.sprintf)((0, i18n_1.__)('Directory: %s', 'shgi'), "<code>./" + repository.dir + "</code>"),
-                } })),
-            react_1.default.createElement("p", { className: RepositoryListView_css_1.default.pushToDeploy },
-                (0, i18n_1.__)('Push to Deploy URL', 'shgi'),
-                ":",
-                react_1.default.createElement("input", { className: RepositoryListView_css_1.default.pushToDeployInput, value: updateUrl, type: "text", disabled: true }),
-                Boolean(navigator.clipboard) && (react_1.default.createElement("button", { className: RepositoryListView_css_1.default.copyButton, onClick: function () {
-                        addToast({
-                            message: (0, i18n_1.__)('Push to Deploy URL wurde in die Zwischenablage kopiert', 'shgi'),
-                            type: theme_1.NOTICE_TYPES.SUCCESS,
-                        });
-                        navigator.clipboard.writeText(updateUrl);
-                    }, title: "Copy" },
-                    react_1.default.createElement(theme_1.Icon, { icon: "copy" }))))),
+            repository.version === null ? (react_1.default.createElement(theme_1.Notice, { className: RepositoryListView_css_1.default.error, type: theme_1.NOTICE_TYPES.ERROR }, repository.theme
+                ? (0, i18n_1.__)('The Theme does not seem to be installed', 'shgi')
+                : (0, i18n_1.__)('The Plugin does not seem to be installed', 'shgi'))) : (react_1.default.createElement(react_1.default.Fragment, null,
+                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.version }, (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgi'), repository.version)),
+                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo }, repository.baseUrl),
+                repository.dir && (react_1.default.createElement("p", { dangerouslySetInnerHTML: {
+                        __html: (0, i18n_1.sprintf)((0, i18n_1.__)('Directory: %s', 'shgi'), "<code>./" + repository.dir + "</code>"),
+                    } })),
+                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.pushToDeploy },
+                    (0, i18n_1.__)('Push to Deploy URL', 'shgi'),
+                    ":",
+                    react_1.default.createElement("input", { className: RepositoryListView_css_1.default.pushToDeployInput, value: updateUrl, type: "text", disabled: true }),
+                    Boolean(navigator.clipboard) && (react_1.default.createElement("button", { className: RepositoryListView_css_1.default.copyButton, onClick: function () {
+                            addToast({
+                                message: (0, i18n_1.__)('Push to Deploy URL wurde in die Zwischenablage kopiert', 'shgi'),
+                                type: theme_1.NOTICE_TYPES.SUCCESS,
+                            });
+                            navigator.clipboard.writeText(updateUrl);
+                        }, title: "Copy" },
+                        react_1.default.createElement(theme_1.Icon, { icon: "copy" }))))))),
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.controls },
             react_1.default.createElement(theme_1.Button, { buttonType: "primary", loading: loadingUpdate, onClick: updateRepo }, (0, i18n_1.__)('Update', 'shgi')),
             react_1.default.createElement(theme_1.Button, { buttonType: "delete", loading: loadingDelete, onClick: deleteRepo }, (0, i18n_1.__)('Delete', 'shgi')))));
@@ -31144,7 +31147,9 @@ var CheckFolderForm = function (_a) {
                 var _a;
                 return (__assign(__assign({}, acc), (_a = {}, _a[branch.name] = branch.name, _a)));
             }, {}) }),
-        react_1.default.createElement(theme_1.FormElement, { form: form, name: "dir", label: (0, i18n_1.__)('Directory', 'shgi'), Input: theme_1.InputText, prepend: "./", prependWidth: "0.6em" }),
+        react_1.default.createElement(theme_1.FormElement, { form: form, name: "dir", label: (0, i18n_1.__)('Directory', 'shgi'), Input: theme_1.InputText, prepend: "./", prependWidth: "0.6em", DescriptionInput: react_1.default.createElement("p", { dangerouslySetInnerHTML: {
+                    __html: (0, i18n_1.__)("If your Theme or Plugin is in a subdirectory of your repository, specify the path relative to the root path here. Leave empty if it's in the root.", 'shgi'),
+                } }) }),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR, message: error })),
         react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: submit, align: "right" })));
 };
@@ -31229,7 +31234,7 @@ var RunInstallationForm = function (_a) {
             savePluginAs: '',
         },
     });
-    var showMustUseForm = !constants_1.VARS.mustUsePlugins || (wpPackage === null || wpPackage === void 0 ? void 0 : wpPackage.type) !== 'plugin';
+    var showMustUseForm = constants_1.VARS.mustUsePlugins && (wpPackage === null || wpPackage === void 0 ? void 0 : wpPackage.type) === 'plugin';
     var install = function (savePluginAsMU) {
         if (savePluginAsMU === void 0) { savePluginAsMU = false; }
         setLoading(true);
@@ -31239,7 +31244,7 @@ var RunInstallationForm = function (_a) {
             .finally(function () { return setLoading(false); });
     };
     react_1.default.useEffect(function () {
-        showMustUseForm && install(false);
+        !showMustUseForm && install(false);
     }, []);
     var desc = react_1.default.createElement("p", null, "Das Theme");
     return loading ? (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, RunInstallationForm_css_1.default.loadingComp) },
@@ -31249,14 +31254,15 @@ var RunInstallationForm = function (_a) {
         react_1.default.createElement(theme_1.Loader, { className: RunInstallationForm_css_1.default.loader, size: 3 }))) : (react_1.default.createElement(theme_1.Form, { onSubmit: form.handleSubmit(function (data) {
             return install(data.savePluginAs === 'mustUse');
         }), className: className },
-        react_1.default.createElement("p", { dangerouslySetInnerHTML: {
-                __html: (0, i18n_1.sprintf)((0, i18n_1.__)('The plugin "%s" is ready for installation. Now please define whether the plugin should be installed as a "must use plugin" or as a normal plugin.'), "<b>" + wpPackage.name + "</b>"),
-            } }),
-        react_1.default.createElement(theme_1.FormElement, { form: form, name: "savePluginAs", label: (0, i18n_1.__)('Save plugin as', 'shgi'), Input: theme_1.InputSelect, options: (_b = {},
-                _b[''] = (0, i18n_1.__)('select..', 'shgi'),
-                _b.normal = (0, i18n_1.__)('Normal Plugin', 'shgi'),
-                _b.mustUse = (0, i18n_1.__)('Must Use Plugin', 'shgi'),
-                _b) }),
+        showMustUseForm && (react_1.default.createElement(react_1.default.Fragment, null,
+            react_1.default.createElement("p", { dangerouslySetInnerHTML: {
+                    __html: (0, i18n_1.sprintf)((0, i18n_1.__)('The plugin "%s" is ready for installation. Now please define whether the plugin should be installed as a "must use plugin" or as a normal plugin.'), "<b>" + wpPackage.name + "</b>"),
+                } }),
+            react_1.default.createElement(theme_1.FormElement, { form: form, name: "savePluginAs", label: (0, i18n_1.__)('Save plugin as', 'shgi'), Input: theme_1.InputSelect, options: (_b = {},
+                    _b[''] = (0, i18n_1.__)('select..', 'shgi'),
+                    _b.normal = (0, i18n_1.__)('Normal Plugin', 'shgi'),
+                    _b.mustUse = (0, i18n_1.__)('Must Use Plugin', 'shgi'),
+                    _b) }))),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR, message: error })),
         react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: submit, align: "right" })));
 };

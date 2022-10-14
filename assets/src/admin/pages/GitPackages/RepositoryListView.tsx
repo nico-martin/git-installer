@@ -1,7 +1,8 @@
+import { Message } from 'postcss';
 import React from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 import { useToast } from '../../components/toast/toastContext';
-import { Button, Icon, NOTICE_TYPES } from '../../theme';
+import { Button, Icon, NOTICE_TYPES, Notice } from '../../theme';
 import { apiDelete, apiGet } from '../../utils/apiFetch';
 import cn from '../../utils/classnames';
 import { VARS } from '../../utils/constants';
@@ -79,47 +80,57 @@ const RepositoryListView = ({
           {repository.name}
           {repository.saveAsMustUsePlugin ? ' (MU)' : ''}
         </h3>
-        <p className={styles.version}>
-          {sprintf(__('Version: %s', 'shgi'), repository.version)}
-        </p>
-        <p className={styles.repo}>{repository.baseUrl}</p>
-        {repository.dir && (
-          <p
-            dangerouslySetInnerHTML={{
-              __html: sprintf(
-                __('Directory: %s', 'shgi'),
-                `<code>./${repository.dir}</code>`
-              ),
-            }}
-          />
-        )}
-        <p className={styles.pushToDeploy}>
-          {__('Push to Deploy URL', 'shgi')}:
-          <input
-            className={styles.pushToDeployInput}
-            value={updateUrl}
-            type="text"
-            disabled
-          />
-          {Boolean(navigator.clipboard) && (
-            <button
-              className={styles.copyButton}
-              onClick={() => {
-                addToast({
-                  message: __(
-                    'Push to Deploy URL wurde in die Zwischenablage kopiert',
-                    'shgi'
+        {repository.version === null ? (
+          <Notice className={styles.error} type={NOTICE_TYPES.ERROR}>
+            {repository.theme
+              ? __('The Theme does not seem to be installed', 'shgi')
+              : __('The Plugin does not seem to be installed', 'shgi')}
+          </Notice>
+        ) : (
+          <React.Fragment>
+            <p className={styles.version}>
+              {sprintf(__('Version: %s', 'shgi'), repository.version)}
+            </p>
+            <p className={styles.repo}>{repository.baseUrl}</p>
+            {repository.dir && (
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: sprintf(
+                    __('Directory: %s', 'shgi'),
+                    `<code>./${repository.dir}</code>`
                   ),
-                  type: NOTICE_TYPES.SUCCESS,
-                });
-                navigator.clipboard.writeText(updateUrl);
-              }}
-              title="Copy"
-            >
-              <Icon icon="copy" />
-            </button>
-          )}
-        </p>
+                }}
+              />
+            )}
+            <p className={styles.pushToDeploy}>
+              {__('Push to Deploy URL', 'shgi')}:
+              <input
+                className={styles.pushToDeployInput}
+                value={updateUrl}
+                type="text"
+                disabled
+              />
+              {Boolean(navigator.clipboard) && (
+                <button
+                  className={styles.copyButton}
+                  onClick={() => {
+                    addToast({
+                      message: __(
+                        'Push to Deploy URL wurde in die Zwischenablage kopiert',
+                        'shgi'
+                      ),
+                      type: NOTICE_TYPES.SUCCESS,
+                    });
+                    navigator.clipboard.writeText(updateUrl);
+                  }}
+                  title="Copy"
+                >
+                  <Icon icon="copy" />
+                </button>
+              )}
+            </p>
+          </React.Fragment>
+        )}
       </div>
       <div className={styles.controls}>
         <Button

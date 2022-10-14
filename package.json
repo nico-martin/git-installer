@@ -1,6 +1,6 @@
 {
   "name": "git-installer",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
     "dev": "webpack --mode development --watch",
     "prod": "webpack --mode production",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org:sayhellogmbh/shp_git-installer.git"
+    "url": "git+ssh://git@github.com:SayHelloGmbH/git-installer.git"
   },
   "dependencies": {
     "@types/wordpress__components": "^9.8.6",
@@ -55,11 +55,11 @@
     "webpack-livereload-plugin": "^3.0.2"
   },
   "author": "Nico Martin",
-  "license": "GPL-3.0",
+  "license": "hello@sayhello.ch",
   "bugs": {
-    "url": "https://bitbucket.org/sayhellogmbh/shp_git-installer/issues"
+    "url": "https://github.com/SayHelloGmbH/git-installer/issues"
   },
-  "homepage": "https://bitbucket.org/sayhellogmbh/shp_git-installer#README",
+  "homepage": "https://github.com/SayHelloGmbH/git-installer/blob/main/README.md",
   "babel": {
     "presets": [
       "@babel/preset-env"

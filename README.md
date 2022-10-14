@@ -26,7 +26,15 @@ add_filter('shgi/Repositories/MustUsePlugins', '__return_true');
 Now you are able to select the target folder for your plugin before the installation.
 
 ## Changelog
+### 0.0.5
+- bugfix: UI adjustments if installation fails
+- bugfix: copyDir/rename
+- bugfix: flush theme cache after new Theme is added
+
 ### 0.0.4
+- warning if REST API access is disabled
+- overwrite existing packages on install
+- fixed a couple of bugs
 
 ### 0.0.3
 - added support for Plugins or Themes from subdirectories
@@ -43,3 +51,6 @@ Now you are able to select the target folder for your plugin before the installa
 
 ### 0.0.1
 - initial release
+## Author
+Nico Martin   
+[nico.dev](https://nico.dev) - [github.com/nico-martin](https://github.com/nico-martin)

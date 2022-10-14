@@ -31,7 +31,7 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
     },
   });
 
-  const showMustUseForm = !VARS.mustUsePlugins || wpPackage?.type !== 'plugin';
+  const showMustUseForm = VARS.mustUsePlugins && wpPackage?.type === 'plugin';
 
   const install = (savePluginAsMU: boolean = false) => {
     setLoading(true);
@@ -42,7 +42,7 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
   };
 
   React.useEffect(() => {
-    showMustUseForm && install(false);
+    !showMustUseForm && install(false);
   }, []);
 
   const desc = <p>Das Theme</p>;
@@ -67,27 +67,31 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
       )}
       className={className}
     >
-      <p
-        dangerouslySetInnerHTML={{
-          __html: sprintf(
-            __(
-              'The plugin "%s" is ready for installation. Now please define whether the plugin should be installed as a "must use plugin" or as a normal plugin.'
-            ),
-            `<b>${wpPackage.name}</b>`
-          ),
-        }}
-      />
-      <FormElement
-        form={form}
-        name="savePluginAs"
-        label={__('Save plugin as', 'shgi')}
-        Input={InputSelect}
-        options={{
-          ['']: __('select..', 'shgi'),
-          normal: __('Normal Plugin', 'shgi'),
-          mustUse: __('Must Use Plugin', 'shgi'),
-        }}
-      />
+      {showMustUseForm && (
+        <React.Fragment>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: sprintf(
+                __(
+                  'The plugin "%s" is ready for installation. Now please define whether the plugin should be installed as a "must use plugin" or as a normal plugin.'
+                ),
+                `<b>${wpPackage.name}</b>`
+              ),
+            }}
+          />
+          <FormElement
+            form={form}
+            name="savePluginAs"
+            label={__('Save plugin as', 'shgi')}
+            Input={InputSelect}
+            options={{
+              ['']: __('select..', 'shgi'),
+              normal: __('Normal Plugin', 'shgi'),
+              mustUse: __('Must Use Plugin', 'shgi'),
+            }}
+          />
+        </React.Fragment>
+      )}
       {error !== '' && (
         <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />
       )}

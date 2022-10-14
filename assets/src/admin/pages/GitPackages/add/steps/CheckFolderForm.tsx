@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import {
   Form,
   FormControls,
@@ -74,6 +74,16 @@ const CheckFolderForm: React.FC<AddRepositoryFormPropsI> = ({
         Input={InputText}
         prepend="./"
         prependWidth="0.6em"
+        DescriptionInput={
+          <p
+            dangerouslySetInnerHTML={{
+              __html: __(
+                "If your Theme or Plugin is in a subdirectory of your repository, specify the path relative to the root path here. Leave empty if it's in the root.",
+                'shgi'
+              ),
+            }}
+          />
+        }
       />
       {error !== '' && (
         <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />

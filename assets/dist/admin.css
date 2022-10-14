@@ -994,6 +994,10 @@
   justify-content: space-between;
 }
 
+.RepositoryListView__infos--1f6NV {
+  flex-grow: 1;
+}
+
 .RepositoryListView__infos--1f6NV p {
     margin: 0.8em 0 0 0;
   }
@@ -1055,6 +1059,10 @@
 .RepositoryListView__copyButton--FrZQ5:hover {
     opacity: 0.6;
   }
+
+.RepositoryListView__error--13_UO {
+  margin-top: var(--wpmstaging-form-spacing);
+}
 
 /*!**********************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/GitPackages/add/AddRepository.css ***!
