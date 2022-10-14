@@ -188,9 +188,6 @@ class GitPackages
         $update = $this->updatePackage($repoData['key']);
         if (is_wp_error($update)) return $update;
 
-        wp_cache_flush();
-        search_theme_directories(true); // flush theme cache
-
         return [
             'message' => sprintf(
                 __('"%s" was installed successfully', 'shgi'),
@@ -387,6 +384,10 @@ class GitPackages
     private function getPackages($array = true)
     {
         require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+        wp_cache_flush();
+        search_theme_directories(true); // flush theme cache
+
         $plugins = get_plugins();
         $themes = wp_get_themes();
         $return_repos = [];
