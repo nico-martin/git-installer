@@ -1,16 +1,19 @@
 <?php
-
 namespace SayHello\GitInstaller\Package;
 
 use SayHello\GitInstaller\Helpers;
+use SayHello\GitInstaller\FsHelpers;
 
 class GitPackages
 {
+
     public $repo_option = 'sayhello-git-installer-git-repositories';
     public $deploy_option = 'sayhello-git-installer-git-deploy';
 
     public function run()
     {
+        error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+
         add_filter('shgi/AdminPage/Menu', [$this, 'menu']);
         add_filter('shgi/Settings/register', [$this, 'settings']);
         add_filter('shgi/Assets/AdminFooterJS', [$this, 'footerJsVars']);
@@ -424,15 +427,13 @@ class GitPackages
     {
         $packages = $this->getPackages(false);
 
-        if (!array_key_exists($key, $packages)) {
-            return new \WP_Error(
-                'shgi_repo_not_found',
-                sprintf(
-                    __('Package %s could not be updated: The package does not exist', 'shgi'),
-                    '<code>' . $key . '</code>'
-                ),
-            );
-        }
+        if (!array_key_exists($key, $packages)) return new \WP_Error(
+            'shgi_repo_not_found',
+            sprintf(
+                __('Package %s could not be updated: The package does not exist', 'shgi'),
+                '"' . $key . '"'
+            ),
+        );
 
         $package = $packages[$key];
         $tempDir = Helpers::getContentFolder() . 'temp/';
@@ -444,49 +445,34 @@ class GitPackages
 
         $request = wp_remote_get($request[0], $request[1]);
 
-        if (is_wp_error($request) || wp_remote_retrieve_response_code($request) >= 300) {
-            return new \WP_Error(
-                'shgi_repo_not_fetched',
-                sprintf(
-                    __('Archive %s could not be copied', 'shgi'),
-                    '<code>' . $zipUrl . '</code>'
-                )
-            );
-        }
+        if (is_wp_error($request) || wp_remote_retrieve_response_code($request) >= 300) return new \WP_Error(
+            'shgi_repo_not_fetched',
+            sprintf(
+                __('Archive %s could not be copied', 'shgi'),
+                '<code>' . $zipUrl . '</code>'
+            )
+        );
 
         file_put_contents($tempDir . $key . '.zip', wp_remote_retrieve_body($request));
-        $zip = new \ZipArchive;
-        $res = $zip->open($tempDir . $key . '.zip');
-        if ($res !== true) {
-            return new \WP_Error(
-                'shgi_repo_unzip_failed',
-                sprintf(
-                    __('%s could not be unpacked', 'shgi'),
-                    '<code>' . $zipUrl . '</code>'
-                )
-            );
-        }
-        $zip->extractTo($tempDir . $key . '/');
-        $zip->close();
-        unlink($tempDir . $key . '.zip');
+
+        $unzip = FsHelpers::unzip($tempDir . $key . '.zip', $tempDir . $key . '/');
+        if (is_wp_error($unzip)) return $unzip;
 
         $subDirs = glob($tempDir . $key . '/*', GLOB_ONLYDIR);
         $packageDir = $subDirs[0];
         $oldDir = $this->getPackageDir($key);
 
         if (is_dir($oldDir)) {
-            $this->rrmdir($oldDir);
+            FsHelpers::removeDir($oldDir);
         }
 
-        $renamed = rename(
+        $renamed = FsHelpers::moveDir(
             self::unleadingslashit(
-                trailingslashit(
-                    $packageDir . ($package['dir'] ? '/' . $package['dir'] : '')
-                )
+                trailingslashit($packageDir) . ($package['dir'] ? trailingslashit($package['dir']) : '')
             ),
             $oldDir
         );
-        $this->rrmdir($tempDir);
+        FsHelpers::removeDir($tempDir);
 
         if (!$renamed) {
             return new \WP_Error(
@@ -494,31 +480,18 @@ class GitPackages
                 __(
                     'The folder could not be copied. Possibly the old folder could not be emptied completely.',
                     'shgi'
-                )
+                ), [
+                    'from' => self::unleadingslashit(
+                        trailingslashit($packageDir) . ($package['dir'] ? trailingslashit($package['dir']) : '')
+                    ),
+                    'to' => $oldDir,
+                ]
             );
         }
 
         do_action('shgi/GitPackages/DoAfterUpdate', $oldDir);
 
         return true;
-    }
-
-    private function rrmdir($dir)
-    {
-        if (is_dir($dir)) {
-            $objects = scandir($dir);
-            foreach ($objects as $object) {
-                if ($object != "." && $object != "..") {
-                    if (filetype($dir . "/" . $object) == "dir") {
-                        $this->rrmdir($dir . "/" . $object);
-                    } else {
-                        unlink($dir . "/" . $object);
-                    }
-                }
-            }
-            reset($objects);
-            rmdir($dir);
-        }
     }
 
     private function getPackageDir($key)

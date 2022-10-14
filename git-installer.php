@@ -18,6 +18,7 @@ add_action('init', function () {
 });
 
 require_once 'src/Helpers.php';
+require_once 'src/FsHelpers.php';
 require_once 'src/Plugin.php';
 require_once 'src/Assets.php';
 require_once 'src/Settings.php';
