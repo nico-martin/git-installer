@@ -136,7 +136,7 @@ class GitPackages
         ]);
 
         register_rest_route(sayhelloGitInstaller()->api_namespace, 'git-packages-deploy/(?P<slug>\S+)/', [
-            'methods' => 'GET',
+            'methods' => ['GET', 'POST'],
             'callback' => [$this, 'pushToDeploy'],
             'args' => [
                 'slug',

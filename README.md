@@ -30,6 +30,7 @@ Now you are able to select the target folder for your plugin before the installa
 - bugfix: UI adjustments if installation fails
 - bugfix: copyDir/rename
 - bugfix: flush theme cache after new Theme is added
+- pushToDeploy URL now also works for POST requests
 
 ### 0.0.4
 - warning if REST API access is disabled
