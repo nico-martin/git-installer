@@ -191,6 +191,7 @@ class GitPackages
         if (is_wp_error($update)) return $update;
 
         wp_cache_flush();
+        search_theme_directories(true); // flush theme cache
 
         return [
             'message' => sprintf(
@@ -242,7 +243,7 @@ class GitPackages
                 )
             );
         }
-        $this->rrmdir($this->getPackageDir($key));
+        FsHelpers::removeDir($this->getPackageDir($key));
 
         unset($repos[$key]);
         update_option($this->repo_option, $repos);
@@ -267,18 +268,16 @@ class GitPackages
         ]);
 
         $infos = $provider->getInfos($url);
-        if (is_wp_error($infos)) {
-            return new \WP_Error(
-                'repo_validation_failed',
-                sprintf(
-                    $provider->hasToken() ?
-                        __('Either it is not a valid %s repository URL, or it is private and the deposited token does not have the required permissions.', 'shgi') :
-                        __('Either it is not a valid %s repository URL, or it is Private. In this case, you would have to add a corresponding token under "Access control".', 'shgi'),
-                    $provider->name()
-                ),
-                ['status' => 404]
-            );
-        }
+        if (is_wp_error($infos)) return new \WP_Error(
+            'repo_validation_failed',
+            sprintf(
+                $provider->hasToken() ?
+                    __('Either it is not a valid %s repository URL, or it is private and the deposited token does not have the required permissions.', 'shgi') :
+                    __('Either it is not a valid %s repository URL, or it is Private. In this case, you would have to add a corresponding token under "Access control".', 'shgi'),
+                $provider->name()
+            ),
+            ['status' => 404]
+        );
 
         return $infos;
     }
@@ -308,18 +307,19 @@ class GitPackages
             $provider->validateDir($url, $branch, $dir)
         );
 
-        $theme = array_filter($files, function ($file) {
+        $theme = array_values(array_filter($files, function ($file) {
             return $file['file'] === 'style.css' && boolval($file['parsed']['theme']);
-        });
+        }));
 
-        $plugin = array_filter($files, function ($file) {
+        $plugin = array_values(array_filter($files, function ($file) {
             return boolval($file['parsed']['plugin']);
-        });
+        }));
 
         if (count($theme) !== 0) {
             return [
                 'type' => 'theme',
                 'name' => $theme[0]['parsed']['theme'],
+                'theme' => $theme,
             ];
         }
 

@@ -31234,7 +31234,7 @@ var RunInstallationForm = function (_a) {
             savePluginAs: '',
         },
     });
-    var showMustUseForm = !constants_1.VARS.mustUsePlugins || (wpPackage === null || wpPackage === void 0 ? void 0 : wpPackage.type) !== 'plugin';
+    var showMustUseForm = constants_1.VARS.mustUsePlugins && (wpPackage === null || wpPackage === void 0 ? void 0 : wpPackage.type) === 'plugin';
     var install = function (savePluginAsMU) {
         if (savePluginAsMU === void 0) { savePluginAsMU = false; }
         setLoading(true);
@@ -31244,7 +31244,7 @@ var RunInstallationForm = function (_a) {
             .finally(function () { return setLoading(false); });
     };
     react_1.default.useEffect(function () {
-        showMustUseForm && install(false);
+        !showMustUseForm && install(false);
     }, []);
     var desc = react_1.default.createElement("p", null, "Das Theme");
     return loading ? (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, RunInstallationForm_css_1.default.loadingComp) },
@@ -31254,14 +31254,15 @@ var RunInstallationForm = function (_a) {
         react_1.default.createElement(theme_1.Loader, { className: RunInstallationForm_css_1.default.loader, size: 3 }))) : (react_1.default.createElement(theme_1.Form, { onSubmit: form.handleSubmit(function (data) {
             return install(data.savePluginAs === 'mustUse');
         }), className: className },
-        react_1.default.createElement("p", { dangerouslySetInnerHTML: {
-                __html: (0, i18n_1.sprintf)((0, i18n_1.__)('The plugin "%s" is ready for installation. Now please define whether the plugin should be installed as a "must use plugin" or as a normal plugin.'), "<b>" + wpPackage.name + "</b>"),
-            } }),
-        react_1.default.createElement(theme_1.FormElement, { form: form, name: "savePluginAs", label: (0, i18n_1.__)('Save plugin as', 'shgi'), Input: theme_1.InputSelect, options: (_b = {},
-                _b[''] = (0, i18n_1.__)('select..', 'shgi'),
-                _b.normal = (0, i18n_1.__)('Normal Plugin', 'shgi'),
-                _b.mustUse = (0, i18n_1.__)('Must Use Plugin', 'shgi'),
-                _b) }),
+        showMustUseForm && (react_1.default.createElement(react_1.default.Fragment, null,
+            react_1.default.createElement("p", { dangerouslySetInnerHTML: {
+                    __html: (0, i18n_1.sprintf)((0, i18n_1.__)('The plugin "%s" is ready for installation. Now please define whether the plugin should be installed as a "must use plugin" or as a normal plugin.'), "<b>" + wpPackage.name + "</b>"),
+                } }),
+            react_1.default.createElement(theme_1.FormElement, { form: form, name: "savePluginAs", label: (0, i18n_1.__)('Save plugin as', 'shgi'), Input: theme_1.InputSelect, options: (_b = {},
+                    _b[''] = (0, i18n_1.__)('select..', 'shgi'),
+                    _b.normal = (0, i18n_1.__)('Normal Plugin', 'shgi'),
+                    _b.mustUse = (0, i18n_1.__)('Must Use Plugin', 'shgi'),
+                    _b) }))),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR, message: error })),
         react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: submit, align: "right" })));
 };
