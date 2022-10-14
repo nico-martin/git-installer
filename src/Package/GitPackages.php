@@ -1,4 +1,5 @@
 <?php
+
 namespace SayHello\GitInstaller\Package;
 
 use SayHello\GitInstaller\Helpers;
@@ -467,9 +468,7 @@ class GitPackages
         }
 
         $renamed = FsHelpers::moveDir(
-            self::unleadingslashit(
-                trailingslashit($packageDir) . ($package['dir'] ? trailingslashit($package['dir']) : '')
-            ),
+            trailingslashit($packageDir) . ($package['dir'] ? trailingslashit($package['dir']) : ''),
             $oldDir
         );
         FsHelpers::removeDir($tempDir);
@@ -481,9 +480,7 @@ class GitPackages
                     'The folder could not be copied. Possibly the old folder could not be emptied completely.',
                     'shgi'
                 ), [
-                    'from' => self::unleadingslashit(
-                        trailingslashit($packageDir) . ($package['dir'] ? trailingslashit($package['dir']) : '')
-                    ),
+                    'from' => trailingslashit($packageDir) . ($package['dir'] ? trailingslashit($package['dir']) : ''),
                     'to' => $oldDir,
                 ]
             );

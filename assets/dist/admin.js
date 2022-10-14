@@ -98,7 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","pushToDeploy":"RepositoryListView__pushToDeploy--1T2yZ","pushToDeployInput":"RepositoryListView__pushToDeployInput--30Exa","copyButton":"RepositoryListView__copyButton--FrZQ5"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","pushToDeploy":"RepositoryListView__pushToDeploy--1T2yZ","pushToDeployInput":"RepositoryListView__pushToDeployInput--30Exa","copyButton":"RepositoryListView__copyButton--FrZQ5","error":"RepositoryListView__error--13_UO"});
 
 /***/ }),
 
@@ -30943,23 +30943,26 @@ var RepositoryListView = function (_a) {
                 repository.theme ? (0, i18n_1.__)('Theme:', 'shgi') + ' ' : '',
                 repository.name,
                 repository.saveAsMustUsePlugin ? ' (MU)' : ''),
-            react_1.default.createElement("p", { className: RepositoryListView_css_1.default.version }, (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgi'), repository.version)),
-            react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo }, repository.baseUrl),
-            repository.dir && (react_1.default.createElement("p", { dangerouslySetInnerHTML: {
-                    __html: (0, i18n_1.sprintf)((0, i18n_1.__)('Directory: %s', 'shgi'), "<code>./" + repository.dir + "</code>"),
-                } })),
-            react_1.default.createElement("p", { className: RepositoryListView_css_1.default.pushToDeploy },
-                (0, i18n_1.__)('Push to Deploy URL', 'shgi'),
-                ":",
-                react_1.default.createElement("input", { className: RepositoryListView_css_1.default.pushToDeployInput, value: updateUrl, type: "text", disabled: true }),
-                Boolean(navigator.clipboard) && (react_1.default.createElement("button", { className: RepositoryListView_css_1.default.copyButton, onClick: function () {
-                        addToast({
-                            message: (0, i18n_1.__)('Push to Deploy URL wurde in die Zwischenablage kopiert', 'shgi'),
-                            type: theme_1.NOTICE_TYPES.SUCCESS,
-                        });
-                        navigator.clipboard.writeText(updateUrl);
-                    }, title: "Copy" },
-                    react_1.default.createElement(theme_1.Icon, { icon: "copy" }))))),
+            repository.version === null ? (react_1.default.createElement(theme_1.Notice, { className: RepositoryListView_css_1.default.error, type: theme_1.NOTICE_TYPES.ERROR }, repository.theme
+                ? (0, i18n_1.__)('The Theme does not seem to be installed', 'shgi')
+                : (0, i18n_1.__)('The Plugin does not seem to be installed', 'shgi'))) : (react_1.default.createElement(react_1.default.Fragment, null,
+                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.version }, (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgi'), repository.version)),
+                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo }, repository.baseUrl),
+                repository.dir && (react_1.default.createElement("p", { dangerouslySetInnerHTML: {
+                        __html: (0, i18n_1.sprintf)((0, i18n_1.__)('Directory: %s', 'shgi'), "<code>./" + repository.dir + "</code>"),
+                    } })),
+                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.pushToDeploy },
+                    (0, i18n_1.__)('Push to Deploy URL', 'shgi'),
+                    ":",
+                    react_1.default.createElement("input", { className: RepositoryListView_css_1.default.pushToDeployInput, value: updateUrl, type: "text", disabled: true }),
+                    Boolean(navigator.clipboard) && (react_1.default.createElement("button", { className: RepositoryListView_css_1.default.copyButton, onClick: function () {
+                            addToast({
+                                message: (0, i18n_1.__)('Push to Deploy URL wurde in die Zwischenablage kopiert', 'shgi'),
+                                type: theme_1.NOTICE_TYPES.SUCCESS,
+                            });
+                            navigator.clipboard.writeText(updateUrl);
+                        }, title: "Copy" },
+                        react_1.default.createElement(theme_1.Icon, { icon: "copy" }))))))),
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.controls },
             react_1.default.createElement(theme_1.Button, { buttonType: "primary", loading: loadingUpdate, onClick: updateRepo }, (0, i18n_1.__)('Update', 'shgi')),
             react_1.default.createElement(theme_1.Button, { buttonType: "delete", loading: loadingDelete, onClick: deleteRepo }, (0, i18n_1.__)('Delete', 'shgi')))));
