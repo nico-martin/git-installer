@@ -13,8 +13,6 @@ class GitPackages
 
     public function run()
     {
-        error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-
         add_filter('shgi/AdminPage/Menu', [$this, 'menu']);
         add_filter('shgi/Settings/register', [$this, 'settings']);
         add_filter('shgi/Assets/AdminFooterJS', [$this, 'footerJsVars']);

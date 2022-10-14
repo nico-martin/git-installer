@@ -27,6 +27,9 @@ Now you are able to select the target folder for your plugin before the installa
 
 ## Changelog
 ### 0.0.5
+- bugfix: UI adjustments if installation fails
+- bugfix: copyDir/rename
+- bugfix: flush theme cache after new Theme is added
 
 ### 0.0.4
 - warning if REST API access is disabled
