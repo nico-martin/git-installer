@@ -1,4 +1,4 @@
-# Git Installer (Alpha)
+# Git Installer (Beta)
 
 ## Features
 
