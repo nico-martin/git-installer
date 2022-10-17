@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: Git Installer (Alpha)
+Plugin Name: Git Installer (Beta)
 Plugin URI: https://github.com/SayHelloGmbH/git-installer
 Description: Install and Update Plugins and Themes from Github, Gitlab and Bitbucket
 Author: Nico Martin - mail@nico.dev
