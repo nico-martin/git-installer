@@ -26,6 +26,9 @@ add_filter('shgi/Repositories/MustUsePlugins', '__return_true');
 Now you are able to select the target folder for your plugin before the installation.
 
 ## Changelog
+### 0.1.0
+- stable Beta, no changes
+
 ### 0.0.5
 - bugfix: UI adjustments if installation fails
 - bugfix: copyDir/rename
