@@ -30897,30 +30897,6 @@ var RepositoryListView = function (_a) {
     var _c = react_1.default.useState(false), deleteModal = _c[0], setDeleteModal = _c[1];
     var _d = react_1.default.useState(false), loadingUpdate = _d[0], setLoadingUpdate = _d[1];
     var updateUrl = constants_1.VARS.restPluginBase + "git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey;
-    /*
-    const deleteRepo = () => {
-      setLoadingDelete(true);
-      apiDelete<{
-        message: string;
-        packages: IGitPackages;
-      }>(`${VARS.restPluginNamespace}/git-packages/${repository.key}`)
-        .then((resp) => {
-          addToast({
-            message: resp.message,
-            type: NOTICE_TYPES.SUCCESS,
-          });
-          setRepositories(resp.packages);
-        })
-        .catch((e) =>
-          addToast({
-            message: e,
-            type: NOTICE_TYPES.ERROR,
-          })
-        )
-        .finally(() => {
-          setLoadingDelete(false);
-        });
-    };*/
     var updateRepo = function () {
         setLoadingUpdate(true);
         (0, apiFetch_1.apiGet)(constants_1.VARS.restPluginNamespace + "/git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey)

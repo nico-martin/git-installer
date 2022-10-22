@@ -1,9 +1,8 @@
-import { Message } from 'postcss';
 import React from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 import { useToast } from '../../components/toast/toastContext';
 import { Button, Icon, NOTICE_TYPES, Notice } from '../../theme';
-import { apiDelete, apiGet } from '../../utils/apiFetch';
+import { apiGet } from '../../utils/apiFetch';
 import cn from '../../utils/classnames';
 import { VARS } from '../../utils/constants';
 import { IGitPackage, IGitPackages } from '../../utils/types';
@@ -25,31 +24,6 @@ const RepositoryListView = ({
   const [deleteModal, setDeleteModal] = React.useState<boolean>(false);
   const [loadingUpdate, setLoadingUpdate] = React.useState<boolean>(false);
   const updateUrl = `${VARS.restPluginBase}git-packages-deploy/${repository.key}/?key=${repository.deployKey}`;
-
-  /*
-  const deleteRepo = () => {
-    setLoadingDelete(true);
-    apiDelete<{
-      message: string;
-      packages: IGitPackages;
-    }>(`${VARS.restPluginNamespace}/git-packages/${repository.key}`)
-      .then((resp) => {
-        addToast({
-          message: resp.message,
-          type: NOTICE_TYPES.SUCCESS,
-        });
-        setRepositories(resp.packages);
-      })
-      .catch((e) =>
-        addToast({
-          message: e,
-          type: NOTICE_TYPES.ERROR,
-        })
-      )
-      .finally(() => {
-        setLoadingDelete(false);
-      });
-  };*/
 
   const updateRepo = () => {
     setLoadingUpdate(true);
