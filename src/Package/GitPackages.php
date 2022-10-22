@@ -227,6 +227,7 @@ class GitPackages
 
     public function deleteRepo($data)
     {
+        $fullDelete = array_key_exists('fullDelete', $_GET) && $_GET['fullDelete'] === '1';
         $repos = $this->getPackages(false);
         $key = $data['slug'];
         if (!array_key_exists($key, $repos)) {
@@ -238,7 +239,8 @@ class GitPackages
                 )
             );
         }
-        FsHelpers::removeDir($this->getPackageDir($key));
+
+        $fullDelete && FsHelpers::removeDir($this->getPackageDir($key));
 
         unset($repos[$key]);
         update_option($this->repo_option, $repos);

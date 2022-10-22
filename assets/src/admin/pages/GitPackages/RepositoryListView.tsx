@@ -8,6 +8,7 @@ import cn from '../../utils/classnames';
 import { VARS } from '../../utils/constants';
 import { IGitPackage, IGitPackages } from '../../utils/types';
 import styles from './RepositoryListView.css';
+import DeleteRepository from './delete/DeleteRepository';
 
 const RepositoryListView = ({
   repository,
@@ -21,9 +22,11 @@ const RepositoryListView = ({
   className?: string;
 }) => {
   const { addToast } = useToast();
-  const [loadingDelete, setLoadingDelete] = React.useState<boolean>(false);
+  const [deleteModal, setDeleteModal] = React.useState<boolean>(false);
   const [loadingUpdate, setLoadingUpdate] = React.useState<boolean>(false);
   const updateUrl = `${VARS.restPluginBase}git-packages-deploy/${repository.key}/?key=${repository.deployKey}`;
+
+  /*
   const deleteRepo = () => {
     setLoadingDelete(true);
     apiDelete<{
@@ -46,7 +49,7 @@ const RepositoryListView = ({
       .finally(() => {
         setLoadingDelete(false);
       });
-  };
+  };*/
 
   const updateRepo = () => {
     setLoadingUpdate(true);
@@ -133,6 +136,14 @@ const RepositoryListView = ({
         )}
       </div>
       <div className={styles.controls}>
+        <DeleteRepository
+          modal={deleteModal}
+          setModal={setDeleteModal}
+          repositoryKey={repository.key}
+          theme={repository.theme}
+          name={repository.name}
+          setRepositories={setRepositories}
+        />
         <Button
           buttonType="primary"
           loading={loadingUpdate}
@@ -140,11 +151,7 @@ const RepositoryListView = ({
         >
           {__('Update', 'shgi')}
         </Button>
-        <Button
-          buttonType="delete"
-          loading={loadingDelete}
-          onClick={deleteRepo}
-        >
+        <Button buttonType="delete" onClick={() => setDeleteModal(true)}>
           {__('Delete', 'shgi')}
         </Button>
       </div>
