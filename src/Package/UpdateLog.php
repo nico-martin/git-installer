@@ -60,6 +60,11 @@ class UpdateLog
         }, $option);
     }
 
+    public static function deleteLogs($key)
+    {
+        delete_option(self::$optionKey . '-' . $key);
+    }
+
     private static function mapEntry($option)
     {
         return [
@@ -73,6 +78,7 @@ class UpdateLog
     public static function getRefOptions()
     {
         return apply_filters('shgi/UpdateLog/refOptions', [
+            'install' => __('Install', 'shgi'),
             'webhook-update' => __('Webhook', 'shgi'),
             'update-trigger' => __('update button', 'shgi')
         ]);

@@ -31148,7 +31148,7 @@ var RepositoryListView = function (_a) {
                     react_1.default.createElement("input", { className: RepositoryListView_css_1.default.webhookUpdateInput, value: updateUrl, type: "text", disabled: true }),
                     Boolean(navigator.clipboard) && (react_1.default.createElement("button", { className: RepositoryListView_css_1.default.copyButton, onClick: function () {
                             addToast({
-                                message: (0, i18n_1.__)('Webhook Update was copied to the clipboard', 'shgi'),
+                                message: (0, i18n_1.__)('Webhook Update URL was copied to the clipboard', 'shgi'),
                                 type: theme_1.NOTICE_TYPES.SUCCESS,
                             });
                             navigator.clipboard.writeText(updateUrl);
@@ -31569,11 +31569,13 @@ var RepositoryUpdateLog = function (_a) {
         columnHelper.accessor('prevVersion', {
             header: (0, i18n_1.__)('Version', 'shgi'),
             cell: function (info) {
-                return info.row.original.prevVersion === info.row.original.newVersion
-                    ? '-'
-                    : info.row.original.prevVersion +
-                        ' 🠖 ' +
-                        info.row.original.newVersion;
+                return (info.row.original.prevVersion === null &&
+                    info.row.original.newVersion !== null) ||
+                    info.row.original.prevVersion === info.row.original.newVersion ? (info.row.original.newVersion) : info.row.original.prevVersion &&
+                    info.row.original.newVersion &&
+                    info.row.original.prevVersion !== info.row.original.newVersion ? (react_1.default.createElement("b", null, info.row.original.prevVersion +
+                    ' 🠖 ' +
+                    info.row.original.newVersion)) : ('-');
             },
             enableSorting: false,
         }),
@@ -31615,6 +31617,21 @@ var PageGitPackages = function () {
     var _b = (0, settings_1.useSettingsForm)(settings_1.settingsKeys.filter(function (key) { return key.indexOf('git-packages') === 0; })), form = _b.form, submit = _b.submit, error = _b.error, loading = _b.loading;
     var _c = react_1.default.useState(constants_1.VARS.gitPackages), repositories = _c[0], setRepositories = _c[1];
     return (react_1.default.createElement(theme_1.PageContent, null,
+        react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Public Beta Info', 'shgi'), canToggleKey: "public-beta-info" },
+            react_1.default.createElement("p", { style: { fontSize: '1.2rem' } },
+                react_1.default.createElement("b", null, "Thank you so much for being a beta tester!")),
+            react_1.default.createElement("h3", null, "Documentation"),
+            react_1.default.createElement("p", null, "You can find a documentation of the most important features directly in the GitHub repository of the plugin"),
+            react_1.default.createElement("p", { style: { marginTop: '0.2rem' } },
+                react_1.default.createElement("a", { href: "https://github.com/SayHelloGmbH/git-installer", target: "_blank", rel: "noopener" }, "https://github.com/SayHelloGmbH/git-installer")),
+            react_1.default.createElement("h3", null, "Issues"),
+            react_1.default.createElement("p", null, "Please note that at this stage of development, errors can always occur. I would be very grateful if you could check if a bug has already been discovered or if you can create a new issue:"),
+            react_1.default.createElement("p", { style: { marginTop: '0.2rem' } },
+                react_1.default.createElement("a", { href: "https://github.com/SayHelloGmbH/git-installer/issues", target: "_blank", rel: "noreferrer" }, "https://github.com/SayHelloGmbH/git-installer/issues")),
+            react_1.default.createElement("h3", null, "Contact"),
+            react_1.default.createElement("p", null, "Furthermore, I would be happy to hear from you if you have any suggestions or ideas."),
+            react_1.default.createElement("p", { style: { marginTop: '0.2rem' } },
+                react_1.default.createElement("a", { href: "mailto:nico@sayhello.ch" }, "nico@sayhello.ch"))),
         react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Git Repositories', 'shgi'), rightContent: repositories.length !== 0 && (react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('add Repository', 'shgi'))) }, repositories.length === 0 ? (react_1.default.createElement("div", { className: PageGitPackages_css_1.default.empty },
             react_1.default.createElement("p", null, (0, i18n_1.__)('No repositories have been added yet.', 'shgi')),
             react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('Add Repository', 'shgi')))) : (repositories.map(function (repo, i) { return (react_1.default.createElement(RepositoryListView_1.default, { key: i, repository: repo, setRepositories: setRepositories, className: PageGitPackages_css_1.default.repository })); }))),

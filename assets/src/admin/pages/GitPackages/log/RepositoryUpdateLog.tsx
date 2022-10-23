@@ -14,7 +14,6 @@ import { IGitLog } from '../../../utils/types';
 import styles from './RepositoryUpdateLog.css';
 
 const RepositoryUpdateLog: React.FC<{
-  //log: Array<IGitLog>;
   repoKey: string;
   name: string;
   modal: boolean;
@@ -49,11 +48,21 @@ const RepositoryUpdateLog: React.FC<{
     columnHelper.accessor('prevVersion', {
       header: __('Version', 'shgi'),
       cell: (info) =>
-        info.row.original.prevVersion === info.row.original.newVersion
-          ? '-'
-          : info.row.original.prevVersion +
-            ' 🠖 ' +
-            info.row.original.newVersion,
+        (info.row.original.prevVersion === null &&
+          info.row.original.newVersion !== null) ||
+        info.row.original.prevVersion === info.row.original.newVersion ? (
+          info.row.original.newVersion
+        ) : info.row.original.prevVersion &&
+          info.row.original.newVersion &&
+          info.row.original.prevVersion !== info.row.original.newVersion ? (
+          <b>
+            {info.row.original.prevVersion +
+              ' 🠖 ' +
+              info.row.original.newVersion}
+          </b>
+        ) : (
+          '-'
+        ),
       enableSorting: false,
     }),
     columnHelper.accessor('refName', {

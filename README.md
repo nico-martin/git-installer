@@ -6,7 +6,7 @@ Install and update WordPress themes and plugins directly from your Git repositor
 
 ## Features
 
-| Feature                                                                                                                                               |  Shipped   |
+| Feature                                                                                                                                               |   Status   |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------|:----------:|
 | **Install and update Plugins from Git repositories**                                                                                                  |     ✅      |
 | **Provider**                                                                                                                                          |            |
@@ -78,6 +78,7 @@ add_filter('shgi/UpdateLog/refOptions', function($refs){
   /**
    * Initial values:
    * [
+   *   'install' => __('Install', 'shgi'),
    *   'webhook-update' => __('webhook', 'shgi'),
    *   'update-trigger' => __('update button', 'shgi')
    * ]
@@ -89,6 +90,10 @@ add_filter('shgi/UpdateLog/refOptions', function($refs){
 ```
 
 ## Changelog
+
+### 0.2.0
+
+- public beta, no changes
 
 ### 0.1.1
 

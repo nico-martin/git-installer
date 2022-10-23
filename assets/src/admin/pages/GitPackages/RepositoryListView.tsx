@@ -116,7 +116,7 @@ const RepositoryListView = ({
                   onClick={() => {
                     addToast({
                       message: __(
-                        'Webhook Update was copied to the clipboard',
+                        'Webhook Update URL was copied to the clipboard',
                         'shgi'
                       ),
                       type: NOTICE_TYPES.SUCCESS,
