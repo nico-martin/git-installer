@@ -6,10 +6,6 @@ use SayHello\GitInstaller\Helpers;
 
 class UpdateLog
 {
-    private static $refOptions = [
-        'push-to-deploy',
-        'update-trigger',
-    ];
     private static $optionKey = 'shgi-updatelog';
 
     public function run()
@@ -77,7 +73,7 @@ class UpdateLog
     public static function getRefOptions()
     {
         return apply_filters('shgi/UpdateLog/refOptions', [
-            'push-to-deploy' => __('push to deploy', 'shgi'),
+            'webhook-update' => __('Webhook', 'shgi'),
             'update-trigger' => __('update button', 'shgi')
         ]);
     }

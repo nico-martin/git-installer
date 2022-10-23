@@ -47,7 +47,7 @@ const CheckRepoForm: React.FC<AddRepositoryFormPropsI> = ({
           pattern: {
             value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
             message: __(
-              'The URL must lead to a Github, Gitlab or Bitbucket repository',
+              'The URL must lead to a GitHub, Gitlab or Bitbucket repository',
               'shgi'
             ),
           },

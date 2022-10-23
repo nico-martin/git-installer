@@ -31,6 +31,7 @@ var map = {
 	"./icons/phone.svg": "./assets/dist/static/admin/icons/phone.svg",
 	"./icons/safari.svg": "./assets/dist/static/admin/icons/safari.svg",
 	"./icons/send.svg": "./assets/dist/static/admin/icons/send.svg",
+	"./icons/source-branch.svg": "./assets/dist/static/admin/icons/source-branch.svg",
 	"./icons/unfold-more-horizontal.svg": "./assets/dist/static/admin/icons/unfold-more-horizontal.svg",
 	"./icons/windows.svg": "./assets/dist/static/admin/icons/windows.svg",
 	"./pixel-mock.svg": "./assets/dist/static/admin/pixel-mock.svg"
@@ -156,7 +157,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","pushToDeploy":"RepositoryListView__pushToDeploy--1T2yZ","pushToDeployInput":"RepositoryListView__pushToDeployInput--30Exa","copyButton":"RepositoryListView__copyButton--FrZQ5","error":"RepositoryListView__error--13_UO","logButton":"RepositoryListView__logButton--14sPs","logButtonIcon":"RepositoryListView__logButtonIcon--3epQG"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","repoBranch":"RepositoryListView__repoBranch--27uUJ","repoBranchIcon":"RepositoryListView__repoBranchIcon--2n2rm","webhookUpdate":"RepositoryListView__webhookUpdate--27L70","webhookUpdateInput":"RepositoryListView__webhookUpdateInput--1LVHk","copyButton":"RepositoryListView__copyButton--FrZQ5","error":"RepositoryListView__error--13_UO","logButton":"RepositoryListView__logButton--14sPs","logButtonIcon":"RepositoryListView__logButtonIcon--3epQG"});
 
 /***/ }),
 
@@ -1083,6 +1084,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<svg viewBox=\"0 0 24 24\">\r\n    <path fill=\"currentColor\" d=\"M2,21L23,12L2,3V10L17,12L2,14V21Z\"/>\r\n</svg>");
+
+/***/ }),
+
+/***/ "./assets/dist/static/admin/icons/source-branch.svg":
+/*!**********************************************************!*\
+  !*** ./assets/dist/static/admin/icons/source-branch.svg ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<svg viewBox=\"0 0 24 24\">\r\n    <path fill=\"currentColor\"\r\n          d=\"M13,14C9.64,14 8.54,15.35 8.18,16.24C9.25,16.7 10,17.76 10,19A3,3 0 0,1 7,22A3,3 0 0,1 4,19C4,17.69 4.83,16.58 6,16.17V7.83C4.83,7.42 4,6.31 4,5A3,3 0 0,1 7,2A3,3 0 0,1 10,5C10,6.31 9.17,7.42 8,7.83V13.12C8.88,12.47 10.16,12 12,12C14.67,12 15.56,10.66 15.85,9.77C14.77,9.32 14,8.25 14,7A3,3 0 0,1 17,4A3,3 0 0,1 20,7C20,8.34 19.12,9.5 17.91,9.86C17.65,11.29 16.68,14 13,14M7,18A1,1 0 0,0 6,19A1,1 0 0,0 7,20A1,1 0 0,0 8,19A1,1 0 0,0 7,18M7,4A1,1 0 0,0 6,5A1,1 0 0,0 7,6A1,1 0 0,0 8,5A1,1 0 0,0 7,4M17,6A1,1 0 0,0 16,7A1,1 0 0,0 17,8A1,1 0 0,0 18,7A1,1 0 0,0 17,6Z\"/>\r\n</svg>\r\n");
 
 /***/ }),
 
@@ -30949,9 +30965,9 @@ var EcosystemProvider = function (_a) {
         if (!showRestWarning)
             return '';
         return constants_1.VARS.activePlugins.indexOf('password-protected/password-protected.php') !== -1
-            ? (0, i18n_1.__)('The Plugin "Password Protected" is active and enabled. Therefore the REST API Access is restricted and features like the "push to deploy URL" won\'t work. Please allow REST API Access under "Protected Permissions".', 'shgi') +
+            ? (0, i18n_1.__)('The Plugin "Password Protected" is active and enabled. Therefore the REST API Access is restricted and features like the "webhook update URL" won\'t work. Please allow REST API Access under "Protected Permissions".', 'shgi') +
                 ("<br /><a href=\"" + constants_1.VARS.adminUrl + "options-general.php?page=password-protected\">" + constants_1.VARS.adminUrl + "options-general.php?page=password-protected</a>")
-            : (0, i18n_1.__)('REST API Access seems to be restricted. Therefore features like the "push to deploy URL" won\'t work. Please make sure that the REST API can be accessed for visitors.', 'shgi');
+            : (0, i18n_1.__)('REST API Access seems to be restricted. Therefore features like the "webhook update URL" won\'t work. Please make sure that the REST API can be accessed for visitors.', 'shgi');
     }, [showRestWarning]);
     return (react_1.default.createElement(Context.Provider, { value: {
             notices: __spreadArray([], (restWarning
@@ -31080,10 +31096,10 @@ var RepositoryListView = function (_a) {
     var _c = react_1.default.useState(false), deleteModal = _c[0], setDeleteModal = _c[1];
     var _d = react_1.default.useState(false), logModal = _d[0], setLogModal = _d[1];
     var _e = react_1.default.useState(false), loadingUpdate = _e[0], setLoadingUpdate = _e[1];
-    var updateUrl = constants_1.VARS.restPluginBase + "git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey + "&ref=push-to-deploy";
+    var updateUrl = constants_1.VARS.restPluginBase + "git-packages-update/" + repository.key + "/?key=" + repository.deployKey + "&ref=webhook-update";
     var updateRepo = function () {
         setLoadingUpdate(true);
-        (0, apiFetch_1.apiGet)(constants_1.VARS.restPluginNamespace + "/git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey + "&ref=update-trigger")
+        (0, apiFetch_1.apiGet)(constants_1.VARS.restPluginNamespace + "/git-packages-update/" + repository.key + "/?key=" + repository.deployKey + "&ref=update-trigger")
             .then(function (resp) {
             addToast({
                 message: (0, i18n_1.__)('Update successful'),
@@ -31116,17 +31132,23 @@ var RepositoryListView = function (_a) {
                     (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgi'), repository.version),
                     react_1.default.createElement("button", { className: RepositoryListView_css_1.default.logButton, onClick: function () { return setLogModal(true); } },
                         react_1.default.createElement(theme_1.Icon, { icon: "clipboard-text-clock-outline", className: RepositoryListView_css_1.default.logButtonIcon }))),
-                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo }, repository.baseUrl),
+                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo },
+                    repository.baseUrl,
+                    ' ',
+                    react_1.default.createElement("code", { className: RepositoryListView_css_1.default.repoBranch },
+                        react_1.default.createElement(theme_1.Icon, { icon: "source-branch", className: RepositoryListView_css_1.default.repoBranchIcon }),
+                        ' ',
+                        repository.activeBranch)),
                 repository.dir && (react_1.default.createElement("p", { dangerouslySetInnerHTML: {
                         __html: (0, i18n_1.sprintf)((0, i18n_1.__)('Directory: %s', 'shgi'), "<code>./" + repository.dir + "</code>"),
                     } })),
-                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.pushToDeploy },
-                    (0, i18n_1.__)('Push to Deploy URL', 'shgi'),
+                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.webhookUpdate },
+                    (0, i18n_1.__)('Webhook Update URL', 'shgi'),
                     ":",
-                    react_1.default.createElement("input", { className: RepositoryListView_css_1.default.pushToDeployInput, value: updateUrl, type: "text", disabled: true }),
+                    react_1.default.createElement("input", { className: RepositoryListView_css_1.default.webhookUpdateInput, value: updateUrl, type: "text", disabled: true }),
                     Boolean(navigator.clipboard) && (react_1.default.createElement("button", { className: RepositoryListView_css_1.default.copyButton, onClick: function () {
                             addToast({
-                                message: (0, i18n_1.__)('Push to Deploy URL wurde in die Zwischenablage kopiert', 'shgi'),
+                                message: (0, i18n_1.__)('Webhook Update was copied to the clipboard', 'shgi'),
                                 type: theme_1.NOTICE_TYPES.SUCCESS,
                             });
                             navigator.clipboard.writeText(updateUrl);
@@ -31364,7 +31386,7 @@ var CheckRepoForm = function (_a) {
                 required: (0, i18n_1.__)('Required field', 'shgi'),
                 pattern: {
                     value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
-                    message: (0, i18n_1.__)('The URL must lead to a Github, Gitlab or Bitbucket repository', 'shgi'),
+                    message: (0, i18n_1.__)('The URL must lead to a GitHub, Gitlab or Bitbucket repository', 'shgi'),
                 },
             } }),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR, message: error })),
@@ -31600,7 +31622,7 @@ var PageGitPackages = function () {
             react_1.default.createElement(AddRepository_1.default, { repositoryKeys: repositories.map(function (r) { return r.key; }), setRepositories: setRepositories, onFinish: function () { return setAddPackageModal(false); } }))),
         react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Access control', 'shgi'), canToggleKey: "git-packages" },
             react_1.default.createElement(theme_1.Form, { onSubmit: submit },
-                react_1.default.createElement("h3", null, "Github"),
+                react_1.default.createElement("h3", null, "GitHub"),
                 react_1.default.createElement(theme_1.FormElement, { form: form, name: "git-packages-github-token", Input: theme_1.InputText, type: "text", masked: true, DescriptionInput: react_1.default.createElement(react_1.default.Fragment, null,
                         react_1.default.createElement("p", { dangerouslySetInnerHTML: {
                                 __html: (0, i18n_1.sprintf)((0, i18n_1.__)('You can generate your personal acces token here: %s', 'shgi'), '<a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer">https://github.com/settings/tokens</a>'),

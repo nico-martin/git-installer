@@ -1135,15 +1135,28 @@
 }
 
 .RepositoryListView__repo--1ltS5 {
+  display: flex;
+  align-items: center;
 }
 
-.RepositoryListView__pushToDeploy--1T2yZ {
+.RepositoryListView__repoBranch--27uUJ {
+  margin-left: 0.5em;
+  display: flex;
+  align-items: center;
+  font-size: 0.9em;
+}
+
+.RepositoryListView__repoBranchIcon--2n2rm {
+  margin-right: 0.2em;
+}
+
+.RepositoryListView__webhookUpdate--27L70 {
   font-size: 0.7rem;
   display: flex;
   align-items: center;
 }
 
-.RepositoryListView__pushToDeployInput--30Exa {
+.RepositoryListView__webhookUpdateInput--1LVHk {
   margin-left: 1em;
   font-size: 0.7rem;
   width: 200px;

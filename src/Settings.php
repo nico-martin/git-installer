@@ -164,7 +164,6 @@ class Settings
         $oldValues = $this->getSettings();
         update_option(self::$key, array_merge($options, $settings));
         $newValues = $this->getSettings();
-        do_action('shgi/Settings/afterUpdate', $oldValues, $newValues);
 
         return $newValues;
     }

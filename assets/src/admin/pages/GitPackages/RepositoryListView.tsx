@@ -25,12 +25,12 @@ const RepositoryListView = ({
   const [deleteModal, setDeleteModal] = React.useState<boolean>(false);
   const [logModal, setLogModal] = React.useState<boolean>(false);
   const [loadingUpdate, setLoadingUpdate] = React.useState<boolean>(false);
-  const updateUrl = `${VARS.restPluginBase}git-packages-deploy/${repository.key}/?key=${repository.deployKey}&ref=push-to-deploy`;
+  const updateUrl = `${VARS.restPluginBase}git-packages-update/${repository.key}/?key=${repository.deployKey}&ref=webhook-update`;
 
   const updateRepo = () => {
     setLoadingUpdate(true);
     apiGet<IGitPackage>(
-      `${VARS.restPluginNamespace}/git-packages-deploy/${repository.key}/?key=${repository.deployKey}&ref=update-trigger`
+      `${VARS.restPluginNamespace}/git-packages-update/${repository.key}/?key=${repository.deployKey}&ref=update-trigger`
     )
       .then((resp) => {
         addToast({
@@ -85,7 +85,13 @@ const RepositoryListView = ({
                 />
               </button>
             </p>
-            <p className={styles.repo}>{repository.baseUrl}</p>
+            <p className={styles.repo}>
+              {repository.baseUrl}{' '}
+              <code className={styles.repoBranch}>
+                <Icon icon="source-branch" className={styles.repoBranchIcon} />{' '}
+                {repository.activeBranch}
+              </code>
+            </p>
             {repository.dir && (
               <p
                 dangerouslySetInnerHTML={{
@@ -96,10 +102,10 @@ const RepositoryListView = ({
                 }}
               />
             )}
-            <p className={styles.pushToDeploy}>
-              {__('Push to Deploy URL', 'shgi')}:
+            <p className={styles.webhookUpdate}>
+              {__('Webhook Update URL', 'shgi')}:
               <input
-                className={styles.pushToDeployInput}
+                className={styles.webhookUpdateInput}
                 value={updateUrl}
                 type="text"
                 disabled
@@ -110,7 +116,7 @@ const RepositoryListView = ({
                   onClick={() => {
                     addToast({
                       message: __(
-                        'Push to Deploy URL wurde in die Zwischenablage kopiert',
+                        'Webhook Update was copied to the clipboard',
                         'shgi'
                       ),
                       type: NOTICE_TYPES.SUCCESS,
