@@ -12,6 +12,8 @@ var map = {
 	"./icons/apple.svg": "./assets/dist/static/admin/icons/apple.svg",
 	"./icons/bitbucket.svg": "./assets/dist/static/admin/icons/bitbucket.svg",
 	"./icons/check-outline.svg": "./assets/dist/static/admin/icons/check-outline.svg",
+	"./icons/chevron-down.svg": "./assets/dist/static/admin/icons/chevron-down.svg",
+	"./icons/chevron-up.svg": "./assets/dist/static/admin/icons/chevron-up.svg",
 	"./icons/chrome.svg": "./assets/dist/static/admin/icons/chrome.svg",
 	"./icons/clipboard-text-clock-outline.svg": "./assets/dist/static/admin/icons/clipboard-text-clock-outline.svg",
 	"./icons/copy.svg": "./assets/dist/static/admin/icons/copy.svg",
@@ -29,6 +31,7 @@ var map = {
 	"./icons/phone.svg": "./assets/dist/static/admin/icons/phone.svg",
 	"./icons/safari.svg": "./assets/dist/static/admin/icons/safari.svg",
 	"./icons/send.svg": "./assets/dist/static/admin/icons/send.svg",
+	"./icons/unfold-more-horizontal.svg": "./assets/dist/static/admin/icons/unfold-more-horizontal.svg",
 	"./icons/windows.svg": "./assets/dist/static/admin/icons/windows.svg",
 	"./pixel-mock.svg": "./assets/dist/static/admin/pixel-mock.svg"
 };
@@ -601,7 +604,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"ReactTable-module__root--NBFPu","loader":"ReactTable-module__loader--ptAem","loaderIcon":"ReactTable-module__loaderIcon--1YNiU"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"ReactTable-module__root--NBFPu","loader":"ReactTable-module__loader--ptAem","loaderIcon":"ReactTable-module__loaderIcon--1YNiU","headingSortButton":"ReactTable-module__headingSortButton--1TV3p","headingSortButtonIcon":"ReactTable-module__headingSortButtonIcon--3c6JX"});
 
 /***/ }),
 
@@ -795,6 +798,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<svg viewBox=\"0 0 24 24\">\r\n    <path fill=\"currentColor\"\r\n          d=\"M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20M16.59 7.58L10 14.17L7.41 11.59L6 13L10 17L18 9L16.59 7.58Z\"/>\r\n</svg>");
+
+/***/ }),
+
+/***/ "./assets/dist/static/admin/icons/chevron-down.svg":
+/*!*********************************************************!*\
+  !*** ./assets/dist/static/admin/icons/chevron-down.svg ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<svg viewBox=\"0 0 24 24\">\r\n    <path fill=\"currentColor\" d=\"M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z\"/>\r\n</svg>\r\n");
+
+/***/ }),
+
+/***/ "./assets/dist/static/admin/icons/chevron-up.svg":
+/*!*******************************************************!*\
+  !*** ./assets/dist/static/admin/icons/chevron-up.svg ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<svg viewBox=\"0 0 24 24\">\r\n    <path fill=\"currentColor\" d=\"M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z\"/>\r\n</svg>\r\n");
 
 /***/ }),
 
@@ -1050,6 +1083,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<svg viewBox=\"0 0 24 24\">\r\n    <path fill=\"currentColor\" d=\"M2,21L23,12L2,3V10L17,12L2,14V21Z\"/>\r\n</svg>");
+
+/***/ }),
+
+/***/ "./assets/dist/static/admin/icons/unfold-more-horizontal.svg":
+/*!*******************************************************************!*\
+  !*** ./assets/dist/static/admin/icons/unfold-more-horizontal.svg ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<svg viewBox=\"0 0 24 24\">\r\n    <path fill=\"currentColor\"\r\n          d=\"M12,18.17L8.83,15L7.42,16.41L12,21L16.59,16.41L15.17,15M12,5.83L15.17,9L16.58,7.59L12,3L7.41,7.59L8.83,9L12,5.83Z\"/>\r\n</svg>\r\n");
 
 /***/ }),
 
@@ -31030,7 +31078,8 @@ var RepositoryListView = function (_a) {
     var repository = _a.repository, setRepositories = _a.setRepositories, _b = _a.className, className = _b === void 0 ? '' : _b;
     var addToast = (0, toastContext_1.useToast)().addToast;
     var _c = react_1.default.useState(false), deleteModal = _c[0], setDeleteModal = _c[1];
-    var _d = react_1.default.useState(false), logModal = _d[0], setLogModal = _d[1];
+    //const [logModal, setLogModal] = React.useState<boolean>(false);
+    var _d = react_1.default.useState(repository.key === 'deploy-wp'), logModal = _d[0], setLogModal = _d[1];
     var _e = react_1.default.useState(false), loadingUpdate = _e[0], setLoadingUpdate = _e[1];
     var updateUrl = constants_1.VARS.restPluginBase + "git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey + "&ref=push-to-deploy";
     var updateRepo = function () {
@@ -31477,6 +31526,7 @@ var RepositoryUpdateLog = function (_a) {
         columnHelper.accessor('date', {
             header: (0, i18n_1.__)('Date', 'shgi'),
             cell: function (info) { return info.getValue(); },
+            sortingFn: function (a, b) { return a.original.time - b.original.time; },
         }),
         columnHelper.accessor('prevVersion', {
             header: (0, i18n_1.__)('Version', 'shgi'),
@@ -31487,6 +31537,7 @@ var RepositoryUpdateLog = function (_a) {
                         ' 🠖 ' +
                         info.row.original.newVersion;
             },
+            enableSorting: false,
         }),
         columnHelper.accessor('ref', {
             header: (0, i18n_1.__)('Trigger', 'shgi'),
@@ -31500,7 +31551,7 @@ var RepositoryUpdateLog = function (_a) {
         }),
     ];
     return modal ? (react_1.default.createElement(theme_1.ShadowBox, { title: (0, i18n_1.sprintf)((0, i18n_1.__)('update Log "%s"', 'shgi'), name), close: function () { return setModal(false); }, size: "medium" },
-        react_1.default.createElement("div", { className: RepositoryUpdateLog_css_1.default.log }, log.length === 0 ? (react_1.default.createElement("p", null, (0, i18n_1.__)('No entries found', 'shgi'))) : (react_1.default.createElement(theme_1.ReactTable, { columns: columns, data: log }))))) : null;
+        react_1.default.createElement("div", { className: RepositoryUpdateLog_css_1.default.log }, log.length === 0 ? (react_1.default.createElement("p", null, (0, i18n_1.__)('No entries found', 'shgi'))) : (react_1.default.createElement(theme_1.ReactTable, { columns: columns, data: log, initialSort: [{ id: 'date', desc: true }], enableSort: true }))))) : null;
 };
 exports["default"] = RepositoryUpdateLog;
 
@@ -33106,7 +33157,8 @@ var index_1 = __webpack_require__(/*! ../index */ "./assets/src/admin/theme/inde
 var ReactTable_module_css_1 = __importDefault(__webpack_require__(/*! ./ReactTable.module.css */ "./assets/src/admin/theme/table/ReactTable.module.css"));
 var ExpanderCell_1 = __importDefault(__webpack_require__(/*! ./cells/ExpanderCell */ "./assets/src/admin/theme/table/cells/ExpanderCell.tsx"));
 var ReactTable = function (_a) {
-    var _b = _a.className, className = _b === void 0 ? '' : _b, _c = _a.loading, loading = _c === void 0 ? false : _c, columns = _a.columns, data = _a.data, _d = _a.renderSubComponent, renderSubComponent = _d === void 0 ? null : _d;
+    var _b = _a.className, className = _b === void 0 ? '' : _b, _c = _a.loading, loading = _c === void 0 ? false : _c, columns = _a.columns, data = _a.data, _d = _a.renderSubComponent, renderSubComponent = _d === void 0 ? null : _d, _e = _a.initialSort, initialSort = _e === void 0 ? [] : _e, _f = _a.enableSort, enableSort = _f === void 0 ? false : _f;
+    var _g = react_1.default.useState(initialSort), sorting = _g[0], setSorting = _g[1];
     var table = (0, react_table_1.useReactTable)({
         data: data,
         columns: __spreadArray(__spreadArray([], (Boolean(renderSubComponent)
@@ -33125,12 +33177,24 @@ var ReactTable = function (_a) {
         getRowCanExpand: function () { return Boolean(renderSubComponent); },
         getCoreRowModel: (0, react_table_1.getCoreRowModel)(),
         getExpandedRowModel: (0, react_table_1.getExpandedRowModel)(),
+        state: { sorting: sorting },
+        onSortingChange: setSorting,
+        getSortedRowModel: (0, react_table_1.getSortedRowModel)(),
+        enableSorting: enableSort,
     });
     return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, ReactTable_module_css_1.default.root) }, loading ? (react_1.default.createElement("div", { className: (0, classnames_1.default)(ReactTable_module_css_1.default.loader) },
         react_1.default.createElement(index_1.Loader, { className: (0, classnames_1.default)(ReactTable_module_css_1.default.loaderIcon) }))) : (react_1.default.createElement(index_1.Table, null,
-        react_1.default.createElement(index_1.THead, null, table.getHeaderGroups().map(function (headerGroup, headerGroupI) { return (react_1.default.createElement(index_1.Row, { key: headerGroupI }, headerGroup.headers.map(function (header, headerI) { return (react_1.default.createElement(index_1.CellHeading, { key: headerGroupI + "-" + headerI }, header.isPlaceholder
-            ? null
-            : (0, react_table_1.flexRender)(header.column.columnDef.header, header.getContext()))); }))); })),
+        react_1.default.createElement(index_1.THead, null, table.getHeaderGroups().map(function (headerGroup, headerGroupI) { return (react_1.default.createElement(index_1.Row, { key: headerGroupI }, headerGroup.headers.map(function (header, headerI) {
+            console.log(header.column.getIsSorted());
+            var content = (0, react_table_1.flexRender)(header.column.columnDef.header, header.getContext());
+            return (react_1.default.createElement(index_1.CellHeading, { key: headerGroupI + "-" + headerI }, header.isPlaceholder ? null : header.column.getCanSort() ? (react_1.default.createElement("button", { className: ReactTable_module_css_1.default.headingSortButton, onClick: header.column.getToggleSortingHandler() },
+                content,
+                react_1.default.createElement(index_1.Icon, { className: ReactTable_module_css_1.default.headingSortButtonIcon, icon: header.column.getIsSorted() === 'asc'
+                        ? 'chevron-up'
+                        : header.column.getIsSorted() === 'desc'
+                            ? 'chevron-down'
+                            : 'unfold-more-horizontal' }))) : (content)));
+        }))); })),
         react_1.default.createElement(index_1.TBody, null, table.getRowModel().rows.map(function (row, rowI) { return (react_1.default.createElement(react_1.default.Fragment, { key: rowI },
             react_1.default.createElement(index_1.Row, null, row.getVisibleCells().map(function (cell, cellI) { return (react_1.default.createElement(index_1.CellBody, { key: rowI + "-" + cellI, style: {
                     width: cell.column.getSize(),

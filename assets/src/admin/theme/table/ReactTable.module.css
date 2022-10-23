@@ -12,3 +12,18 @@
   width: 100%;
   align-items: center;
 }
+
+.headingSortButton {
+  padding: 0;
+  background-color: transparent;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.headingSortButtonIcon {
+  display: inline-block;
+  margin-left: 0.4em;
+}

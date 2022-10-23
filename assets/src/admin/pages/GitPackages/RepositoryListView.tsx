@@ -23,7 +23,10 @@ const RepositoryListView = ({
 }) => {
   const { addToast } = useToast();
   const [deleteModal, setDeleteModal] = React.useState<boolean>(false);
-  const [logModal, setLogModal] = React.useState<boolean>(false);
+  //const [logModal, setLogModal] = React.useState<boolean>(false);
+  const [logModal, setLogModal] = React.useState<boolean>(
+    repository.key === 'deploy-wp'
+  );
   const [loadingUpdate, setLoadingUpdate] = React.useState<boolean>(false);
   const updateUrl = `${VARS.restPluginBase}git-packages-deploy/${repository.key}/?key=${repository.deployKey}&ref=push-to-deploy`;
 

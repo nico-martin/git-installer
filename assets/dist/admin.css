@@ -958,6 +958,21 @@
   align-items: center;
 }
 
+.ReactTable-module__headingSortButton--1TV3p {
+  padding: 0;
+  background-color: transparent;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.ReactTable-module__headingSortButtonIcon--3c6JX {
+  display: inline-block;
+  margin-left: 0.4em;
+}
+
 /*!************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/table/cells/ExpanderCell.module.css ***!
   \************************************************************************************************************************************************************************************/

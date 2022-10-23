@@ -2,7 +2,6 @@ import { createColumnHelper } from '@tanstack/table-core';
 import React from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 import { ReactTable, ShadowBox } from '../../../theme';
-import dayjs from '../../../utils/dayjs';
 import { IGitLog } from '../../../utils/types';
 import styles from './RepositoryUpdateLog.css';
 
@@ -17,6 +16,7 @@ const RepositoryUpdateLog: React.FC<{
     columnHelper.accessor('date', {
       header: __('Date', 'shgi'),
       cell: (info) => info.getValue(),
+      sortingFn: (a, b) => a.original.time - b.original.time,
     }),
     columnHelper.accessor('prevVersion', {
       header: __('Version', 'shgi'),
@@ -26,6 +26,7 @@ const RepositoryUpdateLog: React.FC<{
           : info.row.original.prevVersion +
             ' 🠖 ' +
             info.row.original.newVersion,
+      enableSorting: false,
     }),
     columnHelper.accessor('ref', {
       header: __('Trigger', 'shgi'),
@@ -48,7 +49,12 @@ const RepositoryUpdateLog: React.FC<{
         {log.length === 0 ? (
           <p>{__('No entries found', 'shgi')}</p>
         ) : (
-          <ReactTable columns={columns} data={log} />
+          <ReactTable
+            columns={columns}
+            data={log}
+            initialSort={[{ id: 'date', desc: true }]}
+            enableSort
+          />
         )}
       </div>
     </ShadowBox>

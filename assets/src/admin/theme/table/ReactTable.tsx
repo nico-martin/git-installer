@@ -3,6 +3,8 @@ import {
   getCoreRowModel,
   getExpandedRowModel,
   useReactTable,
+  SortingState,
+  getSortedRowModel,
 } from '@tanstack/react-table';
 import React from 'react';
 import cn from '../../utils/classnames';
@@ -14,6 +16,7 @@ import {
   TBody,
   THead,
   Table,
+  Icon,
 } from '../index';
 import styles from './ReactTable.module.css';
 import ExpanderCell from './cells/ExpanderCell';
@@ -24,13 +27,19 @@ const ReactTable: React.FC<{
   columns: any;
   data: any;
   renderSubComponent?: (props: any) => React.ReactNode;
+  initialSort?: SortingState;
+  enableSort?: boolean;
 }> = ({
   className = '',
   loading = false,
   columns,
   data,
   renderSubComponent = null,
+  initialSort = [],
+  enableSort = false,
 }) => {
+  const [sorting, setSorting] = React.useState<SortingState>(initialSort);
+
   const table = useReactTable({
     data,
     columns: [
@@ -54,6 +63,10 @@ const ReactTable: React.FC<{
     getRowCanExpand: () => Boolean(renderSubComponent),
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
+    state: { sorting },
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    enableSorting: enableSort,
   });
 
   return (
@@ -67,16 +80,37 @@ const ReactTable: React.FC<{
           <THead>
             {table.getHeaderGroups().map((headerGroup, headerGroupI) => (
               <Row key={headerGroupI}>
-                {headerGroup.headers.map((header, headerI) => (
-                  <CellHeading key={`${headerGroupI}-${headerI}`}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </CellHeading>
-                ))}
+                {headerGroup.headers.map((header, headerI) => {
+                  console.log(header.column.getIsSorted());
+                  const content = flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  );
+                  return (
+                    <CellHeading key={`${headerGroupI}-${headerI}`}>
+                      {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                        <button
+                          className={styles.headingSortButton}
+                          onClick={header.column.getToggleSortingHandler()}
+                        >
+                          {content}
+                          <Icon
+                            className={styles.headingSortButtonIcon}
+                            icon={
+                              header.column.getIsSorted() === 'asc'
+                                ? 'chevron-up'
+                                : header.column.getIsSorted() === 'desc'
+                                ? 'chevron-down'
+                                : 'unfold-more-horizontal'
+                            }
+                          />
+                        </button>
+                      ) : (
+                        content
+                      )}
+                    </CellHeading>
+                  );
+                })}
               </Row>
             ))}
           </THead>
