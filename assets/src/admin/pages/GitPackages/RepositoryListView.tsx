@@ -1,13 +1,14 @@
-import { Message } from 'postcss';
 import React from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 import { useToast } from '../../components/toast/toastContext';
 import { Button, Icon, NOTICE_TYPES, Notice } from '../../theme';
-import { apiDelete, apiGet } from '../../utils/apiFetch';
+import { apiGet } from '../../utils/apiFetch';
 import cn from '../../utils/classnames';
 import { VARS } from '../../utils/constants';
 import { IGitPackage, IGitPackages } from '../../utils/types';
 import styles from './RepositoryListView.css';
+import DeleteRepository from './delete/DeleteRepository';
+import RepositoryUpdateLog from './log/RepositoryUpdateLog';
 
 const RepositoryListView = ({
   repository,
@@ -21,37 +22,15 @@ const RepositoryListView = ({
   className?: string;
 }) => {
   const { addToast } = useToast();
-  const [loadingDelete, setLoadingDelete] = React.useState<boolean>(false);
+  const [deleteModal, setDeleteModal] = React.useState<boolean>(false);
+  const [logModal, setLogModal] = React.useState<boolean>(false);
   const [loadingUpdate, setLoadingUpdate] = React.useState<boolean>(false);
-  const updateUrl = `${VARS.restPluginBase}git-packages-deploy/${repository.key}/?key=${repository.deployKey}`;
-  const deleteRepo = () => {
-    setLoadingDelete(true);
-    apiDelete<{
-      message: string;
-      packages: IGitPackages;
-    }>(`${VARS.restPluginNamespace}/git-packages/${repository.key}`)
-      .then((resp) => {
-        addToast({
-          message: resp.message,
-          type: NOTICE_TYPES.SUCCESS,
-        });
-        setRepositories(resp.packages);
-      })
-      .catch((e) =>
-        addToast({
-          message: e,
-          type: NOTICE_TYPES.ERROR,
-        })
-      )
-      .finally(() => {
-        setLoadingDelete(false);
-      });
-  };
+  const updateUrl = `${VARS.restPluginBase}git-packages-deploy/${repository.key}/?key=${repository.deployKey}&ref=push-to-deploy`;
 
   const updateRepo = () => {
     setLoadingUpdate(true);
     apiGet<IGitPackage>(
-      `${VARS.restPluginNamespace}/git-packages-deploy/${repository.key}/?key=${repository.deployKey}`
+      `${VARS.restPluginNamespace}/git-packages-deploy/${repository.key}/?key=${repository.deployKey}&ref=update-trigger`
     )
       .then((resp) => {
         addToast({
@@ -88,8 +67,23 @@ const RepositoryListView = ({
           </Notice>
         ) : (
           <React.Fragment>
+            <RepositoryUpdateLog
+              repoKey={repository.key}
+              name={repository.name}
+              setModal={setLogModal}
+              modal={logModal}
+            />
             <p className={styles.version}>
               {sprintf(__('Version: %s', 'shgi'), repository.version)}
+              <button
+                className={styles.logButton}
+                onClick={() => setLogModal(true)}
+              >
+                <Icon
+                  icon="clipboard-text-clock-outline"
+                  className={styles.logButtonIcon}
+                />
+              </button>
             </p>
             <p className={styles.repo}>{repository.baseUrl}</p>
             {repository.dir && (
@@ -133,6 +127,14 @@ const RepositoryListView = ({
         )}
       </div>
       <div className={styles.controls}>
+        <DeleteRepository
+          modal={deleteModal}
+          setModal={setDeleteModal}
+          repositoryKey={repository.key}
+          theme={repository.theme}
+          name={repository.name}
+          setRepositories={setRepositories}
+        />
         <Button
           buttonType="primary"
           loading={loadingUpdate}
@@ -140,11 +142,7 @@ const RepositoryListView = ({
         >
           {__('Update', 'shgi')}
         </Button>
-        <Button
-          buttonType="delete"
-          loading={loadingDelete}
-          onClick={deleteRepo}
-        >
+        <Button buttonType="delete" onClick={() => setDeleteModal(true)}>
           {__('Delete', 'shgi')}
         </Button>
       </div>

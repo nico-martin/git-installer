@@ -1,0 +1,31 @@
+.table {
+  width: 100%;
+  border-bottom: 1px solid #ccd0d4;
+  border-spacing: 0;
+}
+
+.thead {
+}
+
+.tbody {
+}
+
+.row {
+  position: relative;
+}
+
+.cell {
+  text-align: left;
+  padding: 0.6rem 0;
+
+  & + .cell {
+    padding-left: 0.6rem;
+  }
+}
+
+.cellHeading {
+}
+
+.cellBody {
+  border-top: 1px solid #ccd0d4;
+}

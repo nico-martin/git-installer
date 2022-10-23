@@ -1,0 +1,20 @@
+.button {
+  display: flex;
+  align-items: center;
+  &:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  &:hover .icon {
+    //color: var(--c-primary-dark);
+  }
+}
+
+.buttonExpanded {
+}
+
+.icon {
+  transform: scale(1.2) translateY(5%) translateX(15%);
+}

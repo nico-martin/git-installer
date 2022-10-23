@@ -1,7 +1,7 @@
 .container {
   display: flex;
   vertical-align: top;
-  margin-top: var(--wpmstaging-form-spacing);
+  margin-top: var(--shgi-form-spacing);
 }
 
 .containerStacked {
@@ -9,8 +9,8 @@
 }
 
 .labelContainer {
-  width: var(--wpmstaging-form-label-width);
-  margin-right: var(--wpmstaging-form-spacing);
+  width: var(--shgi-form-label-width);
+  margin-right: var(--shgi-form-spacing);
   display: block;
   flex-shrink: 0;
 }
@@ -18,7 +18,7 @@
 .containerStacked .labelContainer {
   margin-right: 0;
   width: 100%;
-  margin-bottom: var(--wpmstaging-form-spacing-xsmall);
+  margin-bottom: var(--shgi-form-spacing-xsmall);
 }
 
 .description {

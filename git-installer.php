@@ -3,10 +3,10 @@
 /*
 Plugin Name: Git Installer (Beta)
 Plugin URI: https://github.com/SayHelloGmbH/git-installer
-Description: Install and Update Plugins and Themes from Github, Gitlab and Bitbucket
+Description: Install and Update Plugins and Themes from GitHub, Gitlab and Bitbucket
 Author: Nico Martin - mail@nico.dev
 Author URI: https://nico.dev
-Version: 0.1.0
+Version: 0.1.1
 Text Domain: shgi
 Domain Path: /languages
 */
@@ -23,6 +23,7 @@ require_once 'src/Plugin.php';
 require_once 'src/Assets.php';
 require_once 'src/Settings.php';
 require_once 'src/AdminPage.php';
+require_once 'src/Package/UpdateLog.php';
 require_once 'src/Package/GitPackages.php';
 require_once 'src/Package/provider/Provider.php';
 require_once 'src/Package/provider/Github.php';
@@ -47,6 +48,9 @@ sayhelloGitInstaller()->AdminPage->run();
 /**
  * Packages
  */
+
+sayhelloGitInstaller()->UpdateLog = new SayHello\GitInstaller\Package\UpdateLog();
+sayhelloGitInstaller()->UpdateLog->run();
 
 sayhelloGitInstaller()->GitPackages = new SayHello\GitInstaller\Package\GitPackages();
 sayhelloGitInstaller()->GitPackages->run();

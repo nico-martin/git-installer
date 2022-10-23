@@ -11,6 +11,7 @@ const Card: React.FC<{
   children?: any;
   toggleButtonClose?: Function;
   rightContent?: JSX.Element;
+  stickyHeader?: boolean;
 }> = ({
   className = '',
   canToggleKey = '',
@@ -18,6 +19,7 @@ const Card: React.FC<{
   children,
   toggleButtonClose,
   rightContent = null,
+  stickyHeader = false,
 }) => {
   const [open, setOpen] = React.useState<boolean>(!isCardClosed(canToggleKey));
 
@@ -34,7 +36,11 @@ const Card: React.FC<{
       })}
     >
       {title && (
-        <div className={styles.heading}>
+        <div
+          className={cn(styles.heading, {
+            [styles.headingSticky]: stickyHeader,
+          })}
+        >
           <h2 className={styles.title}>{title}</h2>
           {(canToggle || Boolean(toggleButtonClose)) && (
             <button

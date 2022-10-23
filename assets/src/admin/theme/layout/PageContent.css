@@ -1,9 +1,9 @@
 .content {
-    max-width: var(--wpmstaging-form-max-width);
+  max-width: var(--shgi-form-max-width);
 
-    & > * + * {
-        margin-top: var(--wpmstaging-form-spacing);
-    }
+  & > * + * {
+    margin-top: var(--shgi-form-spacing);
+  }
 
-    margin-top: var(--wpmstaging-form-spacing);
+  margin-top: var(--shgi-form-spacing);
 }

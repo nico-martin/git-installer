@@ -36,6 +36,15 @@ export interface IGitPackageRaw {
   apiUrl: string;
 }
 
+export interface IGitLog {
+  ref: string;
+  refName: string;
+  time: number;
+  date: string;
+  prevVersion: string;
+  newVersion: string;
+}
+
 export interface IGitPackage extends IGitPackageRaw {
   deployKey: string;
   theme: boolean;

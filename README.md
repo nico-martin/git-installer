@@ -26,6 +26,11 @@ add_filter('shgi/Repositories/MustUsePlugins', '__return_true');
 Now you are able to select the target folder for your plugin before the installation.
 
 ## Changelog
+### 0.1.1
+- added confirmation modal before deletion
+- added possibility to keep theme/plugin and only remove git connection
+- added update log
+
 ### 0.1.0
 - stable Beta, no changes
 
