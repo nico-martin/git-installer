@@ -4,6 +4,9 @@ Install and update WordPress themes and plugins directly from your Git repositor
 
 "Git Installer" works with public and private repositories, different branches, subdirectories and even allows automated updates via webhooks. Furthermore, plugins or themes are automatically recognised and validated and it also supports must use plugins and multisite installations.
 
+## Download
+[https://wp.nico.dev/wp-content/uploads/2022/10/git-installer-0-2-0.zip](https://wp.nico.dev/wp-content/uploads/2022/10/git-installer-0-2-0.zip)
+
 ## Features
 
 | Feature                                                                                                                                               |   Status   |
