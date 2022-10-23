@@ -34,6 +34,51 @@ const PageGitPackages = () => {
     <PageContent>
       {/*<TestForm />*/}
       <Card
+        title={__('Public Beta Info', 'shgi')}
+        canToggleKey="public-beta-info"
+      >
+        <p style={{ fontSize: '1.2rem' }}>
+          <b>Thank you so much for being a beta tester!</b>
+        </p>
+        <h3>Documentation</h3>
+        <p>
+          You can find a documentation of the most important features directly
+          in the GitHub repository of the plugin
+        </p>
+        <p style={{ marginTop: '0.2rem' }}>
+          <a
+            href="https://github.com/SayHelloGmbH/git-installer"
+            target="_blank"
+            rel="noopener"
+          >
+            https://github.com/SayHelloGmbH/git-installer
+          </a>
+        </p>
+        <h3>Issues</h3>
+        <p>
+          Please note that at this stage of development, errors can always
+          occur. I would be very grateful if you could check if a bug has
+          already been discovered or if you can create a new issue:
+        </p>
+        <p style={{ marginTop: '0.2rem' }}>
+          <a
+            href="https://github.com/SayHelloGmbH/git-installer/issues"
+            target="_blank"
+            rel="noreferrer"
+          >
+            https://github.com/SayHelloGmbH/git-installer/issues
+          </a>
+        </p>
+        <h3>Contact</h3>
+        <p>
+          Furthermore, I would be happy to hear from you if you have any
+          suggestions or ideas.
+        </p>
+        <p style={{ marginTop: '0.2rem' }}>
+          <a href="mailto:nico@sayhello.ch">nico@sayhello.ch</a>
+        </p>
+      </Card>
+      <Card
         title={__('Git Repositories', 'shgi')}
         rightContent={
           repositories.length !== 0 && (
