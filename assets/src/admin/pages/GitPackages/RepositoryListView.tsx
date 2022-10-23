@@ -85,7 +85,13 @@ const RepositoryListView = ({
                 />
               </button>
             </p>
-            <p className={styles.repo}>{repository.baseUrl}</p>
+            <p className={styles.repo}>
+              {repository.baseUrl}{' '}
+              <code className={styles.repoBranch}>
+                <Icon icon="source-branch" className={styles.repoBranchIcon} />{' '}
+                {repository.activeBranch}
+              </code>
+            </p>
             {repository.dir && (
               <p
                 dangerouslySetInnerHTML={{

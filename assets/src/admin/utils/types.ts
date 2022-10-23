@@ -32,6 +32,7 @@ export interface IGitPackageRaw {
   private: boolean;
   provider: string;
   branches: Record<string, IGitPackageBranch>;
+  activeBranch: string;
   baseUrl: string;
   apiUrl: string;
 }

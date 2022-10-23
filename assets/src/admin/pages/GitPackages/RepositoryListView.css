@@ -43,6 +43,19 @@
 }
 
 .repo {
+  display: flex;
+  align-items: center;
+}
+
+.repoBranch {
+  margin-left: 0.5em;
+  display: flex;
+  align-items: center;
+  font-size: 0.9em;
+}
+
+.repoBranchIcon {
+  margin-right: 0.2em;
 }
 
 .webhookUpdate {

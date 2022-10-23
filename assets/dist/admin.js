@@ -31,6 +31,7 @@ var map = {
 	"./icons/phone.svg": "./assets/dist/static/admin/icons/phone.svg",
 	"./icons/safari.svg": "./assets/dist/static/admin/icons/safari.svg",
 	"./icons/send.svg": "./assets/dist/static/admin/icons/send.svg",
+	"./icons/source-branch.svg": "./assets/dist/static/admin/icons/source-branch.svg",
 	"./icons/unfold-more-horizontal.svg": "./assets/dist/static/admin/icons/unfold-more-horizontal.svg",
 	"./icons/windows.svg": "./assets/dist/static/admin/icons/windows.svg",
 	"./pixel-mock.svg": "./assets/dist/static/admin/pixel-mock.svg"
@@ -156,7 +157,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","webhookUpdate":"RepositoryListView__webhookUpdate--27L70","webhookUpdateInput":"RepositoryListView__webhookUpdateInput--1LVHk","copyButton":"RepositoryListView__copyButton--FrZQ5","error":"RepositoryListView__error--13_UO","logButton":"RepositoryListView__logButton--14sPs","logButtonIcon":"RepositoryListView__logButtonIcon--3epQG"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","repoBranch":"RepositoryListView__repoBranch--27uUJ","repoBranchIcon":"RepositoryListView__repoBranchIcon--2n2rm","webhookUpdate":"RepositoryListView__webhookUpdate--27L70","webhookUpdateInput":"RepositoryListView__webhookUpdateInput--1LVHk","copyButton":"RepositoryListView__copyButton--FrZQ5","error":"RepositoryListView__error--13_UO","logButton":"RepositoryListView__logButton--14sPs","logButtonIcon":"RepositoryListView__logButtonIcon--3epQG"});
 
 /***/ }),
 
@@ -1083,6 +1084,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<svg viewBox=\"0 0 24 24\">\r\n    <path fill=\"currentColor\" d=\"M2,21L23,12L2,3V10L17,12L2,14V21Z\"/>\r\n</svg>");
+
+/***/ }),
+
+/***/ "./assets/dist/static/admin/icons/source-branch.svg":
+/*!**********************************************************!*\
+  !*** ./assets/dist/static/admin/icons/source-branch.svg ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<svg viewBox=\"0 0 24 24\">\r\n    <path fill=\"currentColor\"\r\n          d=\"M13,14C9.64,14 8.54,15.35 8.18,16.24C9.25,16.7 10,17.76 10,19A3,3 0 0,1 7,22A3,3 0 0,1 4,19C4,17.69 4.83,16.58 6,16.17V7.83C4.83,7.42 4,6.31 4,5A3,3 0 0,1 7,2A3,3 0 0,1 10,5C10,6.31 9.17,7.42 8,7.83V13.12C8.88,12.47 10.16,12 12,12C14.67,12 15.56,10.66 15.85,9.77C14.77,9.32 14,8.25 14,7A3,3 0 0,1 17,4A3,3 0 0,1 20,7C20,8.34 19.12,9.5 17.91,9.86C17.65,11.29 16.68,14 13,14M7,18A1,1 0 0,0 6,19A1,1 0 0,0 7,20A1,1 0 0,0 8,19A1,1 0 0,0 7,18M7,4A1,1 0 0,0 6,5A1,1 0 0,0 7,6A1,1 0 0,0 8,5A1,1 0 0,0 7,4M17,6A1,1 0 0,0 16,7A1,1 0 0,0 17,8A1,1 0 0,0 18,7A1,1 0 0,0 17,6Z\"/>\r\n</svg>\r\n");
 
 /***/ }),
 
@@ -31116,7 +31132,13 @@ var RepositoryListView = function (_a) {
                     (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgi'), repository.version),
                     react_1.default.createElement("button", { className: RepositoryListView_css_1.default.logButton, onClick: function () { return setLogModal(true); } },
                         react_1.default.createElement(theme_1.Icon, { icon: "clipboard-text-clock-outline", className: RepositoryListView_css_1.default.logButtonIcon }))),
-                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo }, repository.baseUrl),
+                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.repo },
+                    repository.baseUrl,
+                    ' ',
+                    react_1.default.createElement("code", { className: RepositoryListView_css_1.default.repoBranch },
+                        react_1.default.createElement(theme_1.Icon, { icon: "source-branch", className: RepositoryListView_css_1.default.repoBranchIcon }),
+                        ' ',
+                        repository.activeBranch)),
                 repository.dir && (react_1.default.createElement("p", { dangerouslySetInnerHTML: {
                         __html: (0, i18n_1.sprintf)((0, i18n_1.__)('Directory: %s', 'shgi'), "<code>./" + repository.dir + "</code>"),
                     } })),
