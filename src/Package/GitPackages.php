@@ -4,7 +4,7 @@ namespace SayHello\GitInstaller\Package;
 
 use SayHello\GitInstaller\Helpers;
 use SayHello\GitInstaller\FsHelpers;
-use SayHello\GitInstaller\UpdateLog;
+use SayHello\GitInstaller\Package\UpdateLog;
 
 class GitPackages
 {
@@ -420,7 +420,6 @@ class GitPackages
 
             $return_repos[$dir]['deployKey'] = $deployKeys[$dir];
             $return_repos[$dir]['version'] = $version;
-            $return_repos[$dir]['log'] = UpdateLog::getLogs($dir);
         }
 
         return $array ? array_values($return_repos) : $return_repos;

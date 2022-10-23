@@ -37,7 +37,8 @@ export interface IGitPackageRaw {
 }
 
 export interface IGitLog {
-  ref: 'push-to-deploy' | 'update-trigger';
+  ref: string;
+  refName: string;
   time: number;
   date: string;
   prevVersion: string;
@@ -50,7 +51,6 @@ export interface IGitPackage extends IGitPackageRaw {
   saveAsMustUsePlugin: boolean;
   version: string;
   dir: string;
-  log: Array<IGitLog>;
 }
 
 export type IGitPackages = Array<IGitPackage>;

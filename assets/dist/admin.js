@@ -31078,8 +31078,7 @@ var RepositoryListView = function (_a) {
     var repository = _a.repository, setRepositories = _a.setRepositories, _b = _a.className, className = _b === void 0 ? '' : _b;
     var addToast = (0, toastContext_1.useToast)().addToast;
     var _c = react_1.default.useState(false), deleteModal = _c[0], setDeleteModal = _c[1];
-    //const [logModal, setLogModal] = React.useState<boolean>(false);
-    var _d = react_1.default.useState(repository.key === 'deploy-wp'), logModal = _d[0], setLogModal = _d[1];
+    var _d = react_1.default.useState(false), logModal = _d[0], setLogModal = _d[1];
     var _e = react_1.default.useState(false), loadingUpdate = _e[0], setLoadingUpdate = _e[1];
     var updateUrl = constants_1.VARS.restPluginBase + "git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey + "&ref=push-to-deploy";
     var updateRepo = function () {
@@ -31112,7 +31111,7 @@ var RepositoryListView = function (_a) {
             repository.version === null ? (react_1.default.createElement(theme_1.Notice, { className: RepositoryListView_css_1.default.error, type: theme_1.NOTICE_TYPES.ERROR }, repository.theme
                 ? (0, i18n_1.__)('The Theme does not seem to be installed', 'shgi')
                 : (0, i18n_1.__)('The Plugin does not seem to be installed', 'shgi'))) : (react_1.default.createElement(react_1.default.Fragment, null,
-                react_1.default.createElement(RepositoryUpdateLog_1.default, { log: repository.log, name: repository.name, setModal: setLogModal, modal: logModal }),
+                react_1.default.createElement(RepositoryUpdateLog_1.default, { repoKey: repository.key, name: repository.name, setModal: setLogModal, modal: logModal }),
                 react_1.default.createElement("p", { className: RepositoryListView_css_1.default.version },
                     (0, i18n_1.sprintf)((0, i18n_1.__)('Version: %s', 'shgi'), repository.version),
                     react_1.default.createElement("button", { className: RepositoryListView_css_1.default.logButton, onClick: function () { return setLogModal(true); } },
@@ -31518,10 +31517,27 @@ var table_core_1 = __webpack_require__(/*! @tanstack/table-core */ "./node_modul
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var i18n_1 = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 var theme_1 = __webpack_require__(/*! ../../../theme */ "./assets/src/admin/theme/index.ts");
+var apiFetch_1 = __webpack_require__(/*! ../../../utils/apiFetch */ "./assets/src/admin/utils/apiFetch.ts");
+var constants_1 = __webpack_require__(/*! ../../../utils/constants */ "./assets/src/admin/utils/constants.ts");
 var RepositoryUpdateLog_css_1 = __importDefault(__webpack_require__(/*! ./RepositoryUpdateLog.css */ "./assets/src/admin/pages/GitPackages/log/RepositoryUpdateLog.css"));
 var RepositoryUpdateLog = function (_a) {
-    var log = _a.log, name = _a.name, modal = _a.modal, setModal = _a.setModal;
+    var repoKey = _a.repoKey, name = _a.name, modal = _a.modal, setModal = _a.setModal;
+    var _b = react_1.default.useState([]), logs = _b[0], setLogs = _b[1];
+    var _c = react_1.default.useState(false), logsLoading = _c[0], setLogsLoading = _c[1];
+    var _d = react_1.default.useState(''), logsError = _d[0], setLogsError = _d[1];
     var columnHelper = (0, table_core_1.createColumnHelper)();
+    react_1.default.useEffect(function () {
+        setLogs([]);
+        setLogsError('');
+        setLogsLoading(false);
+        if (modal) {
+            setLogsLoading(true);
+            (0, apiFetch_1.apiGet)(constants_1.VARS.restPluginNamespace + "/packages-update-log/" + repoKey + "/")
+                .then(function (logs) { return setLogs(logs); })
+                .catch(function (e) { return setLogsError(e); })
+                .finally(function () { return setLogsLoading(false); });
+        }
+    }, [modal]);
     var columns = [
         columnHelper.accessor('date', {
             header: (0, i18n_1.__)('Date', 'shgi'),
@@ -31539,19 +31555,13 @@ var RepositoryUpdateLog = function (_a) {
             },
             enableSorting: false,
         }),
-        columnHelper.accessor('ref', {
+        columnHelper.accessor('refName', {
             header: (0, i18n_1.__)('Trigger', 'shgi'),
-            cell: function (info) {
-                return info.getValue() === 'push-to-deploy'
-                    ? (0, i18n_1.__)('push to deploy', 'shgi')
-                    : info.getValue() === 'update-trigger'
-                        ? (0, i18n_1.__)('update button', 'shgi')
-                        : '-';
-            },
+            cell: function (info) { return info.getValue(); },
         }),
     ];
     return modal ? (react_1.default.createElement(theme_1.ShadowBox, { title: (0, i18n_1.sprintf)((0, i18n_1.__)('update Log "%s"', 'shgi'), name), close: function () { return setModal(false); }, size: "medium" },
-        react_1.default.createElement("div", { className: RepositoryUpdateLog_css_1.default.log }, log.length === 0 ? (react_1.default.createElement("p", null, (0, i18n_1.__)('No entries found', 'shgi'))) : (react_1.default.createElement(theme_1.ReactTable, { columns: columns, data: log, initialSort: [{ id: 'date', desc: true }], enableSort: true }))))) : null;
+        react_1.default.createElement("div", { className: RepositoryUpdateLog_css_1.default.log }, logsLoading ? (react_1.default.createElement(theme_1.Loader, { block: true })) : logsError ? (react_1.default.createElement(theme_1.Notice, { type: theme_1.NOTICE_TYPES.ERROR }, logsError)) : logs.length === 0 ? (react_1.default.createElement("p", null, (0, i18n_1.__)('No entries found', 'shgi'))) : (react_1.default.createElement(theme_1.ReactTable, { columns: columns, data: logs, initialSort: [{ id: 'date', desc: true }], enableSort: true }))))) : null;
 };
 exports["default"] = RepositoryUpdateLog;
 
@@ -33185,7 +33195,6 @@ var ReactTable = function (_a) {
     return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, ReactTable_module_css_1.default.root) }, loading ? (react_1.default.createElement("div", { className: (0, classnames_1.default)(ReactTable_module_css_1.default.loader) },
         react_1.default.createElement(index_1.Loader, { className: (0, classnames_1.default)(ReactTable_module_css_1.default.loaderIcon) }))) : (react_1.default.createElement(index_1.Table, null,
         react_1.default.createElement(index_1.THead, null, table.getHeaderGroups().map(function (headerGroup, headerGroupI) { return (react_1.default.createElement(index_1.Row, { key: headerGroupI }, headerGroup.headers.map(function (header, headerI) {
-            console.log(header.column.getIsSorted());
             var content = (0, react_table_1.flexRender)(header.column.columnDef.header, header.getContext());
             return (react_1.default.createElement(index_1.CellHeading, { key: headerGroupI + "-" + headerI }, header.isPlaceholder ? null : header.column.getCanSort() ? (react_1.default.createElement("button", { className: ReactTable_module_css_1.default.headingSortButton, onClick: header.column.getToggleSortingHandler() },
                 content,

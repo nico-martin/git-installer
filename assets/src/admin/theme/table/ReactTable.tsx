@@ -81,7 +81,6 @@ const ReactTable: React.FC<{
             {table.getHeaderGroups().map((headerGroup, headerGroupI) => (
               <Row key={headerGroupI}>
                 {headerGroup.headers.map((header, headerI) => {
-                  console.log(header.column.getIsSorted());
                   const content = flexRender(
                     header.column.columnDef.header,
                     header.getContext()

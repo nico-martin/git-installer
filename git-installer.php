@@ -19,11 +19,11 @@ add_action('init', function () {
 
 require_once 'src/Helpers.php';
 require_once 'src/FsHelpers.php';
-require_once 'src/UpdateLog.php';
 require_once 'src/Plugin.php';
 require_once 'src/Assets.php';
 require_once 'src/Settings.php';
 require_once 'src/AdminPage.php';
+require_once 'src/Package/UpdateLog.php';
 require_once 'src/Package/GitPackages.php';
 require_once 'src/Package/provider/Provider.php';
 require_once 'src/Package/provider/Github.php';
@@ -48,6 +48,9 @@ sayhelloGitInstaller()->AdminPage->run();
 /**
  * Packages
  */
+
+sayhelloGitInstaller()->UpdateLog = new SayHello\GitInstaller\Package\UpdateLog();
+sayhelloGitInstaller()->UpdateLog->run();
 
 sayhelloGitInstaller()->GitPackages = new SayHello\GitInstaller\Package\GitPackages();
 sayhelloGitInstaller()->GitPackages->run();

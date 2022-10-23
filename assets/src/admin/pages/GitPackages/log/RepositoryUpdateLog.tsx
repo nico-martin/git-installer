@@ -1,17 +1,45 @@
 import { createColumnHelper } from '@tanstack/table-core';
 import React from 'react';
 import { __, sprintf } from '@wordpress/i18n';
-import { ReactTable, ShadowBox } from '../../../theme';
+import {
+  Loader,
+  Notice,
+  NOTICE_TYPES,
+  ReactTable,
+  ShadowBox,
+} from '../../../theme';
+import { apiGet } from '../../../utils/apiFetch';
+import { VARS } from '../../../utils/constants';
 import { IGitLog } from '../../../utils/types';
 import styles from './RepositoryUpdateLog.css';
 
 const RepositoryUpdateLog: React.FC<{
-  log: Array<IGitLog>;
+  //log: Array<IGitLog>;
+  repoKey: string;
   name: string;
   modal: boolean;
   setModal: (show: boolean) => void;
-}> = ({ log, name, modal, setModal }) => {
+}> = ({ repoKey, name, modal, setModal }) => {
+  const [logs, setLogs] = React.useState<Array<IGitLog>>([]);
+  const [logsLoading, setLogsLoading] = React.useState<boolean>(false);
+  const [logsError, setLogsError] = React.useState<string>('');
   const columnHelper = createColumnHelper<IGitLog>();
+
+  React.useEffect(() => {
+    setLogs([]);
+    setLogsError('');
+    setLogsLoading(false);
+    if (modal) {
+      setLogsLoading(true);
+      apiGet<Array<IGitLog>>(
+        `${VARS.restPluginNamespace}/packages-update-log/${repoKey}/`
+      )
+        .then((logs) => setLogs(logs))
+        .catch((e) => setLogsError(e))
+        .finally(() => setLogsLoading(false));
+    }
+  }, [modal]);
+
   const columns = [
     columnHelper.accessor('date', {
       header: __('Date', 'shgi'),
@@ -28,14 +56,9 @@ const RepositoryUpdateLog: React.FC<{
             info.row.original.newVersion,
       enableSorting: false,
     }),
-    columnHelper.accessor('ref', {
+    columnHelper.accessor('refName', {
       header: __('Trigger', 'shgi'),
-      cell: (info) =>
-        info.getValue() === 'push-to-deploy'
-          ? __('push to deploy', 'shgi')
-          : info.getValue() === 'update-trigger'
-          ? __('update button', 'shgi')
-          : '-',
+      cell: (info) => info.getValue(),
     }),
   ];
 
@@ -46,12 +69,16 @@ const RepositoryUpdateLog: React.FC<{
       size="medium"
     >
       <div className={styles.log}>
-        {log.length === 0 ? (
+        {logsLoading ? (
+          <Loader block />
+        ) : logsError ? (
+          <Notice type={NOTICE_TYPES.ERROR}>{logsError}</Notice>
+        ) : logs.length === 0 ? (
           <p>{__('No entries found', 'shgi')}</p>
         ) : (
           <ReactTable
             columns={columns}
-            data={log}
+            data={logs}
             initialSort={[{ id: 'date', desc: true }]}
             enableSort
           />
