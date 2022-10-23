@@ -186,7 +186,7 @@ class GitPackages
         $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin, $dir);
         if (is_wp_error($repoData)) return $repoData;
 
-        $update = $this->updatePackage($repoData['key']);
+        $update = $this->updatePackage($repoData['key'], 'install');
         if (is_wp_error($update)) return $update;
 
         return [
@@ -212,9 +212,6 @@ class GitPackages
         ]);
 
         $ref = array_key_exists('ref', $_GET) ? $_GET['ref'] : '';
-        if (!in_array($ref, UpdateLog::getRefOptions())) {
-            $ref = '';
-        }
 
         $update = $this->updatePackage($key, $ref);
         if (is_wp_error($update)) return new \WP_Error($update->get_error_code(), $update->get_error_message(), [
@@ -241,6 +238,7 @@ class GitPackages
         }
 
         $fullDelete && FsHelpers::removeDir($this->getPackageDir($key));
+        UpdateLog::deleteLogs($key);
 
         unset($repos[$key]);
         update_option($this->repo_option, $repos);
