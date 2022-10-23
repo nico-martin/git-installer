@@ -1,7 +1,7 @@
 :root {
-    --wpmstaging-form-spacing-xsmall: 0.5rem;
-    --wpmstaging-form-spacing-small: 1rem;
-    --wpmstaging-form-spacing: 1.5rem;
-    --wpmstaging-form-label-width: 180px;
-    --wpmstaging-form-max-width: 700px;
+  --shgi-form-spacing-xsmall: 0.5rem;
+  --shgi-form-spacing-small: 1rem;
+  --shgi-form-spacing: 1.5rem;
+  --shgi-form-label-width: 180px;
+  --shgi-form-max-width: 700px;
 }

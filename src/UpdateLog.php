@@ -30,7 +30,9 @@ class UpdateLog
     {
         $option = get_option(self::$optionKey . '-' . $key, []);
         return array_map(function ($o) {
-            return self::mapEntry($o);
+            $e = self::mapEntry($o);
+            $e['date'] = wp_date(get_option('date_format') . ' ' . get_option('time_format'), $e['time']);
+            return $e;
         }, $option);
     }
 

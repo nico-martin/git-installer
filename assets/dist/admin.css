@@ -2,11 +2,11 @@
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/App.css ***!
   \**************************************************************************************************************************************************/
 :root {
-    --wpmstaging-form-spacing-xsmall: 0.5rem;
-    --wpmstaging-form-spacing-small: 1rem;
-    --wpmstaging-form-spacing: 1.5rem;
-    --wpmstaging-form-label-width: 180px;
-    --wpmstaging-form-max-width: 700px;
+  --shgi-form-spacing-xsmall: 0.5rem;
+  --shgi-form-spacing-small: 1rem;
+  --shgi-form-spacing: 1.5rem;
+  --shgi-form-label-width: 180px;
+  --shgi-form-max-width: 700px;
 }
 
 /*!******************************************************************************************************************************************************************!*\
@@ -83,16 +83,16 @@
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/layout/PageContent.css ***!
   \***********************************************************************************************************************************************************************/
 .PageContent__content--3Iwc8 {
-    max-width: var(--wpmstaging-form-max-width);
+  max-width: var(--shgi-form-max-width);
 }
 
-    .PageContent__content--3Iwc8 > * + * {
-        margin-top: var(--wpmstaging-form-spacing);
-    }
+  .PageContent__content--3Iwc8 > * + * {
+    margin-top: var(--shgi-form-spacing);
+  }
 
-    .PageContent__content--3Iwc8 {
+  .PageContent__content--3Iwc8 {
 
-    margin-top: var(--wpmstaging-form-spacing);
+  margin-top: var(--shgi-form-spacing);
 }
 
 /*!************************************************************************************************************************************************************!*\
@@ -144,9 +144,16 @@
     left: 0;
   }
 
+.Card__headingSticky--1q4MO {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 999;
+}
+
 .Card__title--258Vk {
   margin: 0;
-  padding: var(--wpmstaging-form-spacing-small) var(--wpmstaging-form-spacing);
+  padding: var(--shgi-form-spacing-small) var(--shgi-form-spacing);
 }
 
 .Card__toggleButton--1-4jS {
@@ -155,7 +162,7 @@
   width: 1.6rem;
   height: 1.6rem;
   padding: 0;
-  margin: 0 var(--wpmstaging-form-spacing) 0 0;
+  margin: 0 var(--shgi-form-spacing) 0 0;
   border-radius: 50%;
   position: relative;
   cursor: pointer;
@@ -174,7 +181,7 @@
 }
 
 .Card__content--UvNPu {
-  padding: var(--wpmstaging-form-spacing);
+  padding: var(--shgi-form-spacing);
 }
 
 .Card__cardClosed--g-FMj .Card__content--UvNPu {
@@ -182,7 +189,7 @@
   }
 
 .Card__headingRightContent--l69EV {
-  margin-right: var(--wpmstaging-form-spacing);
+  margin-right: var(--shgi-form-spacing);
 }
 
 /*!************************************************************************************************************************************************************************!*\
@@ -216,7 +223,7 @@
   position: sticky;
   top: 0;
   background-color: #fff;
-  padding: var(--wpmstaging-form-spacing);
+  padding: var(--shgi-form-spacing);
   z-index: 10;
 }
 
@@ -230,9 +237,9 @@
   left: 50%;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
-  max-height: calc(100vh - (var(--wpmstaging-form-spacing) * 2));
+  max-height: calc(100vh - (var(--shgi-form-spacing) * 4));
   width: 900px;
-  max-width: calc(100vw - (var(--wpmstaging-form-spacing) * 2));
+  max-width: calc(100vw - (var(--shgi-form-spacing) * 2));
   background-color: #fff;
   transition: opacity 0.2s ease-in;
   will-change: transform;
@@ -248,7 +255,7 @@
   }
 
 .ShadowBox__content--2XuV8 {
-  padding: var(--wpmstaging-form-spacing);
+  padding: var(--shgi-form-spacing);
 }
 
 .ShadowBox__loader--3YJXn {
@@ -621,7 +628,7 @@
 .FormElement__container--TbJPB {
   display: flex;
   vertical-align: top;
-  margin-top: var(--wpmstaging-form-spacing);
+  margin-top: var(--shgi-form-spacing);
 }
 
 .FormElement__containerStacked--1Hh4B {
@@ -629,8 +636,8 @@
 }
 
 .FormElement__labelContainer--3bLFZ {
-  width: var(--wpmstaging-form-label-width);
-  margin-right: var(--wpmstaging-form-spacing);
+  width: var(--shgi-form-label-width);
+  margin-right: var(--shgi-form-spacing);
   display: block;
   flex-shrink: 0;
 }
@@ -638,7 +645,7 @@
 .FormElement__containerStacked--1Hh4B .FormElement__labelContainer--3bLFZ {
   margin-right: 0;
   width: 100%;
-  margin-bottom: var(--wpmstaging-form-spacing-xsmall);
+  margin-bottom: var(--shgi-form-spacing-xsmall);
 }
 
 .FormElement__description--3ZCm3 {
@@ -681,7 +688,7 @@
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/FormControls.css ***!
   \**********************************************************************************************************************************************************************/
 .FormControls__controls--2EPjf {
-    margin-top: calc(var(--wpmstaging-form-spacing) * 2);
+  margin-top: calc(var(--shgi-form-spacing) * 2);
 }
 
 /*!**********************************************************************************************************************************************************************!*\
@@ -692,7 +699,7 @@
 }
 
 .FormFeedback__wrapper--1ZrQp {
-  margin-top: var(--wpmstaging-form-spacing);
+  margin-top: var(--shgi-form-spacing);
 }
 
 /*!*******************************************************************************************************************************************************************!*\
@@ -898,6 +905,85 @@
 .InputColor__input--2Sn2U:not([type="checkbox"]) {
     width: 5.1em !important;
 }
+/*!***********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/table/Table.module.css ***!
+  \***********************************************************************************************************************************************************************/
+.Table-module__table--iCyGZ {
+  width: 100%;
+  border-bottom: 1px solid #ccd0d4;
+  border-spacing: 0;
+}
+
+.Table-module__thead--16mQa {
+}
+
+.Table-module__tbody--365R- {
+}
+
+.Table-module__row--2llI7 {
+  position: relative;
+}
+
+.Table-module__cell--2N9WD {
+  text-align: left;
+  padding: 0.6rem 0;
+}
+
+.Table-module__cell--2N9WD + .Table-module__cell--2N9WD {
+    padding-left: 0.6rem;
+  }
+
+.Table-module__cellHeading--1Hojm {
+}
+
+.Table-module__cellBody--xiFCb {
+  border-top: 1px solid #ccd0d4;
+}
+
+/*!****************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/table/ReactTable.module.css ***!
+  \****************************************************************************************************************************************************************************/
+.ReactTable-module__root--NBFPu {
+  display: block;
+}
+
+.ReactTable-module__loader--ptAem {
+  width: 100%;
+  display: block;
+  font-size: 2rem;
+}
+
+.ReactTable-module__loaderIcon--1YNiU {
+  width: 100%;
+  align-items: center;
+}
+
+/*!************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/table/cells/ExpanderCell.module.css ***!
+  \************************************************************************************************************************************************************************************/
+.ExpanderCell-module__button--2k7yr {
+  display: flex;
+  align-items: center;
+}
+  .ExpanderCell-module__button--2k7yr:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .ExpanderCell-module__button--2k7yr:hover .ExpanderCell-module__icon--1QQB9 {
+    //color: var(--c-primary-dark);
+  }
+
+.ExpanderCell-module__buttonExpanded--ESlVz {
+}
+
+.ExpanderCell-module__icon--1QQB9 {
+  transform: scale(1.2) translateY(5%) translateX(15%);
+}
+
 /*!****************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/components/toast/toastContext.css ***!
   \****************************************************************************************************************************************************************************/
@@ -1029,6 +1115,8 @@
 
 .RepositoryListView__version--2l7TN {
   font-size: 0.8rem;
+  display: flex;
+  vertical-align: center;
 }
 
 .RepositoryListView__repo--1ltS5 {
@@ -1061,7 +1149,33 @@
   }
 
 .RepositoryListView__error--13_UO {
-  margin-top: var(--wpmstaging-form-spacing);
+  margin-top: var(--shgi-form-spacing);
+}
+
+.RepositoryListView__logButton--14sPs {
+  margin-left: 0.2rem;
+  background-color: transparent;
+  border: none;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.RepositoryListView__logButton--14sPs:hover {
+    opacity: 1;
+  }
+
+.RepositoryListView__logButton--14sPs .RepositoryListView__logButtonIcon--3epQG {
+    transform: scale(1.2) translateY(10%);
+  }
+
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/GitPackages/log/RepositoryUpdateLog.css ***!
+  \****************************************************************************************************************************************************************************************/
+.RepositoryUpdateLog__log--3Pafd {
+}
+
+.RepositoryUpdateLog__entry--2haJT {
+  display: flex;
 }
 
 /*!**********************************************************************************************************************************************************************************!*\
@@ -1069,13 +1183,13 @@
   \**********************************************************************************************************************************************************************************/
 .AddRepository__stepHeading--2ke99 {
   display: flex;
-  margin-left: calc(var(--wpmstaging-form-spacing-xsmall) * -1);
-  margin-right: calc(var(--wpmstaging-form-spacing-xsmall) * -1);
-  width: calc(100% + var(--wpmstaging-form-spacing-xsmall) * 2);
+  margin-left: calc(var(--shgi-form-spacing-xsmall) * -1);
+  margin-right: calc(var(--shgi-form-spacing-xsmall) * -1);
+  width: calc(100% + var(--shgi-form-spacing-xsmall) * 2);
 }
 
 .AddRepository__stepHeadingElement--fB1mR {
-  padding: 0 var(--wpmstaging-form-spacing-xsmall);
+  padding: 0 var(--shgi-form-spacing-xsmall);
 }
 
 .AddRepository__stepHeadingElementVisited--23NAY .AddRepository__stepHeadingElementTitle--1BK9d {
@@ -1090,12 +1204,11 @@
 .AddRepository__stepHeadingElementTitle--1BK9d {
   border-bottom: 3px solid #3c434a;
   margin: 0;
-  padding-bottom: var(--wpmstaging-form-spacing-xsmall);
+  padding-bottom: var(--shgi-form-spacing-xsmall);
 }
 
 .AddRepository__stepForm--2ynfY {
-  padding: calc(2 * var(--wpmstaging-form-spacing)) 0
-    var(--wpmstaging-form-spacing) 0;
+  padding: calc(2 * var(--shgi-form-spacing)) 0 var(--shgi-form-spacing) 0;
 }
 
 /*!**********************************************************************************************************************************************************************************************!*\
@@ -1113,8 +1226,8 @@
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/PageGitPackages.css ***!
   \********************************************************************************************************************************************************************/
 .PageGitPackages__repository--2fhYj + .PageGitPackages__repository--2fhYj {
-  margin-top: var(--wpmstaging-form-spacing);
-  padding-top: var(--wpmstaging-form-spacing);
+  margin-top: var(--shgi-form-spacing);
+  padding-top: var(--shgi-form-spacing);
   border-top: 1px solid #ccd0d4;
 }
 

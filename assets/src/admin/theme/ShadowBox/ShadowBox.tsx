@@ -49,7 +49,12 @@ export default ({
         data-visible={show}
       >
         <div className={styles.shadow} onClick={onClose} />
-        <Card className={styles.box} title={title} toggleButtonClose={onClose}>
+        <Card
+          className={styles.box}
+          title={title}
+          toggleButtonClose={onClose}
+          stickyHeader
+        >
           {isFunction(children) ? children(onClose) : children}
         </Card>
       </div>

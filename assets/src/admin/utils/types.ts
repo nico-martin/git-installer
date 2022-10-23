@@ -36,18 +36,21 @@ export interface IGitPackageRaw {
   apiUrl: string;
 }
 
+export interface IGitLog {
+  ref: 'push-to-deploy' | 'update-trigger';
+  time: number;
+  date: string;
+  prevVersion: string;
+  newVersion: string;
+}
+
 export interface IGitPackage extends IGitPackageRaw {
   deployKey: string;
   theme: boolean;
   saveAsMustUsePlugin: boolean;
   version: string;
   dir: string;
-  log: Array<{
-    ref: 'push-to-deploy' | 'update-trigger';
-    time: number;
-    prevVersion: string;
-    newVersion: string;
-  }>;
+  log: Array<IGitLog>;
 }
 
 export type IGitPackages = Array<IGitPackage>;

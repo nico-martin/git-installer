@@ -1,6 +1,6 @@
 .repository + .repository {
-  margin-top: var(--wpmstaging-form-spacing);
-  padding-top: var(--wpmstaging-form-spacing);
+  margin-top: var(--shgi-form-spacing);
+  padding-top: var(--shgi-form-spacing);
   border-top: 1px solid #ccd0d4;
 }
 

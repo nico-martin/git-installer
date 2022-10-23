@@ -8,6 +8,7 @@ import { VARS } from '../../utils/constants';
 import { IGitPackage, IGitPackages } from '../../utils/types';
 import styles from './RepositoryListView.css';
 import DeleteRepository from './delete/DeleteRepository';
+import RepositoryUpdateLog from './log/RepositoryUpdateLog';
 
 const RepositoryListView = ({
   repository,
@@ -22,6 +23,7 @@ const RepositoryListView = ({
 }) => {
   const { addToast } = useToast();
   const [deleteModal, setDeleteModal] = React.useState<boolean>(false);
+  const [logModal, setLogModal] = React.useState<boolean>(false);
   const [loadingUpdate, setLoadingUpdate] = React.useState<boolean>(false);
   const updateUrl = `${VARS.restPluginBase}git-packages-deploy/${repository.key}/?key=${repository.deployKey}&ref=push-to-deploy`;
 
@@ -48,8 +50,6 @@ const RepositoryListView = ({
       .finally(() => setLoadingUpdate(false));
   };
 
-  console.log(repository.log);
-
   return (
     <div className={cn(className, styles.root)}>
       <div className={styles.infos}>
@@ -67,8 +67,23 @@ const RepositoryListView = ({
           </Notice>
         ) : (
           <React.Fragment>
+            <RepositoryUpdateLog
+              log={repository.log}
+              name={repository.name}
+              setModal={setLogModal}
+              modal={logModal}
+            />
             <p className={styles.version}>
               {sprintf(__('Version: %s', 'shgi'), repository.version)}
+              <button
+                className={styles.logButton}
+                onClick={() => setLogModal(true)}
+              >
+                <Icon
+                  icon="clipboard-text-clock-outline"
+                  className={styles.logButtonIcon}
+                />
+              </button>
             </p>
             <p className={styles.repo}>{repository.baseUrl}</p>
             {repository.dir && (

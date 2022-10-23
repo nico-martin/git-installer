@@ -26,7 +26,7 @@
   position: sticky;
   top: 0;
   background-color: #fff;
-  padding: var(--wpmstaging-form-spacing);
+  padding: var(--shgi-form-spacing);
   z-index: 10;
 }
 
@@ -40,9 +40,9 @@
   left: 50%;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
-  max-height: calc(100vh - (var(--wpmstaging-form-spacing) * 2));
+  max-height: calc(100vh - (var(--shgi-form-spacing) * 4));
   width: 900px;
-  max-width: calc(100vw - (var(--wpmstaging-form-spacing) * 2));
+  max-width: calc(100vw - (var(--shgi-form-spacing) * 2));
   background-color: #fff;
   transition: opacity 0.2s ease-in;
   will-change: transform;
@@ -62,7 +62,7 @@
 }
 
 .content {
-  padding: var(--wpmstaging-form-spacing);
+  padding: var(--shgi-form-spacing);
 }
 
 .loader {

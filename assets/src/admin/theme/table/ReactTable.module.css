@@ -1,0 +1,14 @@
+.root {
+  display: block;
+}
+
+.loader {
+  width: 100%;
+  display: block;
+  font-size: 2rem;
+}
+
+.loaderIcon {
+  width: 100%;
+  align-items: center;
+}

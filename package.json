@@ -11,6 +11,7 @@
     "url": "git+ssh://git@github.com:SayHelloGmbH/git-installer.git"
   },
   "dependencies": {
+    "@tanstack/react-table": "^8.5.15",
     "@types/wordpress__components": "^9.8.6",
     "@types/wordpress__i18n": "^3.11.0",
     "dayjs": "^1.10.7",

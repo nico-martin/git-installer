@@ -27,3 +27,6 @@ export { default as InputCheckbox } from './form/InputCheckbox';
 export { default as InputRadio } from './form/InputRadio';
 export { default as InputUpload } from './form/InputUpload';
 export { default as InputColor } from './form/InputColor';
+
+export { Table, Row, TBody, THead, CellBody, CellHeading } from './table/Table';
+export { default as ReactTable } from './table/ReactTable';
