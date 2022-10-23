@@ -29,6 +29,7 @@ Now you are able to select the target folder for your plugin before the installa
 ### 0.1.1
 - added confirmation modal before deletion
 - added possibility to keep theme/plugin and only remove git connection
+- added update log
 
 ### 0.1.0
 - stable Beta, no changes
