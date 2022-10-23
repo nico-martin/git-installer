@@ -6,7 +6,7 @@ Plugin URI: https://github.com/SayHelloGmbH/git-installer
 Description: Install and Update Plugins and Themes from GitHub, Gitlab and Bitbucket
 Author: Nico Martin - mail@nico.dev
 Author URI: https://nico.dev
-Version: 0.1.1
+Version: 0.2.0
 Text Domain: shgi
 Domain Path: /languages
 */

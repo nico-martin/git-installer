@@ -91,6 +91,10 @@ add_filter('shgi/UpdateLog/refOptions', function($refs){
 
 ## Changelog
 
+### 0.2.0
+
+- public beta, no changes
+
 ### 0.1.1
 
 - added confirmation modal before deletion
