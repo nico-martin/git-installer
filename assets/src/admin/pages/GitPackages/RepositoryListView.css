@@ -45,13 +45,13 @@
 .repo {
 }
 
-.pushToDeploy {
+.webhookUpdate {
   font-size: 0.7rem;
   display: flex;
   align-items: center;
 }
 
-.pushToDeployInput {
+.webhookUpdateInput {
   margin-left: 1em;
   font-size: 0.7rem;
   width: 200px;

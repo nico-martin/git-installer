@@ -156,7 +156,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","pushToDeploy":"RepositoryListView__pushToDeploy--1T2yZ","pushToDeployInput":"RepositoryListView__pushToDeployInput--30Exa","copyButton":"RepositoryListView__copyButton--FrZQ5","error":"RepositoryListView__error--13_UO","logButton":"RepositoryListView__logButton--14sPs","logButtonIcon":"RepositoryListView__logButtonIcon--3epQG"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","webhookUpdate":"RepositoryListView__webhookUpdate--27L70","webhookUpdateInput":"RepositoryListView__webhookUpdateInput--1LVHk","copyButton":"RepositoryListView__copyButton--FrZQ5","error":"RepositoryListView__error--13_UO","logButton":"RepositoryListView__logButton--14sPs","logButtonIcon":"RepositoryListView__logButtonIcon--3epQG"});
 
 /***/ }),
 
@@ -30949,9 +30949,9 @@ var EcosystemProvider = function (_a) {
         if (!showRestWarning)
             return '';
         return constants_1.VARS.activePlugins.indexOf('password-protected/password-protected.php') !== -1
-            ? (0, i18n_1.__)('The Plugin "Password Protected" is active and enabled. Therefore the REST API Access is restricted and features like the "push to deploy URL" won\'t work. Please allow REST API Access under "Protected Permissions".', 'shgi') +
+            ? (0, i18n_1.__)('The Plugin "Password Protected" is active and enabled. Therefore the REST API Access is restricted and features like the "webhook update URL" won\'t work. Please allow REST API Access under "Protected Permissions".', 'shgi') +
                 ("<br /><a href=\"" + constants_1.VARS.adminUrl + "options-general.php?page=password-protected\">" + constants_1.VARS.adminUrl + "options-general.php?page=password-protected</a>")
-            : (0, i18n_1.__)('REST API Access seems to be restricted. Therefore features like the "push to deploy URL" won\'t work. Please make sure that the REST API can be accessed for visitors.', 'shgi');
+            : (0, i18n_1.__)('REST API Access seems to be restricted. Therefore features like the "webhook update URL" won\'t work. Please make sure that the REST API can be accessed for visitors.', 'shgi');
     }, [showRestWarning]);
     return (react_1.default.createElement(Context.Provider, { value: {
             notices: __spreadArray([], (restWarning
@@ -31080,10 +31080,10 @@ var RepositoryListView = function (_a) {
     var _c = react_1.default.useState(false), deleteModal = _c[0], setDeleteModal = _c[1];
     var _d = react_1.default.useState(false), logModal = _d[0], setLogModal = _d[1];
     var _e = react_1.default.useState(false), loadingUpdate = _e[0], setLoadingUpdate = _e[1];
-    var updateUrl = constants_1.VARS.restPluginBase + "git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey + "&ref=push-to-deploy";
+    var updateUrl = constants_1.VARS.restPluginBase + "git-packages-update/" + repository.key + "/?key=" + repository.deployKey + "&ref=webhook-update";
     var updateRepo = function () {
         setLoadingUpdate(true);
-        (0, apiFetch_1.apiGet)(constants_1.VARS.restPluginNamespace + "/git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey + "&ref=update-trigger")
+        (0, apiFetch_1.apiGet)(constants_1.VARS.restPluginNamespace + "/git-packages-update/" + repository.key + "/?key=" + repository.deployKey + "&ref=update-trigger")
             .then(function (resp) {
             addToast({
                 message: (0, i18n_1.__)('Update successful'),
@@ -31120,13 +31120,13 @@ var RepositoryListView = function (_a) {
                 repository.dir && (react_1.default.createElement("p", { dangerouslySetInnerHTML: {
                         __html: (0, i18n_1.sprintf)((0, i18n_1.__)('Directory: %s', 'shgi'), "<code>./" + repository.dir + "</code>"),
                     } })),
-                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.pushToDeploy },
-                    (0, i18n_1.__)('Push to Deploy URL', 'shgi'),
+                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.webhookUpdate },
+                    (0, i18n_1.__)('Webhook Update URL', 'shgi'),
                     ":",
-                    react_1.default.createElement("input", { className: RepositoryListView_css_1.default.pushToDeployInput, value: updateUrl, type: "text", disabled: true }),
+                    react_1.default.createElement("input", { className: RepositoryListView_css_1.default.webhookUpdateInput, value: updateUrl, type: "text", disabled: true }),
                     Boolean(navigator.clipboard) && (react_1.default.createElement("button", { className: RepositoryListView_css_1.default.copyButton, onClick: function () {
                             addToast({
-                                message: (0, i18n_1.__)('Push to Deploy URL wurde in die Zwischenablage kopiert', 'shgi'),
+                                message: (0, i18n_1.__)('Webhook Update was copied to the clipboard', 'shgi'),
                                 type: theme_1.NOTICE_TYPES.SUCCESS,
                             });
                             navigator.clipboard.writeText(updateUrl);
@@ -31364,7 +31364,7 @@ var CheckRepoForm = function (_a) {
                 required: (0, i18n_1.__)('Required field', 'shgi'),
                 pattern: {
                     value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
-                    message: (0, i18n_1.__)('The URL must lead to a Github, Gitlab or Bitbucket repository', 'shgi'),
+                    message: (0, i18n_1.__)('The URL must lead to a GitHub, Gitlab or Bitbucket repository', 'shgi'),
                 },
             } }),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR, message: error })),
@@ -31600,7 +31600,7 @@ var PageGitPackages = function () {
             react_1.default.createElement(AddRepository_1.default, { repositoryKeys: repositories.map(function (r) { return r.key; }), setRepositories: setRepositories, onFinish: function () { return setAddPackageModal(false); } }))),
         react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Access control', 'shgi'), canToggleKey: "git-packages" },
             react_1.default.createElement(theme_1.Form, { onSubmit: submit },
-                react_1.default.createElement("h3", null, "Github"),
+                react_1.default.createElement("h3", null, "GitHub"),
                 react_1.default.createElement(theme_1.FormElement, { form: form, name: "git-packages-github-token", Input: theme_1.InputText, type: "text", masked: true, DescriptionInput: react_1.default.createElement(react_1.default.Fragment, null,
                         react_1.default.createElement("p", { dangerouslySetInnerHTML: {
                                 __html: (0, i18n_1.sprintf)((0, i18n_1.__)('You can generate your personal acces token here: %s', 'shgi'), '<a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer">https://github.com/settings/tokens</a>'),

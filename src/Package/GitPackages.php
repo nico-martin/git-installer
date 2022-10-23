@@ -136,9 +136,9 @@ class GitPackages
             }
         ]);
 
-        register_rest_route(sayhelloGitInstaller()->api_namespace, 'git-packages-deploy/(?P<slug>\S+)/', [
+        register_rest_route(sayhelloGitInstaller()->api_namespace, 'git-packages-update/(?P<slug>\S+)/', [
             'methods' => ['GET', 'POST'],
-            'callback' => [$this, 'pushToDeploy'],
+            'callback' => [$this, 'updateRepo'],
             'args' => [
                 'slug',
             ],
@@ -199,7 +199,7 @@ class GitPackages
         ];
     }
 
-    public function pushToDeploy($data)
+    public function updateRepo($data)
     {
         if (!array_key_exists('key', $_GET)) return new \WP_Error('wrong_request', __('Invalid request: no key found', 'shgi'), [
             'status' => 403,
@@ -258,7 +258,7 @@ class GitPackages
         if (!$provider) return new \WP_Error(
             'repository_not_found',
             sprintf(
-                __("Package %s could not be found. Please make sure it's a valid URL to a Github, Gitlab or Bitbucket repository", 'shgi'),
+                __("Package %s could not be found. Please make sure it's a valid URL to a GitHub, Gitlab or Bitbucket repository", 'shgi'),
                 '<code>' . $url . '</code>'
             ), [
             'status' => 404,
@@ -489,8 +489,6 @@ class GitPackages
 
         $newPackages = $this->getPackages(false);
         UpdateLog::addLog($key, $ref, $package['version'], $newPackages[$key]['version']);
-
-        do_action('shgi/GitPackages/DoAfterUpdate', $oldDir);
 
         return true;
     }

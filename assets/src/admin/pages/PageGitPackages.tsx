@@ -82,7 +82,7 @@ const PageGitPackages = () => {
       )}
       <Card title={__('Access control', 'shgi')} canToggleKey="git-packages">
         <Form onSubmit={submit}>
-          <h3>Github</h3>
+          <h3>GitHub</h3>
           <FormElement
             form={form}
             name="git-packages-github-token"
