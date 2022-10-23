@@ -42,6 +42,12 @@ export interface IGitPackage extends IGitPackageRaw {
   saveAsMustUsePlugin: boolean;
   version: string;
   dir: string;
+  log: Array<{
+    ref: 'push-to-deploy' | 'update-trigger';
+    time: number;
+    prevVersion: string;
+    newVersion: string;
+  }>;
 }
 
 export type IGitPackages = Array<IGitPackage>;

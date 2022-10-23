@@ -30896,10 +30896,10 @@ var RepositoryListView = function (_a) {
     var addToast = (0, toastContext_1.useToast)().addToast;
     var _c = react_1.default.useState(false), deleteModal = _c[0], setDeleteModal = _c[1];
     var _d = react_1.default.useState(false), loadingUpdate = _d[0], setLoadingUpdate = _d[1];
-    var updateUrl = constants_1.VARS.restPluginBase + "git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey;
+    var updateUrl = constants_1.VARS.restPluginBase + "git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey + "&ref=push-to-deploy";
     var updateRepo = function () {
         setLoadingUpdate(true);
-        (0, apiFetch_1.apiGet)(constants_1.VARS.restPluginNamespace + "/git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey)
+        (0, apiFetch_1.apiGet)(constants_1.VARS.restPluginNamespace + "/git-packages-deploy/" + repository.key + "/?key=" + repository.deployKey + "&ref=update-trigger")
             .then(function (resp) {
             addToast({
                 message: (0, i18n_1.__)('Update successful'),
@@ -30917,6 +30917,7 @@ var RepositoryListView = function (_a) {
         })
             .finally(function () { return setLoadingUpdate(false); });
     };
+    console.log(repository.log);
     return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, RepositoryListView_css_1.default.root) },
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.infos },
             react_1.default.createElement("h3", { className: RepositoryListView_css_1.default.name },

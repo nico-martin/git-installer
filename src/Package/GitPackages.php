@@ -4,6 +4,7 @@ namespace SayHello\GitInstaller\Package;
 
 use SayHello\GitInstaller\Helpers;
 use SayHello\GitInstaller\FsHelpers;
+use SayHello\GitInstaller\UpdateLog;
 
 class GitPackages
 {
@@ -200,27 +201,26 @@ class GitPackages
 
     public function pushToDeploy($data)
     {
-        if (!array_key_exists('key', $_GET)) {
-            return new \WP_Error('wrong_request', __('Invalid request: no key found', 'shgi'), [
-                'status' => 403,
-            ]);
-        }
+        if (!array_key_exists('key', $_GET)) return new \WP_Error('wrong_request', __('Invalid request: no key found', 'shgi'), [
+            'status' => 403,
+        ]);
 
         $key = $data['slug'];
         $deployKeys = get_option($this->deploy_option, []);
-        if (!array_key_exists($key, $deployKeys) || $_GET['key'] != $deployKeys[$key]) {
-            return new \WP_Error('wrong_request', __('Invalid request: invalid key', 'shgi'), [
-                'status' => 403,
-            ]);
+        if (!array_key_exists($key, $deployKeys) || $_GET['key'] != $deployKeys[$key]) return new \WP_Error('wrong_request', __('Invalid request: invalid key', 'shgi'), [
+            'status' => 403,
+        ]);
+
+        $ref = array_key_exists('ref', $_GET) ? $_GET['ref'] : '';
+        if (!in_array($ref, UpdateLog::getRefOptions())) {
+            $ref = '';
         }
 
-        $update = $this->updatePackage($key);
-        if (is_wp_error($update)) {
-            return new \WP_Error($update->get_error_code(), $update->get_error_message(), [
-                'status' => 409,
-                'd' => $update->get_all_error_data(),
-            ]);
-        }
+        $update = $this->updatePackage($key, $ref);
+        if (is_wp_error($update)) return new \WP_Error($update->get_error_code(), $update->get_error_message(), [
+            'status' => 409,
+            'd' => $update->get_all_error_data(),
+        ]);
 
         return $this->getPackages(false)[$key];
     }
@@ -420,12 +420,13 @@ class GitPackages
 
             $return_repos[$dir]['deployKey'] = $deployKeys[$dir];
             $return_repos[$dir]['version'] = $version;
+            $return_repos[$dir]['log'] = UpdateLog::getLogs($dir);
         }
 
         return $array ? array_values($return_repos) : $return_repos;
     }
 
-    private function updatePackage($key)
+    private function updatePackage($key, $ref = '')
     {
         $packages = $this->getPackages(false);
 
@@ -486,6 +487,9 @@ class GitPackages
                 ]
             );
         }
+
+        $newPackages = $this->getPackages(false);
+        UpdateLog::addLog($key, $ref, $package['version'], $newPackages[$key]['version']);
 
         do_action('shgi/GitPackages/DoAfterUpdate', $oldDir);
 

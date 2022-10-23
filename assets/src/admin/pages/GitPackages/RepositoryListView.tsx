@@ -23,12 +23,12 @@ const RepositoryListView = ({
   const { addToast } = useToast();
   const [deleteModal, setDeleteModal] = React.useState<boolean>(false);
   const [loadingUpdate, setLoadingUpdate] = React.useState<boolean>(false);
-  const updateUrl = `${VARS.restPluginBase}git-packages-deploy/${repository.key}/?key=${repository.deployKey}`;
+  const updateUrl = `${VARS.restPluginBase}git-packages-deploy/${repository.key}/?key=${repository.deployKey}&ref=push-to-deploy`;
 
   const updateRepo = () => {
     setLoadingUpdate(true);
     apiGet<IGitPackage>(
-      `${VARS.restPluginNamespace}/git-packages-deploy/${repository.key}/?key=${repository.deployKey}`
+      `${VARS.restPluginNamespace}/git-packages-deploy/${repository.key}/?key=${repository.deployKey}&ref=update-trigger`
     )
       .then((resp) => {
         addToast({
@@ -47,6 +47,8 @@ const RepositoryListView = ({
       )
       .finally(() => setLoadingUpdate(false));
   };
+
+  console.log(repository.log);
 
   return (
     <div className={cn(className, styles.root)}>
