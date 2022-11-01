@@ -2,8 +2,6 @@
 
 namespace SayHello\GitInstaller\Package;
 
-use SayHello\GitInstaller\Helpers;
-
 class Ecosystem
 {
     public function run()

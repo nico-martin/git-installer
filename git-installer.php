@@ -6,9 +6,10 @@ Plugin URI: https://github.com/SayHelloGmbH/git-installer
 Description: Install and Update Plugins and Themes from GitHub, Gitlab and Bitbucket
 Author: Nico Martin - mail@nico.dev
 Author URI: https://nico.dev
-Version: 0.2.0
+Version: 0.2.1
 Text Domain: shgi
 Domain Path: /languages
+Requires PHP: 7.4
 */
 
 defined('ABSPATH') or die();
@@ -23,12 +24,14 @@ require_once 'src/Plugin.php';
 require_once 'src/Assets.php';
 require_once 'src/Settings.php';
 require_once 'src/AdminPage.php';
+require_once 'src/Package/Helpers/GitPackageManagement.php';
 require_once 'src/Package/UpdateLog.php';
 require_once 'src/Package/GitPackages.php';
 require_once 'src/Package/provider/Provider.php';
 require_once 'src/Package/provider/Github.php';
 require_once 'src/Package/provider/Gitlab.php';
 require_once 'src/Package/provider/Bitbucket.php';
+require_once 'src/Package/UpdateCheck.php';
 require_once 'src/Package/Ecosystem.php';
 
 function sayhelloGitInstaller(): \SayHello\GitInstaller\Plugin
@@ -54,6 +57,9 @@ sayhelloGitInstaller()->UpdateLog->run();
 
 sayhelloGitInstaller()->GitPackages = new SayHello\GitInstaller\Package\GitPackages();
 sayhelloGitInstaller()->GitPackages->run();
+
+sayhelloGitInstaller()->UpdateCheck = new SayHello\GitInstaller\Package\UpdateCheck();
+sayhelloGitInstaller()->UpdateCheck->run();
 
 sayhelloGitInstaller()->Ecosystem = new SayHello\GitInstaller\Package\Ecosystem();
 sayhelloGitInstaller()->Ecosystem->run();

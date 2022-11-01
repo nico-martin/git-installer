@@ -6,9 +6,9 @@ use SayHello\GitInstaller\Helpers;
 
 class Github extends Provider
 {
-    public static $provider = 'github';
+    public static string $provider = 'github';
 
-    public static function validateUrl($url)
+    public static function validateUrl($url): bool
     {
         $parsed = self::parseGithubUrl($url);
         return $parsed['host'] === 'github.com' && isset($parsed['owner']) && isset($parsed['repo']);

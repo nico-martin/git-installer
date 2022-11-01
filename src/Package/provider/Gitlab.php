@@ -6,15 +6,15 @@ use SayHello\GitInstaller\Helpers;
 
 class Gitlab extends Provider
 {
-    public static $provider = 'gitlab';
+    public static string $provider = 'gitlab';
 
-    public static function validateUrl($url)
+    public static function validateUrl($url): bool
     {
         $parsed = self::parseGitlabUrl($url);
         return $parsed['host'] === 'gitlab.com' && isset($parsed['id']);
     }
 
-    private static function parseGitlabUrl($url)
+    private static function parseGitlabUrl($url): array
     {
         $parsed = parse_url($url);
         $parsed['params'] = array_values(
@@ -86,7 +86,7 @@ class Gitlab extends Provider
         return $branches;
     }
 
-    private static function getRepoFolderFiles($id, $branch, $folder = '')
+    private static function getRepoFolderFiles($id, $branch, $folder = ''): array
     {
         $auth = self::authenticateRequest("https://gitlab.com/api/v4/projects/{$id}/repository/tree/?ref={$branch}&recursive=1&per_page=999");
         $response = Helpers::getRestJson($auth[0], $auth[1]);
@@ -115,13 +115,13 @@ class Gitlab extends Provider
         }, $files);
     }
 
-    public static function validateDir($url, $branch, $dir)
+    public static function validateDir($url, $branch, $dir): array
     {
         $parsed = self::parseGitlabUrl($url);
         return self::getRepoFolderFiles($parsed['id'], $branch, $dir);
     }
 
-    public static function authenticateRequest($url, $args = [])
+    public static function authenticateRequest($url, $args = []): array
     {
         $gitlabToken = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-gitlab-token');
         if ($gitlabToken) {
@@ -138,20 +138,20 @@ class Gitlab extends Provider
         return [$url, $args];
     }
 
-    public static function export()
+    public static function export(): object
     {
         return new class {
-            public function name()
+            public function name(): string
             {
                 return 'Gitlab';
             }
 
-            public function hasToken()
+            public function hasToken(): bool
             {
                 return boolval(sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-gitlab-token'));
             }
 
-            public function validateUrl($url)
+            public function validateUrl($url): bool
             {
                 return Gitlab::validateUrl($url);
             }
@@ -161,12 +161,12 @@ class Gitlab extends Provider
                 return Gitlab::getInfos($url);
             }
 
-            public function authenticateRequest($url, $args = [])
+            public function authenticateRequest($url, $args = []): array
             {
                 return Gitlab::authenticateRequest($url, $args);
             }
 
-            public function validateDir($url, $branch, $dir = '')
+            public function validateDir($url, $branch, $dir = ''): array
             {
                 return Gitlab::validateDir($url, $branch, $dir);
             }

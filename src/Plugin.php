@@ -7,29 +7,29 @@ use SayHello\GitInstaller\Package\GitPackages;
 class Plugin
 {
 
-    private static $instance;
-    public $name = '';
-    public $version = '';
-    public $prefix = '';
-    public $api_namespace = '';
-    public $api_namespace_live = '';
-    public $debug = false;
-    public $file = '';
+    private static ?Plugin $instance = null;
+    public string $name = '';
+    public string $version = '';
+    public string $prefix = '';
+    public string $api_namespace = '';
+    public bool $debug = false;
+    public string $file = '';
 
-    public $upload_dir = '';
-    public $upload_url = '';
+    public string $upload_dir = '';
 
-    public $option_key = 'shgi_data';
+    public string $option_key = 'shgi_data';
 
-    public $AdminPage;
-    public $Assets;
-    public $Settings;
-    public $PasswordProtected;
-    public $GitPackages;
+    public AdminPage $AdminPage;
+    public Assets $Assets;
+    public Settings $Settings;
+    public Package\GitPackages $GitPackages;
+    public Package\UpdateLog $UpdateLog;
+    public Package\UpdateCheck $UpdateCheck;
+    public Package\Ecosystem $Ecosystem;
 
-    public static function getInstance($file)
+    public static function getInstance($file): Plugin
     {
-        if (!isset(self::$instance) && !(self::$instance instanceof Plugin)) {
+        if (!isset(self::$instance)) {
             self::$instance = new Plugin();
 
             if (get_option(sayhelloGitInstaller()->option_key)) {

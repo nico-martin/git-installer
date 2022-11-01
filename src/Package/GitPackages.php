@@ -4,16 +4,16 @@ namespace SayHello\GitInstaller\Package;
 
 use SayHello\GitInstaller\Helpers;
 use SayHello\GitInstaller\FsHelpers;
-use SayHello\GitInstaller\Package\UpdateLog;
+use SayHello\GitInstaller\Package\Helpers\GitPackageManagement;
 
 class GitPackages
 {
 
-    public $repo_option = 'sayhello-git-installer-git-repositories';
-    public $deploy_option = 'sayhello-git-installer-git-deploy';
+    public GitPackageManagement $packages;
 
     public function run()
     {
+        $this->packages = new GitPackageManagement();
         add_filter('shgi/AdminPage/Menu', [$this, 'menu']);
         add_filter('shgi/Settings/register', [$this, 'settings']);
         add_filter('shgi/Assets/AdminFooterJS', [$this, 'footerJsVars']);
@@ -66,8 +66,8 @@ class GitPackages
 
     public function footerJsVars($vars)
     {
-        $vars['gitPackages'] = $this->getPackages();
-        $vars['mustUsePlugins'] = self::useMustUsePlugins();
+        $vars['gitPackages'] = $this->packages->getPackagesArray();
+        $vars['mustUsePlugins'] = Helpers::useMustUsePlugins();
 
         return $vars;
     }
@@ -169,9 +169,9 @@ class GitPackages
         ]);
     }
 
-    public function getRepos()
+    public function getRepos(): array
     {
-        return $this->getPackages();
+        return $this->packages->getPackagesArray();
     }
 
     public function addRepo($data)
@@ -181,12 +181,14 @@ class GitPackages
         $theme = $params['theme'];
         $activeBranch = $params['activeBranch'];
         $saveAsMustUsePlugin = $params['saveAsMustUsePlugin'];
-        $dir = self::sanitizeDir($params['dir']);
+        $dir = Helpers::sanitizeDir($params['dir']);
 
-        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin, $dir);
+        // https://github.com/SayHelloGmbH/shp-printcopy
+
+        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin, $dir, true);
         if (is_wp_error($repoData)) return $repoData;
 
-        $update = $this->updatePackage($repoData['key'], 'install');
+        $update = $this->updatePackage($repoData['key'], 'install', true);
         if (is_wp_error($update)) return $update;
 
         return [
@@ -194,7 +196,7 @@ class GitPackages
                 __('"%s" was installed successfully', 'shgi'),
                 $repoData['key']
             ),
-            'packages' => $this->getPackages(),
+            'packages' => $this->packages->getPackagesArray(),
             'dir' => $dir,
         ];
     }
@@ -206,8 +208,8 @@ class GitPackages
         ]);
 
         $key = $data['slug'];
-        $deployKeys = get_option($this->deploy_option, []);
-        if (!array_key_exists($key, $deployKeys) || $_GET['key'] != $deployKeys[$key]) return new \WP_Error('wrong_request', __('Invalid request: invalid key', 'shgi'), [
+        $deployKey = $this->packages->getDeployKey($key);
+        if (!$deployKey || $_GET['key'] != $deployKey) return new \WP_Error('wrong_request', __('Invalid request: invalid key', 'shgi'), [
             'status' => 403,
         ]);
 
@@ -216,36 +218,32 @@ class GitPackages
         $update = $this->updatePackage($key, $ref);
         if (is_wp_error($update)) return new \WP_Error($update->get_error_code(), $update->get_error_message(), [
             'status' => 409,
-            'd' => $update->get_all_error_data(),
         ]);
 
-        return $this->getPackages(false)[$key];
+        return $this->packages->getPackage($key);
     }
 
     public function deleteRepo($data)
     {
         $fullDelete = array_key_exists('fullDelete', $_GET) && $_GET['fullDelete'] === '1';
-        $repos = $this->getPackages(false);
         $key = $data['slug'];
-        if (!array_key_exists($key, $repos)) {
+        $deleted = $this->packages->deletePackage($key);
+        if (!$deleted) {
             return new \WP_Error(
                 'shgi_repo_not_found',
                 sprintf(
                     __('Package %s could not be updated: The package does not exist', 'shgi'),
                     '<code>' . $key . '</code>'
-                )
+                ),
             );
         }
 
         $fullDelete && FsHelpers::removeDir($this->getPackageDir($key));
         UpdateLog::deleteLogs($key);
 
-        unset($repos[$key]);
-        update_option($this->repo_option, $repos);
-
         return [
             'message' => sprintf(__('"%s" was deleted successfully', 'shgi'), $key),
-            'packages' => $this->getPackages(),
+            'packages' => $this->packages->getPackages(false),
         ];
     }
 
@@ -277,22 +275,9 @@ class GitPackages
         return $infos;
     }
 
-    public function checkGitDir($data)
+    public function getPackageHeaders($url, $branch, $dir)
     {
-        $params = $data->get_params();
-        $url = $params['url'];
-        $dir = self::sanitizeDir($params['dir']);
-        $branch = $params['branch'];
-
         $provider = self::getProvider('', $url);
-        if (!$provider) return new \WP_Error(
-            'repository_not_found',
-            sprintf(
-                __('Package %s could not be found', 'shgi'),
-                '<code>' . $url . '</code>'
-            ), [
-            'status' => 404,
-        ]);
 
         $files = array_map(
             function ($element) {
@@ -315,6 +300,7 @@ class GitPackages
                 'type' => 'theme',
                 'name' => $theme[0]['parsed']['theme'],
                 'theme' => $theme,
+                'headers' => $theme[0]['parsed'],
             ];
         }
 
@@ -322,24 +308,50 @@ class GitPackages
             return [
                 'type' => 'plugin',
                 'name' => $plugin[0]['parsed']['plugin'],
+                'headers' => $plugin[0]['parsed'],
             ];
         }
 
-        return new \WP_Error(
-            'package_not_found',
-            sprintf(__('No valid WordPress Theme (style.css with "Theme Name" header) or WordPress Plugin (Plugin PHP file with "Plugin Name" header) was found in the %s folder of the repository.', 'shgi'), ($dir) ? $dir : 'root'),
-            [
-                'status' => 400,
-                'files' => $provider->validateDir($url, $branch, $dir),
-            ]
-        );
+        return null;
+    }
+
+    public function getPackageHeadersByKey($key)
+    {
+        $package = $this->packages->getPackage($key);
+        $branch = $package['activeBranch'];
+        $url = $package['baseUrl'];
+        $dir = Helpers::sanitizeDir($package['dir']);
+
+        return $this->getPackageHeaders($url, $branch, $dir);
+    }
+
+    public function checkGitDir($data)
+    {
+        $params = $data->get_params();
+        $url = $params['url'];
+        $dir = Helpers::sanitizeDir($params['dir']);
+        $branch = $params['branch'];
+
+        $headers = $this->getPackageHeaders($url, $branch, $dir);
+
+        if (!$headers) {
+            return new \WP_Error(
+                'package_not_found',
+                sprintf(__('No valid WordPress Theme (style.css with "Theme Name" header) or WordPress Plugin (Plugin PHP file with "Plugin Name" header) was found in the %s folder of the repository.', 'shgi'), ($dir) ? $dir : 'root'),
+                [
+                    'status' => 400,
+                ]
+            );
+        }
+
+        return $headers;
     }
 
     /**
      * Helpers
      */
 
-    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false, $dir = '')
+    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false, $dir = '', $new = false)
     {
         $provider = self::getProvider('', $url);
         if (!$provider) {
@@ -364,68 +376,20 @@ class GitPackages
             )[0]['name'];
         }
 
-        $repositories = get_option($this->repo_option, []);
-        $deployKeysOption = get_option($this->deploy_option, []);
-        if (!array_key_exists($repoData['key'], $deployKeysOption)) {
-            $deployKeysOption[$repoData['key']] = wp_generate_password(40, false);
-            update_option($this->deploy_option, $deployKeysOption);
-        }
-        $repositories[$repoData['key']] = $repoData;
-        $repositories[$repoData['key']]['theme'] = $theme;
-        $repositories[$repoData['key']]['saveAsMustUsePlugin'] = $saveAsMustUsePlugin;
-        $repositories[$repoData['key']]['activeBranch'] = $activeBranch;
-        $repositories[$repoData['key']]['dir'] = $dir;
 
-        update_option($this->repo_option, $repositories);
+        $this->packages->getDeployKey($repoData['key'], true);
 
-        return $repoData;
-    }
+        $repoData['theme'] = $theme;
+        $repoData['saveAsMustUsePlugin'] = $saveAsMustUsePlugin;
+        $repoData['activeBranch'] = $activeBranch;
+        $repoData['dir'] = $dir;
 
-    private function getPackages($array = true)
-    {
-        require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
-        wp_cache_flush();
-        search_theme_directories(true); // flush theme cache
-
-        $plugins = get_plugins();
-        $themes = wp_get_themes();
-        $return_repos = [];
-        $repos = get_option($this->repo_option, []);
-        $deployKeys = get_option($this->deploy_option, []);
-
-        foreach ($repos as $dir => $repo) {
-            $version = null;
-            $return_repos[$dir] = $repo;
-
-            if ($repo['theme']) {
-                if (array_key_exists($dir, $themes)) {
-                    $version = $themes[$dir]['Version'];
-                }
-            } else {
-                $filteredPlugins = array_values(
-                    array_filter(
-                        $plugins,
-                        function ($key) use ($dir) {
-                            return substr($key, 0, strlen($dir)) === $dir;
-                        },
-                        ARRAY_FILTER_USE_KEY
-                    )
-                );
-                $plugin = count($filteredPlugins) >= 1 ? $filteredPlugins[0] : null;
-                $version = $plugin ? $plugin['Version'] : null;
-            }
-
-            $return_repos[$dir]['deployKey'] = $deployKeys[$dir];
-            $return_repos[$dir]['version'] = $version;
-        }
-
-        return $array ? array_values($return_repos) : $return_repos;
+        return $this->packages->updatePackage($repoData['key'], $repoData, $new);
     }
 
     private function updatePackage($key, $ref = '')
     {
-        $packages = $this->getPackages(false);
+        $packages = $this->packages->getPackages();
 
         if (!array_key_exists($key, $packages)) return new \WP_Error(
             'shgi_repo_not_found',
@@ -433,6 +397,7 @@ class GitPackages
                 __('Package %s could not be updated: The package does not exist', 'shgi'),
                 '"' . $key . '"'
             ),
+            ['p' => $packages]
         );
 
         $package = $packages[$key];
@@ -485,7 +450,7 @@ class GitPackages
             );
         }
 
-        $newPackages = $this->getPackages(false);
+        $newPackages = $this->packages->getPackages(false);
         UpdateLog::addLog($key, $ref, $package['version'], $newPackages[$key]['version']);
 
         return true;
@@ -493,7 +458,7 @@ class GitPackages
 
     private function getPackageDir($key)
     {
-        $packages = $this->getPackages(false);
+        $packages = $this->packages->getPackages();
         if (!array_key_exists($key, $packages)) {
             return false;
         }
@@ -531,7 +496,23 @@ class GitPackages
         foreach (
             [
                 'theme' => 'Theme Name',
+                'theme-uri' => 'Theme URI',
                 'plugin' => 'Plugin Name',
+                'plugin-uri' => 'Plugin URI',
+                'description' => 'Description',
+                'tags' => 'Tags',
+                'version' => 'Version',
+                'requires-at-least' => 'Requires at least',
+                'tested-up-to' => 'Tested up to',
+                'requires-php' => 'Requires PHP',
+                'author' => 'Author',
+                'author-uri' => 'Author URI',
+                'license' => 'License',
+                'license-uri' => 'License URI',
+                'text-domain' => 'Text Domain',
+                'domain-path' => 'Domain Path',
+                'network' => 'Network',
+                'update-uri' => 'Update URI',
             ] as $field => $regex
         ) {
             if (preg_match('/^(?:[ \t]*<\?php)?[ \t\/*#@]*' . preg_quote($regex, '/') . ':(.*)$/mi', $fileData, $match) && $match[1]) {
@@ -544,19 +525,5 @@ class GitPackages
         return $allHeaders;
     }
 
-    private static function useMustUsePlugins()
-    {
-        return apply_filters('shgi/Repositories/MustUsePlugins', false);
-    }
 
-    private static function sanitizeDir($dir)
-    {
-        if (!$dir) return '';
-        return trailingslashit($dir);
-    }
-
-    private static function unleadingslashit($str)
-    {
-        return ltrim($str, '/');
-    }
 }

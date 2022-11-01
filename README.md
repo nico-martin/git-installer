@@ -94,6 +94,10 @@ add_filter('shgi/UpdateLog/refOptions', function($refs){
 
 ## Changelog
 
+### 0.2.1
+
+-
+
 ### 0.2.0
 
 - public beta, no changes

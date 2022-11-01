@@ -4,10 +4,10 @@ namespace SayHello\GitInstaller;
 
 class AdminPage
 {
-    public $capability = '';
-    public $settings_parent = '';
-    public $menu_title = '';
-    private $menu = [];
+    public string $capability = '';
+    public string $settings_parent = '';
+    public string $menu_title = '';
+    private array $menu = [];
 
     public function __construct()
     {
