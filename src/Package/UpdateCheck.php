@@ -23,13 +23,14 @@ class UpdateCheck
         // https://github.com/rudrastyh/misha-update-checker/blob/main/misha-update-checker.php
 
 
+
         /*
         echo '<pre>';
-        //print_r(sayhelloGitInstaller()->GitPackages->getPackageHeadersByKey('wp-test-plugin'));
+        print_r(sayhelloGitInstaller()->GitPackages->loadNewPluginHeaders('wp-test-plugin'));
         //print_r($this->getPackagePluginFiles());
         //print_r($this->getPackageFilePath('wp-test-plugin'));
         //print_r(wp_get_themes());
-        print_r(get_plugins());
+        //print_r(get_plugins());
         //print_r($this->getPackageKeys());
         echo '</pre>';
         wp_die();*/

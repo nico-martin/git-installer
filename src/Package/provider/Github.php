@@ -178,6 +178,11 @@ class Github extends Provider
             {
                 return Github::validateDir($url, $branch, $dir);
             }
+
+            public function fetchFileContent($url): string
+            {
+                return Github::fetchFileContent($url)['content'];
+            }
         };
     }
 }

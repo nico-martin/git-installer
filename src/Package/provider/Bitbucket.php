@@ -182,6 +182,11 @@ class Bitbucket extends Provider
             {
                 return Bitbucket::validateDir($url, $branch, $dir);
             }
+
+            public function fetchFileContent($url): string
+            {
+                return Bitbucket::fetchFileContent($url)['content'];
+            }
         };
     }
 }

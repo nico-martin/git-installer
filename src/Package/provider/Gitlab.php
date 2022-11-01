@@ -196,6 +196,11 @@ class Gitlab extends Provider
             {
                 return Gitlab::validateDir($url, $branch, $dir);
             }
+
+            public function fetchFileContent($url): string
+            {
+                return Gitlab::fetchFileContent($url)['content'];
+            }
         };
     }
 }

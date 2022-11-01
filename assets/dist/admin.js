@@ -31117,7 +31117,6 @@ var RepositoryListView = function (_a) {
         })
             .finally(function () { return setLoadingUpdate(false); });
     };
-    console.log(repository.headersFile);
     return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, RepositoryListView_css_1.default.root) },
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.infos },
             react_1.default.createElement("h3", { className: RepositoryListView_css_1.default.name },

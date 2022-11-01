@@ -316,14 +316,13 @@ class GitPackages
         return null;
     }
 
-    public function getPackageHeadersByKey($key)
+    public function loadNewPluginHeaders($key): array
     {
         $package = $this->packages->getPackage($key);
-        $branch = $package['activeBranch'];
-        $url = $package['baseUrl'];
-        $dir = Helpers::sanitizeDir($package['dir']);
+        if (!$package['headersFile']) return [];
+        $provider = self::getProvider($package['provider']);
 
-        return $this->getPackageHeaders($url, $branch, $dir);
+        return self::parseHeader($provider->fetchFileContent($package['headersFile']));
     }
 
     public function checkGitDir($data)
