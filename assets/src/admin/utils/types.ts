@@ -52,6 +52,7 @@ export interface IGitPackage extends IGitPackageRaw {
   saveAsMustUsePlugin: boolean;
   version: string;
   dir: string;
+  headersFile: string;
 }
 
 export type IGitPackages = Array<IGitPackage>;
@@ -59,4 +60,6 @@ export type IGitPackages = Array<IGitPackage>;
 export interface IGitWordPressPackage {
   type: 'theme' | 'plugin';
   name: string;
+  headersFile: string;
+  headers: Record<string, string>;
 }

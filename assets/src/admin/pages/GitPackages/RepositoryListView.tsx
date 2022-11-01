@@ -50,6 +50,8 @@ const RepositoryListView = ({
       .finally(() => setLoadingUpdate(false));
   };
 
+  console.log(repository.headersFile);
+
   return (
     <div className={cn(className, styles.root)}>
       <div className={styles.infos}>

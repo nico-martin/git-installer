@@ -31117,6 +31117,7 @@ var RepositoryListView = function (_a) {
         })
             .finally(function () { return setLoadingUpdate(false); });
     };
+    console.log(repository.headersFile);
     return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, RepositoryListView_css_1.default.root) },
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.infos },
             react_1.default.createElement("h3", { className: RepositoryListView_css_1.default.name },
@@ -31251,6 +31252,7 @@ var AddRepository = function (_a) {
                         saveAsMustUsePlugin: constants_1.VARS.mustUsePlugins && saveAsMustUsePlugin,
                         activeBranch: activeBranch,
                         dir: dir,
+                        headersFile: wpPackage.headersFile,
                     })
                         .then(function (resp) {
                         setRepositories(resp.packages);
@@ -31505,6 +31507,7 @@ var DeleteRepository = function (_a) {
                         type: theme_1.NOTICE_TYPES.SUCCESS,
                     });
                     setRepositories(resp.packages);
+                    setModal(false);
                 })
                     .catch(function (e) { return setError(e); })
                     .finally(function () { return setLoadingDelete(false); });

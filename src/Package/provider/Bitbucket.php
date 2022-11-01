@@ -107,13 +107,25 @@ class Bitbucket extends Provider
         );
 
         return array_map(function ($element) use ($folder) {
-            $auth = self::authenticateRequest($element['links']['self']['href']);
-            $response = Helpers::fetchPlainText($auth[0], $auth[1]);
+            $url = $element['links']['self']['href'];
+            $content = self::fetchFileContent($url);
             return [
                 'file' => substr($element['path'], strlen($folder)),
-                'content' => is_wp_error($response) ? null : $response,
+                'fileUrl' => $url,
+                'content' => $content['content'],
             ];
         }, $files);
+    }
+
+    public static function fetchFileContent($url): array
+    {
+        $auth = self::authenticateRequest($url);
+        $response = Helpers::fetchPlainText($auth[0], $auth[1]);
+
+        return [
+            'name' => null,
+            'content' => is_wp_error($response) ? null : $response,
+        ];
     }
 
     public static function validateDir($url, $branch, $dir)

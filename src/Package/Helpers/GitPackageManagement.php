@@ -19,6 +19,7 @@ namespace SayHello\GitInstaller\Package\Helpers;
  *   'apiUrl' => (string)
  *   'deployKey' => (string)
  *   'theme' => (bool)
+ *   'headerFile' => (string)
  *   'saveAsMustUsePlugin' => (bool)
  *   'version' => (string)
  *   'dir' => (string)
@@ -130,13 +131,15 @@ class GitPackageManagement
     /**
      * @param $key string
      * @param $data array Partial<$gitPackage>
+     * @param bool $new
      * @return array $gitPackage
      */
 
-    public function updatePackage(string $key, array $data, $new = false): ?array
+    public function updatePackage(string $key, array $data, bool $new = false): ?array
     {
         $packageData = $new ? [] : $this->getPackage($key);
         if ($packageData === null) return null;
+
 
         $packages = $this->getPackages();
         $newData = array_merge($packageData, $data);

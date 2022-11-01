@@ -104,13 +104,25 @@ class Github extends Provider
         );
 
         return array_map(function ($element) use ($folder) {
-            $auth = self::authenticateRequest($element['url']);
-            $response = Helpers::getRestJson($auth[0], $auth[1]);
+            $url = $element['url'];
+            $content = self::fetchFileContent($url);
             return [
                 'file' => substr($element['path'], strlen($folder)),
-                'content' => base64_decode($response['content']),
+                'fileUrl' => $url,
+                'content' => $content['content'],
             ];
         }, $files);
+    }
+
+    public static function fetchFileContent($url): array
+    {
+        $auth = self::authenticateRequest($url);
+        $response = Helpers::getRestJson($auth[0], $auth[1]);
+
+        return [
+            'name' => null,
+            'content' => base64_decode($response['content']),
+        ];
     }
 
     public static function validateDir($url, $branch, $dir)

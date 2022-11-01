@@ -88,31 +88,57 @@ class Gitlab extends Provider
 
     private static function getRepoFolderFiles($id, $branch, $folder = ''): array
     {
-        $auth = self::authenticateRequest("https://gitlab.com/api/v4/projects/{$id}/repository/tree/?ref={$branch}&recursive=1&per_page=999");
-        $response = Helpers::getRestJson($auth[0], $auth[1]);
-        $files = array_values(
-            array_filter(
-                $response,
-                function ($element) use ($folder) {
-                    if ($element['type'] !== 'blob') return false;
-                    if (!str_starts_with($element['path'], $folder)) return false;
-                    if ($element['path'] === 'style.css') return true;
-                    $relativePath = substr($element['path'], strlen($folder));
-                    if (str_contains($relativePath, '/')) return false;
-                    return str_ends_with($relativePath, '.php');
-                }
-            )
-        );
+        $allPagesParsed = false;
+        $page = 0;
+        $files = [];
+        $perPage = 100;
+
+        while (!$allPagesParsed) {
+            $page++;
+            $auth = self::authenticateRequest("https://gitlab.com/api/v4/projects/{$id}/repository/tree/?ref={$branch}&recursive=1&per_page={$perPage}&page={$page}");
+            $response = Helpers::getRestJson($auth[0], $auth[1]);
+            if (count($response) < $perPage) {
+                $allPagesParsed = true;
+            }
+            $files = array_merge(
+                $files,
+                array_values(
+                    array_filter(
+                        $response,
+                        function ($element) use ($folder) {
+                            if ($element['type'] !== 'blob') return false;
+                            if (!str_starts_with($element['path'], $folder)) return false;
+                            if ($element['path'] === 'style.css') return true;
+                            $relativePath = substr($element['path'], strlen($folder));
+                            if (str_contains($relativePath, '/')) return false;
+                            return str_ends_with($relativePath, '.php');
+                        }
+                    )
+                )
+            );
+        }
 
         return array_map(function ($element) use ($folder, $id, $branch) {
             $path = urlencode($element['path']);
-            $auth = self::authenticateRequest("https://gitlab.com/api/v4/projects/{$id}/repository/files/{$path}?ref={$branch}");
-            $response = Helpers::getRestJson($auth[0], $auth[1]);
+            $url = "https://gitlab.com/api/v4/projects/{$id}/repository/files/{$path}?ref={$branch}";
+            $content = self::fetchFileContent($url);
             return [
-                'file_name' => $response['file_path'],
-                'content' => base64_decode($response['content']),
+                'file' => $content['name'],
+                'fileUrl' => $url,
+                'content' => $content['content'],
             ];
         }, $files);
+    }
+
+    public static function fetchFileContent($url): array
+    {
+        $auth = self::authenticateRequest($url);
+        $response = Helpers::getRestJson($auth[0], $auth[1]);
+
+        return [
+            'name' => $response['file_path'],
+            'content' => base64_decode($response['content']),
+        ];
     }
 
     public static function validateDir($url, $branch, $dir): array

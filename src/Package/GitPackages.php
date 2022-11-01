@@ -180,15 +180,14 @@ class GitPackages
         $repo_url = $params['url'];
         $theme = $params['theme'];
         $activeBranch = $params['activeBranch'];
+        $headersFile = $params['headersFile'];
         $saveAsMustUsePlugin = $params['saveAsMustUsePlugin'];
         $dir = Helpers::sanitizeDir($params['dir']);
 
-        // https://github.com/SayHelloGmbH/shp-printcopy
-
-        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin, $dir, true);
+        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin, $dir, $headersFile, true);
         if (is_wp_error($repoData)) return $repoData;
 
-        $update = $this->updatePackage($repoData['key'], 'install', true);
+        $update = $this->updatePackage($repoData['key'], 'install');
         if (is_wp_error($update)) return $update;
 
         return [
@@ -196,7 +195,7 @@ class GitPackages
                 __('"%s" was installed successfully', 'shgi'),
                 $repoData['key']
             ),
-            'packages' => $this->packages->getPackagesArray(),
+            'packages' => $this->packages->getPackagesArray(false),
             'dir' => $dir,
         ];
     }
@@ -243,7 +242,7 @@ class GitPackages
 
         return [
             'message' => sprintf(__('"%s" was deleted successfully', 'shgi'), $key),
-            'packages' => $this->packages->getPackages(false),
+            'packages' => $this->packages->getPackagesArray(false),
         ];
     }
 
@@ -301,6 +300,7 @@ class GitPackages
                 'name' => $theme[0]['parsed']['theme'],
                 'theme' => $theme,
                 'headers' => $theme[0]['parsed'],
+                'headersFile' => $theme[0]['fileUrl'],
             ];
         }
 
@@ -309,6 +309,7 @@ class GitPackages
                 'type' => 'plugin',
                 'name' => $plugin[0]['parsed']['plugin'],
                 'headers' => $plugin[0]['parsed'],
+                'headersFile' => $plugin[0]['fileUrl'],
             ];
         }
 
@@ -334,6 +335,8 @@ class GitPackages
 
         $headers = $this->getPackageHeaders($url, $branch, $dir);
 
+        if (is_wp_error($headers)) return $headers;
+
         if (!$headers) {
             return new \WP_Error(
                 'package_not_found',
@@ -351,7 +354,7 @@ class GitPackages
      * Helpers
      */
 
-    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false, $dir = '', $new = false)
+    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false, $dir = '', $headersFile = '', $new = false)
     {
         $provider = self::getProvider('', $url);
         if (!$provider) {
@@ -362,7 +365,6 @@ class GitPackages
         }
 
         $repoData = $provider->getInfos($url);
-
         if (is_wp_error($repoData)) return $repoData;
 
         if (!array_key_exists($activeBranch, $repoData['branches'])) {
@@ -376,20 +378,20 @@ class GitPackages
             )[0]['name'];
         }
 
-
         $this->packages->getDeployKey($repoData['key'], true);
 
         $repoData['theme'] = $theme;
         $repoData['saveAsMustUsePlugin'] = $saveAsMustUsePlugin;
         $repoData['activeBranch'] = $activeBranch;
         $repoData['dir'] = $dir;
+        $repoData['headersFile'] = $headersFile;
 
         return $this->packages->updatePackage($repoData['key'], $repoData, $new);
     }
 
     private function updatePackage($key, $ref = '')
     {
-        $packages = $this->packages->getPackages();
+        $packages = $this->packages->getPackages(false);
 
         if (!array_key_exists($key, $packages)) return new \WP_Error(
             'shgi_repo_not_found',

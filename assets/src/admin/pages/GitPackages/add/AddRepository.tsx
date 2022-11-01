@@ -103,6 +103,7 @@ const AddRepository: React.FC<{
               saveAsMustUsePlugin: VARS.mustUsePlugins && saveAsMustUsePlugin,
               activeBranch,
               dir,
+              headersFile: wpPackage.headersFile,
             }
           )
             .then((resp) => {
