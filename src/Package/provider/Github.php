@@ -10,6 +10,7 @@ class Github extends Provider
 
     public static function validateUrl($url): bool
     {
+        if(!$url) return false;
         $parsed = self::parseGithubUrl($url);
         return $parsed['host'] === 'github.com' && isset($parsed['owner']) && isset($parsed['repo']);
     }
@@ -43,7 +44,6 @@ class Github extends Provider
         }
 
         $parsedUrl = self::parseGithubUrl($url);
-        // https://api.github.com/repos/SayHelloGmbH/progressive-wordpress
         $apiUrl = "https://api.github.com/repos/{$parsedUrl['owner']}/{$parsedUrl['repo']}";
         $auth = self::authenticateRequest($apiUrl);
 
@@ -103,26 +103,23 @@ class Github extends Provider
             )
         );
 
-        return array_map(function ($element) use ($folder) {
-            $url = $element['url'];
+        return array_map(function ($element) use ($folder, $owner, $repo, $branch) {
+            $url = "https://raw.githubusercontent.com/{$owner}/{$repo}/{$branch}/{$element['path']}";
             $content = self::fetchFileContent($url);
             return [
                 'file' => substr($element['path'], strlen($folder)),
                 'fileUrl' => $url,
-                'content' => $content['content'],
+                'content' => $content,
             ];
         }, $files);
     }
 
-    public static function fetchFileContent($url): array
+    public static function fetchFileContent($url): ?string
     {
         $auth = self::authenticateRequest($url);
-        $response = Helpers::getRestJson($auth[0], $auth[1]);
+        $response = Helpers::fetchPlainText($auth[0], $auth[1]);
 
-        return [
-            'name' => null,
-            'content' => base64_decode($response['content']),
-        ];
+        return is_wp_error($response) ? null : $response;
     }
 
     public static function validateDir($url, $branch, $dir)
@@ -179,9 +176,9 @@ class Github extends Provider
                 return Github::validateDir($url, $branch, $dir);
             }
 
-            public function fetchFileContent($url): string
+            public function fetchFileContent($url)
             {
-                return Github::fetchFileContent($url)['content'];
+                return Github::fetchFileContent($url);
             }
         };
     }

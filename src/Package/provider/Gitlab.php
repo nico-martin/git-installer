@@ -10,6 +10,7 @@ class Gitlab extends Provider
 
     public static function validateUrl($url): bool
     {
+        if(!$url) return false;
         $parsed = self::parseGitlabUrl($url);
         return $parsed['host'] === 'gitlab.com' && isset($parsed['id']);
     }
@@ -123,22 +124,19 @@ class Gitlab extends Provider
             $url = "https://gitlab.com/api/v4/projects/{$id}/repository/files/{$path}?ref={$branch}";
             $content = self::fetchFileContent($url);
             return [
-                'file' => $content['name'],
+                'file' => $element['path'],
                 'fileUrl' => $url,
-                'content' => $content['content'],
+                'content' => $content,
             ];
         }, $files);
     }
 
-    public static function fetchFileContent($url): array
+    public static function fetchFileContent($url): ?string
     {
         $auth = self::authenticateRequest($url);
         $response = Helpers::getRestJson($auth[0], $auth[1]);
 
-        return [
-            'name' => $response['file_path'],
-            'content' => base64_decode($response['content']),
-        ];
+        return base64_decode($response['content']);
     }
 
     public static function validateDir($url, $branch, $dir): array
@@ -199,7 +197,7 @@ class Gitlab extends Provider
 
             public function fetchFileContent($url): string
             {
-                return Gitlab::fetchFileContent($url)['content'];
+                return Gitlab::fetchFileContent($url);
             }
         };
     }

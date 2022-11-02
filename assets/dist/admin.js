@@ -31117,6 +31117,13 @@ var RepositoryListView = function (_a) {
         })
             .finally(function () { return setLoadingUpdate(false); });
     };
+    react_1.default.useEffect(function () {
+        console.log(repository.key, {
+            headersFile: repository.headersFile,
+            baseUrl: repository.baseUrl,
+            provider: repository.provider,
+        });
+    }, []);
     return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, RepositoryListView_css_1.default.root) },
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.infos },
             react_1.default.createElement("h3", { className: RepositoryListView_css_1.default.name },
@@ -31214,7 +31221,10 @@ var AddRepository = function (_a) {
                             resolve(true);
                         }
                     })
-                        .catch(reject);
+                        .catch(function (e) {
+                        console.log(e);
+                        reject(e);
+                    });
                 });
             },
             submit: (0, i18n_1.__)('Check URL', 'shgi'),
@@ -33402,7 +33412,10 @@ var authFetch = function (_a) {
             var resp = _a[0], data = _a[1];
             return resp.status < 300 ? resolve(data) : reject(data.message);
         })
-            .catch(function (e) { return reject(constants_1.VARS.generalError); });
+            .catch(function (e) {
+            console.log(e);
+            return reject(constants_1.VARS.generalError);
+        });
     });
 };
 

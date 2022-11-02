@@ -63,7 +63,10 @@ const AddRepository: React.FC<{
                 resolve(true);
               }
             })
-            .catch(reject)
+            .catch((e) => {
+              console.log(e);
+              reject(e);
+            })
         ),
       submit: __('Check URL', 'shgi'),
     },

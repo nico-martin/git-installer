@@ -10,6 +10,7 @@ class Bitbucket extends Provider
 
     public static function validateUrl($url)
     {
+        if(!$url) return false;
         $parsed = self::parseBitbucketUrl($url);
         return $parsed['host'] === 'bitbucket.org' && isset($parsed['workspace']) && isset($parsed['repo']);
     }
@@ -108,24 +109,20 @@ class Bitbucket extends Provider
 
         return array_map(function ($element) use ($folder) {
             $url = $element['links']['self']['href'];
-            $content = self::fetchFileContent($url);
             return [
                 'file' => substr($element['path'], strlen($folder)),
                 'fileUrl' => $url,
-                'content' => $content['content'],
+                'content' => self::fetchFileContent($url),
             ];
         }, $files);
     }
 
-    public static function fetchFileContent($url): array
+    public static function fetchFileContent($url): ?string
     {
         $auth = self::authenticateRequest($url);
         $response = Helpers::fetchPlainText($auth[0], $auth[1]);
 
-        return [
-            'name' => null,
-            'content' => is_wp_error($response) ? null : $response,
-        ];
+        return is_wp_error($response) ? null : $response;
     }
 
     public static function validateDir($url, $branch, $dir)
@@ -185,7 +182,7 @@ class Bitbucket extends Provider
 
             public function fetchFileContent($url): string
             {
-                return Bitbucket::fetchFileContent($url)['content'];
+                return Bitbucket::fetchFileContent($url);
             }
         };
     }

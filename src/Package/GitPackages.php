@@ -274,7 +274,7 @@ class GitPackages
         return $infos;
     }
 
-    public function getPackageHeaders($url, $branch, $dir)
+    private function getPackageHeaders($url, $branch, $dir)
     {
         $provider = self::getProvider('', $url);
 
@@ -316,13 +316,36 @@ class GitPackages
         return null;
     }
 
+    public function getPackageHeadersFile($packageKey): ?string
+    {
+        $package = $this->packages->getPackage($packageKey);
+        if (array_key_exists('headersFile', $package) && boolval($package['headersFile'])) {
+            return $package['headersFile'];
+        }
+
+        $headers = $this->getPackageHeaders($package['baseUrl'], $package['activeBranch'], $package['dir']);
+        if (!$headers) {
+            return null;
+        }
+
+        if ($headers['headersFile']) $this->packages->updatePackage(
+            $packageKey,
+            [
+                'headersFile' => $headers['headersFile']
+            ]
+        );
+
+        return $headers['headersFile'];
+    }
+
     public function loadNewPluginHeaders($key): array
     {
-        $package = $this->packages->getPackage($key);
-        if (!$package['headersFile']) return [];
-        $provider = self::getProvider($package['provider']);
+        $headersFile = $this->getPackageHeadersFile($key);
+        if (!$headersFile) return [];
 
-        return self::parseHeader($provider->fetchFileContent($package['headersFile']));
+        $package = $this->packages->getPackage($key);
+        $provider = self::getProvider($package['provider']);
+        return self::parseHeader($provider->fetchFileContent($headersFile));
     }
 
     public function checkGitDir($data)
@@ -333,7 +356,6 @@ class GitPackages
         $branch = $params['branch'];
 
         $headers = $this->getPackageHeaders($url, $branch, $dir);
-
         if (is_wp_error($headers)) return $headers;
 
         if (!$headers) {
@@ -342,6 +364,7 @@ class GitPackages
                 sprintf(__('No valid WordPress Theme (style.css with "Theme Name" header) or WordPress Plugin (Plugin PHP file with "Plugin Name" header) was found in the %s folder of the repository.', 'shgi'), ($dir) ? $dir : 'root'),
                 [
                     'status' => 400,
+
                 ]
             );
         }

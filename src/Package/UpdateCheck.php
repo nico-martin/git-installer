@@ -3,12 +3,14 @@
 namespace SayHello\GitInstaller\Package;
 
 use SayHello\GitInstaller\Helpers;
+use SayHello\GitInstaller\Package\Helpers\GitPackageManagement;
 
 class UpdateCheck
 {
     public bool $cacheAllowed;
     public string $cacheKey;
-    public array $pluginFiles;
+    public array $pluginFiles = [];
+    public GitPackageManagement $packages;
 
     public function run()
     {
@@ -19,9 +21,9 @@ class UpdateCheck
         $this->cacheKey = 'shgi_custom_upd';
         $this->cacheAllowed = false;
         require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        $this->packages = new GitPackageManagement();
 
         // https://github.com/rudrastyh/misha-update-checker/blob/main/misha-update-checker.php
-
 
 
         /*
@@ -38,7 +40,7 @@ class UpdateCheck
 
     private function getPackageFilePath($key)
     {
-        $package = sayhelloGitInstaller()->GitPackages->getPackages(false)[$key];
+        $package = $this->packages->getPackage($key);
         if (!$package['theme']) {
             $plugins = array_keys(get_plugins());
             $file = null;
@@ -55,11 +57,11 @@ class UpdateCheck
 
     private function getPackagePluginFiles(): array
     {
-        if ($this->pluginFiles) {
+        if (count($this->pluginFiles) !== 0) {
             return $this->pluginFiles;
         }
 
-        $keys = array_keys(sayhelloGitInstaller()->GitPackages->getPackages(false));
+        $keys = array_keys($this->packages->getPackages(false));
         $plugins = array_keys(get_plugins());
 
         $return = [];
@@ -148,29 +150,21 @@ class UpdateCheck
          * )
          */
 
-        /**
-         * todo: requires some refactoring:
-         * 1. refactor GitPackages to decouple and cache some logic
-         * 2. add the "headersUrl" to each package to call new Headers directly
-         * 3. continue here
-         */
+        foreach ($this->getPackagePluginFiles() as $key => $file) {
 
-        //foreach ($this->getPackagePluginFiles() as $key => $file) {
-        foreach (['wp-test-plugin'=>'wp-test-plugin/wp-test-plugin.php'] as $key => $file) {
+            $newHeaders = sayhelloGitInstaller()->GitPackages->loadNewPluginHeaders($key);
+            $oldHeaders = get_plugins()[$file];
 
-            //$oldHeaders = get_plugins()[$file];
-            //$newHeaders = sayhelloGitInstaller()->GitPackages->getPackageHeadersByKey($key)['headers'];
-            /*
             if ($newHeaders
                 && version_compare($oldHeaders['Version'], $newHeaders['version'], '<')
                 && version_compare($newHeaders['requires-at-least'], get_bloginfo('version'), '<=')
                 && version_compare($newHeaders['requires-php'], PHP_VERSION, '<')
             ) {
                 $res = new \stdClass();
-                $res->new_version = $newHeaders['Version'];
+                $res->new_version = $newHeaders['version'];
                 $res->package = 'test';
                 $transient->response[$file] = $res;
-            }*/
+            }
         }
 
         return $transient;

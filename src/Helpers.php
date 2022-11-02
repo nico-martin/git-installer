@@ -49,19 +49,17 @@ class Helpers
     public static function fetchPlainText($url, $args = [])
     {
         $request = wp_remote_get($url, $args);
-        if (is_wp_error($request)) {
-            return $request;
-        }
+        if (is_wp_error($request)) return $request;
 
         $code = wp_remote_retrieve_response_code($request);
-        if ($code >= 300) {
-            return new \WP_Error('remote_get_error', sprintf(
-                    __('Invalid request to %s', 'shgi'),
-                    '<code>' . $url . '</code>')
-            );
-        }
+        if ($code >= 300) new \WP_Error('remote_get_error', sprintf(
+                __('Invalid request to %s', 'shgi'),
+                '<code>' . $url . '</code>')
+        );
 
-        return wp_remote_retrieve_body($request);
+        $body = wp_remote_retrieve_body($request);
+
+        return str_replace('<?php', '', $body);
     }
 
     public static function getContentFolder($url = false): string
