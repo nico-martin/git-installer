@@ -79,6 +79,15 @@ class Helpers
         return $baseDir . $folder . '/';
     }
 
+    public static function getTempDir($dir = 'temp', $url = false): string
+    {
+        $dir = untrailingslashit($dir);
+        $tempDir = Helpers::getContentFolder($url) . $dir . '/';
+        if (!is_dir($tempDir)) mkdir($tempDir);
+
+        return $tempDir;
+    }
+
     public static function checkForFunction($func, $notification = true): bool
     {
         if (!function_exists($func)) {

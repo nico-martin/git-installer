@@ -338,7 +338,7 @@ class GitPackages
         return $headers['headersFile'];
     }
 
-    public function loadNewPluginHeaders($key): array
+    public function loadNewPackageHeaders($key): array
     {
         $headersFile = $this->getPackageHeadersFile($key);
         if (!$headersFile) return [];
@@ -411,22 +411,18 @@ class GitPackages
         return $this->packages->updatePackage($repoData['key'], $repoData, $new);
     }
 
-    private function updatePackage($key, $ref = '')
+    public function loadNewPackageFiles($key, $target)
     {
-        $packages = $this->packages->getPackages(false);
-
-        if (!array_key_exists($key, $packages)) return new \WP_Error(
+        $package = $this->packages->getPackage($key);
+        if (!$package) return new \WP_Error(
             'shgi_repo_not_found',
             sprintf(
                 __('Package %s could not be updated: The package does not exist', 'shgi'),
                 '"' . $key . '"'
             ),
-            ['p' => $packages]
         );
 
-        $package = $packages[$key];
-        $tempDir = Helpers::getContentFolder() . 'temp/';
-        if (!is_dir($tempDir)) mkdir($tempDir);
+        $tempDir = Helpers::getTempDir();
 
         $zipUrl = $package['branches'][$package['activeBranch']]['zip'];
         $provider = self::getProvider($package['provider']);
@@ -449,30 +445,34 @@ class GitPackages
 
         $subDirs = glob($tempDir . $key . '/*', GLOB_ONLYDIR);
         $packageDir = $subDirs[0];
-        $oldDir = $this->getPackageDir($key);
-
-        if (is_dir($oldDir)) {
-            FsHelpers::removeDir($oldDir);
-        }
 
         $renamed = FsHelpers::moveDir(
             trailingslashit($packageDir) . ($package['dir'] ? trailingslashit($package['dir']) : ''),
-            $oldDir
+            $target
         );
         FsHelpers::removeDir($tempDir);
 
-        if (!$renamed) {
-            return new \WP_Error(
-                'rename_repo_failed',
-                __(
-                    'The folder could not be copied. Possibly the old folder could not be emptied completely.',
-                    'shgi'
-                ), [
-                    'from' => trailingslashit($packageDir) . ($package['dir'] ? trailingslashit($package['dir']) : ''),
-                    'to' => $oldDir,
-                ]
-            );
+        return $renamed;
+    }
+
+    private function updatePackage($key, $ref = '')
+    {
+        $target = $this->getPackageDir($key);
+        if (is_dir($target)) {
+            FsHelpers::removeDir($target);
         }
+
+        $package = $this->packages->getPackage($key);
+        $moved = $this->loadNewPackageFiles($key, $target);
+
+        if (is_wp_error($moved)) return $moved;
+        if (!$moved) return new \WP_Error(
+            'rename_repo_failed',
+            __(
+                'The folder could not be copied. Possibly the old folder could not be emptied completely.',
+                'shgi'
+            )
+        );
 
         $newPackages = $this->packages->getPackages(false);
         UpdateLog::addLog($key, $ref, $package['version'], $newPackages[$key]['version']);
@@ -480,7 +480,7 @@ class GitPackages
         return true;
     }
 
-    private function getPackageDir($key)
+    public function getPackageDir($key)
     {
         $packages = $this->packages->getPackages();
         if (!array_key_exists($key, $packages)) {
@@ -500,7 +500,7 @@ class GitPackages
         return trailingslashit(WP_PLUGIN_DIR) . $key;
     }
 
-    private static function getProvider($provider = '', $url = '')
+    public static function getProvider($provider = '', $url = '')
     {
         if ($provider === Provider\Github::$provider || Provider\Github::validateUrl($url)) {
             return Provider\Github::export();

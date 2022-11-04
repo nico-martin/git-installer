@@ -10,7 +10,7 @@ class Gitlab extends Provider
 
     public static function validateUrl($url): bool
     {
-        if(!$url) return false;
+        if (!$url) return false;
         $parsed = self::parseGitlabUrl($url);
         return $parsed['host'] === 'gitlab.com' && isset($parsed['id']);
     }
@@ -147,19 +147,23 @@ class Gitlab extends Provider
 
     public static function authenticateRequest($url, $args = []): array
     {
-        $gitlabToken = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-gitlab-token');
-        if ($gitlabToken) {
-            $gitlabToken = Provider::trimString($gitlabToken);
-            if (strpos($url, 'private_token=') === false) {
-                if (strpos($url, '?') === false) {
-                    $url = $url . '?private_token=' . $gitlabToken;
-                } else {
-                    $url = $url . '&private_token=' . $gitlabToken;
-                }
-            }
+        $authHeader = self::authHeader();
+        if ($authHeader) {
+            $args = [
+                'headers' => [
+                    'Authorization' => $authHeader,
+                ]
+            ];
         }
 
         return [$url, $args];
+    }
+
+    public static function authHeader()
+    {
+        $gitlabToken = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-gitlab-token');
+        if (!$gitlabToken) return false;
+        return 'Bearer ' . Provider::trimString($gitlabToken);
     }
 
     public static function export(): object
@@ -198,6 +202,11 @@ class Gitlab extends Provider
             public function fetchFileContent($url): string
             {
                 return Gitlab::fetchFileContent($url);
+            }
+
+            public function getAuthHeader()
+            {
+                return Gitlab::authHeader();
             }
         };
     }

@@ -10,7 +10,7 @@ class Github extends Provider
 
     public static function validateUrl($url): bool
     {
-        if(!$url) return false;
+        if (!$url) return false;
         $parsed = self::parseGithubUrl($url);
         return $parsed['host'] === 'github.com' && isset($parsed['owner']) && isset($parsed['repo']);
     }
@@ -130,17 +130,23 @@ class Github extends Provider
 
     public static function authenticateRequest($url, $args = [])
     {
-        $github_auth_header = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-github-token');
-        if ($github_auth_header) {
-            $github_auth_header = Provider::trimString($github_auth_header);
+        $authHeader = self::authHeader();
+        if ($authHeader) {
             $args = [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $github_auth_header,
+                    'Authorization' => $authHeader,
                 ]
             ];
         }
 
         return [$url, $args];
+    }
+
+    public static function authHeader()
+    {
+        $githubAuthHeader = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-github-token');
+        if (!$githubAuthHeader) return false;
+        return 'Bearer ' . Provider::trimString($githubAuthHeader);
     }
 
     public static function export()
@@ -179,6 +185,11 @@ class Github extends Provider
             public function fetchFileContent($url)
             {
                 return Github::fetchFileContent($url);
+            }
+
+            public function getAuthHeader()
+            {
+                return Github::authHeader();
             }
         };
     }

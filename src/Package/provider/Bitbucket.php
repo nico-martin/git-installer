@@ -10,7 +10,7 @@ class Bitbucket extends Provider
 
     public static function validateUrl($url)
     {
-        if(!$url) return false;
+        if (!$url) return false;
         $parsed = self::parseBitbucketUrl($url);
         return $parsed['host'] === 'bitbucket.org' && isset($parsed['workspace']) && isset($parsed['repo']);
     }
@@ -91,7 +91,7 @@ class Bitbucket extends Provider
     {
         $branchHash = self::getBranches($workspace, $repo)[$branch]['hash'];
         //return "https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}/src/{$branchHash}";
-        $auth = self::authenticateRequest("https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}/src/{$branchHash}/$folder?pagelen=99");
+        $auth = self::authenticateRequest("https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}/src/{$branch}/$folder?pagelen=99");
         $response = Helpers::getRestJson($auth[0], $auth[1]);
         $files = array_values(
             array_filter(
@@ -107,8 +107,8 @@ class Bitbucket extends Provider
             )
         );
 
-        return array_map(function ($element) use ($folder) {
-            $url = $element['links']['self']['href'];
+        return array_map(function ($element) use ($folder, $branchHash, $branch) {
+            $url = str_replace($branchHash, $branch, $element['links']['self']['href']);
             return [
                 'file' => substr($element['path'], strlen($folder)),
                 'fileUrl' => $url,
@@ -133,18 +133,25 @@ class Bitbucket extends Provider
 
     public static function authenticateRequest($url, $args = [])
     {
-        $token = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-bitbucket-token');
-        $user = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-bitbucket-user');
-        if ($token && $user) {
-            $token = Provider::trimString($token);
+        $authHeader = self::authHeader();
+        if ($authHeader) {
             $args = [
                 'headers' => [
-                    'Authorization' => 'Basic ' . base64_encode("{$user}:{$token}"),
+                    'Authorization' => $authHeader,
                 ]
             ];
         }
 
         return [$url, $args];
+    }
+
+    public static function authHeader()
+    {
+        $token = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-bitbucket-token');
+        $user = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-bitbucket-user');
+        if (!$token || !$user) return false;
+        $token = Provider::trimString($token);
+        return 'Basic ' . base64_encode("{$user}:{$token}");
     }
 
     public static function export()
@@ -183,6 +190,11 @@ class Bitbucket extends Provider
             public function fetchFileContent($url): string
             {
                 return Bitbucket::fetchFileContent($url);
+            }
+
+            public function getAuthHeader()
+            {
+                return Bitbucket::authHeader();
             }
         };
     }

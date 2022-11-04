@@ -31,7 +31,7 @@ require_once 'src/Package/provider/Provider.php';
 require_once 'src/Package/provider/Github.php';
 require_once 'src/Package/provider/Gitlab.php';
 require_once 'src/Package/provider/Bitbucket.php';
-require_once 'src/Package/UpdateCheck.php';
+require_once 'src/Package/Updater.php';
 require_once 'src/Package/Ecosystem.php';
 
 function sayhelloGitInstaller(): \SayHello\GitInstaller\Plugin
@@ -58,8 +58,8 @@ sayhelloGitInstaller()->UpdateLog->run();
 sayhelloGitInstaller()->GitPackages = new SayHello\GitInstaller\Package\GitPackages();
 sayhelloGitInstaller()->GitPackages->run();
 
-sayhelloGitInstaller()->UpdateCheck = new SayHello\GitInstaller\Package\UpdateCheck();
-sayhelloGitInstaller()->UpdateCheck->run();
+sayhelloGitInstaller()->Updater = new SayHello\GitInstaller\Package\Updater();
+sayhelloGitInstaller()->Updater->run();
 
 sayhelloGitInstaller()->Ecosystem = new SayHello\GitInstaller\Package\Ecosystem();
 sayhelloGitInstaller()->Ecosystem->run();
