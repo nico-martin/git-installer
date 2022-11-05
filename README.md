@@ -98,7 +98,7 @@ add_filter('shgi/UpdateLog/refOptions', function($refs){
 
 ### 0.2.1
 
--
+- added support to update packages directly from the theme/plugin overview
 
 ### 0.2.0
 
