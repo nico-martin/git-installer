@@ -1,3 +1,4 @@
+![Git Installer Banner](https://sayhello.ch/images/git-installer/banner.jpg)
 # Git Installer (Beta)
 
 Install and update WordPress themes and plugins directly from your Git repository via GitHub, Gitlab or Bitbucket.
@@ -17,6 +18,7 @@ Install and update WordPress themes and plugins directly from your Git repositor
 | - Gitlab                                                                                                                                              |     ✅      |
 | - Bitbucket                                                                                                                                           |     ✅      |
 | **Webhook updates**                                                                                                                                   |     ✅      |
+| **Integrated WordPress update process**<br />View pending updates directly in the WordPress overview and update them individually or as a bulk update.                                                                                           |     ✅      |
 | **Private Repositories**                                                                                                                              |     ✅      |
 | **Must Use Plugin support**<br />*[https://wordpress.org/support/article/must-use-plugins/](https://wordpress.org/support/article/must-use-plugins/)* |     ✅      |
 | **Branches**                                                                                                                                          | any branch |
