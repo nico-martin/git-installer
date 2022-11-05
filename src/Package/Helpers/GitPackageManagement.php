@@ -140,12 +140,15 @@ class GitPackageManagement
         $packageData = $new ? [] : $this->getPackage($key);
         if ($packageData === null) return null;
 
-
         $packages = $this->getPackages();
         $newData = array_merge($packageData, $data);
         $packages[$key] = $newData;
 
         update_option($this->repo_option, $packages);
+
+        $this->packages = null;
+        wp_cache_flush();
+        search_theme_directories(true); // flush theme cache
 
         return $newData;
     }
