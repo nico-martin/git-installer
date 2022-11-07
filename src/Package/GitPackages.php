@@ -445,7 +445,6 @@ class GitPackages
 
         $subDirs = glob($tempDir . $key . '/*', GLOB_ONLYDIR);
         $packageDir = $subDirs[0];
-
         $renamed = FsHelpers::moveDir(
             trailingslashit($packageDir) . ($package['dir'] ? trailingslashit($package['dir']) : ''),
             $target
