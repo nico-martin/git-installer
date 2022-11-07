@@ -100,6 +100,7 @@ add_filter('shgi/UpdateLog/refOptions', function($refs){
 
 - added support to update packages directly from the theme/plugin overview
 - bugfix: install fails on first try
+- bugfix: theme in subfolder
 
 ### 0.2.0
 
