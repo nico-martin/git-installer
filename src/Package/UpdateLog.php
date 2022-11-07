@@ -6,7 +6,7 @@ use SayHello\GitInstaller\Helpers;
 
 class UpdateLog
 {
-    private static $optionKey = 'shgi-updatelog';
+    private static string $optionKey = 'shgi-updatelog';
 
     public function run()
     {
@@ -27,13 +27,13 @@ class UpdateLog
         ]);
     }
 
-    public function getLogsApi($data)
+    public function getLogsApi($data): array
     {
         $key = $data['slug'];
         return self::getLogs($key);
     }
 
-    public static function addLog($key, $ref, $prevVersion, $nextVersion)
+    public static function addLog($key, $ref, $prevVersion, $nextVersion): array
     {
         $logs = self::getLogs($key);
         $newEntry = self::mapEntry([
@@ -49,7 +49,7 @@ class UpdateLog
         return $newEntry;
     }
 
-    public static function getLogs($key)
+    public static function getLogs($key): array
     {
         $option = get_option(self::$optionKey . '-' . $key, []);
         return array_map(function ($o) {
@@ -65,7 +65,7 @@ class UpdateLog
         delete_option(self::$optionKey . '-' . $key);
     }
 
-    private static function mapEntry($option)
+    private static function mapEntry($option): array
     {
         return [
             'ref' => array_key_exists('ref', $option) && array_key_exists($option['ref'], self::getRefOptions()) ? $option['ref'] : null,

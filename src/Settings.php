@@ -5,8 +5,8 @@ namespace SayHello\GitInstaller;
 class Settings
 {
 
-    public static $key = 'shgi-settings';
-    public $registered_settings = [];
+    public static string $key = 'shgi-settings';
+    public array $registered_settings = [];
 
     public function __construct()
     {
@@ -53,7 +53,7 @@ class Settings
         return $this->updateSettings($params);
     }
 
-    public function apiGetSettings()
+    public function apiGetSettings(): array
     {
         $return = [];
         $valid_settings_keys = array_keys($this->getRegisteredSettings());
@@ -74,7 +74,7 @@ class Settings
         ];
     }
 
-    public function getSettings($keys_to_return = [])
+    public function getSettings($keys_to_return = []): array
     {
         $saved_options = get_option(self::$key, []);
         $registered_settings = $this->getRegisteredSettings();
@@ -163,9 +163,7 @@ class Settings
 
         $oldValues = $this->getSettings();
         update_option(self::$key, array_merge($options, $settings));
-        $newValues = $this->getSettings();
-
-        return $newValues;
+        return $this->getSettings();
     }
 
     public function validateSetting($key, $value)

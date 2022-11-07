@@ -32,9 +32,12 @@ archive.on('error', (err) => {
 
 archive.pipe(output);
 
+archive.file('LICENSE', { name: 'LICENSE' });
+archive.file('readme.txt', { name: 'readme.txt' });
 archive.file('git-installer.php', { name: 'git-installer.php' });
 archive.directory('assets/dist/', true);
 archive.directory('src/', true);
+archive.directory('public/', true);
 
 archive
   .finalize()

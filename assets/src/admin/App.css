@@ -5,3 +5,18 @@
   --shgi-form-label-width: 180px;
   --shgi-form-max-width: 700px;
 }
+
+:global(.shgi-git-icon) {
+  svg {
+    width: 1em;
+    height: 1em;
+    margin: 0 0.2em;
+    transform: scale(1.3) translateY(15%);
+  }
+
+  color: black;
+
+  &:hover {
+    color: #135e96;
+  }
+}

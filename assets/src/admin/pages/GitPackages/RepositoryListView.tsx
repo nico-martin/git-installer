@@ -50,6 +50,14 @@ const RepositoryListView = ({
       .finally(() => setLoadingUpdate(false));
   };
 
+  React.useEffect(() => {
+    console.log(repository.key, {
+      headersFile: repository.headersFile,
+      baseUrl: repository.baseUrl,
+      provider: repository.provider,
+    });
+  }, []);
+
   return (
     <div className={cn(className, styles.root)}>
       <div className={styles.infos}>

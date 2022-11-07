@@ -4,7 +4,7 @@ namespace SayHello\GitInstaller;
 
 class FsHelpers
 {
-    public static function moveDir($from, $to)
+    public static function moveDir($from, $to): bool
     {
         return rename(
             $from,

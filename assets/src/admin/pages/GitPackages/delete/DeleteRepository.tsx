@@ -69,6 +69,7 @@ const DeleteRepository: React.FC<{
                 type: NOTICE_TYPES.SUCCESS,
               });
               setRepositories(resp.packages);
+              setModal(false);
             })
             .catch((e) => setError(e))
             .finally(() => setLoadingDelete(false));

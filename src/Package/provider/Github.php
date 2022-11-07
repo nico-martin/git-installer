@@ -6,10 +6,11 @@ use SayHello\GitInstaller\Helpers;
 
 class Github extends Provider
 {
-    public static $provider = 'github';
+    public static string $provider = 'github';
 
-    public static function validateUrl($url)
+    public static function validateUrl($url): bool
     {
+        if (!$url) return false;
         $parsed = self::parseGithubUrl($url);
         return $parsed['host'] === 'github.com' && isset($parsed['owner']) && isset($parsed['repo']);
     }
@@ -43,7 +44,6 @@ class Github extends Provider
         }
 
         $parsedUrl = self::parseGithubUrl($url);
-        // https://api.github.com/repos/SayHelloGmbH/progressive-wordpress
         $apiUrl = "https://api.github.com/repos/{$parsedUrl['owner']}/{$parsedUrl['repo']}";
         $auth = self::authenticateRequest($apiUrl);
 
@@ -89,28 +89,37 @@ class Github extends Provider
     {
         $auth = self::authenticateRequest("https://api.github.com/repos/{$owner}/{$repo}/git/trees/{$branch}?recursive=1");
         $response = Helpers::getRestJson($auth[0], $auth[1]);
+
         $files = array_values(
             array_filter(
                 $response['tree'],
                 function ($element) use ($folder) {
                     if ($element['type'] !== 'blob') return false;
                     if (!str_starts_with($element['path'], $folder)) return false;
-                    if ($element['path'] === 'style.css') return true;
                     $relativePath = substr($element['path'], strlen($folder));
                     if (str_contains($relativePath, '/')) return false;
-                    return str_ends_with($relativePath, '.php');
+                    return str_ends_with($relativePath, '.php') || str_ends_with($relativePath, 'style.css');
                 }
             )
         );
 
-        return array_map(function ($element) use ($folder) {
-            $auth = self::authenticateRequest($element['url']);
-            $response = Helpers::getRestJson($auth[0], $auth[1]);
+        return array_map(function ($element) use ($folder, $owner, $repo, $branch) {
+            $url = "https://raw.githubusercontent.com/{$owner}/{$repo}/{$branch}/{$element['path']}";
+            $content = self::fetchFileContent($url);
             return [
                 'file' => substr($element['path'], strlen($folder)),
-                'content' => base64_decode($response['content']),
+                'fileUrl' => $url,
+                'content' => $content,
             ];
         }, $files);
+    }
+
+    public static function fetchFileContent($url): ?string
+    {
+        $auth = self::authenticateRequest($url);
+        $response = Helpers::fetchPlainText($auth[0], $auth[1]);
+
+        return is_wp_error($response) ? null : $response;
     }
 
     public static function validateDir($url, $branch, $dir)
@@ -121,17 +130,23 @@ class Github extends Provider
 
     public static function authenticateRequest($url, $args = [])
     {
-        $github_auth_header = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-github-token');
-        if ($github_auth_header) {
-            $github_auth_header = Provider::trimString($github_auth_header);
+        $authHeader = self::authHeader();
+        if ($authHeader) {
             $args = [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $github_auth_header,
+                    'Authorization' => $authHeader,
                 ]
             ];
         }
 
         return [$url, $args];
+    }
+
+    public static function authHeader()
+    {
+        $githubAuthHeader = sayhelloGitInstaller()->Settings->getSingleSettingValue('git-packages-github-token');
+        if (!$githubAuthHeader) return false;
+        return 'Bearer ' . Provider::trimString($githubAuthHeader);
     }
 
     public static function export()
@@ -166,6 +181,18 @@ class Github extends Provider
             {
                 return Github::validateDir($url, $branch, $dir);
             }
+
+            public function fetchFileContent($url)
+            {
+                return Github::fetchFileContent($url);
+            }
+
+            public function getAuthHeader()
+            {
+                return Github::authHeader();
+            }
         };
     }
 }
+
+
