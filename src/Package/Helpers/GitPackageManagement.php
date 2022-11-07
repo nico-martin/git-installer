@@ -2,6 +2,8 @@
 
 namespace SayHello\GitInstaller\Package\Helpers;
 
+use SayHello\GitInstaller\Helpers;
+
 /**
  * $gitPackage = [
  *   'key' => (string)
@@ -54,6 +56,7 @@ class GitPackageManagement
 
         $plugins = get_plugins();
         $themes = wp_get_themes();
+
         $return_repos = [];
         $repos = get_option($this->repo_option, []);
         $deployKeys = get_option($this->deploy_option, []);
