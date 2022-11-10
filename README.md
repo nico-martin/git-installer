@@ -1,12 +1,16 @@
-![Git Installer Banner](https://sayhello.ch/images/git-installer/banner.jpg)
+![Git Installer Banner](https://update.git-installer.com/assets/banner-1544x500.jpg)
+
 # Git Installer (Beta)
 
 Install and update WordPress themes and plugins directly from your Git repository via GitHub, Gitlab or Bitbucket.
 
-"Git Installer" works with public and private repositories, different branches, subdirectories and even allows automated updates via webhooks. Furthermore, plugins or themes are automatically recognised and validated and it also supports must use plugins and multisite installations.
+"Git Installer" works with public and private repositories, different branches, subdirectories and even allows automated
+updates via webhooks. Furthermore, plugins or themes are automatically recognised and validated and it also supports
+must use plugins and multisite installations.
 
 ## Download
-[https://wp.nico.dev/wp-content/uploads/2022/10/git-installer-0-2-0.zip](https://wp.nico.dev/wp-content/uploads/2022/10/git-installer-0-2-0.zip)
+
+[https://update.git-installer.com/zip.php?release=latest](https://update.git-installer.com/zip.php?release=latest)
 
 ## Features
 
@@ -28,24 +32,31 @@ Install and update WordPress themes and plugins directly from your Git repositor
 
 ## Webhook updates
 
-"Git Installer" enables updates to be carried out automatically via a webhook. For each package, a "Webhook Update URL" is created, which must be deposited with the respective provider.
+"Git Installer" enables updates to be carried out automatically via a webhook. For each package, a "Webhook Update URL"
+is created, which must be deposited with the respective provider.
 
 ### GitHub
+
 *Repository -> Settings -> Webhooks -> Add webhook:*
+
 - Payload URL: the Webhook Update URL
 - Content type: application/x-www-form-urlencoded
 - Secret: none
 - Which events would you like to trigger this webhook?: Just the push event
 
 ### Gitlab
+
 *Repository -> Settings -> Webhooks:*
+
 - URL: the Webhook Update URL
 - Trigger: Push events (Branch name should match the branch you are using, blank works as well)
 - Secret token: none
 - SSL verification: checked
 
 ### Bitbucket
+
 *Repository -> Repository settings -> Workflow -> Webhooks -> Add webhook:*
+
 - Title: choose your own
 - URL: the Webhook Update URL
 - Active: checked
@@ -67,11 +78,13 @@ Now you are able to select the target folder for your plugin before the installa
 ### Update Referer
 
 Updates are usually done via a REST endpoint:
+
 ```php
 `${REST_API}/git-installer/v1/git-packages-deploy/${REPOSITORY_SLUG}/?key=${REPOSITORY_SECRET}`
 ```
 
 This endpoint accepts an additional GET parameter called `ref` which is used for logging.
+
 ```php
 `${REST_API}/git-installer/v1/git-packages-deploy/${REPOSITORY_SLUG}/?key=${REPOSITORY_SECRET}&ref=webhook-update`
 ```
@@ -93,60 +106,6 @@ add_filter('shgi/UpdateLog/refOptions', function($refs){
   return $refs;
 });
 ```
-
-## Changelog
-
-### 0.2.1
-
-- added support to update packages directly from the theme/plugin overview
-- bugfix: install fails on first try
-- bugfix: theme in subfolder
-
-### 0.2.0
-
-- public beta, no changes
-
-### 0.1.1
-
-- added confirmation modal before deletion
-- added possibility to keep theme/plugin and only remove git connection
-- added update log
-
-### 0.1.0
-
-- stable Beta, no changes
-
-### 0.0.5
-
-- bugfix: UI adjustments if installation fails
-- bugfix: copyDir/rename
-- bugfix: flush theme cache after new Theme is added
-- pushToDeploy URL now also works for POST requests
-
-### 0.0.4
-
-- warning if REST API access is disabled
-- overwrite existing packages on install
-- fixed a couple of bugs
-
-### 0.0.3
-
-- added support for Plugins or Themes from subdirectories
-- fixed "Version: null" bug after install
-
-### 0.0.2
-
-- added support for [Must Use Plugins](https://wordpress.org/support/article/must-use-plugins/)
-- improvements for error messages
-- added automatic check for plugins and themes
-- added multisite support
-- improved Auth-Key handling
-- delete invalid characters from Auth-Keys
-- Bugfix: works now with permalink settings "Plain"
-
-### 0.0.1
-
-- initial release
 
 ## Author
 
