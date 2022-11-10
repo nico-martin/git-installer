@@ -547,6 +547,4 @@ class GitPackages
 
         return $allHeaders;
     }
-
-
 }

@@ -6,10 +6,11 @@ Plugin URI: https://github.com/SayHelloGmbH/git-installer
 Description: Install and Update Plugins and Themes from GitHub, Gitlab and Bitbucket
 Author: Nico Martin - mail@nico.dev
 Author URI: https://nico.dev
-Version: 0.2.1
+Version: 0.2.2
 Text Domain: shgi
 Domain Path: /languages
 Requires PHP: 7.4
+Update URI: https://update.git-installer.com/infos.php?release=latest
 */
 
 defined('ABSPATH') or die();
@@ -63,3 +64,13 @@ sayhelloGitInstaller()->Updater->run();
 
 sayhelloGitInstaller()->Ecosystem = new SayHello\GitInstaller\Package\Ecosystem();
 sayhelloGitInstaller()->Ecosystem->run();
+
+require_once 'src/plugin-update-checker-5.0/plugin-update-checker.php';
+
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+    'https://update.git-installer.com/infos.php?release=v0.2.1',
+    __FILE__,
+    'shgi'
+);
