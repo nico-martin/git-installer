@@ -70,7 +70,7 @@ require_once 'src/plugin-update-checker-5.0/plugin-update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 $myUpdateChecker = PucFactory::buildUpdateChecker(
-    'https://update.git-installer.com/infos.php?release=v0.2.1',
+    'https://update.git-installer.com/infos.php?release=latest',
     __FILE__,
     'shgi'
 );
