@@ -142,6 +142,7 @@ class GitPackages
             'args' => [
                 'slug',
             ],
+            'permission_callback' => '__return_true'
         ]);
 
         register_rest_route(sayhelloGitInstaller()->api_namespace, 'git-packages-check/(?P<url>\S+)/', [
@@ -547,6 +548,4 @@ class GitPackages
 
         return $allHeaders;
     }
-
-
 }

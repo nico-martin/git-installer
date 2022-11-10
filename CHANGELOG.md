@@ -3,6 +3,7 @@
 ## 0.2.2
 
 - added update process for "git installer"
+- added permission callback for GET/POST git-packages-update/(?P<slug>\S+)/
 
 ## 0.2.1
 
