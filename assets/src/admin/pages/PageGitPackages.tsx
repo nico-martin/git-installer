@@ -34,51 +34,6 @@ const PageGitPackages = () => {
     <PageContent>
       {/*<TestForm />*/}
       <Card
-        title={__('Public Beta Info', 'shgi')}
-        canToggleKey="public-beta-info"
-      >
-        <p style={{ fontSize: '1.2rem' }}>
-          <b>Thank you so much for being a beta tester!</b>
-        </p>
-        <h3>Documentation</h3>
-        <p>
-          You can find a documentation of the most important features directly
-          in the GitHub repository of the plugin
-        </p>
-        <p style={{ marginTop: '0.2rem' }}>
-          <a
-            href="https://github.com/SayHelloGmbH/git-installer"
-            target="_blank"
-            rel="noopener"
-          >
-            https://github.com/SayHelloGmbH/git-installer
-          </a>
-        </p>
-        <h3>Issues</h3>
-        <p>
-          Please note that at this stage of development, errors can always
-          occur. I would be very grateful if you could check if a bug has
-          already been discovered or if you can create a new issue:
-        </p>
-        <p style={{ marginTop: '0.2rem' }}>
-          <a
-            href="https://github.com/SayHelloGmbH/git-installer/issues"
-            target="_blank"
-            rel="noreferrer"
-          >
-            https://github.com/SayHelloGmbH/git-installer/issues
-          </a>
-        </p>
-        <h3>Contact</h3>
-        <p>
-          Furthermore, I would be happy to hear from you if you have any
-          suggestions or ideas.
-        </p>
-        <p style={{ marginTop: '0.2rem' }}>
-          <a href="mailto:nico@sayhello.ch">nico@sayhello.ch</a>
-        </p>
-      </Card>
-      <Card
         title={__('Git Repositories', 'shgi')}
         rightContent={
           repositories.length !== 0 && (
@@ -236,6 +191,86 @@ const PageGitPackages = () => {
           )}
           <FormControls type="submit" loading={loading} />
         </Form>
+      </Card>
+      <Card title={'❤ ' + __('Support', 'shgi')} canToggleKey="support">
+        <p>
+          We depend on your support. In order to actively involve you in the
+          further development, we have set up a GitHub Sponsors page. Various
+          sponsorship packages with different benefits can be booked via this
+          page. Thank you for being part of the project! ❤
+        </p>
+        {[
+          {
+            price: __('5$/month', 'shgi'),
+            title: __('individual contributor', 'shgi'),
+            listItems: [
+              __(
+                'You support the further development of "Git Installer".',
+                'shgi'
+              ),
+              sprintf(
+                __('If wanted, your name and URL will appear on:  %s', 'shgi'),
+                '<a href="https://www.git-installer.com/supporter" target="_blank">git-installer.com/supporter</a>'
+              ),
+            ],
+            link: 'https://github.com/sponsors/SayHelloGmbH/sponsorships?tier_id=236263',
+          },
+          {
+            price: __('15$/month', 'shgi'),
+            title: __('company contributor', 'shgi'),
+            listItems: [
+              __(
+                'Your company supports the further development of "Git Installer".',
+                'shgi'
+              ),
+              sprintf(
+                __(
+                  'If wanted, your company name or logo together with your URL appear on: %s',
+                  'shgi'
+                ),
+                '<a href="https://www.git-installer.com/supporter" target="_blank">git-installer.com/supporter</a>'
+              ),
+            ],
+            link: 'https://github.com/sponsors/SayHelloGmbH/sponsorships?tier_id=236264',
+          },
+          {
+            price: __('35$/month', 'shgi'),
+            title: __('Gold contributor', 'shgi'),
+            listItems: [
+              __(
+                'You or your company support the further development of "Git Installer".',
+                'shgi'
+              ),
+              sprintf(
+                __(
+                  'If wanted, your name or logo together with your URL will be displayed in large in the Gold section on:  %s',
+                  'shgi'
+                ),
+                '<a href="https://www.git-installer.com/supporter" target="_blank">git-installer.com/supporter</a>'
+              ),
+            ],
+            link: 'https://github.com/sponsors/SayHelloGmbH/sponsorships?tier_id=236265',
+          },
+        ].map(({ price, title, listItems, link }, i) => (
+          <div className={styles.tier} key={i}>
+            <span className={styles.tierPrice}>{price}</span>
+            <h3 className={styles.tierTitle}>{title}</h3>
+            <ul className={styles.tierList}>
+              {listItems.map((e, i) => (
+                <li key={i} dangerouslySetInnerHTML={{ __html: e }}></li>
+              ))}
+            </ul>
+            <Button
+              className={styles.tierButton}
+              href={link}
+              target="_blank"
+              rel="noreferrer"
+              useAnchor
+            >
+              GitHub Sponsors
+            </Button>
+          </div>
+        ))}
       </Card>
     </PageContent>
   );

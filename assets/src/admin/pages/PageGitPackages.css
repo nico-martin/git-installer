@@ -8,3 +8,36 @@
   text-align: center;
   padding: 1rem 0 3rem 0;
 }
+
+.tier {
+  margin-top: 2rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #ccd0d4;
+  position: relative;
+}
+
+.tierPrice {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: #b1b5b9;
+  color: #fff;
+  padding: 0.5em 1em;
+  border-bottom-right-radius: 0.4em;
+  border-bottom-left-radius: 0.4em;
+}
+.tierTitle {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+ul.tierList {
+  align-self: flex-start;
+  padding-left: 1.2em;
+  list-style: disc outside none;
+  margin: 1.5rem 0;
+
+  li + li {
+    margin-top: 0.5em;
+  }
+}

@@ -1,40 +1,43 @@
 .button {
-    display: inline-block;
-    text-decoration: none;
-    font-size: 13px;
-    line-height: 2.15384615;
-    min-height: 30px;
-    margin: 0;
-    padding: 0 10px;
-    cursor: pointer;
-    border-width: 1px;
-    border-style: solid;
-    -webkit-appearance: none;
-    border-radius: 3px;
-    white-space: nowrap;
-    box-sizing: border-box;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 2.15384615;
+  min-height: 30px;
+  margin: 0;
+  padding: 0 10px;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  -webkit-appearance: none;
+  border-radius: 3px;
+  white-space: nowrap;
+  box-sizing: border-box;
+  background-color: transparent;
+  color: #2271b1;
+  border-color: #2271b1;
 
-    &[disabled] {
-        pointer-events: none;
-    }
+  &[disabled] {
+    pointer-events: none;
+  }
 }
 
 .buttonPrimary:not([disabled]) {
-    background: #007cba;
-    border-color: #007cba;
-    color: #fff;
-    text-decoration: none;
-    text-shadow: none;
+  background: #007cba;
+  border-color: #007cba;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: none;
 }
 
 .buttonDelete {
-    background-color: transparent;
-    border-color: transparent;
-    padding-right: 0;
-    padding-left: 0;
-    color: #cc1818;
+  background-color: transparent;
+  border-color: transparent;
+  padding-right: 0;
+  padding-left: 0;
+  color: #cc1818;
 
-    &:hover {
-        color: #710d0d;
-    }
+  &:hover {
+    color: #710d0d;
+  }
 }

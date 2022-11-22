@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0
+
+- out of beta 🎉 
+- small fixes and adjustments
+
 ## 0.2.2
 
 - added update process for "git installer"
