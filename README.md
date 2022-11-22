@@ -1,6 +1,6 @@
 ![Git Installer Banner](https://update.git-installer.com/assets/banner-1544x500.jpg)
 
-# Git Installer (Beta)
+# Git Installer
 
 Install and update WordPress themes and plugins directly from your Git repository via GitHub, Gitlab or Bitbucket.
 

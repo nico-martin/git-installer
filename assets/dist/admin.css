@@ -1,3 +1,6 @@
+/*!**************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/App.css ***!
+  \**************************************************************************************************************************************************/
 :root {
   --shgi-form-spacing-xsmall: 0.5rem;
   --shgi-form-spacing-small: 1rem;
@@ -22,6 +25,9 @@
     color: #135e96;
   }
 
+/*!******************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/layout/Notice.css ***!
+  \******************************************************************************************************************************************************************/
 .Notice__notice--2GQrp {
   background: #fff;
   border: 1px solid #ccd0d4;
@@ -67,6 +73,9 @@
   border-left-color: #46b450;
 }
 
+/*!****************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/layout/Page.css ***!
+  \****************************************************************************************************************************************************************/
 .Page__page--vQh7j {
   padding-top: 0 !important;
 }
@@ -86,6 +95,9 @@
   margin-top: 1rem;
 }
 
+/*!***********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/layout/PageContent.css ***!
+  \***********************************************************************************************************************************************************************/
 .PageContent__content--3Iwc8 {
   max-width: var(--shgi-form-max-width);
 }
@@ -99,6 +111,9 @@
   margin-top: var(--shgi-form-spacing);
 }
 
+/*!************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/Content.css ***!
+  \************************************************************************************************************************************************************/
 .Content__content--2ErA3 > * {
     margin: 0;
   }
@@ -117,6 +132,9 @@
         margin-top: 0.5em;
       }
 
+/*!****************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/layout/Card.css ***!
+  \****************************************************************************************************************************************************************/
 .Card__card--3pcSL {
   position: relative;
   border: 1px solid #ccd0d4;
@@ -190,6 +208,9 @@
   margin-right: var(--shgi-form-spacing);
 }
 
+/*!************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/ShadowBox/ShadowBox.css ***!
+  \************************************************************************************************************************************************************************/
 .ShadowBox__shadowbox--A77Fe {
   position: fixed;
   bottom: 0;
@@ -279,6 +300,9 @@
     opacity: 0.7;
   }
 
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/navigation/TabNavigation.css ***!
+  \*****************************************************************************************************************************************************************************/
 .TabNavigation__navigation--2BNr1 {
     border-bottom: 1px solid #ccc;
     margin: 0 0 23px 0;
@@ -357,6 +381,9 @@
     box-shadow: inset 0 2px 5px -3px #0a4b78;
 }
 
+/*!****************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/media/Image.css ***!
+  \****************************************************************************************************************************************************************/
 .Image__image--38Qro {
   display: inline-block;
   background-color: #f1f1f1;
@@ -373,6 +400,9 @@
   display: block;
 }
 
+/*!**********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/media/MaskedImage.css ***!
+  \**********************************************************************************************************************************************************************/
 .MaskedImage__container--3248g {
     background-color: #f1f1f1;
     border: 1px solid #b0b0b0;
@@ -384,6 +414,9 @@
     border: none;
     border-radius: 0px;
 }
+/*!**************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/media/SVG.css ***!
+  \**************************************************************************************************************************************************************/
 .SVG__svg--1OkxZ {
     margin: 0;
 }
@@ -399,6 +432,9 @@
         height: auto;
         display: block;
     }
+/*!***************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/media/Icon.css ***!
+  \***************************************************************************************************************************************************************/
 .Icon__icon--3gk1w {
     display: inline-block;
     line-height: 1;
@@ -429,6 +465,9 @@
     .Icon__icon--3gk1w.Icon__round--LVyCO {
         border-radius: 9999px;
     }
+/*!****************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/misc/Loader.css ***!
+  \****************************************************************************************************************************************************************/
 @-webkit-keyframes Loader__spinner-animation--1gJ5S {
   0% {
     transform: rotate(0deg);
@@ -480,6 +519,9 @@
     box-sizing: border-box;
   }
 
+/*!*****************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/misc/Tooltip.css ***!
+  \*****************************************************************************************************************************************************************/
 .Tooltip__trigger--1XxnE {
     position: relative;
 }
@@ -524,46 +566,56 @@
     white-space: nowrap;
 }
 
+/*!****************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/Button.css ***!
+  \****************************************************************************************************************************************************************/
 .Button__button--1vX9r {
-    display: inline-block;
-    text-decoration: none;
-    font-size: 13px;
-    line-height: 2.15384615;
-    min-height: 30px;
-    margin: 0;
-    padding: 0 10px;
-    cursor: pointer;
-    border-width: 1px;
-    border-style: solid;
-    -webkit-appearance: none;
-    border-radius: 3px;
-    white-space: nowrap;
-    box-sizing: border-box;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 2.15384615;
+  min-height: 30px;
+  margin: 0;
+  padding: 0 10px;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  -webkit-appearance: none;
+  border-radius: 3px;
+  white-space: nowrap;
+  box-sizing: border-box;
+  background-color: transparent;
+  color: #2271b1;
+  border-color: #2271b1;
 }
 
-    .Button__button--1vX9r[disabled] {
-        pointer-events: none;
-    }
+  .Button__button--1vX9r[disabled] {
+    pointer-events: none;
+  }
 
 .Button__buttonPrimary--3j18e:not([disabled]) {
-    background: #007cba;
-    border-color: #007cba;
-    color: #fff;
-    text-decoration: none;
-    text-shadow: none;
+  background: #007cba;
+  border-color: #007cba;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: none;
 }
 
 .Button__buttonDelete--2uu6H {
-    background-color: transparent;
-    border-color: transparent;
-    padding-right: 0;
-    padding-left: 0;
-    color: #cc1818;
+  background-color: transparent;
+  border-color: transparent;
+  padding-right: 0;
+  padding-left: 0;
+  color: #cc1818;
 }
 
 .Button__buttonDelete--2uu6H:hover {
-        color: #710d0d;
-    }
+    color: #710d0d;
+  }
+
+/*!*********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/ButtonGroup.css ***!
+  \*********************************************************************************************************************************************************************/
 .ButtonGroup__group--wQQQ6 {
     display: flex;
     vertical-align: center;
@@ -584,9 +636,15 @@
 .ButtonGroup__alignRight--KHIZh {
     justify-content: flex-end;
 }
+/*!**************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/Form.css ***!
+  \**************************************************************************************************************************************************************/
 .Form__form--1Mbrs {
 }
 
+/*!*********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/FormElement.css ***!
+  \*********************************************************************************************************************************************************************/
 .FormElement__container--TbJPB {
   display: flex;
   vertical-align: top;
@@ -646,10 +704,16 @@
   font-size: 0.8em !important;
 }
 
+/*!**********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/FormControls.css ***!
+  \**********************************************************************************************************************************************************************/
 .FormControls__controls--2EPjf {
   margin-top: calc(var(--shgi-form-spacing) * 2);
 }
 
+/*!**********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/FormFeedback.css ***!
+  \**********************************************************************************************************************************************************************/
 .FormFeedback__td--2_j1N {
   padding: 20px 0 !important;
 }
@@ -658,6 +722,9 @@
   margin-top: var(--shgi-form-spacing);
 }
 
+/*!*******************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/InputText.css ***!
+  \*******************************************************************************************************************************************************************/
 .InputText__container--2qMJx {
   display: flex;
   align-items: center;
@@ -684,6 +751,9 @@
   margin-left: 0.5rem;
 }
 
+/*!********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/InputRadio.css ***!
+  \********************************************************************************************************************************************************************/
 .InputRadio__element--1WCGL + .InputRadio__element--1WCGL {
   margin-top: 0.3em;
 }
@@ -694,6 +764,9 @@
 .InputRadio__label--3fxrw {
 }
 
+/*!*********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/InputUpload.css ***!
+  \*********************************************************************************************************************************************************************/
 .InputUpload__container--1D0gX {
   display: flex;
   flex-wrap: wrap;
@@ -807,6 +880,9 @@
 }
 */
 
+/*!********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/InputColor.css ***!
+  \********************************************************************************************************************************************************************/
 .InputColor__wrapper--3j6MI {
     position: relative;
 }
@@ -849,6 +925,9 @@
 .InputColor__input--2Sn2U:not([type="checkbox"]) {
     width: 5.1em !important;
 }
+/*!***********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/table/Table.module.css ***!
+  \***********************************************************************************************************************************************************************/
 .Table-module__table--iCyGZ {
   width: 100%;
   border-bottom: 1px solid #ccd0d4;
@@ -881,6 +960,9 @@
   border-top: 1px solid #ccd0d4;
 }
 
+/*!****************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/table/ReactTable.module.css ***!
+  \****************************************************************************************************************************************************************************/
 .ReactTable-module__root--NBFPu {
   display: block;
 }
@@ -911,6 +993,9 @@
   margin-left: 0.4em;
 }
 
+/*!************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/table/cells/ExpanderCell.module.css ***!
+  \************************************************************************************************************************************************************************************/
 .ExpanderCell-module__button--2k7yr {
   display: flex;
   align-items: center;
@@ -934,6 +1019,9 @@
   transform: scale(1.2) translateY(5%) translateX(15%);
 }
 
+/*!****************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/components/toast/toastContext.css ***!
+  \****************************************************************************************************************************************************************************/
 .toastContext__root--1hLWP {
   position: fixed;
   top: 60px;
@@ -1019,6 +1107,9 @@
     margin-left: 1em;
   }
 
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/GitPackages/RepositoryListView.css ***!
+  \***********************************************************************************************************************************************************************************/
 .RepositoryListView__root--18p5s {
   display: flex;
   justify-content: space-between;
@@ -1125,6 +1216,9 @@
     transform: scale(1.2) translateY(10%);
   }
 
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/GitPackages/log/RepositoryUpdateLog.css ***!
+  \****************************************************************************************************************************************************************************************/
 .RepositoryUpdateLog__log--3Pafd {
 }
 
@@ -1132,6 +1226,9 @@
   display: flex;
 }
 
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/GitPackages/add/AddRepository.css ***!
+  \**********************************************************************************************************************************************************************************/
 .AddRepository__stepHeading--2ke99 {
   display: flex;
   margin-left: calc(var(--shgi-form-spacing-xsmall) * -1);
@@ -1162,6 +1259,9 @@
   padding: calc(2 * var(--shgi-form-spacing)) 0 var(--shgi-form-spacing) 0;
 }
 
+/*!**********************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/GitPackages/add/steps/RunInstallationForm.css ***!
+  \**********************************************************************************************************************************************************************************************/
 .RunInstallationForm__loadingComp--1uj5p {
   text-align: center;
 }
@@ -1170,6 +1270,9 @@
   margin: 1rem 0;
 }
 
+/*!********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/PageGitPackages.css ***!
+  \********************************************************************************************************************************************************************/
 .PageGitPackages__repository--2fhYj + .PageGitPackages__repository--2fhYj {
   margin-top: var(--shgi-form-spacing);
   padding-top: var(--shgi-form-spacing);
@@ -1181,3 +1284,38 @@
   padding: 1rem 0 3rem 0;
 }
 
+.PageGitPackages__tier--1xgOM {
+  margin-top: 2rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #ccd0d4;
+  position: relative;
+}
+
+.PageGitPackages__tierPrice--q8drs {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: #b1b5b9;
+  color: #fff;
+  padding: 0.5em 1em;
+  border-bottom-right-radius: 0.4em;
+  border-bottom-left-radius: 0.4em;
+}
+.PageGitPackages__tierTitle--1rRu4 {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+ul.PageGitPackages__tierList--2edim {
+  align-self: flex-start;
+  padding-left: 1.2em;
+  list-style: disc outside none;
+  margin: 1.5rem 0;
+}
+
+ul.PageGitPackages__tierList--2edim li + li {
+    margin-top: 0.5em;
+  }
+
+
+/*# sourceMappingURL=admin.css.map*/
