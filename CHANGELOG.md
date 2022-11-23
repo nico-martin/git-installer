@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0
+- added action `shgi/GitPackages/updatePackage/success`
+- added action `shgi/GitPackages/updatePackage/error`
+- bugfix: update log did not save prevVersion
+
 ## 1.0.0
 
 - out of beta 🎉 

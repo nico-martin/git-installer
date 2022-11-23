@@ -462,20 +462,28 @@ class GitPackages
             FsHelpers::removeDir($target);
         }
 
-        $package = $this->packages->getPackage($key);
+        $package = $this->packages->getPackage($key, false, false);
         $moved = $this->loadNewPackageFiles($key, $target);
 
-        if (is_wp_error($moved)) return $moved;
-        if (!$moved) return new \WP_Error(
-            'rename_repo_failed',
-            __(
-                'The folder could not be copied. Possibly the old folder could not be emptied completely.',
-                'shgi'
-            )
-        );
+        if (is_wp_error($moved)) {
+            do_action('shgi/GitPackages/updatePackage/error', $key, $ref, $moved);
+            return $moved;
+        }
+        if (!$moved) {
+            $error = new \WP_Error(
+                'rename_repo_failed',
+                __(
+                    'The folder could not be copied. Possibly the old folder could not be emptied completely.',
+                    'shgi'
+                )
+            );
+            do_action('shgi/GitPackages/updatePackage/error', $key, $ref, $error);
+            return $error;
+        }
 
         $newPackages = $this->packages->getPackages(false);
-        UpdateLog::addLog($key, $ref, $package['version'], $newPackages[$key]['version']);
+        do_action('shgi/GitPackages/updatePackage/success', $key, $ref, $package['version'], $newPackages[$key]['version']);
+        //do_action('shgi/GitPackages/updatePackage/success', $key, $ref, $package, $newPackages[$key]['version']);
 
         return true;
     }
