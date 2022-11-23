@@ -65,6 +65,29 @@ is created, which must be deposited with the respective provider.
 
 ## Hooks
 
+### Plugin Update action
+
+An action that runs after a successful update.
+
+```php
+add_action('shgi/GitPackages/updatePackage/success', function($packageKey, $ref, $prevVersion, $nextVersion){
+  // $packageKey: string    = the key of the plugin or theme. Usually the name of the github repo
+  // $ref: string           = key of the "refOption" defined in `shgi/UpdateLog/refOptions`
+  // $prevVersion: string   = version before the update 
+  // $nextVersion: string   = version after the update 
+}, 20, 4);
+```
+
+An action that runs after a failed update.
+
+```php
+add_action('shgi/GitPackages/updatePackage/error', function($packageKey, $ref, $reason){
+  // $packageKey: string    = the key of the plugin or theme. Usually the name of the github repo
+  // $ref: string           = key of the "refOption" defined in `shgi/UpdateLog/refOptions`
+  // $reason: WP_Error      = a reason why the update failed
+}, 20, 3);
+```
+
 ### Must Use Plugin
 
 Activate "Must Use Plugin" support

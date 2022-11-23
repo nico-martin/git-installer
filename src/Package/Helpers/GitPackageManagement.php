@@ -43,7 +43,7 @@ class GitPackageManagement
      * @return array Array of key (string) => $gitPackage
      */
 
-    public function getPackages(bool $cache = true): array
+    public function getPackages(bool $cache = true, bool $flushCache = true): array
     {
         if ($this->packages !== null && $cache) {
             return $this->packages;
@@ -51,8 +51,10 @@ class GitPackageManagement
 
         require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-        wp_cache_flush();
-        search_theme_directories(true); // flush theme cache
+        if ($flushCache) {
+            wp_cache_flush();
+            search_theme_directories(true); // flush theme cache
+        }
 
         $plugins = get_plugins();
         $themes = wp_get_themes();
@@ -80,7 +82,7 @@ class GitPackageManagement
                     )
                 );
                 $plugin = count($filteredPlugins) >= 1 ? $filteredPlugins[0] : null;
-                $version = $plugin ? $plugin['Version'] : null;
+                $version = $plugin['Version'];
             }
 
             $return_repos[$dir]['deployKey'] = $deployKeys[$dir];
@@ -106,9 +108,9 @@ class GitPackageManagement
      * @return array $gitPackage
      */
 
-    public function getPackage(string $key): ?array
+    public function getPackage(string $key, bool $cache = false, bool $flushCache = true): ?array
     {
-        $packages = $this->getPackages(false);
+        $packages = $this->getPackages($cache, $flushCache);
         if (!array_key_exists($key, $packages)) {
             return null;
         }

@@ -11,6 +11,12 @@ class UpdateLog
     public function run()
     {
         add_action('rest_api_init', [$this, 'registerRoute']);
+        add_action('shgi/GitPackages/updatePackage/success', [$this, 'addLogAction'], 20, 4);
+    }
+
+    public function addLogAction($key, $ref, $prevVersion, $nextVersion): void
+    {
+        self::addLog($key, $ref, $prevVersion, $nextVersion);
     }
 
     public function registerRoute()
