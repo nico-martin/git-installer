@@ -31642,7 +31642,10 @@ var PageGitPackages = function () {
                                 __html: (0, i18n_1.sprintf)((0, i18n_1.__)('You can generate your personal acces token here: %s', 'shgi'), '<a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer">https://github.com/settings/tokens</a>'),
                             } }),
                         react_1.default.createElement("p", { dangerouslySetInnerHTML: {
-                                __html: (0, i18n_1.sprintf)((0, i18n_1.__)('The token must have access rights at least for the scope %s.', 'shgi'), '<code>api</code>'),
+                                __html: (0, i18n_1.__)('For now, please use the classic token.', 'shgi'),
+                            } }),
+                        react_1.default.createElement("p", { dangerouslySetInnerHTML: {
+                                __html: (0, i18n_1.sprintf)((0, i18n_1.__)('The token must have access rights at least for the scope %s.', 'shgi'), '<code>repo</code>'),
                             } })) }),
                 react_1.default.createElement("h3", null, "Gitlab"),
                 react_1.default.createElement(theme_1.FormElement, { form: form, name: "git-packages-gitlab-token", Input: theme_1.InputText, type: "text", masked: true, DescriptionInput: react_1.default.createElement(react_1.default.Fragment, null,

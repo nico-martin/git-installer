@@ -95,7 +95,6 @@ class Helpers
             if ($notification) {
                 self::showAdminNotification($message);
             }
-
             return false;
         }
 

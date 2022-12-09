@@ -104,12 +104,20 @@ const PageGitPackages = () => {
                 />
                 <p
                   dangerouslySetInnerHTML={{
+                    __html: __(
+                      'For now, please use the classic token.',
+                      'shgi'
+                    ),
+                  }}
+                />
+                <p
+                  dangerouslySetInnerHTML={{
                     __html: sprintf(
                       __(
                         'The token must have access rights at least for the scope %s.',
                         'shgi'
                       ),
-                      '<code>api</code>'
+                      '<code>repo</code>'
                     ),
                   }}
                 />
