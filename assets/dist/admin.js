@@ -31117,13 +31117,6 @@ var RepositoryListView = function (_a) {
         })
             .finally(function () { return setLoadingUpdate(false); });
     };
-    react_1.default.useEffect(function () {
-        console.log(repository.key, {
-            headersFile: repository.headersFile,
-            baseUrl: repository.baseUrl,
-            provider: repository.provider,
-        });
-    }, []);
     return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, RepositoryListView_css_1.default.root) },
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.infos },
             react_1.default.createElement("h3", { className: RepositoryListView_css_1.default.name },
@@ -31396,7 +31389,7 @@ var CheckRepoForm = function (_a) {
         react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryUrl", label: (0, i18n_1.__)('Repository URL', 'shgi'), Input: theme_1.InputText, rules: {
                 required: (0, i18n_1.__)('Required field', 'shgi'),
                 pattern: {
-                    value: /^(https:\/\/(github|gitlab|bitbucket)\.\S+)/,
+                    value: /^((https:\/\/|git@)(github|gitlab|bitbucket)\.\S+)/,
                     message: (0, i18n_1.__)('The URL must lead to a GitHub, Gitlab or Bitbucket repository', 'shgi'),
                 },
             } }),
@@ -31642,7 +31635,7 @@ var PageGitPackages = function () {
                                 __html: (0, i18n_1.sprintf)((0, i18n_1.__)('You can generate your personal acces token here: %s', 'shgi'), '<a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer">https://github.com/settings/tokens</a>'),
                             } }),
                         react_1.default.createElement("p", { dangerouslySetInnerHTML: {
-                                __html: (0, i18n_1.sprintf)((0, i18n_1.__)('The token must have access rights at least for the scope %s.', 'shgi'), '<code>api</code>'),
+                                __html: (0, i18n_1.sprintf)((0, i18n_1.__)('The classic token must have access rights at least for the scope %1$s, for the new "fine-grained" token you need to grant at least %2$s permissions for %3$s in the "Repository permissions"', 'shgi'), '<code>repo</code>', '<code>Read-only</code>', '<code>Contents</code>'),
                             } })) }),
                 react_1.default.createElement("h3", null, "Gitlab"),
                 react_1.default.createElement(theme_1.FormElement, { form: form, name: "git-packages-gitlab-token", Input: theme_1.InputText, type: "text", masked: true, DescriptionInput: react_1.default.createElement(react_1.default.Fragment, null,

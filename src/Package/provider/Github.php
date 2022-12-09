@@ -17,20 +17,21 @@ class Github extends Provider
 
     private static function parseGithubUrl($url)
     {
-        $parsed = parse_url($url);
-        $parsed['params'] = array_values(
-            array_filter(
-                explode('/', $parsed['path']),
-                function ($e) {
-                    return $e !== '';
-                }
-            )
-        );
+        $regex = '/^(?:https?:\/\/)?(?:ssh:\/\/)?(?:git@)?github.com(?::|\/)([^\/]+)\/([^\/\.]+)/';
+        $match = preg_match($regex, $url, $matches);
+
+        if ($match) {
+            return [
+                'host' => 'github.com',
+                'owner' => $matches[1],
+                'repo' => $matches[2]
+            ];
+        }
 
         return [
-            'host' => $parsed['host'],
-            'owner' => $parsed['params'][0],
-            'repo' => $parsed['params'][1]
+            'host' => 'invalid',
+            'owner' => '',
+            'repo' => ''
         ];
     }
 

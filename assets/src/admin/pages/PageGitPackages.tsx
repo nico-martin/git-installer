@@ -106,10 +106,12 @@ const PageGitPackages = () => {
                   dangerouslySetInnerHTML={{
                     __html: sprintf(
                       __(
-                        'The token must have access rights at least for the scope %s.',
+                        'The classic token must have access rights at least for the scope %1$s, for the new "fine-grained" token you need to grant at least %2$s permissions for %3$s in the "Repository permissions"',
                         'shgi'
                       ),
-                      '<code>api</code>'
+                      '<code>repo</code>',
+                      '<code>Read-only</code>',
+                      '<code>Contents</code>'
                     ),
                   }}
                 />
