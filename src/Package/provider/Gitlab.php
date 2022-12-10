@@ -17,6 +17,28 @@ class Gitlab extends Provider
 
     private static function parseGitlabUrl($url): array
     {
+        $url = rtrim($url, '.git');
+        $url = rtrim($url, '/');
+        $url = explode('/-/', $url)[0];
+
+        $regex = '/^(https:\/\/gitlab\.com\/|git@gitlab.com:)([\S]+)/';
+        $match = preg_match($regex, $url, $matches);
+
+        if ($match) {
+            $params = explode('/', $matches[2]);
+            return [
+                'host' => 'gitlab.com',
+                'id' => urlencode($matches[2]),
+                'repo' => end($params),
+            ];
+        }
+
+        return [
+            'host' => 'invalid',
+            'id' => '',
+            'repo' => '',
+        ];
+
         $parsed = parse_url($url);
         $parsed['params'] = array_values(
             array_filter(
@@ -26,7 +48,6 @@ class Gitlab extends Provider
                 }
             )
         );
-
 
         return [
             'host' => $parsed['host'],
