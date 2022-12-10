@@ -31389,7 +31389,7 @@ var CheckRepoForm = function (_a) {
         react_1.default.createElement(theme_1.FormElement, { form: form, name: "repositoryUrl", label: (0, i18n_1.__)('Repository URL', 'shgi'), Input: theme_1.InputText, rules: {
                 required: (0, i18n_1.__)('Required field', 'shgi'),
                 pattern: {
-                    value: /^((https:\/\/|git@)(github|gitlab|bitbucket)\.\S+)/,
+                    value: /^((https:\/\/|git@|https:\/\/([^\/]+)@)(github|gitlab|bitbucket)\.\S+)/,
                     message: (0, i18n_1.__)('The URL must lead to a GitHub, Gitlab or Bitbucket repository', 'shgi'),
                 },
             } }),
