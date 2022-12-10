@@ -17,20 +17,21 @@ class Bitbucket extends Provider
 
     private static function parseBitbucketUrl($url)
     {
-        $parsed = parse_url($url);
-        $parsed['params'] = array_values(
-            array_filter(
-                explode('/', $parsed['path']),
-                function ($e) {
-                    return $e !== '';
-                }
-            )
-        );
+        $regex = '/^(?:https?:\/\/)?(?:ssh:\/\/)?(?:([^\/]+)@)?bitbucket.org(?::|\/)([^\/]+)\/([^\/\.]+)/';
+        $match = preg_match($regex, $url, $matches);
+
+        if ($match) {
+            return [
+                'host' => 'bitbucket.org',
+                'workspace' => $matches[2],
+                'repo' => $matches[3]
+            ];
+        }
 
         return [
-            'host' => $parsed['host'],
-            'workspace' => $parsed['params'][0],
-            'repo' => $parsed['params'][1]
+            'host' => 'invalid',
+            'workspace' => '',
+            'repo' => ''
         ];
     }
 
