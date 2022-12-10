@@ -2,9 +2,7 @@
 
 namespace SayHello\GitInstaller\Package;
 
-use SayHello\GitInstaller\Helpers;
 use SayHello\GitInstaller\Package\Helpers\GitPackageManagement;
-use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 class Updater
 {
@@ -14,7 +12,6 @@ class Updater
 
     public function run()
     {
-        /*
         add_filter('plugins_api', [$this, 'info'], 20, 3);
         add_filter('site_transient_update_plugins', [$this, 'updatePlugins']);
         add_filter('site_transient_update_themes', [$this, 'updateThemes']);
@@ -23,60 +20,9 @@ class Updater
         add_filter('theme_row_meta', [$this, 'rowIcon'], 15, 2);
 
         add_action('upgrader_process_complete', [$this, 'purge'], 10, 2);
-*/
-
-        add_action('admin_init', [$this, 'registerPackages']);
-        add_action('rest_api_init', [$this, 'registerRoute']);
 
         require_once ABSPATH . 'wp-admin/includes/plugin.php';
         $this->packages = new GitPackageManagement();
-    }
-
-    public function registerPackages()
-    {
-        foreach ($this->getPackagePluginFiles() as $key => $file) {
-            PucFactory::buildUpdateChecker(
-                get_rest_url(null, sayhelloGitInstaller()->api_namespace . '/' . "packages-updater-check/{$key}/"),
-                trailingslashit(WP_PLUGIN_DIR) . $file,
-                'shgi-' . $key
-            );
-        }
-    }
-
-    public function registerRoute()
-    {
-        register_rest_route(sayhelloGitInstaller()->api_namespace, 'packages-updater-check/(?P<slug>\S+)/', [
-            'methods' => 'GET',
-            'callback' => [$this, 'getUpdaterCheck'],
-            'args' => [
-                'slug',
-            ],
-            'permission_callback' => '__return_true'
-        ]);
-    }
-
-    public function getUpdaterCheck($data): array
-    {
-        $key = $data['slug'];
-
-        $headers = $this->getNewPackageHeaders($key);
-        $package = $this->packages->getPackage($key);
-
-        $package = [
-            "name" => $headers['plugin'],
-            "version" => $headers['version'],
-            "download_url" => $this->getPackageZipUrl($key),
-            "homepage" => $package['baseUrl'],
-            "requires" => $headers['requires-at-least'],
-            "tested" => $headers['tested-up-to'],
-            "author" => $headers['author'],
-            "author_homepage" => $headers['author-uri'],
-            "sections" => [
-                "description" => $headers['description']
-            ],
-        ];
-        Helpers::addLog($package);
-        return $package;
     }
 
     private function getPackagePluginFiles(): array
