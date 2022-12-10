@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+- improved GitHub, Gitlab and Bitbucket link validation
+- added support for GitHub fine-grained personal access tokens
+- some text-adjustments
+
 ## 1.1.0
 - added action `shgi/GitPackages/updatePackage/success`
 - added action `shgi/GitPackages/updatePackage/error`
