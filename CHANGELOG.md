@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.1
+- Bugfix for issue #42
+
 ## 1.2.0
 - improved GitHub, Gitlab and Bitbucket link validation
 - added support for GitHub fine-grained personal access tokens
