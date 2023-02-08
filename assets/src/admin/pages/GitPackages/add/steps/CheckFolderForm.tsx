@@ -31,7 +31,7 @@ const CheckFolderForm: React.FC<AddRepositoryFormPropsI> = ({
       repositoryUrl: repoData.baseUrl,
       activeBranch:
         Object.values(repoData.branches).find((branch) => branch.default)
-          .name || null,
+          ?.name || null,
       dir: '',
     },
   });

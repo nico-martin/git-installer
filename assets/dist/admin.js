@@ -31320,14 +31320,14 @@ var react_hook_form_1 = __webpack_require__(/*! react-hook-form */ "./node_modul
 var i18n_1 = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 var theme_1 = __webpack_require__(/*! ../../../../theme */ "./assets/src/admin/theme/index.ts");
 var CheckFolderForm = function (_a) {
-    var promise = _a.promise, submit = _a.submit, repoData = _a.repoData, _b = _a.className, className = _b === void 0 ? '' : _b;
-    var _c = react_1.default.useState(false), loading = _c[0], setLoading = _c[1];
-    var _d = react_1.default.useState(''), error = _d[0], setError = _d[1];
+    var _b;
+    var promise = _a.promise, submit = _a.submit, repoData = _a.repoData, _c = _a.className, className = _c === void 0 ? '' : _c;
+    var _d = react_1.default.useState(false), loading = _d[0], setLoading = _d[1];
+    var _e = react_1.default.useState(''), error = _e[0], setError = _e[1];
     var form = (0, react_hook_form_1.useForm)({
         defaultValues: {
             repositoryUrl: repoData.baseUrl,
-            activeBranch: Object.values(repoData.branches).find(function (branch) { return branch.default; })
-                .name || null,
+            activeBranch: ((_b = Object.values(repoData.branches).find(function (branch) { return branch.default; })) === null || _b === void 0 ? void 0 : _b.name) || null,
             dir: '',
         },
     });
