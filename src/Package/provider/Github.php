@@ -63,6 +63,7 @@ class Github extends Provider
             'branches' => $branches,
             'baseUrl' => "https://github.com/{$parsedUrl['owner']}/{$parsedUrl['repo']}",
             'apiUrl' => $apiUrl,
+            'r' => $response,
         ];
     }
 
@@ -81,6 +82,7 @@ class Github extends Provider
                 'url' => "https://github.com/{$owner}/{$repo}/tree/{$branch['name']}",
                 'zip' => "{$apiUrl}/zipball/{$branch['name']}",
                 'default' => $branch['name'] === $defaultBranch,
+                'db' => $defaultBranch
             ];
         }
         return $branches;

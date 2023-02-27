@@ -36,12 +36,10 @@ class Helpers
     {
         $json = json_decode(self::fetchPlainText($url, $args), true);
 
-        if (!$json) {
-            return new \WP_Error('json_parse_error', sprintf(
-                    __('Request to %s could not be processed', 'shgi'),
-                    '<code>' . $url . '</code>')
-            );
-        }
+        if (!$json) return new \WP_Error('json_parse_error', sprintf(
+                __('Request to %s could not be processed', 'shgi'),
+                '<code>' . $url . '</code>')
+        );
 
         return $json;
     }
@@ -52,7 +50,7 @@ class Helpers
         if (is_wp_error($request)) return $request;
 
         $code = wp_remote_retrieve_response_code($request);
-        if ($code >= 300) new \WP_Error('remote_get_error', sprintf(
+        if ($code >= 300) return new \WP_Error('remote_get_error', sprintf(
                 __('Invalid request to %s', 'shgi'),
                 '<code>' . $url . '</code>')
         );
