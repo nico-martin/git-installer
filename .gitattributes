@@ -12,4 +12,4 @@ package.json export-ignore
 .eslintrc export-ignore
 .eslintignore export-ignore
 scripts export-ignore
-assets export-ignore
+assets/src export-ignore
