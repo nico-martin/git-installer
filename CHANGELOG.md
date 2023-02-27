@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.2
+- Bugfix for gitlab URL parsing
+
 ## 1.2.1
 - Bugfix for issue #42
 

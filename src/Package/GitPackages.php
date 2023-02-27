@@ -269,7 +269,10 @@ class GitPackages
                     __('Either it is not a valid %s repository URL, or it is Private. In this case, you would have to add a corresponding token under "Access control".', 'shgi'),
                 $provider->name()
             ),
-            ['status' => 404]
+            [
+                'status' => 404,
+                'error' => $infos->get_error_message()
+            ]
         );
 
         return $infos;
@@ -365,7 +368,6 @@ class GitPackages
                 sprintf(__('No valid WordPress Theme (style.css with "Theme Name" header) or WordPress Plugin (Plugin PHP file with "Plugin Name" header) was found in the %s folder of the repository.', 'shgi'), ($dir) ? $dir : 'root'),
                 [
                     'status' => 400,
-
                 ]
             );
         }
