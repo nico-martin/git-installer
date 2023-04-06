@@ -129,7 +129,12 @@ class GitPackages
             'methods' => 'DELETE',
             'callback' => [$this, 'deleteRepo'],
             'args' => [
-                'slug',
+                'slug' => [
+                    'required' => true,
+                    'validate_callback' => function ($param) {
+                        return is_string($param);
+                    },
+                ],
             ],
             'permission_callback' => function () {
                 return current_user_can(Helpers::$authAdmin);
@@ -140,7 +145,12 @@ class GitPackages
             'methods' => ['GET', 'POST'],
             'callback' => [$this, 'updateRepo'],
             'args' => [
-                'slug',
+                'slug' => [
+                    'required' => true,
+                    'validate_callback' => function ($param) {
+                        return is_string($param);
+                    },
+                ],
             ],
             'permission_callback' => '__return_true'
         ]);
@@ -149,7 +159,12 @@ class GitPackages
             'methods' => 'GET',
             'callback' => [$this, 'checkGitUrl'],
             'args' => [
-                'url',
+                'url' => [
+                    'required' => true,
+                    'validate_callback' => function ($param) {
+                        return is_string($param);
+                    },
+                ],
             ],
             'permission_callback' => function () {
                 return current_user_can(Helpers::$authAdmin);
@@ -160,9 +175,24 @@ class GitPackages
             'methods' => 'POST',
             'callback' => [$this, 'checkGitDir'],
             'args' => [
-                'url',
-                'branch',
-                'dir'
+                'url' => [
+                    'required' => true,
+                    'validate_callback' => function ($param) {
+                        return is_string($param);
+                    },
+                ],
+                'branch' => [
+                    'required' => true,
+                    'validate_callback' => function ($param) {
+                        return is_string($param);
+                    },
+                ],
+                'dir' => [
+                    'required' => true,
+                    'validate_callback' => function ($param) {
+                        return is_string($param);
+                    },
+                ],
             ],
             'permission_callback' => function () {
                 return current_user_can(Helpers::$authAdmin);
@@ -459,6 +489,7 @@ class GitPackages
 
     private function updatePackage($key, $ref = '')
     {
+        FsHelpers::maintenanceMode(true);
         $target = $this->getPackageDir($key);
         if (is_dir($target)) {
             FsHelpers::removeDir($target);
@@ -485,7 +516,7 @@ class GitPackages
 
         $newPackages = $this->packages->getPackages(false);
         do_action('shgi/GitPackages/updatePackage/success', $key, $ref, $package['version'], $newPackages[$key]['version']);
-        //do_action('shgi/GitPackages/updatePackage/success', $key, $ref, $package, $newPackages[$key]['version']);
+        FsHelpers::maintenanceMode(false);
 
         return true;
     }
