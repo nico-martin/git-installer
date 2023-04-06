@@ -25,7 +25,12 @@ class UpdateLog
             'methods' => 'GET',
             'callback' => [$this, 'getLogsApi'],
             'args' => [
-                'slug',
+                'slug' => [
+                    'required' => true,
+                    'validate_callback' => function ($param) {
+                        return is_string($param);
+                    },
+                ],
             ],
             'permission_callback' => function () {
                 return current_user_can(Helpers::$authAdmin);

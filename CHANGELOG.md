@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.3
+- Removed possible PHP Notices
+- Added .maintenance while updating
+
 ## 1.2.2
 - Bugfix for gitlab URL parsing
 

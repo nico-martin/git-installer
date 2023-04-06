@@ -48,4 +48,16 @@ class FsHelpers
         unlink($zipFile);
         return true;
     }
+
+    public static function maintenanceMode($enable = false)
+    {
+        $file = ABSPATH . '.maintenance';
+        if ($enable) {
+            $maintenance_string = '<?php $upgrading = ' . time() . '; ?>';
+            unlink($file);
+            file_put_contents($file, $maintenance_string);
+        } elseif (!$enable && file_exists($file)) {
+            unlink($file);
+        }
+    }
 }
