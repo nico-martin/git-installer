@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.4
+- Improvement for .maintenance
+
 ## 1.2.3
 - Removed possible PHP Notices
 - Added .maintenance while updating

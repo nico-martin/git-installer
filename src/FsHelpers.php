@@ -49,6 +49,12 @@ class FsHelpers
         return true;
     }
 
+    public static function isInMaintenanceMode()
+    {
+        $file = ABSPATH . '.maintenance';
+        return file_exists($file);
+    }
+
     public static function maintenanceMode($enable = false)
     {
         $file = ABSPATH . '.maintenance';
