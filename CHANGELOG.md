@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.5
+- Fix for dot in repository name
+
 ## 1.2.4
 - Improvement for .maintenance
 

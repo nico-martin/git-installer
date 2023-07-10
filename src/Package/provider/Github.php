@@ -17,7 +17,7 @@ class Github extends Provider
 
     private static function parseGithubUrl($url)
     {
-        $regex = '/^(?:https?:\/\/)?(?:ssh:\/\/)?(?:git@)?github.com(?::|\/)([^\/]+)\/([^\/\.]+)/';
+        $regex = '/^(?:https?:\/\/)?(?:ssh:\/\/)?(?:git@)?github.com(?::|\/)([^\/]+)\/([^\/\s]+)/';
         $match = preg_match($regex, $url, $matches);
 
         if ($match) {

@@ -12,19 +12,20 @@ class Bitbucket extends Provider
     {
         if (!$url) return false;
         $parsed = self::parseBitbucketUrl($url);
+
         return $parsed['host'] === 'bitbucket.org' && isset($parsed['workspace']) && isset($parsed['repo']);
     }
 
     private static function parseBitbucketUrl($url)
     {
-        $regex = '/^(?:https?:\/\/)?(?:ssh:\/\/)?(?:([^\/]+)@)?bitbucket.org(?::|\/)([^\/]+)\/([^\/\.]+)/';
+        $regex = '/^(?:https?:\/\/)?(?:ssh:\/\/)?(?:([^\/]+)@)?bitbucket.org(?::|\/)([^\/]+)\/([^\/\s]+)/';
         $match = preg_match($regex, $url, $matches);
 
         if ($match) {
             return [
                 'host' => 'bitbucket.org',
                 'workspace' => $matches[2],
-                'repo' => $matches[3]
+                'repo' => $matches[3],
             ];
         }
 
@@ -70,6 +71,7 @@ class Bitbucket extends Provider
     private static function getBranches($workspace, $repo, $defaultBranch = '')
     {
         $apiUrl = "https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}";
+
         $apiBranchesUrl = "{$apiUrl}/refs/branches?pagelen=100";
         $auth = self::authenticateRequest($apiBranchesUrl);
         $response = Helpers::getRestJson($auth[0], $auth[1]);

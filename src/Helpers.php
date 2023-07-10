@@ -34,7 +34,12 @@ class Helpers
 
     public static function getRestJson($url, $args = [])
     {
-        $json = json_decode(self::fetchPlainText($url, $args), true);
+        $resp = self::fetchPlainText($url, $args);
+        if (is_wp_error($resp)) {
+            return $resp;
+        }
+
+        $json = json_decode($resp, true);
 
         if (!$json) return new \WP_Error('json_parse_error', sprintf(
                 __('Request to %s could not be processed', 'shgi'),
