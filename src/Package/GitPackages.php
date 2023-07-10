@@ -489,7 +489,10 @@ class GitPackages
 
     private function updatePackage($key, $ref = '')
     {
-        FsHelpers::maintenanceMode(true);
+        $alreadyInMaintMode = FsHelpers::isInMaintenanceMode();
+        if (!$alreadyInMaintMode) {
+            FsHelpers::maintenanceMode(true);
+        }
         $target = $this->getPackageDir($key);
         if (is_dir($target)) {
             FsHelpers::removeDir($target);
@@ -516,7 +519,9 @@ class GitPackages
 
         $newPackages = $this->packages->getPackages(false);
         do_action('shgi/GitPackages/updatePackage/success', $key, $ref, $package['version'], $newPackages[$key]['version']);
-        FsHelpers::maintenanceMode(false);
+        if (!$alreadyInMaintMode) {
+            FsHelpers::maintenanceMode(false);
+        }
 
         return true;
     }

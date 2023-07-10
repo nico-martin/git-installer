@@ -6,7 +6,7 @@ Plugin URI: https://github.com/SayHelloGmbH/git-installer
 Description: Install and Update Plugins and Themes from GitHub, Gitlab and Bitbucket
 Author: Nico Martin - mail@nico.dev
 Author URI: https://nico.dev
-Version: 1.2.3
+Version: 1.2.5
 Text Domain: shgi
 Domain Path: /languages
 Requires PHP: 7.4
@@ -28,6 +28,7 @@ require_once 'src/Plugin.php';
 require_once 'src/Assets.php';
 require_once 'src/Settings.php';
 require_once 'src/AdminPage.php';
+require_once 'src/Package/Helpers/Log.php';
 require_once 'src/Package/Helpers/GitPackageManagement.php';
 require_once 'src/Package/UpdateLog.php';
 require_once 'src/Package/GitPackages.php';
