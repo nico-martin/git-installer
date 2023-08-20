@@ -2,6 +2,7 @@
 
 ## 1.2.6
 - Fix for invalid/changed repository URLs (issue #49)
+- Fix for directory name (issue #48)
 
 ## 1.2.5
 - Fix for dot in repository name

@@ -148,4 +148,13 @@ class Helpers
 
         file_put_contents($file, $oldContent . $log);
     }
+
+    public static function sanitizeRepositoryDir($key)
+    {
+        $key = str_replace('.git', '', $key);
+        $key = preg_replace("/[^A-Za-z0-9]/", '-', $key);
+        $key = preg_replace('/-+/', '-', $key);
+        $key = strtolower($key);
+        return $key;
+    }
 }
