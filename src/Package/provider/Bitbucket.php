@@ -58,10 +58,10 @@ class Bitbucket extends Provider
         if (is_wp_error($branches)) return $branches;
 
         return [
-            'key' => $parsedUrl['repo'],
+            'key' => Helpers::sanitizeRepositoryDir($parsedUrl['repo']),
             'name' => $response['name'],
             'private' => $response['is_private'],
-            'provider' => self::$provider,
+            'provider' => self::$provider . ' ' . Helpers::sanitizeRepositoryDir('Hello   World'). ' ' . Helpers::sanitizeRepositoryDir('Hell&World 123%&/'),
             'branches' => $branches,
             'baseUrl' => $response['links']['html']['href'],
             'apiUrl' => $apiUrl,
