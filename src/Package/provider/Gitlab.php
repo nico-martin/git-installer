@@ -207,7 +207,7 @@ class Gitlab extends Provider
                 return Gitlab::validateDir($url, $branch, $dir);
             }
 
-            public function fetchFileContent($url): string
+            public function fetchFileContent($url)
             {
                 return Gitlab::fetchFileContent($url);
             }
