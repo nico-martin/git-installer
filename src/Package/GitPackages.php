@@ -379,7 +379,10 @@ class GitPackages
 
         $package = $this->packages->getPackage($key);
         $provider = self::getProvider($package['provider']);
-        return self::parseHeader($provider->fetchFileContent($headersFile));
+        $file = $provider->fetchFileContent($headersFile);
+        if ($file === null) return [];
+
+        return self::parseHeader($file);
     }
 
     public function checkGitDir($data)
