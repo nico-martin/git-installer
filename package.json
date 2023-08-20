@@ -1,6 +1,6 @@
 {
   "name": "git-installer",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "scripts": {
     "dev": "webpack --mode development --watch",
     "prod": "webpack --mode production",
