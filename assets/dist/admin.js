@@ -157,7 +157,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","repoBranch":"RepositoryListView__repoBranch--27uUJ","repoBranchIcon":"RepositoryListView__repoBranchIcon--2n2rm","webhookUpdate":"RepositoryListView__webhookUpdate--27L70","webhookUpdateInput":"RepositoryListView__webhookUpdateInput--1LVHk","copyButton":"RepositoryListView__copyButton--FrZQ5","error":"RepositoryListView__error--13_UO","logButton":"RepositoryListView__logButton--14sPs","logButtonIcon":"RepositoryListView__logButtonIcon--3epQG"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","repoBranch":"RepositoryListView__repoBranch--27uUJ","repoBranchIcon":"RepositoryListView__repoBranchIcon--2n2rm","webhookUpdate":"RepositoryListView__webhookUpdate--27L70","webhookUpdateInput":"RepositoryListView__webhookUpdateInput--1LVHk","afterUpdateHook":"RepositoryListView__afterUpdateHook--1GXEv","copyButton":"RepositoryListView__copyButton--FrZQ5","error":"RepositoryListView__error--13_UO","logButton":"RepositoryListView__logButton--14sPs","logButtonIcon":"RepositoryListView__logButtonIcon--3epQG"});
 
 /***/ }),
 
@@ -31076,6 +31076,15 @@ exports.useToast = useToast;
 
 "use strict";
 
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -31096,6 +31105,7 @@ var RepositoryListView = function (_a) {
     var _c = react_1.default.useState(false), deleteModal = _c[0], setDeleteModal = _c[1];
     var _d = react_1.default.useState(false), logModal = _d[0], setLogModal = _d[1];
     var _e = react_1.default.useState(false), loadingUpdate = _e[0], setLoadingUpdate = _e[1];
+    var _f = react_1.default.useState([]), loadingHookUpdate = _f[0], setLoadingHookUpdate = _f[1];
     var updateUrl = constants_1.VARS.restPluginBase + "git-packages-update/" + repository.key + "/?key=" + repository.deployKey + "&ref=webhook-update";
     var updateRepo = function () {
         setLoadingUpdate(true);
@@ -31116,6 +31126,25 @@ var RepositoryListView = function (_a) {
             });
         })
             .finally(function () { return setLoadingUpdate(false); });
+    };
+    var updateAfterUpdateHook = function (key, checked) {
+        var _a;
+        setLoadingHookUpdate(function (hooks) { return __spreadArray(__spreadArray([], hooks, true), [key], false); });
+        (0, apiFetch_1.apiPost)(constants_1.VARS.restPluginNamespace + "/hooks/after-update-hook/" + repository.key + "/", { changedHooks: (_a = {}, _a[key] = checked, _a) })
+            .then(function (resp) {
+            setRepositories(function (packages) {
+                return packages.map(function (p) { return (p.key === resp.key ? resp : p); });
+            });
+        })
+            .catch(function (e) {
+            return addToast({
+                message: (0, i18n_1.__)('Hook save failed'),
+                type: theme_1.NOTICE_TYPES.ERROR,
+            });
+        })
+            .finally(function () {
+            return setLoadingHookUpdate(function (hooks) { return hooks.filter(function (hook) { return hook !== key; }); });
+        });
     };
     return (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, RepositoryListView_css_1.default.root) },
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.infos },
@@ -31153,7 +31182,21 @@ var RepositoryListView = function (_a) {
                             });
                             navigator.clipboard.writeText(updateUrl);
                         }, title: "Copy" },
-                        react_1.default.createElement(theme_1.Icon, { icon: "copy" }))))))),
+                        react_1.default.createElement(theme_1.Icon, { icon: "copy" })))),
+                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.afterUpdateHook },
+                    react_1.default.createElement("b", null,
+                        (0, i18n_1.__)('After Update Hooks', 'shgi'),
+                        ":"),
+                    Object.entries(constants_1.VARS.afterUpdateHooks).map(function (_a) {
+                        var key = _a[0], title = _a[1];
+                        return (react_1.default.createElement("span", { key: key },
+                            react_1.default.createElement("input", { id: repository.key + "-update-after-update-hook-" + key, type: "checkbox", onChange: function (e) {
+                                    return updateAfterUpdateHook(key, e.target.checked);
+                                }, defaultChecked: (repository.afterUpdateHooks || []).indexOf(key) !== -1, disabled: loadingHookUpdate.indexOf(key) !== -1 }),
+                            react_1.default.createElement("label", { htmlFor: repository.key + "-update-after-update-hook-" + key },
+                                ' ',
+                                title)));
+                    }))))),
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.controls },
             react_1.default.createElement(DeleteRepository_1.default, { modal: deleteModal, setModal: setDeleteModal, repositoryKey: repository.key, theme: repository.theme, name: repository.name, setRepositories: setRepositories }),
             react_1.default.createElement(theme_1.Button, { buttonType: "primary", loading: loadingUpdate, onClick: updateRepo }, (0, i18n_1.__)('Update', 'shgi')),
@@ -31621,6 +31664,7 @@ var PageGitPackages = function () {
     var _a = react_1.default.useState(false), addPackageModal = _a[0], setAddPackageModal = _a[1];
     var _b = (0, settings_1.useSettingsForm)(settings_1.settingsKeys.filter(function (key) { return key.indexOf('git-packages') === 0; })), form = _b.form, submit = _b.submit, error = _b.error, loading = _b.loading;
     var _c = react_1.default.useState(constants_1.VARS.gitPackages), repositories = _c[0], setRepositories = _c[1];
+    //console.log('afterUpdateHooks', VARS.afterUpdateHooks);
     return (react_1.default.createElement(theme_1.PageContent, null,
         react_1.default.createElement(theme_1.Card, { title: (0, i18n_1.__)('Git Repositories', 'shgi'), rightContent: repositories.length !== 0 && (react_1.default.createElement(theme_1.Button, { buttonType: "primary", onClick: function () { return setAddPackageModal(true); } }, (0, i18n_1.__)('add Repository', 'shgi'))) }, repositories.length === 0 ? (react_1.default.createElement("div", { className: PageGitPackages_css_1.default.empty },
             react_1.default.createElement("p", null, (0, i18n_1.__)('No repositories have been added yet.', 'shgi')),

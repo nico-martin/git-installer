@@ -141,7 +141,7 @@ class Helpers
             $log = json_encode($log);
         }
         $log = $log . PHP_EOL . "-------------------------" . PHP_EOL;
-        $file = $dir . $name . '_' . date("j.n.Y") . '.log';
+        $file = $dir . apply_filters('post_name', $name) . '_' . date("j.n.Y") . '.log';
         if (!file_exists($file)) file_put_contents($file, '');
 
         $oldContent = file_get_contents($file);

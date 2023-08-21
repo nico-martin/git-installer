@@ -38,6 +38,7 @@ require_once 'src/Package/provider/Gitlab.php';
 require_once 'src/Package/provider/Bitbucket.php';
 require_once 'src/Package/Updater.php';
 require_once 'src/Package/Ecosystem.php';
+require_once 'src/Package/Hooks.php';
 
 function sayhelloGitInstaller(): \SayHello\GitInstaller\Plugin
 {
@@ -68,6 +69,9 @@ sayhelloGitInstaller()->Updater->run();
 
 sayhelloGitInstaller()->Ecosystem = new SayHello\GitInstaller\Package\Ecosystem();
 sayhelloGitInstaller()->Ecosystem->run();
+
+sayhelloGitInstaller()->Hooks = new SayHello\GitInstaller\Package\Hooks();
+sayhelloGitInstaller()->Hooks->run();
 
 require_once 'src/plugin-update-checker-5.0/plugin-update-checker.php';
 

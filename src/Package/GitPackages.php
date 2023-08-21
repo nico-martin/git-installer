@@ -18,8 +18,6 @@ class GitPackages
         add_filter('shgi/Settings/register', [$this, 'settings']);
         add_filter('shgi/Assets/AdminFooterJS', [$this, 'footerJsVars']);
 
-        add_action('shgi/GitPackages/DoAfterUpdate', [$this, 'maybeDoComposerInstall']);
-
         /**
          * Rest
          */
@@ -70,37 +68,6 @@ class GitPackages
         $vars['mustUsePlugins'] = Helpers::useMustUsePlugins();
 
         return $vars;
-    }
-
-    public function maybeDoComposerInstall($dir)
-    {
-        if (!file_exists(trailingslashit($dir) . 'composer.json')) {
-            return;
-        }
-
-        if (!Helpers::checkForFunction('shell_exec', false)) {
-            return;
-        }
-
-        $package = str_replace(ABSPATH, '', $dir);
-        $logDir = Helpers::getContentFolder() . 'logs/';
-        if (!is_dir($logDir)) {
-            mkdir($logDir);
-        }
-        $logFile = $logDir . 'composer.log';
-        if (!file_exists($logFile)) {
-            file_put_contents($logFile, '');
-        }
-
-        $cd = getcwd();
-        chdir($package);
-        $composer = shell_exec('export HOME=~ && ~/bin/composer install 2>&1');
-        $log = '[' . date('D Y-m-d H:i:s') . '] [client ' . $_SERVER['REMOTE_ADDR'] . ']' . PHP_EOL .
-            'Package: ' . $package . PHP_EOL .
-            'Response: ' . $composer . PHP_EOL;
-
-        file_put_contents($logFile, $log, FILE_APPEND);
-        chdir($cd);
     }
 
     /**
@@ -250,7 +217,11 @@ class GitPackages
             'status' => 409,
         ]);
 
-        return $this->packages->getPackage($key);
+        $package = $this->packages->getPackage($key);
+
+        do_action('shgi/GitPackages/DoAfterUpdate', $package);
+
+        return $package;
     }
 
     public function deleteRepo($data)

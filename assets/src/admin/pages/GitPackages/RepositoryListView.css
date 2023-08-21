@@ -70,6 +70,28 @@
   width: 200px;
 }
 
+.afterUpdateHook {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5em !important;
+  gap: 1rem;
+
+  span,
+  label,
+  input {
+    font-size: 0.7rem;
+  }
+
+  input[disabled] {
+    opacity: 0.75;
+    cursor: not-allowed;
+
+    & + label {
+      opacity: 0.5;
+    }
+  }
+}
+
 .copyButton {
   font-size: 1.5em;
   background-color: transparent;

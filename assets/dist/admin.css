@@ -1182,6 +1182,29 @@
   width: 200px;
 }
 
+.RepositoryListView__afterUpdateHook--1GXEv {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5em !important;
+  grid-gap: 1rem;
+  gap: 1rem;
+}
+
+.RepositoryListView__afterUpdateHook--1GXEv span,
+  .RepositoryListView__afterUpdateHook--1GXEv label,
+  .RepositoryListView__afterUpdateHook--1GXEv input {
+    font-size: 0.7rem;
+  }
+
+.RepositoryListView__afterUpdateHook--1GXEv input[disabled] {
+    opacity: 0.75;
+    cursor: not-allowed;
+  }
+
+.RepositoryListView__afterUpdateHook--1GXEv input[disabled] + label {
+      opacity: 0.5;
+    }
+
 .RepositoryListView__copyButton--FrZQ5 {
   font-size: 1.5em;
   background-color: transparent;

@@ -25,6 +25,7 @@ use SayHello\GitInstaller\Helpers;
  *   'saveAsMustUsePlugin' => (bool)
  *   'version' => (string)
  *   'dir' => (string)
+ *   'afterUpdateHooks' => Array<string>
  * ]
  */
 class GitPackageManagement
@@ -143,6 +144,8 @@ class GitPackageManagement
     public function updatePackage(string $key, array $data, bool $new = false): ?array
     {
         $packageData = $new ? [] : $this->getPackage($key);
+        Helpers::addLog($key);
+        Helpers::addLog($packageData);
         if ($packageData === null) return null;
 
         $packages = $this->getPackages();
