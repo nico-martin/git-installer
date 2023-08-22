@@ -157,7 +157,7 @@ class Hooks
 
     public static function getPostupdateHooks()
     {
-        $hooks = apply_filters('shgi/Hooks/Postupdate', []);
+        $hooks = apply_filters('shgi/Hooks/PostupdateHooks', []);
 
         $formatted = [];
 

@@ -82,11 +82,16 @@ class Helpers
         return $baseDir . $folder . '/';
     }
 
-    public static function getTempDir($dir = 'temp', $url = false): string
+    public static function getTempDir($dir = 'temp', $url = false, $htaccessDenyAll = false): string
     {
         $dir = untrailingslashit($dir);
         $tempDir = Helpers::getContentFolder($url) . $dir . '/';
         if (!is_dir($tempDir)) mkdir($tempDir);
+        if ($htaccessDenyAll) {
+            if (!file_exists($tempDir . '.htaccess')) {
+                file_put_contents($tempDir . '.htaccess', "order deny,allow\ndeny from all");
+            }
+        }
 
         return $tempDir;
     }
@@ -136,7 +141,7 @@ class Helpers
 
     public static function addLog($log, string $name = 'debug'): void
     {
-        $dir = trailingslashit(self::getTempDir('log'));
+        $dir = trailingslashit(self::getTempDir('log', false, true));
         $logString = '[' . date("D Y-m-d H:i:s") . ']' . PHP_EOL;
         $logString .= is_string($log) ? $log : json_encode($log);
         $logString .= PHP_EOL . "-------------------------" . PHP_EOL;
