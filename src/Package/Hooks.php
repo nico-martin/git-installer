@@ -6,10 +6,6 @@ use SayHello\GitInstaller\Helpers;
 use SayHello\GitInstaller\FsHelpers;
 use SayHello\GitInstaller\Package\Helpers\GitPackageManagement;
 
-/**
- * TODO:
- * - test!
- */
 class Hooks
 {
     public GitPackageManagement $packages;
@@ -50,8 +46,7 @@ class Hooks
                 Helpers::addLog($log, "postupdateHooks");
             },
             'check' => function () {
-                $check = shell_exec('cd ' . ABSPATH . ' && composer --version 2>&1');
-                Helpers::addLog($check, "composer");
+                $check = shell_exec('composer --version 2>&1');
                 return Helpers::checkForFunction('shell_exec', false) && strpos($check, 'Composer version') !== false;
             }
         ];
