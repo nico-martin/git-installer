@@ -229,6 +229,12 @@ class GitPackages
     {
         $fullDelete = array_key_exists('fullDelete', $_GET) && $_GET['fullDelete'] === '1';
         $key = $data['slug'];
+
+        if ($fullDelete) {
+            Helpers::addLog($key . ' -- ' . $this->getPackageDir($key), 'delete');
+            FsHelpers::removeDir($this->getPackageDir($key));
+        }
+
         $deleted = $this->packages->deletePackage($key);
         if (!$deleted) {
             return new \WP_Error(
@@ -239,9 +245,6 @@ class GitPackages
                 ),
             );
         }
-
-        $fullDelete && FsHelpers::removeDir($this->getPackageDir($key));
-        UpdateLog::deleteLogs($key);
 
         return [
             'message' => sprintf(__('"%s" was deleted successfully', 'shgi'), $key),
