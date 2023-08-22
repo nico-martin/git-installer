@@ -30,8 +30,6 @@ const PageGitPackages = () => {
     VARS.gitPackages
   );
 
-  //console.log('afterUpdateHooks', VARS.afterUpdateHooks);
-
   return (
     <PageContent>
       {/*<TestForm />*/}
