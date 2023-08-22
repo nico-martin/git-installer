@@ -522,49 +522,49 @@
 /*!*****************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/misc/Tooltip.css ***!
   \*****************************************************************************************************************************************************************/
-.Tooltip__trigger--1XxnE {
-    position: relative;
+.Tooltip__tooltip--12Sdz {
+  will-change: opacity;
+  transition: opacity 200ms ease-in-out;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
 }
 
-    .Tooltip__trigger--1XxnE::after {
-        background-color: #1d2327;
-        border-radius: 5px;
-        color: #fff;
-        display: none;
-        padding: 0.8em 1em;
-        position: absolute;
-        text-align: center;
-        z-index: 999;
-        content: attr(data-tip);
-        bottom: 0;
-        left: 50%;
-        transform: translate(-50%, calc(100% + 10px));
-    }
-
-    .Tooltip__trigger--1XxnE::before {
-        background-color: #1d2327;
-        content: ' ';
-        display: none;
-        position: absolute;
-        width: 1em;
-        height: 1em;
-        z-index: 999;
-        bottom: 0;
-        left: 50%;
-        transform: translate(-50%, calc(100% + 5px)) rotate(45deg);
-    }
-
-    .Tooltip__trigger--1XxnE:hover::after {
-        display: block;
-    }
-
-    .Tooltip__trigger--1XxnE:hover::before {
-        display: block;
-    }
-
-.Tooltip__nowrap--9yXKg {
-    white-space: nowrap;
+.Tooltip__tooltipShow--27Zu2 {
+  opacity: 1;
+  pointer-events: auto;
 }
+
+.Tooltip__tooltipInner--rx6ok {
+  background-color: #000;
+  color: #fff;
+  border-radius: 0.4em;
+  padding: 0.5em 0.75em;
+  font-size: 0.75rem;
+  margin-top: 1em;
+  position: relative;
+}
+
+.Tooltip__arrow--1Iw2f {
+  width: 0.75rem;
+  height: 0.75rem;
+  transform: translateX(-50%) translateY(-50%);
+  position: absolute;
+  left: 50%;
+  top: 0;
+}
+
+.Tooltip__arrow--1Iw2f::before {
+    content: '';
+    transform: rotate(45deg);
+    background-color: #000;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    z-index: -1;
+  }
 
 /*!****************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/Button.css ***!
@@ -1181,6 +1181,29 @@
   font-size: 0.7rem;
   width: 200px;
 }
+
+.RepositoryListView__postupdateHook--2jUHA {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5em !important;
+  grid-gap: 1rem;
+  gap: 1rem;
+}
+
+.RepositoryListView__postupdateHook--2jUHA span,
+  .RepositoryListView__postupdateHook--2jUHA label,
+  .RepositoryListView__postupdateHook--2jUHA input {
+    font-size: 0.7rem;
+  }
+
+.RepositoryListView__postupdateHook--2jUHA input[disabled] {
+    opacity: 0.75;
+    cursor: not-allowed;
+  }
+
+.RepositoryListView__postupdateHook--2jUHA input[disabled] + label {
+      opacity: 0.5;
+    }
 
 .RepositoryListView__copyButton--FrZQ5 {
   font-size: 1.5em;

@@ -16,7 +16,10 @@ import CheckRepoForm from './steps/CheckRepoForm';
 import RunInstallationForm from './steps/RunInstallationForm';
 
 export interface AddRepositoryFormPropsI {
-  promise: (a: string | boolean, b?: string) => Promise<boolean>;
+  promise: (
+    a: string | boolean,
+    b?: string | Array<string>
+  ) => Promise<boolean>;
   submit: string;
   repoData: IGitPackageRaw;
   wpPackage: IGitWordPressPackage;
@@ -96,7 +99,7 @@ const AddRepository: React.FC<{
     {
       title: __('Install', 'shgi'),
       Form: RunInstallationForm,
-      promise: (saveAsMustUsePlugin) =>
+      promise: (saveAsMustUsePlugin, postupdateHooks) =>
         new Promise((resolve, reject) =>
           apiPut<{ message: string; packages: IGitPackages }>(
             VARS.restPluginNamespace + '/git-packages',
@@ -107,6 +110,7 @@ const AddRepository: React.FC<{
               activeBranch,
               dir,
               headersFile: wpPackage.headersFile,
+              postupdateHooks,
             }
           )
             .then((resp) => {

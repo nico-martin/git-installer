@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.2.6
+- Fix for fullDelete bug
 - Fix for invalid/changed repository URLs (issue #49)
 - Fix for directory name (issue #48)
 

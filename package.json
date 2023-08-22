@@ -18,6 +18,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^7.35.0",
+    "react-popper": "^2.3.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

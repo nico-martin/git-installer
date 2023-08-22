@@ -1,8 +1,8 @@
 import React from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 import { useToast } from '../../components/toast/toastContext';
-import { Button, Icon, NOTICE_TYPES, Notice } from '../../theme';
-import { apiGet } from '../../utils/apiFetch';
+import { Button, Icon, NOTICE_TYPES, Notice, Tooltip } from '../../theme';
+import { apiGet, apiPost } from '../../utils/apiFetch';
 import cn from '../../utils/classnames';
 import { VARS } from '../../utils/constants';
 import { IGitPackage, IGitPackages } from '../../utils/types';
@@ -25,6 +25,9 @@ const RepositoryListView = ({
   const [deleteModal, setDeleteModal] = React.useState<boolean>(false);
   const [logModal, setLogModal] = React.useState<boolean>(false);
   const [loadingUpdate, setLoadingUpdate] = React.useState<boolean>(false);
+  const [loadingHookUpdate, setLoadingHookUpdate] = React.useState<
+    Array<string>
+  >([]);
   const updateUrl = `${VARS.restPluginBase}git-packages-update/${repository.key}/?key=${repository.deployKey}&ref=webhook-update`;
 
   const updateRepo = () => {
@@ -48,6 +51,28 @@ const RepositoryListView = ({
         })
       )
       .finally(() => setLoadingUpdate(false));
+  };
+
+  const updatePostUpdateHook = (key: string, checked: boolean) => {
+    setLoadingHookUpdate((hooks) => [...hooks, key]);
+    apiPost<IGitPackage>(
+      `${VARS.restPluginNamespace}/hooks/post-update-hook/${repository.key}/`,
+      { changedHooks: { [key]: checked } }
+    )
+      .then((resp) => {
+        setRepositories((packages) =>
+          packages.map((p) => (p.key === resp.key ? resp : p))
+        );
+      })
+      .catch((e) =>
+        addToast({
+          message: __('Hook save failed'),
+          type: NOTICE_TYPES.ERROR,
+        })
+      )
+      .finally(() =>
+        setLoadingHookUpdate((hooks) => hooks.filter((hook) => hook !== key))
+      );
   };
 
   return (
@@ -129,6 +154,48 @@ const RepositoryListView = ({
                 </button>
               )}
             </p>
+            {Object.keys(VARS.postupdateHooks).length !== 0 && (
+              <p className={styles.postupdateHook}>
+                <b>{__('Postupdate Hooks', 'shgi')}:</b>
+                {Object.entries(VARS.postupdateHooks).map(
+                  ([key, { title, description }]) => {
+                    const tooltipRef = React.useRef<HTMLSpanElement>(null);
+                    return (
+                      <React.Fragment key={key}>
+                        <Tooltip
+                          tooltipRef={tooltipRef}
+                          key={key}
+                          maxWidth={300}
+                        >
+                          {description}
+                        </Tooltip>
+                        <span ref={description ? tooltipRef : null}>
+                          <input
+                            id={`${repository.key}-update-post-update-hook-${key}`}
+                            type="checkbox"
+                            onChange={(e) =>
+                              updatePostUpdateHook(key, e.target.checked)
+                            }
+                            defaultChecked={
+                              (repository.postupdateHooks || []).indexOf(
+                                key
+                              ) !== -1
+                            }
+                            disabled={loadingHookUpdate.indexOf(key) !== -1}
+                          />
+                          <label
+                            htmlFor={`${repository.key}-update-post-update-hook-${key}`}
+                          >
+                            {' '}
+                            {title}
+                          </label>
+                        </span>
+                      </React.Fragment>
+                    );
+                  }
+                )}
+              </p>
+            )}
           </React.Fragment>
         )}
       </div>
