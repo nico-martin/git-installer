@@ -1,7 +1,7 @@
 import React from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 import { useToast } from '../../components/toast/toastContext';
-import { Button, Icon, NOTICE_TYPES, Notice } from '../../theme';
+import { Button, Icon, NOTICE_TYPES, Notice, Tooltip } from '../../theme';
 import { apiGet, apiPost } from '../../utils/apiFetch';
 import cn from '../../utils/classnames';
 import { VARS } from '../../utils/constants';
@@ -156,27 +156,38 @@ const RepositoryListView = ({
             </p>
             <p className={styles.afterUpdateHook}>
               <b>{__('After Update Hooks', 'shgi')}:</b>
-              {Object.entries(VARS.afterUpdateHooks).map(([key, title]) => (
-                <span key={key}>
-                  <input
-                    id={`${repository.key}-update-after-update-hook-${key}`}
-                    type="checkbox"
-                    onChange={(e) =>
-                      updateAfterUpdateHook(key, e.target.checked)
-                    }
-                    defaultChecked={
-                      (repository.afterUpdateHooks || []).indexOf(key) !== -1
-                    }
-                    disabled={loadingHookUpdate.indexOf(key) !== -1}
-                  />
-                  <label
-                    htmlFor={`${repository.key}-update-after-update-hook-${key}`}
-                  >
-                    {' '}
-                    {title}
-                  </label>
-                </span>
-              ))}
+              {Object.entries(VARS.afterUpdateHooks).map(
+                ([key, { title, description }]) => {
+                  const tooltipRef = React.useRef<HTMLSpanElement>(null);
+                  return (
+                    <React.Fragment key={key}>
+                      <Tooltip tooltipRef={tooltipRef} key={key} maxWidth={300}>
+                        {description}
+                      </Tooltip>
+                      <span ref={description ? tooltipRef : null}>
+                        <input
+                          id={`${repository.key}-update-after-update-hook-${key}`}
+                          type="checkbox"
+                          onChange={(e) =>
+                            updateAfterUpdateHook(key, e.target.checked)
+                          }
+                          defaultChecked={
+                            (repository.afterUpdateHooks || []).indexOf(key) !==
+                            -1
+                          }
+                          disabled={loadingHookUpdate.indexOf(key) !== -1}
+                        />
+                        <label
+                          htmlFor={`${repository.key}-update-after-update-hook-${key}`}
+                        >
+                          {' '}
+                          {title}
+                        </label>
+                      </span>
+                    </React.Fragment>
+                  );
+                }
+              )}
             </p>
           </React.Fragment>
         )}

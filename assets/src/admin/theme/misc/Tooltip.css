@@ -1,43 +1,40 @@
-.trigger {
-    position: relative;
-
-    &::after {
-        background-color: #1d2327;
-        border-radius: 5px;
-        color: #fff;
-        display: none;
-        padding: 0.8em 1em;
-        position: absolute;
-        text-align: center;
-        z-index: 999;
-        content: attr(data-tip);
-        bottom: 0;
-        left: 50%;
-        transform: translate(-50%, calc(100% + 10px));
-    }
-
-    &::before {
-        background-color: #1d2327;
-        content: ' ';
-        display: none;
-        position: absolute;
-        width: 1em;
-        height: 1em;
-        z-index: 999;
-        bottom: 0;
-        left: 50%;
-        transform: translate(-50%, calc(100% + 5px)) rotate(45deg);
-    }
-
-    &:hover::after {
-        display: block;
-    }
-
-    &:hover::before {
-        display: block;
-    }
+.tooltip {
+  will-change: opacity;
+  transition: opacity 200ms ease-in-out;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
 }
 
-.nowrap {
-    white-space: nowrap;
+.tooltipShow {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.tooltipInner {
+  background-color: #000;
+  color: #fff;
+  border-radius: 0.4em;
+  padding: 0.5em 0.75em;
+  font-size: 0.75rem;
+  margin-top: 1em;
+  position: relative;
+}
+
+.arrow {
+  width: 0.75rem;
+  height: 0.75rem;
+  transform: translateX(-50%) translateY(-50%);
+  position: absolute;
+  left: 50%;
+  top: 0;
+
+  &::before {
+    content: '';
+    transform: rotate(45deg);
+    background-color: #000;
+    inset: 0;
+    position: absolute;
+    z-index: -1;
+  }
 }

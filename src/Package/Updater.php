@@ -214,6 +214,10 @@ class Updater
     {
         $package = $this->packages->getPackage($key);
         $provider = sayhelloGitInstaller()->GitPackages::getProvider($package['provider']);
+        if(!$provider) {
+            return;
+        }
+
         $data = base64_encode(json_encode([
             'key' => $key,
             'zipUrl' => $package['branches'][$package['activeBranch']]['zip'],

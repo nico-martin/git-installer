@@ -6,6 +6,7 @@ import {
   FormControls,
   FormElement,
   FormFeedback,
+  InputCheckbox,
   InputSelect,
   Loader,
   NOTICE_TYPES,
@@ -33,17 +34,16 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
 
   const showMustUseForm = VARS.mustUsePlugins && wpPackage?.type === 'plugin';
 
-  const install = (savePluginAsMU: boolean = false) => {
+  const install = (
+    savePluginAsMU: boolean = false,
+    afterUpdateHooks: Array<string> = []
+  ) => {
     setLoading(true);
-    promise(savePluginAsMU, null)
+    promise(savePluginAsMU, afterUpdateHooks)
       .then()
       .catch((e) => setError(e))
       .finally(() => setLoading(false));
   };
-
-  React.useEffect(() => {
-    !showMustUseForm && install(false);
-  }, []);
 
   const desc = <p>Das Theme</p>;
 
@@ -62,9 +62,12 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
     </div>
   ) : (
     <Form
-      onSubmit={form.handleSubmit((data) =>
-        install(data.savePluginAs === 'mustUse')
-      )}
+      onSubmit={form.handleSubmit((data) => {
+        const hooks = Object.entries(VARS.afterUpdateHooks)
+          .map(([key]) => (data[`afterUpdateHooks-${key}`] ? key : null))
+          .filter(Boolean);
+        install(data.savePluginAs === 'mustUse', hooks);
+      })}
       className={className}
     >
       {showMustUseForm && (
@@ -91,6 +94,20 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
             }}
           />
         </React.Fragment>
+      )}
+      <h2>{__('After Update Hooks', 'shgi')}</h2>
+      {Object.entries(VARS.afterUpdateHooks).map(
+        ([key, { title, description }]) => {
+          return (
+            <FormElement
+              form={form}
+              name={`afterUpdateHooks-${key}`}
+              label={title}
+              Input={InputCheckbox}
+              DescriptionInput={<p>{description}</p>}
+            />
+          );
+        }
       )}
       {error !== '' && (
         <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />

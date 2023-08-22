@@ -180,9 +180,10 @@ class GitPackages
         $activeBranch = $params['activeBranch'];
         $headersFile = $params['headersFile'];
         $saveAsMustUsePlugin = $params['saveAsMustUsePlugin'];
+        $afterUpdateHooks = $params['afterUpdateHooks'];
         $dir = Helpers::sanitizeDir($params['dir']);
 
-        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin, $dir, $headersFile, true);
+        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin, $dir, $headersFile, true, $afterUpdateHooks);
         if (is_wp_error($repoData)) return $repoData;
 
         $update = $this->updatePackage($repoData['key'], 'install');
@@ -383,7 +384,7 @@ class GitPackages
      * Helpers
      */
 
-    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false, $dir = '', $headersFile = '', $new = false)
+    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false, $dir = '', $headersFile = '', $new = false, $afterUpdateHooks = [])
     {
         $provider = self::getProvider('', $url);
         if (!$provider) {
@@ -414,6 +415,7 @@ class GitPackages
         $repoData['activeBranch'] = $activeBranch;
         $repoData['dir'] = $dir;
         $repoData['headersFile'] = $headersFile;
+        $repoData['afterUpdateHooks'] = $afterUpdateHooks;
 
         return $this->packages->updatePackage($repoData['key'], $repoData, $new);
     }
@@ -484,8 +486,8 @@ class GitPackages
                 'rename_repo_failed',
                 __(
                     'The folder could not be copied. Possibly the old folder could not be emptied completely.',
-                    'shgi'
-                )
+                    'shgi',
+                ),
             );
             do_action('shgi/GitPackages/updatePackage/error', $key, $ref, $error);
             return $error;

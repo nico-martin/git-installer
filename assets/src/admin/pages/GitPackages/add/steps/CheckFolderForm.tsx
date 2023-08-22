@@ -6,10 +6,12 @@ import {
   FormControls,
   FormElement,
   FormFeedback,
+  InputCheckbox,
   InputSelect,
   InputText,
   NOTICE_TYPES,
 } from '../../../../theme';
+import { VARS } from '../../../../utils/constants';
 import { IGitPackageBranch } from '../../../../utils/types';
 import { AddRepositoryFormPropsI } from '../AddRepository';
 

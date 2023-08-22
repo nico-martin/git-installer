@@ -6,6 +6,12 @@ use SayHello\GitInstaller\Helpers;
 use SayHello\GitInstaller\FsHelpers;
 use SayHello\GitInstaller\Package\Helpers\GitPackageManagement;
 
+/**
+ * TODO:
+ * - finish hooks
+ * - delete full does not delete the files
+ * - test!
+ */
 class Hooks
 {
     public GitPackageManagement $packages;
@@ -25,6 +31,7 @@ class Hooks
     {
         $hooks['composer'] = [
             'title' => 'Composer Install',
+            'description' => __('This Hook will execute "composer install" if a composer.json is found after the new files are added.', 'shgi'),
             'function' => function ($package) {
                 /*
                     $dir = $package['dir'];
@@ -43,7 +50,7 @@ class Hooks
                     $cd = getcwd();
                     chdir($packageDir);
                     $composer = shell_exec('export HOME=~ && ~/bin/composer install 2>&1');
-                    $log = '[' . date('D Y-m-d H:i:s') . '] [client ' . $_SERVER['REMOTE_ADDR'] . ']' . PHP_EOL .
+                    $log =  '[' . date('D Y-m-d H:i:s') . '] [client ' . $_SERVER['REMOTE_ADDR'] . ']' . PHP_EOL .
                         'Package: ' . $packageDir . PHP_EOL .
                         'Response: ' . $composer . PHP_EOL;
 
@@ -75,9 +82,10 @@ class Hooks
     {
         $hooks = self::getAfterUpdateHooks();
 
-        //foreach ($package['afterUpdateHooks'] as $key) {
-        foreach (array_keys($hooks) as $key) {
-            $hooks[$key]['function']($package);
+        foreach ($package['afterUpdateHooks'] as $key) {
+            if (array_key_exists($key, $hooks)) {
+                $hooks[$key]['function']($package);
+            }
         }
     }
 
@@ -85,7 +93,10 @@ class Hooks
     {
         $vars['afterUpdateHooks'] = [];
         foreach (self::getAfterUpdateHooks() as $key => $hook) {
-            $vars['afterUpdateHooks'][$key] = $hook['title'];
+            $vars['afterUpdateHooks'][$key] = [
+                'title' => $hook['title'],
+                'description' => $hook['description'],
+            ];
         }
 
         return $vars;
@@ -142,6 +153,9 @@ class Hooks
                 'title' => array_key_exists('title', $hook)
                     ? $hook['title']
                     : 'Unnamed Hook',
+                'description' => array_key_exists('description', $hook)
+                    ? $hook['description']
+                    : '',
                 'function' => array_key_exists('function', $hook)
                     ? $hook['function']
                     : function ($package) {

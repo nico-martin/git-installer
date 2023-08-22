@@ -61,7 +61,7 @@ class Bitbucket extends Provider
             'key' => Helpers::sanitizeRepositoryDir($parsedUrl['repo']),
             'name' => $response['name'],
             'private' => $response['is_private'],
-            'provider' => self::$provider . ' ' . Helpers::sanitizeRepositoryDir('Hello   World'). ' ' . Helpers::sanitizeRepositoryDir('Hell&World 123%&/'),
+            'provider' => self::$provider,
             'branches' => $branches,
             'baseUrl' => $response['links']['html']['href'],
             'apiUrl' => $apiUrl,
