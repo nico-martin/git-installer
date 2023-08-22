@@ -25,7 +25,7 @@ use SayHello\GitInstaller\Helpers;
  *   'saveAsMustUsePlugin' => (bool)
  *   'version' => (string)
  *   'dir' => (string)
- *   'afterUpdateHooks' => Array<string>
+ *   'postupdateHooks' => Array<string>
  * ]
  */
 class GitPackageManagement

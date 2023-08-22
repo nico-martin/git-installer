@@ -3102,7 +3102,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","repoBranch":"RepositoryListView__repoBranch--27uUJ","repoBranchIcon":"RepositoryListView__repoBranchIcon--2n2rm","webhookUpdate":"RepositoryListView__webhookUpdate--27L70","webhookUpdateInput":"RepositoryListView__webhookUpdateInput--1LVHk","afterUpdateHook":"RepositoryListView__afterUpdateHook--1GXEv","copyButton":"RepositoryListView__copyButton--FrZQ5","error":"RepositoryListView__error--13_UO","logButton":"RepositoryListView__logButton--14sPs","logButtonIcon":"RepositoryListView__logButtonIcon--3epQG"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"root":"RepositoryListView__root--18p5s","infos":"RepositoryListView__infos--1f6NV","version":"RepositoryListView__version--2l7TN","controls":"RepositoryListView__controls--2A1e4","name":"RepositoryListView__name--2xV-4","nameHoster":"RepositoryListView__nameHoster--36cXq","repo":"RepositoryListView__repo--1ltS5","repoBranch":"RepositoryListView__repoBranch--27uUJ","repoBranchIcon":"RepositoryListView__repoBranchIcon--2n2rm","webhookUpdate":"RepositoryListView__webhookUpdate--27L70","webhookUpdateInput":"RepositoryListView__webhookUpdateInput--1LVHk","postupdateHook":"RepositoryListView__postupdateHook--2jUHA","copyButton":"RepositoryListView__copyButton--FrZQ5","error":"RepositoryListView__error--13_UO","logButton":"RepositoryListView__logButton--14sPs","logButtonIcon":"RepositoryListView__logButtonIcon--3epQG"});
 
 /***/ }),
 
@@ -34625,10 +34625,10 @@ var RepositoryListView = function (_a) {
         })
             .finally(function () { return setLoadingUpdate(false); });
     };
-    var updateAfterUpdateHook = function (key, checked) {
+    var updatePostUpdateHook = function (key, checked) {
         var _a;
         setLoadingHookUpdate(function (hooks) { return __spreadArray(__spreadArray([], hooks, true), [key], false); });
-        (0, apiFetch_1.apiPost)(constants_1.VARS.restPluginNamespace + "/hooks/after-update-hook/" + repository.key + "/", { changedHooks: (_a = {}, _a[key] = checked, _a) })
+        (0, apiFetch_1.apiPost)(constants_1.VARS.restPluginNamespace + "/hooks/post-update-hook/" + repository.key + "/", { changedHooks: (_a = {}, _a[key] = checked, _a) })
             .then(function (resp) {
             setRepositories(function (packages) {
                 return packages.map(function (p) { return (p.key === resp.key ? resp : p); });
@@ -34681,24 +34681,23 @@ var RepositoryListView = function (_a) {
                             navigator.clipboard.writeText(updateUrl);
                         }, title: "Copy" },
                         react_1.default.createElement(theme_1.Icon, { icon: "copy" })))),
-                react_1.default.createElement("p", { className: RepositoryListView_css_1.default.afterUpdateHook },
+                Object.keys(constants_1.VARS.postupdateHooks).length !== 0 && (react_1.default.createElement("p", { className: RepositoryListView_css_1.default.postupdateHook },
                     react_1.default.createElement("b", null,
-                        (0, i18n_1.__)('After Update Hooks', 'shgi'),
+                        (0, i18n_1.__)('Postupdate Hooks', 'shgi'),
                         ":"),
-                    Object.entries(constants_1.VARS.afterUpdateHooks).map(function (_a) {
+                    Object.entries(constants_1.VARS.postupdateHooks).map(function (_a) {
                         var key = _a[0], _b = _a[1], title = _b.title, description = _b.description;
                         var tooltipRef = react_1.default.useRef(null);
                         return (react_1.default.createElement(react_1.default.Fragment, { key: key },
                             react_1.default.createElement(theme_1.Tooltip, { tooltipRef: tooltipRef, key: key, maxWidth: 300 }, description),
                             react_1.default.createElement("span", { ref: description ? tooltipRef : null },
-                                react_1.default.createElement("input", { id: repository.key + "-update-after-update-hook-" + key, type: "checkbox", onChange: function (e) {
-                                        return updateAfterUpdateHook(key, e.target.checked);
-                                    }, defaultChecked: (repository.afterUpdateHooks || []).indexOf(key) !==
-                                        -1, disabled: loadingHookUpdate.indexOf(key) !== -1 }),
-                                react_1.default.createElement("label", { htmlFor: repository.key + "-update-after-update-hook-" + key },
+                                react_1.default.createElement("input", { id: repository.key + "-update-post-update-hook-" + key, type: "checkbox", onChange: function (e) {
+                                        return updatePostUpdateHook(key, e.target.checked);
+                                    }, defaultChecked: (repository.postupdateHooks || []).indexOf(key) !== -1, disabled: loadingHookUpdate.indexOf(key) !== -1 }),
+                                react_1.default.createElement("label", { htmlFor: repository.key + "-update-post-update-hook-" + key },
                                     ' ',
                                     title))));
-                    }))))),
+                    })))))),
         react_1.default.createElement("div", { className: RepositoryListView_css_1.default.controls },
             react_1.default.createElement(DeleteRepository_1.default, { modal: deleteModal, setModal: setDeleteModal, repositoryKey: repository.key, theme: repository.theme, name: repository.name, setRepositories: setRepositories }),
             react_1.default.createElement(theme_1.Button, { buttonType: "primary", loading: loadingUpdate, onClick: updateRepo }, (0, i18n_1.__)('Update', 'shgi')),
@@ -34791,7 +34790,7 @@ var AddRepository = function (_a) {
         {
             title: (0, i18n_1.__)('Install', 'shgi'),
             Form: RunInstallationForm_1.default,
-            promise: function (saveAsMustUsePlugin, afterUpdateHooks) {
+            promise: function (saveAsMustUsePlugin, postupdateHooks) {
                 return new Promise(function (resolve, reject) {
                     return (0, apiFetch_1.apiPut)(constants_1.VARS.restPluginNamespace + '/git-packages', {
                         url: repositoryUrl,
@@ -34800,7 +34799,7 @@ var AddRepository = function (_a) {
                         activeBranch: activeBranch,
                         dir: dir,
                         headersFile: wpPackage.headersFile,
-                        afterUpdateHooks: afterUpdateHooks,
+                        postupdateHooks: postupdateHooks,
                     })
                         .then(function (resp) {
                         setRepositories(resp.packages);
@@ -34977,25 +34976,29 @@ var RunInstallationForm = function (_a) {
         },
     });
     var showMustUseForm = constants_1.VARS.mustUsePlugins && (wpPackage === null || wpPackage === void 0 ? void 0 : wpPackage.type) === 'plugin';
-    var install = function (savePluginAsMU, afterUpdateHooks) {
+    var install = function (savePluginAsMU, postupdateHooks) {
         if (savePluginAsMU === void 0) { savePluginAsMU = false; }
-        if (afterUpdateHooks === void 0) { afterUpdateHooks = []; }
+        if (postupdateHooks === void 0) { postupdateHooks = []; }
         setLoading(true);
-        promise(savePluginAsMU, afterUpdateHooks)
+        promise(savePluginAsMU, postupdateHooks)
             .then()
             .catch(function (e) { return setError(e); })
             .finally(function () { return setLoading(false); });
     };
-    var desc = react_1.default.createElement("p", null, "Das Theme");
+    react_1.default.useEffect(function () {
+        Object.keys(constants_1.VARS.postupdateHooks).length === 0 &&
+            !showMustUseForm &&
+            install(false, []);
+    }, []);
     return loading ? (react_1.default.createElement("div", { className: (0, classnames_1.default)(className, RunInstallationForm_css_1.default.loadingComp) },
         react_1.default.createElement("p", { dangerouslySetInnerHTML: {
                 __html: (0, i18n_1.sprintf)((0, i18n_1.__)('The %s "%s" is being installed'), wpPackage.type === 'plugin' ? 'Plugin' : 'Theme', "<b>" + wpPackage.name + "</b>"),
             } }),
         react_1.default.createElement(theme_1.Loader, { className: RunInstallationForm_css_1.default.loader, size: 3 }))) : (react_1.default.createElement(theme_1.Form, { onSubmit: form.handleSubmit(function (data) {
-            var hooks = Object.entries(constants_1.VARS.afterUpdateHooks)
+            var hooks = Object.entries(constants_1.VARS.postupdateHooks)
                 .map(function (_a) {
                 var key = _a[0];
-                return (data["afterUpdateHooks-" + key] ? key : null);
+                return (data["postupdateHooks-" + key] ? key : null);
             })
                 .filter(Boolean);
             install(data.savePluginAs === 'mustUse', hooks);
@@ -35010,9 +35013,9 @@ var RunInstallationForm = function (_a) {
                     _b.mustUse = (0, i18n_1.__)('Must Use Plugin', 'shgi'),
                     _b) }))),
         react_1.default.createElement("h2", null, (0, i18n_1.__)('After Update Hooks', 'shgi')),
-        Object.entries(constants_1.VARS.afterUpdateHooks).map(function (_a) {
+        Object.entries(constants_1.VARS.postupdateHooks).map(function (_a) {
             var key = _a[0], _b = _a[1], title = _b.title, description = _b.description;
-            return (react_1.default.createElement(theme_1.FormElement, { form: form, name: "afterUpdateHooks-" + key, label: title, Input: theme_1.InputCheckbox, DescriptionInput: react_1.default.createElement("p", null, description) }));
+            return (react_1.default.createElement(theme_1.FormElement, { form: form, name: "postupdateHooks-" + key, label: title, Input: theme_1.InputCheckbox, DescriptionInput: react_1.default.createElement("p", null, description) }));
         }),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR, message: error })),
         react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: submit, align: "right" })));

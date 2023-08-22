@@ -99,7 +99,7 @@ const AddRepository: React.FC<{
     {
       title: __('Install', 'shgi'),
       Form: RunInstallationForm,
-      promise: (saveAsMustUsePlugin, afterUpdateHooks) =>
+      promise: (saveAsMustUsePlugin, postupdateHooks) =>
         new Promise((resolve, reject) =>
           apiPut<{ message: string; packages: IGitPackages }>(
             VARS.restPluginNamespace + '/git-packages',
@@ -110,7 +110,7 @@ const AddRepository: React.FC<{
               activeBranch,
               dir,
               headersFile: wpPackage.headersFile,
-              afterUpdateHooks,
+              postupdateHooks,
             }
           )
             .then((resp) => {

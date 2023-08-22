@@ -180,10 +180,10 @@ class GitPackages
         $activeBranch = $params['activeBranch'];
         $headersFile = $params['headersFile'];
         $saveAsMustUsePlugin = $params['saveAsMustUsePlugin'];
-        $afterUpdateHooks = $params['afterUpdateHooks'];
+        $postupdateHooks = $params['postupdateHooks'];
         $dir = Helpers::sanitizeDir($params['dir']);
 
-        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin, $dir, $headersFile, true, $afterUpdateHooks);
+        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin, $dir, $headersFile, true, $postupdateHooks);
         if (is_wp_error($repoData)) return $repoData;
 
         $update = $this->updatePackage($repoData['key'], 'install');
@@ -387,7 +387,7 @@ class GitPackages
      * Helpers
      */
 
-    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false, $dir = '', $headersFile = '', $new = false, $afterUpdateHooks = [])
+    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false, $dir = '', $headersFile = '', $new = false, $postupdateHooks = [])
     {
         $provider = self::getProvider('', $url);
         if (!$provider) {
@@ -418,7 +418,7 @@ class GitPackages
         $repoData['activeBranch'] = $activeBranch;
         $repoData['dir'] = $dir;
         $repoData['headersFile'] = $headersFile;
-        $repoData['afterUpdateHooks'] = $afterUpdateHooks;
+        $repoData['postupdateHooks'] = $postupdateHooks;
 
         return $this->packages->updatePackage($repoData['key'], $repoData, $new);
     }

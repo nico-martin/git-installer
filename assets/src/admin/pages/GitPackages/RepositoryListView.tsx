@@ -53,10 +53,10 @@ const RepositoryListView = ({
       .finally(() => setLoadingUpdate(false));
   };
 
-  const updateAfterUpdateHook = (key: string, checked: boolean) => {
+  const updatePostUpdateHook = (key: string, checked: boolean) => {
     setLoadingHookUpdate((hooks) => [...hooks, key]);
     apiPost<IGitPackage>(
-      `${VARS.restPluginNamespace}/hooks/after-update-hook/${repository.key}/`,
+      `${VARS.restPluginNamespace}/hooks/post-update-hook/${repository.key}/`,
       { changedHooks: { [key]: checked } }
     )
       .then((resp) => {
@@ -154,41 +154,48 @@ const RepositoryListView = ({
                 </button>
               )}
             </p>
-            <p className={styles.afterUpdateHook}>
-              <b>{__('After Update Hooks', 'shgi')}:</b>
-              {Object.entries(VARS.afterUpdateHooks).map(
-                ([key, { title, description }]) => {
-                  const tooltipRef = React.useRef<HTMLSpanElement>(null);
-                  return (
-                    <React.Fragment key={key}>
-                      <Tooltip tooltipRef={tooltipRef} key={key} maxWidth={300}>
-                        {description}
-                      </Tooltip>
-                      <span ref={description ? tooltipRef : null}>
-                        <input
-                          id={`${repository.key}-update-after-update-hook-${key}`}
-                          type="checkbox"
-                          onChange={(e) =>
-                            updateAfterUpdateHook(key, e.target.checked)
-                          }
-                          defaultChecked={
-                            (repository.afterUpdateHooks || []).indexOf(key) !==
-                            -1
-                          }
-                          disabled={loadingHookUpdate.indexOf(key) !== -1}
-                        />
-                        <label
-                          htmlFor={`${repository.key}-update-after-update-hook-${key}`}
+            {Object.keys(VARS.postupdateHooks).length !== 0 && (
+              <p className={styles.postupdateHook}>
+                <b>{__('Postupdate Hooks', 'shgi')}:</b>
+                {Object.entries(VARS.postupdateHooks).map(
+                  ([key, { title, description }]) => {
+                    const tooltipRef = React.useRef<HTMLSpanElement>(null);
+                    return (
+                      <React.Fragment key={key}>
+                        <Tooltip
+                          tooltipRef={tooltipRef}
+                          key={key}
+                          maxWidth={300}
                         >
-                          {' '}
-                          {title}
-                        </label>
-                      </span>
-                    </React.Fragment>
-                  );
-                }
-              )}
-            </p>
+                          {description}
+                        </Tooltip>
+                        <span ref={description ? tooltipRef : null}>
+                          <input
+                            id={`${repository.key}-update-post-update-hook-${key}`}
+                            type="checkbox"
+                            onChange={(e) =>
+                              updatePostUpdateHook(key, e.target.checked)
+                            }
+                            defaultChecked={
+                              (repository.postupdateHooks || []).indexOf(
+                                key
+                              ) !== -1
+                            }
+                            disabled={loadingHookUpdate.indexOf(key) !== -1}
+                          />
+                          <label
+                            htmlFor={`${repository.key}-update-post-update-hook-${key}`}
+                          >
+                            {' '}
+                            {title}
+                          </label>
+                        </span>
+                      </React.Fragment>
+                    );
+                  }
+                )}
+              </p>
+            )}
           </React.Fragment>
         )}
       </div>

@@ -1182,7 +1182,7 @@
   width: 200px;
 }
 
-.RepositoryListView__afterUpdateHook--1GXEv {
+.RepositoryListView__postupdateHook--2jUHA {
   display: flex;
   align-items: center;
   margin-top: 1.5em !important;
@@ -1190,18 +1190,18 @@
   gap: 1rem;
 }
 
-.RepositoryListView__afterUpdateHook--1GXEv span,
-  .RepositoryListView__afterUpdateHook--1GXEv label,
-  .RepositoryListView__afterUpdateHook--1GXEv input {
+.RepositoryListView__postupdateHook--2jUHA span,
+  .RepositoryListView__postupdateHook--2jUHA label,
+  .RepositoryListView__postupdateHook--2jUHA input {
     font-size: 0.7rem;
   }
 
-.RepositoryListView__afterUpdateHook--1GXEv input[disabled] {
+.RepositoryListView__postupdateHook--2jUHA input[disabled] {
     opacity: 0.75;
     cursor: not-allowed;
   }
 
-.RepositoryListView__afterUpdateHook--1GXEv input[disabled] + label {
+.RepositoryListView__postupdateHook--2jUHA input[disabled] + label {
       opacity: 0.5;
     }
 

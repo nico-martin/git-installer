@@ -36,16 +36,20 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
 
   const install = (
     savePluginAsMU: boolean = false,
-    afterUpdateHooks: Array<string> = []
+    postupdateHooks: Array<string> = []
   ) => {
     setLoading(true);
-    promise(savePluginAsMU, afterUpdateHooks)
+    promise(savePluginAsMU, postupdateHooks)
       .then()
       .catch((e) => setError(e))
       .finally(() => setLoading(false));
   };
 
-  const desc = <p>Das Theme</p>;
+  React.useEffect(() => {
+    Object.keys(VARS.postupdateHooks).length === 0 &&
+      !showMustUseForm &&
+      install(false, []);
+  }, []);
 
   return loading ? (
     <div className={cn(className, styles.loadingComp)}>
@@ -63,8 +67,8 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
   ) : (
     <Form
       onSubmit={form.handleSubmit((data) => {
-        const hooks = Object.entries(VARS.afterUpdateHooks)
-          .map(([key]) => (data[`afterUpdateHooks-${key}`] ? key : null))
+        const hooks = Object.entries(VARS.postupdateHooks)
+          .map(([key]) => (data[`postupdateHooks-${key}`] ? key : null))
           .filter(Boolean);
         install(data.savePluginAs === 'mustUse', hooks);
       })}
@@ -96,12 +100,12 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
         </React.Fragment>
       )}
       <h2>{__('After Update Hooks', 'shgi')}</h2>
-      {Object.entries(VARS.afterUpdateHooks).map(
+      {Object.entries(VARS.postupdateHooks).map(
         ([key, { title, description }]) => {
           return (
             <FormElement
               form={form}
-              name={`afterUpdateHooks-${key}`}
+              name={`postupdateHooks-${key}`}
               label={title}
               Input={InputCheckbox}
               DescriptionInput={<p>{description}</p>}
