@@ -36591,7 +36591,7 @@ var SVG = function (_a) {
         }); };
         loadIcon().then(function (loaded) { return setLoadedIcon(loaded.default); });
     }, [path]);
-    return (react_1.default.createElement("figure", __assign({ className: (0, classnames_1.default)(className, SVG_css_1.default.svg, (_b = {},
+    return (react_1.default.createElement("span", __assign({ className: (0, classnames_1.default)(className, SVG_css_1.default.svg, (_b = {},
             _b[SVG_css_1.default.inline] = inline,
             _b)), dangerouslySetInnerHTML: { __html: loadedIcon } }, props)));
 };
