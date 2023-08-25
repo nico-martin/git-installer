@@ -151,6 +151,12 @@ add_filter('shgi/Hooks/PostupdateHooks', function($hooks){
 });
 ```
 
+#### Composer
+By default, git-installer uses the `composer`-alias to run composer. If your configuration does not support aliases, you can also define a `SHGI_COMPOSER_COMMAND` constant in the `wp-config.php`:
+```php
+define('SHGI_COMPOSER_COMMAND', '~/bin/composer');
+```
+
 ## Author
 
 Nico Martin   

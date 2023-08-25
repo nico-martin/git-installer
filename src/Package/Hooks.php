@@ -3,7 +3,6 @@
 namespace SayHello\GitInstaller\Package;
 
 use SayHello\GitInstaller\Helpers;
-use SayHello\GitInstaller\FsHelpers;
 use SayHello\GitInstaller\Package\Helpers\GitPackageManagement;
 
 class Hooks
@@ -25,7 +24,7 @@ class Hooks
     {
         $hooks['composer'] = [
             'title' => 'Composer Install',
-            'description' => __('This Hook will execute "composer install" if a composer.json is found after the new files are added.', 'shgi'),
+            'description' => __('This Hook will execute "' . self::getComposerCommand() . ' install" if a composer.json is found after the new files are added.', 'shgi'),
             'function' => function ($package) {
                 $dir = sayhelloGitInstaller()->GitPackages->getPackageDir($package['key']);
 
@@ -35,7 +34,7 @@ class Hooks
                 }
 
                 $packageDir = str_replace(ABSPATH, '', $dir);
-                $command = 'composer install';
+                $command = self::getComposerCommand() . ' install';
 
                 $output = shell_exec("cd $packageDir && $command 2>&1");
                 $log = '[client ' . $_SERVER['REMOTE_ADDR'] . ']' . PHP_EOL .
@@ -46,8 +45,7 @@ class Hooks
                 Helpers::addLog($log, "postupdateHooks");
             },
             'check' => function () {
-                $check = shell_exec('composer --version 2>&1');
-                return Helpers::checkForFunction('shell_exec', false) && strpos($check, 'Composer version') !== false;
+                return Helpers::checkForFunction('shell_exec', false) && strpos(shell_exec(self::getComposerCommand() . ' --version 2>&1'), 'Composer version') !== false;
             }
         ];
 
@@ -176,5 +174,10 @@ class Hooks
         }
 
         return $formatted;
+    }
+
+    public static function getComposerCommand()
+    {
+        return defined('SHGI_COMPOSER_COMMAND') ? SHGI_COMPOSER_COMMAND : 'composer';
     }
 }
