@@ -6,6 +6,7 @@
 - Fix for invalid/changed repository URLs (issue #49)
 - Fix for directory name (issue #48)
 - Fix for `register_rest_route was called incorrectly` by [neverything](https://github.com/neverything)
+- Fix for `validateDOMNesting` (issue #56)
 
 ## 1.2.5
 - Fix for dot in repository name
