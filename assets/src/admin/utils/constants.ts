@@ -23,6 +23,7 @@ declare global {
       gitPackages: IGitPackages;
       mustUsePlugins: boolean;
       activePlugins: Array<string>;
+      postupdateHooks: Record<string, { title: string; description: string }>;
     };
   }
 }

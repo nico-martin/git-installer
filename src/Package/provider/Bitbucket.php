@@ -58,7 +58,7 @@ class Bitbucket extends Provider
         if (is_wp_error($branches)) return $branches;
 
         return [
-            'key' => $parsedUrl['repo'],
+            'key' => Helpers::sanitizeRepositoryDir($parsedUrl['repo']),
             'name' => $response['name'],
             'private' => $response['is_private'],
             'provider' => self::$provider,
@@ -190,7 +190,7 @@ class Bitbucket extends Provider
                 return Bitbucket::validateDir($url, $branch, $dir);
             }
 
-            public function fetchFileContent($url): string
+            public function fetchFileContent($url)
             {
                 return Bitbucket::fetchFileContent($url);
             }

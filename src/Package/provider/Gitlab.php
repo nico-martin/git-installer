@@ -65,7 +65,7 @@ class Gitlab extends Provider
         if (is_wp_error($branches)) return $branches;
 
         return [
-            'key' => $parsedUrl['repo'],
+            'key' => Helpers::sanitizeRepositoryDir($parsedUrl['repo']),
             'name' => $response['name'],
             'private' => $response['visibility'] === 'private',
             'provider' => self::$provider,
@@ -207,7 +207,7 @@ class Gitlab extends Provider
                 return Gitlab::validateDir($url, $branch, $dir);
             }
 
-            public function fetchFileContent($url): string
+            public function fetchFileContent($url)
             {
                 return Gitlab::fetchFileContent($url);
             }

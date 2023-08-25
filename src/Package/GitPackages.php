@@ -18,8 +18,6 @@ class GitPackages
         add_filter('shgi/Settings/register', [$this, 'settings']);
         add_filter('shgi/Assets/AdminFooterJS', [$this, 'footerJsVars']);
 
-        add_action('shgi/GitPackages/DoAfterUpdate', [$this, 'maybeDoComposerInstall']);
-
         /**
          * Rest
          */
@@ -70,37 +68,6 @@ class GitPackages
         $vars['mustUsePlugins'] = Helpers::useMustUsePlugins();
 
         return $vars;
-    }
-
-    public function maybeDoComposerInstall($dir)
-    {
-        if (!file_exists(trailingslashit($dir) . 'composer.json')) {
-            return;
-        }
-
-        if (!Helpers::checkForFunction('shell_exec', false)) {
-            return;
-        }
-
-        $package = str_replace(ABSPATH, '', $dir);
-        $logDir = Helpers::getContentFolder() . 'logs/';
-        if (!is_dir($logDir)) {
-            mkdir($logDir);
-        }
-        $logFile = $logDir . 'composer.log';
-        if (!file_exists($logFile)) {
-            file_put_contents($logFile, '');
-        }
-
-        $cd = getcwd();
-        chdir($package);
-        $composer = shell_exec('export HOME=~ && ~/bin/composer install 2>&1');
-        $log = '[' . date('D Y-m-d H:i:s') . '] [client ' . $_SERVER['REMOTE_ADDR'] . ']' . PHP_EOL .
-            'Package: ' . $package . PHP_EOL .
-            'Response: ' . $composer . PHP_EOL;
-
-        file_put_contents($logFile, $log, FILE_APPEND);
-        chdir($cd);
     }
 
     /**
@@ -213,9 +180,10 @@ class GitPackages
         $activeBranch = $params['activeBranch'];
         $headersFile = $params['headersFile'];
         $saveAsMustUsePlugin = $params['saveAsMustUsePlugin'];
+        $postupdateHooks = $params['postupdateHooks'];
         $dir = Helpers::sanitizeDir($params['dir']);
 
-        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin, $dir, $headersFile, true);
+        $repoData = $this->updateInfos($repo_url, $activeBranch, $theme, $saveAsMustUsePlugin, $dir, $headersFile, true, $postupdateHooks);
         if (is_wp_error($repoData)) return $repoData;
 
         $update = $this->updatePackage($repoData['key'], 'install');
@@ -250,13 +218,23 @@ class GitPackages
             'status' => 409,
         ]);
 
-        return $this->packages->getPackage($key);
+        $package = $this->packages->getPackage($key);
+
+        do_action('shgi/GitPackages/DoAfterUpdate', $package);
+
+        return $package;
     }
 
     public function deleteRepo($data)
     {
         $fullDelete = array_key_exists('fullDelete', $_GET) && $_GET['fullDelete'] === '1';
         $key = $data['slug'];
+
+        if ($fullDelete) {
+            Helpers::addLog($key . ' -- ' . $this->getPackageDir($key), 'delete');
+            FsHelpers::removeDir($this->getPackageDir($key));
+        }
+
         $deleted = $this->packages->deletePackage($key);
         if (!$deleted) {
             return new \WP_Error(
@@ -267,9 +245,6 @@ class GitPackages
                 ),
             );
         }
-
-        $fullDelete && FsHelpers::removeDir($this->getPackageDir($key));
-        UpdateLog::deleteLogs($key);
 
         return [
             'message' => sprintf(__('"%s" was deleted successfully', 'shgi'), $key),
@@ -379,7 +354,10 @@ class GitPackages
 
         $package = $this->packages->getPackage($key);
         $provider = self::getProvider($package['provider']);
-        return self::parseHeader($provider->fetchFileContent($headersFile));
+        $file = $provider->fetchFileContent($headersFile);
+        if ($file === null) return [];
+
+        return self::parseHeader($file);
     }
 
     public function checkGitDir($data)
@@ -409,7 +387,7 @@ class GitPackages
      * Helpers
      */
 
-    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false, $dir = '', $headersFile = '', $new = false)
+    public function updateInfos($url, $activeBranch, $theme = false, $saveAsMustUsePlugin = false, $dir = '', $headersFile = '', $new = false, $postupdateHooks = [])
     {
         $provider = self::getProvider('', $url);
         if (!$provider) {
@@ -440,6 +418,7 @@ class GitPackages
         $repoData['activeBranch'] = $activeBranch;
         $repoData['dir'] = $dir;
         $repoData['headersFile'] = $headersFile;
+        $repoData['postupdateHooks'] = $postupdateHooks;
 
         return $this->packages->updatePackage($repoData['key'], $repoData, $new);
     }
@@ -510,8 +489,8 @@ class GitPackages
                 'rename_repo_failed',
                 __(
                     'The folder could not be copied. Possibly the old folder could not be emptied completely.',
-                    'shgi'
-                )
+                    'shgi',
+                ),
             );
             do_action('shgi/GitPackages/updatePackage/error', $key, $ref, $error);
             return $error;
