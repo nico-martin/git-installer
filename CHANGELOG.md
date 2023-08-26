@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.6
+## 1.3.0
 - New feature: Postupdate Hooks (issue #50)
 - Fix for fullDelete bug
 - Fix for invalid/changed repository URLs (issue #49)
