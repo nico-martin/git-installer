@@ -194,9 +194,9 @@ class Gitlab extends Provider
                 return Gitlab::validateUrl($url);
             }
 
-            public function getInfos($url)
+            public function getInfos($url, $dir)
             {
-                return Gitlab::getInfos($url);
+                return Gitlab::getInfos($url, $dir);
             }
 
             public function authenticateRequest($url, $args = []): array

@@ -2,6 +2,7 @@
 
 ## 1.3.0
 - New feature: Postupdate Hooks (issue #50)
+- New feature: If the Plugin/Theme is installed from a directory inside the repository, the directory name will be the Plugin/Theme-directory (issue #46)
 - Fix for fullDelete bug
 - Fix for invalid/changed repository URLs (issue #49)
 - Fix for directory name (issue #48)

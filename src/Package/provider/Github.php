@@ -171,9 +171,9 @@ class Github extends Provider
                 return Github::validateUrl($url);
             }
 
-            public function getInfos($url)
+            public function getInfos($url, $dir)
             {
-                return Github::getInfos($url);
+                return Github::getInfos($url, $dir);
             }
 
             public function authenticateRequest($url, $args = [])

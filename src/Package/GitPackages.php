@@ -265,7 +265,7 @@ class GitPackages
             'status' => 404,
         ]);
 
-        $infos = $provider->getInfos($url);
+        $infos = $provider->getInfos($url, null);
         if (is_wp_error($infos)) return new \WP_Error(
             'repo_validation_failed',
             sprintf(

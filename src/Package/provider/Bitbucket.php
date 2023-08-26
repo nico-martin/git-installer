@@ -177,9 +177,9 @@ class Bitbucket extends Provider
                 return Bitbucket::validateUrl($url);
             }
 
-            public function getInfos($url)
+            public function getInfos($url, $dir)
             {
-                return Bitbucket::getInfos($url);
+                return Bitbucket::getInfos($url, $dir);
             }
 
             public function authenticateRequest($url, $args = [])
