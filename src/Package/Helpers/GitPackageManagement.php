@@ -83,7 +83,7 @@ class GitPackageManagement
                     )
                 );
                 $plugin = count($filteredPlugins) >= 1 ? $filteredPlugins[0] : null;
-                $version = $plugin['Version'];
+                $version = $plugin && array_key_exists('Version', $plugin) ? $plugin['Version'] : null;
             }
 
             $return_repos[$dir]['deployKey'] = $deployKeys[$dir];
