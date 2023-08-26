@@ -36,7 +36,7 @@ class Bitbucket extends Provider
         ];
     }
 
-    public static function getInfos($url)
+    public static function getInfos($url, $dir)
     {
         if (!self::validateUrl($url)) {
             return new \WP_Error(
@@ -57,8 +57,10 @@ class Bitbucket extends Provider
 
         if (is_wp_error($branches)) return $branches;
 
+        $key = $dir ? basename($dir) : $parsedUrl['repo'];
+
         return [
-            'key' => Helpers::sanitizeRepositoryDir($parsedUrl['repo']),
+            'key' => Helpers::sanitizeRepositoryDir($key),
             'name' => $response['name'],
             'private' => $response['is_private'],
             'provider' => self::$provider,

@@ -35,7 +35,7 @@ class Github extends Provider
         ];
     }
 
-    public static function getInfos($url)
+    public static function getInfos($url, $dir)
     {
         if (!self::validateUrl($url)) {
             return new \WP_Error(
@@ -55,15 +55,16 @@ class Github extends Provider
 
         if (is_wp_error($branches)) return $branches;
 
+        $key = $dir ? basename($dir) : $parsedUrl['repo'];
+
         return [
-            'key' => Helpers::sanitizeRepositoryDir($parsedUrl['repo']),
+            'key' => Helpers::sanitizeRepositoryDir($key),
             'name' => $response['name'],
             'private' => $response['private'],
             'provider' => self::$provider,
             'branches' => $branches,
             'baseUrl' => "https://github.com/{$parsedUrl['owner']}/{$parsedUrl['repo']}",
             'apiUrl' => $apiUrl,
-            'r' => $response,
         ];
     }
 

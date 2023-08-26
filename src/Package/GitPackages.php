@@ -397,7 +397,7 @@ class GitPackages
             );
         }
 
-        $repoData = $provider->getInfos($url);
+        $repoData = $provider->getInfos($url, $dir);
         if (is_wp_error($repoData)) return $repoData;
 
         if (!array_key_exists($activeBranch, $repoData['branches'])) {
