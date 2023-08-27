@@ -28,6 +28,7 @@ class Plugin
     public Package\UpdateLog $UpdateLog;
     public Package\Updater $Updater;
     public Package\Ecosystem $Ecosystem;
+    public Package\Hooks $Hooks;
 
     public static function getInstance($file): Plugin
     {

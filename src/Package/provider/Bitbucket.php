@@ -36,7 +36,7 @@ class Bitbucket extends Provider
         ];
     }
 
-    public static function getInfos($url)
+    public static function getInfos($url, $dir)
     {
         if (!self::validateUrl($url)) {
             return new \WP_Error(
@@ -57,8 +57,10 @@ class Bitbucket extends Provider
 
         if (is_wp_error($branches)) return $branches;
 
+        $key = $dir ? basename($dir) : $parsedUrl['repo'];
+
         return [
-            'key' => $parsedUrl['repo'],
+            'key' => Helpers::sanitizeRepositoryDir($key),
             'name' => $response['name'],
             'private' => $response['is_private'],
             'provider' => self::$provider,
@@ -175,9 +177,9 @@ class Bitbucket extends Provider
                 return Bitbucket::validateUrl($url);
             }
 
-            public function getInfos($url)
+            public function getInfos($url, $dir)
             {
-                return Bitbucket::getInfos($url);
+                return Bitbucket::getInfos($url, $dir);
             }
 
             public function authenticateRequest($url, $args = [])
@@ -190,7 +192,7 @@ class Bitbucket extends Provider
                 return Bitbucket::validateDir($url, $branch, $dir);
             }
 
-            public function fetchFileContent($url): string
+            public function fetchFileContent($url)
             {
                 return Bitbucket::fetchFileContent($url);
             }

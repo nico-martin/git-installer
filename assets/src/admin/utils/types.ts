@@ -35,6 +35,7 @@ export interface IGitPackageRaw {
   activeBranch: string;
   baseUrl: string;
   apiUrl: string;
+  postupdateHooks?: Array<string>;
 }
 
 export interface IGitLog {

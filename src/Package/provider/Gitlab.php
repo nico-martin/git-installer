@@ -43,7 +43,7 @@ class Gitlab extends Provider
         ];
     }
 
-    public static function getInfos($url)
+    public static function getInfos($url, $dir)
     {
         if (!self::validateUrl($url)) {
             return new \WP_Error(
@@ -64,8 +64,10 @@ class Gitlab extends Provider
 
         if (is_wp_error($branches)) return $branches;
 
+        $key = $dir ? basename($dir) : $parsedUrl['repo'];
+
         return [
-            'key' => $parsedUrl['repo'],
+            'key' => Helpers::sanitizeRepositoryDir($key),
             'name' => $response['name'],
             'private' => $response['visibility'] === 'private',
             'provider' => self::$provider,
@@ -192,9 +194,9 @@ class Gitlab extends Provider
                 return Gitlab::validateUrl($url);
             }
 
-            public function getInfos($url)
+            public function getInfos($url, $dir)
             {
-                return Gitlab::getInfos($url);
+                return Gitlab::getInfos($url, $dir);
             }
 
             public function authenticateRequest($url, $args = []): array
@@ -207,7 +209,7 @@ class Gitlab extends Provider
                 return Gitlab::validateDir($url, $branch, $dir);
             }
 
-            public function fetchFileContent($url): string
+            public function fetchFileContent($url)
             {
                 return Gitlab::fetchFileContent($url);
             }

@@ -25,7 +25,7 @@ const SVG = ({
   }, [path]);
 
   return (
-    <figure
+    <span
       className={cn(className, styles.svg, {
         [styles.inline]: inline,
       })}

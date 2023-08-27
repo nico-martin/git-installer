@@ -25,6 +25,7 @@ use SayHello\GitInstaller\Helpers;
  *   'saveAsMustUsePlugin' => (bool)
  *   'version' => (string)
  *   'dir' => (string)
+ *   'postupdateHooks' => Array<string>
  * ]
  */
 class GitPackageManagement
@@ -82,7 +83,7 @@ class GitPackageManagement
                     )
                 );
                 $plugin = count($filteredPlugins) >= 1 ? $filteredPlugins[0] : null;
-                $version = $plugin['Version'];
+                $version = $plugin && array_key_exists('Version', $plugin) ? $plugin['Version'] : null;
             }
 
             $return_repos[$dir]['deployKey'] = $deployKeys[$dir];
@@ -143,6 +144,8 @@ class GitPackageManagement
     public function updatePackage(string $key, array $data, bool $new = false): ?array
     {
         $packageData = $new ? [] : $this->getPackage($key);
+        Helpers::addLog($key);
+        Helpers::addLog($packageData);
         if ($packageData === null) return null;
 
         $packages = $this->getPackages();

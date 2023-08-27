@@ -19,6 +19,7 @@ class Ecosystem
                     'access' => true,
                 ];
             },
+            'permission_callback' => '__return_true',
         ]);
     }
 

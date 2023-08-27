@@ -6,7 +6,7 @@ Plugin URI: https://github.com/SayHelloGmbH/git-installer
 Description: Install and Update Plugins and Themes from GitHub, Gitlab and Bitbucket
 Author: Nico Martin - mail@nico.dev
 Author URI: https://nico.dev
-Version: 1.2.5
+Version: 1.3.0
 Text Domain: shgi
 Domain Path: /languages
 Requires PHP: 7.4
@@ -38,6 +38,7 @@ require_once 'src/Package/provider/Gitlab.php';
 require_once 'src/Package/provider/Bitbucket.php';
 require_once 'src/Package/Updater.php';
 require_once 'src/Package/Ecosystem.php';
+require_once 'src/Package/Hooks.php';
 
 function sayhelloGitInstaller(): \SayHello\GitInstaller\Plugin
 {
@@ -68,6 +69,9 @@ sayhelloGitInstaller()->Updater->run();
 
 sayhelloGitInstaller()->Ecosystem = new SayHello\GitInstaller\Package\Ecosystem();
 sayhelloGitInstaller()->Ecosystem->run();
+
+sayhelloGitInstaller()->Hooks = new SayHello\GitInstaller\Package\Hooks();
+sayhelloGitInstaller()->Hooks->run();
 
 require_once 'src/plugin-update-checker-5.0/plugin-update-checker.php';
 

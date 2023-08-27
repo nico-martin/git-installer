@@ -6,6 +6,7 @@ import {
   FormControls,
   FormElement,
   FormFeedback,
+  InputCheckbox,
   InputSelect,
   Loader,
   NOTICE_TYPES,
@@ -33,19 +34,22 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
 
   const showMustUseForm = VARS.mustUsePlugins && wpPackage?.type === 'plugin';
 
-  const install = (savePluginAsMU: boolean = false) => {
+  const install = (
+    savePluginAsMU: boolean = false,
+    postupdateHooks: Array<string> = []
+  ) => {
     setLoading(true);
-    promise(savePluginAsMU, null)
+    promise(savePluginAsMU, postupdateHooks)
       .then()
       .catch((e) => setError(e))
       .finally(() => setLoading(false));
   };
 
   React.useEffect(() => {
-    !showMustUseForm && install(false);
+    Object.keys(VARS.postupdateHooks).length === 0 &&
+      !showMustUseForm &&
+      install(false, []);
   }, []);
-
-  const desc = <p>Das Theme</p>;
 
   return loading ? (
     <div className={cn(className, styles.loadingComp)}>
@@ -62,9 +66,12 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
     </div>
   ) : (
     <Form
-      onSubmit={form.handleSubmit((data) =>
-        install(data.savePluginAs === 'mustUse')
-      )}
+      onSubmit={form.handleSubmit((data) => {
+        const hooks = Object.entries(VARS.postupdateHooks)
+          .map(([key]) => (data[`postupdateHooks-${key}`] ? key : null))
+          .filter(Boolean);
+        install(data.savePluginAs === 'mustUse', hooks);
+      })}
       className={className}
     >
       {showMustUseForm && (
@@ -91,6 +98,20 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
             }}
           />
         </React.Fragment>
+      )}
+      <h2>{__('After Update Hooks', 'shgi')}</h2>
+      {Object.entries(VARS.postupdateHooks).map(
+        ([key, { title, description }]) => {
+          return (
+            <FormElement
+              form={form}
+              name={`postupdateHooks-${key}`}
+              label={title}
+              Input={InputCheckbox}
+              DescriptionInput={<p>{description}</p>}
+            />
+          );
+        }
       )}
       {error !== '' && (
         <FormFeedback type={NOTICE_TYPES.ERROR} message={error} />

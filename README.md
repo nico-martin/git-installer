@@ -14,21 +14,22 @@ must use plugins and multisite installations.
 
 ## Features
 
-| Feature                                                                                                                                               |   Status   |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------|:----------:|
-| **Install and update Plugins from Git repositories**                                                                                                  |     ✅      |
-| **Provider**                                                                                                                                          |            |
-| - GitHub                                                                                                                                              |     ✅      |
-| - Gitlab                                                                                                                                              |     ✅      |
-| - Bitbucket                                                                                                                                           |     ✅      |
-| **Webhook updates**                                                                                                                                   |     ✅      |
-| **Integrated WordPress update process**<br />View pending updates directly in the WordPress overview and update them individually or as a bulk update.                                                                                           |     ✅      |
-| **Private Repositories**                                                                                                                              |     ✅      |
-| **Must Use Plugin support**<br />*[https://wordpress.org/support/article/must-use-plugins/](https://wordpress.org/support/article/must-use-plugins/)* |     ✅      |
-| **Branches**                                                                                                                                          | any branch |
-| **Multisite**                                                                                                                                         |     ✅      |
-| **Install from subdirectories**                                                                                                                       |     ✅      |
-| **Check directory**<br />Validates a Repository and checks wether a valid WordPress theme or plugin is found.                                         |     ✅      |
+| Feature                                                                                                                                                |   Status   |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------|:----------:|
+| **Install and update Plugins from Git repositories**                                                                                                   |     ✅      |
+| **Provider**                                                                                                                                           |            |
+| - GitHub                                                                                                                                               |     ✅      |
+| - Gitlab                                                                                                                                               |     ✅      |
+| - Bitbucket                                                                                                                                            |     ✅      |
+| **Webhook updates**                                                                                                                                    |     ✅      |
+| **Integrated WordPress update process**<br />View pending updates directly in the WordPress overview and update them individually or as a bulk update. |     ✅      |
+| **Private Repositories**                                                                                                                               |     ✅      |
+| **Must Use Plugin support**<br />*[https://wordpress.org/support/article/must-use-plugins/](https://wordpress.org/support/article/must-use-plugins/)*  |     ✅      |
+| **Branches**                                                                                                                                           | any branch |
+| **Multisite**                                                                                                                                          |     ✅      |
+| **Install from subdirectories**                                                                                                                        |     ✅      |
+| **Check directory**<br />Validates a Repository and checks wether a valid WordPress theme or plugin is found.                                          |     ✅      |
+| **Postupdate Hooks**<br />Run your composer, NPM or other builds after the update                                                                      |     ✅      |
 
 ## Webhook updates
 
@@ -128,6 +129,32 @@ add_filter('shgi/UpdateLog/refOptions', function($refs){
   $refs['my-ref'] = 'My custom trigger';
   return $refs;
 });
+```
+
+### Custom Postupdate Hooks
+
+```php
+add_filter('shgi/Hooks/PostupdateHooks', function($hooks){
+  $hooks['my-custom-hook'] = [
+    'title' => 'My Custom Hook',
+    'description' => 'Describe what the hook will do',
+    'function' => function($package){
+      // this function will run after a successfull update
+      // $package is the full Package-Object
+    },
+    'check' => function(){
+      // returns a boolean wether the system supports this hook (for example if npm/composer is installed)
+      return true;
+    }
+  ];
+  return $hooks;
+});
+```
+
+#### Composer
+By default, git-installer uses the `composer`-alias to run composer. If your configuration does not support aliases, you can also define a `SHGI_COMPOSER_COMMAND` constant in the `wp-config.php`:
+```php
+define('SHGI_COMPOSER_COMMAND', '~/bin/composer');
 ```
 
 ## Author
