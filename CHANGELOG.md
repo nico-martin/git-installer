@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.3.1
+- Fix for `validateDOMNesting` (issue #61)
 
 ## 1.3.0
 - New feature: Postupdate Hooks (issue #50)
