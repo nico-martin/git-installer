@@ -28,7 +28,7 @@
 /*!******************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/layout/Notice.css ***!
   \******************************************************************************************************************************************************************/
-.Notice__notice--2GQrp {
+.Notice__notice--KFPNo {
   background: #fff;
   border: 1px solid #ccd0d4;
   border-left-width: 4px;
@@ -36,77 +36,77 @@
   padding: 12px 15px;
 }
 
-  .Notice__notice--2GQrp > * {
+  .Notice__notice--KFPNo > * {
     margin: 0 !important;
   }
 
-  .Notice__notice--2GQrp > * + * {
+  .Notice__notice--KFPNo > * + * {
       margin-top: 0.5em !important;
     }
 
-  .Notice__notice--2GQrp ul {
+  .Notice__notice--KFPNo ul {
     list-style: disc outside none;
     list-style: initial;
     padding-left: 20px;
   }
 
-  .Notice__notice--2GQrp p {
+  .Notice__notice--KFPNo p {
     margin-top: 0;
   }
 
-.Notice__noticeInfo--2Fyu2 {
+.Notice__noticeInfo--vhW6x {
   border-left-color: #00a0d2;
 
 }
 
-.Notice__noticeWarning--OTbFg {
+.Notice__noticeWarning--DsOob {
   border-left-color: #ffb900;
 
 }
 
-.Notice__noticeError--18l8q {
+.Notice__noticeError--r-\+oK {
   border-left-color: #dc3232;
 
 }
 
-.Notice__noticeSuccess--1lTlK {
+.Notice__noticeSuccess--ZyuEq {
   border-left-color: #46b450;
 }
 
 /*!****************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/layout/Page.css ***!
   \****************************************************************************************************************************************************************/
-.Page__page--vQh7j {
+.Page__page--DVBtZ {
   padding-top: 0 !important;
 }
 
-.Page__title--2BjVo {
+.Page__title--pVnwJ {
   font-weight: bold;
 }
 
-.Page__content--1Sp0T {
+.Page__content--KP2Fg {
   margin-top: 16px;
 }
 
-.Page__notices--1uGXZ {
+.Page__notices--E9mPv {
 }
 
-.Page__notice--24k4X {
+.Page__notice--ucEeG {
   margin-top: 1rem;
 }
 
 /*!***********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/layout/PageContent.css ***!
   \***********************************************************************************************************************************************************************/
-.PageContent__content--3Iwc8 {
+.PageContent__content--0vf-D {
   max-width: var(--shgi-form-max-width);
 }
 
-  .PageContent__content--3Iwc8 > * + * {
+  .PageContent__content--0vf-D > * + * {
     margin-top: var(--shgi-form-spacing);
   }
 
-  .PageContent__content--3Iwc8 {
+  .PageContent__content--0vf-D {
 
   margin-top: var(--shgi-form-spacing);
 }
@@ -114,35 +114,35 @@
 /*!************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/Content.css ***!
   \************************************************************************************************************************************************************/
-.Content__content--2ErA3 > * {
+.Content__content--JhrRH > * {
     margin: 0;
   }
 
-    .Content__content--2ErA3 > * + * {
+    .Content__content--JhrRH > * + * {
       margin-top: 1em;
     }
-  .Content__content--2ErA3 ul {
+  .Content__content--JhrRH ul {
     list-style: disc;
     padding-left: 1em;
   }
-  .Content__content--2ErA3 ul li {
+  .Content__content--JhrRH ul li {
       margin-bottom: 0;
     }
-  .Content__content--2ErA3 ul li + li {
+  .Content__content--JhrRH ul li + li {
         margin-top: 0.5em;
       }
 
 /*!****************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/layout/Card.css ***!
   \****************************************************************************************************************************************************************/
-.Card__card--3pcSL {
+.Card__card--XCNiR {
   position: relative;
   border: 1px solid #ccd0d4;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   background: #fff;
 }
 
-.Card__heading--3ezs4 {
+.Card__heading--pdqkG {
   margin: 0;
   position: relative;
   display: flex;
@@ -151,7 +151,7 @@
   padding: 0 !important;
 }
 
-.Card__heading--3ezs4:after {
+.Card__heading--pdqkG:after {
     content: '';
     position: absolute;
     border-bottom: 1px solid #ccd0d4;
@@ -160,19 +160,19 @@
     left: 0;
   }
 
-.Card__headingSticky--1q4MO {
+.Card__headingSticky--usoq1 {
   position: sticky;
   top: 0;
   background-color: #fff;
   z-index: 999;
 }
 
-.Card__title--258Vk {
+.Card__title--K2F6o {
   margin: 0;
   padding: var(--shgi-form-spacing-small) var(--shgi-form-spacing);
 }
 
-.Card__toggleButton--1-4jS {
+.Card__toggleButton--q6sZ4 {
   background-color: transparent;
   border: 1px solid transparent;
   width: 1.6rem;
@@ -184,34 +184,34 @@
   cursor: pointer;
 }
 
-.Card__toggleButton--1-4jS:hover {
+.Card__toggleButton--q6sZ4:hover {
     background-color: #efefef;
     border-color: #9f9f9f;
   }
 
-.Card__toggleButtonIcon--EDZqS {
+.Card__toggleButtonIcon--ZbBCt {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%) scale(0.8);
 }
 
-.Card__content--UvNPu {
+.Card__content--gNWWO {
   padding: var(--shgi-form-spacing);
 }
 
-.Card__cardClosed--g-FMj .Card__content--UvNPu {
+.Card__cardClosed--\+TuET .Card__content--gNWWO {
     display: none;
   }
 
-.Card__headingRightContent--l69EV {
+.Card__headingRightContent--eTp5f {
   margin-right: var(--shgi-form-spacing);
 }
 
 /*!************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/ShadowBox/ShadowBox.css ***!
   \************************************************************************************************************************************************************************/
-.ShadowBox__shadowbox--A77Fe {
+.ShadowBox__shadowbox--vsxGv {
   position: fixed;
   bottom: 0;
   right: 0;
@@ -222,7 +222,7 @@
   will-change: opacity;
 }
 
-.ShadowBox__shadow--14WR3 {
+.ShadowBox__shadow--4MhQF {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -232,7 +232,7 @@
   cursor: pointer;
 }
 
-.ShadowBox__header--3nkw1 {
+.ShadowBox__header--\+iUDn {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -243,12 +243,12 @@
   z-index: 10;
 }
 
-.ShadowBox__title--3JE3h {
+.ShadowBox__title--CXxwY {
   display: flex;
   vertical-align: center;
 }
 
-.ShadowBox__box--2wqRB {
+.ShadowBox__box--oqIVq {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -262,48 +262,48 @@
   overflow: auto;
 }
 
-.ShadowBox__shadowboxSmall--C1fkF .ShadowBox__box--2wqRB {
+.ShadowBox__shadowboxSmall--04X-o .ShadowBox__box--oqIVq {
     width: 450px;
   }
 
-.ShadowBox__shadowboxMedium--lSHdx .ShadowBox__box--2wqRB {
+.ShadowBox__shadowboxMedium--A6LQs .ShadowBox__box--oqIVq {
     width: 650px;
   }
 
-.ShadowBox__content--2XuV8 {
+.ShadowBox__content--1K2Pb {
   padding: var(--shgi-form-spacing);
 }
 
-.ShadowBox__loader--3YJXn {
+.ShadowBox__loader--s2KI0 {
   margin: 6vh auto 10vh auto;
   font-size: 2rem;
   width: 2rem;
 }
 
-.ShadowBox__box--2wqRB,
-.ShadowBox__shadow--14WR3 {
+.ShadowBox__box--oqIVq,
+.ShadowBox__shadow--4MhQF {
   opacity: 0;
   will-change: opacity;
   transition: all 200ms ease-in-out;
 }
 
-.ShadowBox__box--2wqRB {
+.ShadowBox__box--oqIVq {
   transform: translateX(-50%) translateY(-30%) scale(0.9);
 }
 
-.ShadowBox__shadowbox--A77Fe[data-visible='true'] .ShadowBox__box--2wqRB {
+.ShadowBox__shadowbox--vsxGv[data-visible='true'] .ShadowBox__box--oqIVq {
     opacity: 1;
     transform: translateX(-50%) translateY(-50%) scale(1);
   }
 
-.ShadowBox__shadowbox--A77Fe[data-visible='true'] .ShadowBox__shadow--14WR3 {
+.ShadowBox__shadowbox--vsxGv[data-visible='true'] .ShadowBox__shadow--4MhQF {
     opacity: 0.7;
   }
 
 /*!*****************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/navigation/TabNavigation.css ***!
   \*****************************************************************************************************************************************************************************/
-.TabNavigation__navigation--2BNr1 {
+.TabNavigation__navigation--loeD3 {
     border-bottom: 1px solid #ccc;
     margin: 0 0 23px 0;
     padding-top: 9px;
@@ -312,7 +312,7 @@
     display: flex;
 }
 
-.TabNavigation__link--1Q62L {
+.TabNavigation__link--LDS2H {
     display: block;
     border: 1px solid #ccc;
     border-bottom: none;
@@ -327,32 +327,32 @@
     white-space: nowrap;
 }
 
-.TabNavigation__link--1Q62L:hover {
+.TabNavigation__link--LDS2H:hover {
         background-color: #fff;
         color: #444;
     }
 
-.TabNavigation__linkActive--3bfOy {
+.TabNavigation__linkActive--qCph4 {
     border-bottom: 1px solid #f1f1f1;
     background: #f1f1f1;
     color: #000;
     margin-bottom: -1px;
 }
 
-.TabNavigation__linkActive--3bfOy:hover {
+.TabNavigation__linkActive--qCph4:hover {
         background: #f1f1f1;
         color: #000;
     }
 
-.TabNavigation__subnavigation--28CDq {
+.TabNavigation__subnavigation--bMLc1 {
 
 }
 
-.TabNavigation__sublink--1wsAV + .TabNavigation__sublink--1wsAV {
+.TabNavigation__sublink--9-UwJ + .TabNavigation__sublink--9-UwJ {
         margin-left: 1rem;
     }
 
-.TabNavigation__sublink--1wsAV {
+.TabNavigation__sublink--9-UwJ {
 
     display: inline-block;
     text-decoration: none;
@@ -374,7 +374,7 @@
     vertical-align: top;
 }
 
-.TabNavigation__sublinkActive--Dh-yE {
+.TabNavigation__sublinkActive--jGVTy {
     background-color: #dcdcde;
     color: #135e96;
     border-color: #0a4b78;
@@ -384,32 +384,32 @@
 /*!****************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/media/Image.css ***!
   \****************************************************************************************************************************************************************/
-.Image__image--38Qro {
+.Image__image--JsPJL {
   display: inline-block;
   background-color: #f1f1f1;
   border: 1px solid #b0b0b0;
   box-sizing: border-box;
 }
 
-.Image__raw--QnkPQ {
+.Image__raw--sOffD {
   background-color: transparent;
   border: none;
 }
 
-.Image__imageImg--3pKW2 {
+.Image__imageImg--Cu2hF {
   display: block;
 }
 
 /*!**********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/media/MaskedImage.css ***!
   \**********************************************************************************************************************************************************************/
-.MaskedImage__container--3248g {
+.MaskedImage__container--DqFIZ {
     background-color: #f1f1f1;
     border: 1px solid #b0b0b0;
     border-radius: 3px;
 }
 
-.MaskedImage__raw--35LXa {
+.MaskedImage__raw--grp\+Z {
     background-color: transparent;
     border: none;
     border-radius: 0px;
@@ -417,17 +417,17 @@
 /*!**************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/media/SVG.css ***!
   \**************************************************************************************************************************************************************/
-.SVG__svg--1OkxZ {
+.SVG__svg--0Q8K7 {
     margin: 0;
 }
 
-    .SVG__svg--1OkxZ.SVG__inline--vquPH {
+    .SVG__svg--0Q8K7.SVG__inline--azEAb {
         width: 1em;
         height: 1em;
         display: inline-block;
     }
 
-    .SVG__svg--1OkxZ svg {
+    .SVG__svg--0Q8K7 svg {
         width: 100%;
         height: auto;
         display: block;
@@ -435,12 +435,12 @@
 /*!***************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/media/Icon.css ***!
   \***************************************************************************************************************************************************************/
-.Icon__icon--3gk1w {
+.Icon__icon--5P9NX {
     display: inline-block;
     line-height: 1;
 }
 
-    .Icon__icon--3gk1w svg {
+    .Icon__icon--5P9NX svg {
         text-align: center;
         vertical-align: middle;
         fill: currentColor;
@@ -449,26 +449,25 @@
         display: block;
     }
 
-    .Icon__icon--3gk1w.Icon__animationSpin--1rCZC {
-        -webkit-animation: Icon__spinner--2c5ox 2s infinite linear;
-                animation: Icon__spinner--2c5ox 2s infinite linear;
+    .Icon__icon--5P9NX.Icon__animationSpin--eBFMy {
+        animation: Icon__spinner--0v02w 2s infinite linear;
     }
 
-    .Icon__icon--3gk1w.Icon__border--2m0La {
+    .Icon__icon--5P9NX.Icon__border--12Bjl {
         border: 1px solid currentColor;
     }
 
-    .Icon__icon--3gk1w.Icon__border--2m0La svg {
+    .Icon__icon--5P9NX.Icon__border--12Bjl svg {
             transform: scale(0.7);
         }
 
-    .Icon__icon--3gk1w.Icon__round--LVyCO {
+    .Icon__icon--5P9NX.Icon__round--sUovm {
         border-radius: 9999px;
     }
 /*!****************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/misc/Loader.css ***!
   \****************************************************************************************************************************************************************/
-@-webkit-keyframes Loader__spinner-animation--1gJ5S {
+@keyframes Loader__spinner-animation--N3ISR {
   0% {
     transform: rotate(0deg);
   }
@@ -477,32 +476,23 @@
   }
 }
 
-@keyframes Loader__spinner-animation--1gJ5S {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.Loader__container--2F4Dg {
+.Loader__container--5lOBr {
   display: inline-block;
 }
 
-.Loader__containerBlock--1I5I4 {
+.Loader__containerBlock--ByPJx {
   display: block;
   text-align: center;
 }
 
-.Loader__loader--2RF2D {
+.Loader__loader--z5bWM {
   display: inline-block;
   position: relative;
   width: 1em;
   height: 1em;
 }
 
-.Loader__loader--2RF2D::after {
+.Loader__loader--z5bWM::after {
     content: '';
     display: block;
     position: absolute;
@@ -514,15 +504,15 @@
     border-left-color: transparent;
     border-top-color: transparent;
     border-radius: 50%;
-    -webkit-animation: Loader__spinner-animation--1gJ5S 0.65s infinite linear;
-            animation: Loader__spinner-animation--1gJ5S 0.65s infinite linear;
+    animation: Loader__spinner-animation--N3ISR 0.65s infinite linear;
     box-sizing: border-box;
   }
 
 /*!*****************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/misc/Tooltip.css ***!
   \*****************************************************************************************************************************************************************/
-.Tooltip__tooltip--12Sdz {
+.Tooltip__tooltip--AaD6I {
+  display: block;
   will-change: opacity;
   transition: opacity 200ms ease-in-out;
   z-index: 9999;
@@ -530,12 +520,13 @@
   pointer-events: none;
 }
 
-.Tooltip__tooltipShow--27Zu2 {
+.Tooltip__tooltipShow--5cI\+g {
   opacity: 1;
   pointer-events: auto;
 }
 
-.Tooltip__tooltipInner--rx6ok {
+.Tooltip__tooltipInner--jDUZJ {
+  display: block;
   background-color: #000;
   color: #fff;
   border-radius: 0.4em;
@@ -545,7 +536,7 @@
   position: relative;
 }
 
-.Tooltip__arrow--1Iw2f {
+.Tooltip__arrow--sInLv {
   width: 0.75rem;
   height: 0.75rem;
   transform: translateX(-50%) translateY(-50%);
@@ -554,7 +545,7 @@
   top: 0;
 }
 
-.Tooltip__arrow--1Iw2f::before {
+.Tooltip__arrow--sInLv::before {
     content: '';
     transform: rotate(45deg);
     background-color: #000;
@@ -569,7 +560,7 @@
 /*!****************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/Button.css ***!
   \****************************************************************************************************************************************************************/
-.Button__button--1vX9r {
+.Button__button--8vezx {
   display: inline-block;
   text-decoration: none;
   font-size: 13px;
@@ -589,11 +580,11 @@
   border-color: #2271b1;
 }
 
-  .Button__button--1vX9r[disabled] {
+  .Button__button--8vezx[disabled] {
     pointer-events: none;
   }
 
-.Button__buttonPrimary--3j18e:not([disabled]) {
+.Button__buttonPrimary--Yhi2B:not([disabled]) {
   background: #007cba;
   border-color: #007cba;
   color: #fff;
@@ -601,7 +592,7 @@
   text-shadow: none;
 }
 
-.Button__buttonDelete--2uu6H {
+.Button__buttonDelete--m6b-E {
   background-color: transparent;
   border-color: transparent;
   padding-right: 0;
@@ -609,97 +600,97 @@
   color: #cc1818;
 }
 
-.Button__buttonDelete--2uu6H:hover {
+.Button__buttonDelete--m6b-E:hover {
     color: #710d0d;
   }
 
 /*!*********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/ButtonGroup.css ***!
   \*********************************************************************************************************************************************************************/
-.ButtonGroup__group--wQQQ6 {
+.ButtonGroup__group--u5o6h {
     display: flex;
     vertical-align: center;
 }
 
-    .ButtonGroup__group--wQQQ6 > * + * {
+    .ButtonGroup__group--u5o6h > * + * {
         margin-left: 1rem;
     }
 
-.ButtonGroup__alignLeft--QqRfa {
+.ButtonGroup__alignLeft--Kfh0m {
     justify-content: flex-start;
 }
 
-.ButtonGroup__alignCenter--1Vlxo {
+.ButtonGroup__alignCenter--v3w15 {
     justify-content: center;
 }
 
-.ButtonGroup__alignRight--KHIZh {
+.ButtonGroup__alignRight--CPost {
     justify-content: flex-end;
 }
 /*!**************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/Form.css ***!
   \**************************************************************************************************************************************************************/
-.Form__form--1Mbrs {
+.Form__form--x6wdJ {
 }
 
 /*!*********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/FormElement.css ***!
   \*********************************************************************************************************************************************************************/
-.FormElement__container--TbJPB {
+.FormElement__container--ll\+PG {
   display: flex;
   vertical-align: top;
   margin-top: var(--shgi-form-spacing);
 }
 
-.FormElement__containerStacked--1Hh4B {
+.FormElement__containerStacked--luL\+G {
   display: block;
 }
 
-.FormElement__labelContainer--3bLFZ {
+.FormElement__labelContainer--YI2LL {
   width: var(--shgi-form-label-width);
   margin-right: var(--shgi-form-spacing);
   display: block;
   flex-shrink: 0;
 }
 
-.FormElement__containerStacked--1Hh4B .FormElement__labelContainer--3bLFZ {
+.FormElement__containerStacked--luL\+G .FormElement__labelContainer--YI2LL {
   margin-right: 0;
   width: 100%;
   margin-bottom: var(--shgi-form-spacing-xsmall);
 }
 
-.FormElement__description--3ZCm3 {
+.FormElement__description--rnva1 {
   color: #676767;
   margin-top: 0.2em;
 }
 
-.FormElement__description--3ZCm3 p {
+.FormElement__description--rnva1 p {
     font-size: 0.9em;
     margin: 0.7em 0 0 0;
   }
 
-.FormElement__description--3ZCm3 p code {
+.FormElement__description--rnva1 p code {
       font-size: 0.9em;
     }
 
-.FormElement__description--3ZCm3 p + p {
+.FormElement__description--rnva1 p + p {
       margin: 0.3em 0 0 0;
     }
 
-.FormElement__label--3aosw {
+.FormElement__label--4f8f9 {
   font-weight: bold;
 }
 
-.FormElement__content--3TDPi {
+.FormElement__content--Q6yRo {
   flex: 1 1 auto;
 }
 
-.FormElement__input--19qDv:not([type='checkbox']) {
+.FormElement__input--xVoms:not([type='checkbox']) {
   width: 100% !important;
   max-width: 100%;
 }
 
-.FormElement__error--26oJ3 {
+.FormElement__error--ld3K7 {
   color: #dc3232;
   font-size: 0.8em !important;
 }
@@ -707,31 +698,31 @@
 /*!**********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/FormControls.css ***!
   \**********************************************************************************************************************************************************************/
-.FormControls__controls--2EPjf {
+.FormControls__controls--iKUyq {
   margin-top: calc(var(--shgi-form-spacing) * 2);
 }
 
 /*!**********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/FormFeedback.css ***!
   \**********************************************************************************************************************************************************************/
-.FormFeedback__td--2_j1N {
+.FormFeedback__td--uosNA {
   padding: 20px 0 !important;
 }
 
-.FormFeedback__wrapper--1ZrQp {
+.FormFeedback__wrapper--UGrzc {
   margin-top: var(--shgi-form-spacing);
 }
 
 /*!*******************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/InputText.css ***!
   \*******************************************************************************************************************************************************************/
-.InputText__container--2qMJx {
+.InputText__container--b9hP7 {
   display: flex;
   align-items: center;
   position: relative;
 }
 
-  .InputText__container--2qMJx:before {
+  .InputText__container--b9hP7:before {
     content: attr(data-prepend);
     position: absolute;
     left: 10px;
@@ -739,10 +730,10 @@
     transform: translateY(-50%);
   }
 
-.InputText__input--3ix2C {
+.InputText__input--LC903 {
 }
 
-.InputText__editButton--1c1nY {
+.InputText__editButton--MpRCu {
   background-color: transparent;
   border: none;
   padding: 0;
@@ -754,40 +745,40 @@
 /*!********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/InputRadio.css ***!
   \********************************************************************************************************************************************************************/
-.InputRadio__element--1WCGL + .InputRadio__element--1WCGL {
+.InputRadio__element--1VE8u + .InputRadio__element--1VE8u {
   margin-top: 0.3em;
 }
 
-.InputRadio__input--2ts8w {
+.InputRadio__input--jmPon {
 }
 
-.InputRadio__label--3fxrw {
+.InputRadio__label--uGfnR {
 }
 
 /*!*********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/InputUpload.css ***!
   \*********************************************************************************************************************************************************************/
-.InputUpload__container--1D0gX {
+.InputUpload__container--HhUg0 {
   display: flex;
   flex-wrap: wrap;
   margin: -0.5rem;
 }
 
-.InputUpload__element--3zg9s {
+.InputUpload__element--64\+iW {
   position: relative;
   box-sizing: border-box;
   margin: 0.5rem;
 }
 
-.InputUpload__element--3zg9s:hover .InputUpload__remove--XCVhM {
+.InputUpload__element--64\+iW:hover .InputUpload__remove--52OOD {
     opacity: 1;
   }
 
-.InputUpload__image--3is5S {
+.InputUpload__image--IN8P9 {
   display: block
 }
 
-.InputUpload__remove--XCVhM {
+.InputUpload__remove--52OOD {
   position: absolute;
   right: -7%;
   top: -7%;
@@ -803,11 +794,11 @@
   opacity: 0;
 }
 
-.InputUpload__remove--XCVhM:hover, .InputUpload__remove--XCVhM:focus {
+.InputUpload__remove--52OOD:hover, .InputUpload__remove--52OOD:focus {
     background-color: #b1411a;
   }
 
-.InputUpload__remove--XCVhM:after, .InputUpload__remove--XCVhM:before {
+.InputUpload__remove--52OOD:after, .InputUpload__remove--52OOD:before {
     content: '';
     position: absolute;
     height: 60%;
@@ -818,11 +809,11 @@
     transform: translateY(-50%) translateX(-50%) rotate(45deg);
   }
 
-.InputUpload__remove--XCVhM:before {
+.InputUpload__remove--52OOD:before {
     transform: translateY(-50%) translateX(-50%) rotate(-45deg);
   }
 
-.InputUpload__add--2dR5u {
+.InputUpload__add--NqkRf {
   padding: 0;
   cursor: pointer;
   position: relative;
@@ -831,15 +822,15 @@
   border: 3px dashed #c4c4c4;
 }
 
-.InputUpload__add--2dR5u:hover, .InputUpload__add--2dR5u:focus {
+.InputUpload__add--NqkRf:hover, .InputUpload__add--NqkRf:focus {
     border-color: #969696;
   }
 
-.InputUpload__add--2dR5u:hover:after, .InputUpload__add--2dR5u:hover:before, .InputUpload__add--2dR5u:focus:after, .InputUpload__add--2dR5u:focus:before {
+.InputUpload__add--NqkRf:hover:after, .InputUpload__add--NqkRf:hover:before, .InputUpload__add--NqkRf:focus:after, .InputUpload__add--NqkRf:focus:before {
       background-color: #818181;
     }
 
-.InputUpload__add--2dR5u:after, .InputUpload__add--2dR5u:before {
+.InputUpload__add--NqkRf:after, .InputUpload__add--NqkRf:before {
     content: '';
     position: absolute;
     height: 15px;
@@ -850,7 +841,7 @@
     transform: translateY(-50%) translateX(-50%);
   }
 
-.InputUpload__add--2dR5u:before {
+.InputUpload__add--NqkRf:before {
     transform: translateY(-50%) translateX(-50%) rotate(90deg);
   }
 
@@ -883,11 +874,11 @@
 /*!********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/form/InputColor.css ***!
   \********************************************************************************************************************************************************************/
-.InputColor__wrapper--3j6MI {
+.InputColor__wrapper--BHFmQ {
     position: relative;
 }
 
-.InputColor__picker--v2Zz0 {
+.InputColor__picker--JBlrO {
     position: absolute;
     left: 0;
     bottom: -10px;
@@ -901,15 +892,15 @@
     z-index: 100;
 }
 
-.InputColor__picker--v2Zz0 .components-color-picker__inputs-wrapper {
+.InputColor__picker--JBlrO .components-color-picker__inputs-wrapper {
         display: none;
     }
 
-.InputColor__inputWrapper--2sdI0 {
+.InputColor__inputWrapper--tJsjL {
     padding-left: 2rem;
 }
 
-.InputColor__colorPreview--3fl9k {
+.InputColor__colorPreview--tTEKR {
     position: absolute;
     height: 1.5rem;
     width: 1.5rem;
@@ -922,63 +913,63 @@
         border: 1px solid #7e8993;
 }
 
-.InputColor__input--2Sn2U:not([type="checkbox"]) {
+.InputColor__input--NaTEf:not([type="checkbox"]) {
     width: 5.1em !important;
 }
 /*!***********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/table/Table.module.css ***!
   \***********************************************************************************************************************************************************************/
-.Table-module__table--iCyGZ {
+.Table-module__table--Q7\+LN {
   width: 100%;
   border-bottom: 1px solid #ccd0d4;
   border-spacing: 0;
 }
 
-.Table-module__thead--16mQa {
+.Table-module__thead--HSFFn {
 }
 
-.Table-module__tbody--365R- {
+.Table-module__tbody--CPb\+T {
 }
 
-.Table-module__row--2llI7 {
+.Table-module__row--a2QVC {
   position: relative;
 }
 
-.Table-module__cell--2N9WD {
+.Table-module__cell--QywHf {
   text-align: left;
   padding: 0.6rem 0;
 }
 
-.Table-module__cell--2N9WD + .Table-module__cell--2N9WD {
+.Table-module__cell--QywHf + .Table-module__cell--QywHf {
     padding-left: 0.6rem;
   }
 
-.Table-module__cellHeading--1Hojm {
+.Table-module__cellHeading--XCqPR {
 }
 
-.Table-module__cellBody--xiFCb {
+.Table-module__cellBody--Ht0B7 {
   border-top: 1px solid #ccd0d4;
 }
 
 /*!****************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/table/ReactTable.module.css ***!
   \****************************************************************************************************************************************************************************/
-.ReactTable-module__root--NBFPu {
+.ReactTable-module__root--\+bOex {
   display: block;
 }
 
-.ReactTable-module__loader--ptAem {
+.ReactTable-module__loader--Hvf7e {
   width: 100%;
   display: block;
   font-size: 2rem;
 }
 
-.ReactTable-module__loaderIcon--1YNiU {
+.ReactTable-module__loaderIcon--vEAI8 {
   width: 100%;
   align-items: center;
 }
 
-.ReactTable-module__headingSortButton--1TV3p {
+.ReactTable-module__headingSortButton--sEHPi {
   padding: 0;
   background-color: transparent;
   margin: 0;
@@ -988,7 +979,7 @@
   align-items: center;
 }
 
-.ReactTable-module__headingSortButtonIcon--3c6JX {
+.ReactTable-module__headingSortButtonIcon--VNJ2V {
   display: inline-block;
   margin-left: 0.4em;
 }
@@ -996,11 +987,11 @@
 /*!************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/theme/table/cells/ExpanderCell.module.css ***!
   \************************************************************************************************************************************************************************************/
-.ExpanderCell-module__button--2k7yr {
+.ExpanderCell-module__button--EojCy {
   display: flex;
   align-items: center;
 }
-  .ExpanderCell-module__button--2k7yr:after {
+  .ExpanderCell-module__button--EojCy:after {
     content: '';
     position: absolute;
     top: 0;
@@ -1008,21 +999,21 @@
     bottom: 0;
     left: 0;
   }
-  .ExpanderCell-module__button--2k7yr:hover .ExpanderCell-module__icon--1QQB9 {
+  .ExpanderCell-module__button--EojCy:hover .ExpanderCell-module__icon--Wed44 {
     //color: var(--c-primary-dark);
   }
 
-.ExpanderCell-module__buttonExpanded--ESlVz {
+.ExpanderCell-module__buttonExpanded--i1nKp {
 }
 
-.ExpanderCell-module__icon--1QQB9 {
+.ExpanderCell-module__icon--Wed44 {
   transform: scale(1.2) translateY(5%) translateX(15%);
 }
 
 /*!****************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/components/toast/toastContext.css ***!
   \****************************************************************************************************************************************************************************/
-.toastContext__root--1hLWP {
+.toastContext__root--yro4A {
   position: fixed;
   top: 60px;
   right: 20px;
@@ -1031,7 +1022,7 @@
   z-index: 9999;
 }
 
-.toastContext__toast--1NZHL {
+.toastContext__toast--STTBP {
   transform: translateY(-50%);
   opacity: 0;
   transition: all 300ms;
@@ -1041,21 +1032,21 @@
   align-items: center;
 }
 
-.toastContext__toast--1NZHL + .toastContext__toast--1NZHL {
+.toastContext__toast--STTBP + .toastContext__toast--STTBP {
     margin-top: 10px;
   }
 
-.toastContext__toastFadeIn--3ketY {
+.toastContext__toastFadeIn--6l93I {
   transform: translateY(0);
   opacity: 1;
 }
 
-.toastContext__toastFadeOut--kEkTp {
+.toastContext__toastFadeOut--ABZ5K {
   transform: translateY(50%);
   opacity: 0;
 }
 
-.toastContext__remove--z5anZ {
+.toastContext__remove--q47SG {
   background-color: transparent;
   border: none;
   //outline: none;
@@ -1065,11 +1056,11 @@
   align-self: flex-start;
 }
 
-.toastContext__remove--z5anZ:hover .toastContext__removeInner--1dFIb {
+.toastContext__remove--q47SG:hover .toastContext__removeInner--g2hF3 {
     background-color: #d63638;
   }
 
-.toastContext__removeInner--1dFIb {
+.toastContext__removeInner--g2hF3 {
   width: 1em;
   height: 1em;
   background-color: #787c82;
@@ -1081,8 +1072,8 @@
   display: block;
 }
 
-.toastContext__removeInner--1dFIb:after,
-  .toastContext__removeInner--1dFIb:before {
+.toastContext__removeInner--g2hF3:after,
+  .toastContext__removeInner--g2hF3:before {
     content: '';
     display: block;
     width: 70%;
@@ -1094,95 +1085,95 @@
     transform: translateY(-50%) translateX(-50%) rotate(45deg);
   }
 
-.toastContext__removeInner--1dFIb:before {
+.toastContext__removeInner--g2hF3:before {
     transform: translateY(-50%) translateX(-50%) rotate(-45deg);
   }
 
-.toastContext__button--6TjQr {
+.toastContext__button--86Pu1 {
   cursor: pointer;
   text-transform: uppercase;
 }
 
-.toastContext__button--6TjQr + .toastContext__button--6TjQr {
+.toastContext__button--86Pu1 + .toastContext__button--86Pu1 {
     margin-left: 1em;
   }
 
 /*!***********************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/GitPackages/RepositoryListView.css ***!
   \***********************************************************************************************************************************************************************************/
-.RepositoryListView__root--18p5s {
+.RepositoryListView__root--GosH1 {
   display: flex;
   justify-content: space-between;
 }
 
-.RepositoryListView__infos--1f6NV {
+.RepositoryListView__infos--DY-zk {
   flex-grow: 1;
 }
 
-.RepositoryListView__infos--1f6NV p {
+.RepositoryListView__infos--DY-zk p {
     margin: 0.8em 0 0 0;
   }
 
-.RepositoryListView__infos--1f6NV p.RepositoryListView__version--2l7TN {
+.RepositoryListView__infos--DY-zk p.RepositoryListView__version--ssT9y {
       margin-top: 0.4rem;
     }
 
-.RepositoryListView__controls--2A1e4 {
+.RepositoryListView__controls---jQXJ {
   display: flex;
   flex-direction: column;
   margin-left: 2rem;
 }
 
-.RepositoryListView__controls--2A1e4 > * + * {
+.RepositoryListView__controls---jQXJ > * + * {
     margin-top: 1em;
   }
 
-.RepositoryListView__name--2xV-4 {
+.RepositoryListView__name--kt9CD {
   margin: 0;
   display: flex;
   align-items: center;
 }
 
-.RepositoryListView__nameHoster--36cXq {
+.RepositoryListView__nameHoster--LxZ6K {
   margin-right: 0.5rem;
   font-size: 1.2em;
 }
 
-.RepositoryListView__version--2l7TN {
+.RepositoryListView__version--ssT9y {
   font-size: 0.8rem;
   display: flex;
   vertical-align: center;
 }
 
-.RepositoryListView__repo--1ltS5 {
+.RepositoryListView__repo--gQA05 {
   display: flex;
   align-items: center;
 }
 
-.RepositoryListView__repoBranch--27uUJ {
+.RepositoryListView__repoBranch--oyhUY {
   margin-left: 0.5em;
   display: flex;
   align-items: center;
   font-size: 0.9em;
 }
 
-.RepositoryListView__repoBranchIcon--2n2rm {
+.RepositoryListView__repoBranchIcon--Eu1e\+ {
   margin-right: 0.2em;
 }
 
-.RepositoryListView__webhookUpdate--27L70 {
+.RepositoryListView__webhookUpdate--Ot0f3 {
   font-size: 0.7rem;
   display: flex;
   align-items: center;
 }
 
-.RepositoryListView__webhookUpdateInput--1LVHk {
+.RepositoryListView__webhookUpdateInput--8bGVT {
   margin-left: 1em;
   font-size: 0.7rem;
   width: 200px;
 }
 
-.RepositoryListView__postupdateHook--2jUHA {
+.RepositoryListView__postupdateHook--C4hQc {
   display: flex;
   align-items: center;
   margin-top: 1.5em !important;
@@ -1190,22 +1181,22 @@
   gap: 1rem;
 }
 
-.RepositoryListView__postupdateHook--2jUHA span,
-  .RepositoryListView__postupdateHook--2jUHA label,
-  .RepositoryListView__postupdateHook--2jUHA input {
+.RepositoryListView__postupdateHook--C4hQc span,
+  .RepositoryListView__postupdateHook--C4hQc label,
+  .RepositoryListView__postupdateHook--C4hQc input {
     font-size: 0.7rem;
   }
 
-.RepositoryListView__postupdateHook--2jUHA input[disabled] {
+.RepositoryListView__postupdateHook--C4hQc input[disabled] {
     opacity: 0.75;
     cursor: not-allowed;
   }
 
-.RepositoryListView__postupdateHook--2jUHA input[disabled] + label {
+.RepositoryListView__postupdateHook--C4hQc input[disabled] + label {
       opacity: 0.5;
     }
 
-.RepositoryListView__copyButton--FrZQ5 {
+.RepositoryListView__copyButton--h\+tD0 {
   font-size: 1.5em;
   background-color: transparent;
   border: none;
@@ -1215,15 +1206,15 @@
   margin-left: 0.5em;
 }
 
-.RepositoryListView__copyButton--FrZQ5:hover {
+.RepositoryListView__copyButton--h\+tD0:hover {
     opacity: 0.6;
   }
 
-.RepositoryListView__error--13_UO {
+.RepositoryListView__error--BGiVC {
   margin-top: var(--shgi-form-spacing);
 }
 
-.RepositoryListView__logButton--14sPs {
+.RepositoryListView__logButton--yC3VP {
   margin-left: 0.2rem;
   background-color: transparent;
   border: none;
@@ -1231,90 +1222,90 @@
   cursor: pointer;
 }
 
-.RepositoryListView__logButton--14sPs:hover {
+.RepositoryListView__logButton--yC3VP:hover {
     opacity: 1;
   }
 
-.RepositoryListView__logButton--14sPs .RepositoryListView__logButtonIcon--3epQG {
+.RepositoryListView__logButton--yC3VP .RepositoryListView__logButtonIcon--IT2f\+ {
     transform: scale(1.2) translateY(10%);
   }
 
 /*!****************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/GitPackages/log/RepositoryUpdateLog.css ***!
   \****************************************************************************************************************************************************************************************/
-.RepositoryUpdateLog__log--3Pafd {
+.RepositoryUpdateLog__log--SvTIk {
 }
 
-.RepositoryUpdateLog__entry--2haJT {
+.RepositoryUpdateLog__entry--mcyOg {
   display: flex;
 }
 
 /*!**********************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/GitPackages/add/AddRepository.css ***!
   \**********************************************************************************************************************************************************************************/
-.AddRepository__stepHeading--2ke99 {
+.AddRepository__stepHeading--CT4WQ {
   display: flex;
   margin-left: calc(var(--shgi-form-spacing-xsmall) * -1);
   margin-right: calc(var(--shgi-form-spacing-xsmall) * -1);
   width: calc(100% + var(--shgi-form-spacing-xsmall) * 2);
 }
 
-.AddRepository__stepHeadingElement--fB1mR {
+.AddRepository__stepHeadingElement--7zzi4 {
   padding: 0 var(--shgi-form-spacing-xsmall);
 }
 
-.AddRepository__stepHeadingElementVisited--23NAY .AddRepository__stepHeadingElementTitle--1BK9d {
+.AddRepository__stepHeadingElementVisited--PQA-l .AddRepository__stepHeadingElementTitle--ZvzOS {
   border-bottom-color: #007cba;
   color: #007cba;
 }
 
-.AddRepository__stepHeadingElementActive--38JHB .AddRepository__stepHeadingElementTitle--1BK9d {
+.AddRepository__stepHeadingElementActive--PPOgP .AddRepository__stepHeadingElementTitle--ZvzOS {
   font-weight: bold;
 }
 
-.AddRepository__stepHeadingElementTitle--1BK9d {
+.AddRepository__stepHeadingElementTitle--ZvzOS {
   border-bottom: 3px solid #3c434a;
   margin: 0;
   padding-bottom: var(--shgi-form-spacing-xsmall);
 }
 
-.AddRepository__stepForm--2ynfY {
+.AddRepository__stepForm--ge7M\+ {
   padding: calc(2 * var(--shgi-form-spacing)) 0 var(--shgi-form-spacing) 0;
 }
 
 /*!**********************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/GitPackages/add/steps/RunInstallationForm.css ***!
   \**********************************************************************************************************************************************************************************************/
-.RunInstallationForm__loadingComp--1uj5p {
+.RunInstallationForm__loadingComp--OK-pg {
   text-align: center;
 }
 
-.RunInstallationForm__loader--295rc {
+.RunInstallationForm__loader--fTTJA {
   margin: 1rem 0;
 }
 
 /*!********************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js!./assets/src/admin/pages/PageGitPackages.css ***!
   \********************************************************************************************************************************************************************/
-.PageGitPackages__repository--2fhYj + .PageGitPackages__repository--2fhYj {
+.PageGitPackages__repository--jLEoW + .PageGitPackages__repository--jLEoW {
   margin-top: var(--shgi-form-spacing);
   padding-top: var(--shgi-form-spacing);
   border-top: 1px solid #ccd0d4;
 }
 
-.PageGitPackages__empty--2R5NE {
+.PageGitPackages__empty--Gu2w7 {
   text-align: center;
   padding: 1rem 0 3rem 0;
 }
 
-.PageGitPackages__tier--1xgOM {
+.PageGitPackages__tier--2T763 {
   margin-top: 2rem;
   padding-top: 0.5rem;
   border-top: 1px solid #ccd0d4;
   position: relative;
 }
 
-.PageGitPackages__tierPrice--q8drs {
+.PageGitPackages__tierPrice--fuB33 {
   position: absolute;
   right: 0;
   top: 0;
@@ -1324,19 +1315,19 @@
   border-bottom-right-radius: 0.4em;
   border-bottom-left-radius: 0.4em;
 }
-.PageGitPackages__tierTitle--1rRu4 {
+.PageGitPackages__tierTitle--VnijY {
   align-self: flex-start;
   margin-top: 1rem;
 }
 
-ul.PageGitPackages__tierList--2edim {
+ul.PageGitPackages__tierList--oMq49 {
   align-self: flex-start;
   padding-left: 1.2em;
   list-style: disc outside none;
   margin: 1.5rem 0;
 }
 
-ul.PageGitPackages__tierList--2edim li + li {
+ul.PageGitPackages__tierList--oMq49 li + li {
     margin-top: 0.5em;
   }
 
