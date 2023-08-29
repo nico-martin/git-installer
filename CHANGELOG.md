@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.3.1
+
 ## 1.3.0
 - New feature: Postupdate Hooks (issue #50)
 - New feature: If the Plugin/Theme is installed from a directory inside the repository, the directory name will be the Plugin/Theme-directory (issue #46)

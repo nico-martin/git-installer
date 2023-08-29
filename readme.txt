@@ -4,7 +4,7 @@ Donate link: https://github.com/sponsors/SayHelloGmbH/
 License: MIT
 Tags: Git, Github, Gitlab, Bitbucket
 Tested up to: 6.1
-Stable tag: 1.2.5
+Stable tag: 1.3.1
 Requires PHP: 7.4
 
 Install and update WordPress themes and plugins directly from your Git repository via GitHub, Gitlab or Bitbucket.
