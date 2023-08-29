@@ -440,7 +440,9 @@ class GitPackages
         $provider = self::getProvider($package['provider']);
         $request = $provider->authenticateRequest($zipUrl);
 
-        $request = wp_remote_get($request[0], $request[1]);
+        $args = $request[1];
+        $args['timeout'] = 200;
+        $request = wp_remote_get($request[0], $args);
 
         if (is_wp_error($request) || wp_remote_retrieve_response_code($request) >= 300) return new \WP_Error(
             'shgi_repo_not_fetched',
@@ -469,9 +471,8 @@ class GitPackages
     private function updatePackage($key, $ref = '')
     {
         $alreadyInMaintMode = FsHelpers::isInMaintenanceMode();
-        if (!$alreadyInMaintMode) {
-            FsHelpers::maintenanceMode(true);
-        }
+        !$alreadyInMaintMode && FsHelpers::maintenanceMode(true);
+
         $target = $this->getPackageDir($key);
         if (is_dir($target)) {
             FsHelpers::removeDir($target);
@@ -482,6 +483,7 @@ class GitPackages
 
         if (is_wp_error($moved)) {
             do_action('shgi/GitPackages/updatePackage/error', $key, $ref, $moved);
+            !$alreadyInMaintMode && FsHelpers::maintenanceMode(false);
             return $moved;
         }
         if (!$moved) {
@@ -493,14 +495,13 @@ class GitPackages
                 ),
             );
             do_action('shgi/GitPackages/updatePackage/error', $key, $ref, $error);
+            !$alreadyInMaintMode && FsHelpers::maintenanceMode(false);
             return $error;
         }
 
         $newPackages = $this->packages->getPackages(false);
         do_action('shgi/GitPackages/updatePackage/success', $key, $ref, $package['version'], $newPackages[$key]['version']);
-        if (!$alreadyInMaintMode) {
-            FsHelpers::maintenanceMode(false);
-        }
+        !$alreadyInMaintMode && FsHelpers::maintenanceMode(false);
 
         return true;
     }
