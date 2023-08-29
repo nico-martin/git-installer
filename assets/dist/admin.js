@@ -35015,7 +35015,7 @@ var RunInstallationForm = function (_a) {
         react_1.default.createElement("h2", null, (0, i18n_1.__)('After Update Hooks', 'shgi')),
         Object.entries(constants_1.VARS.postupdateHooks).map(function (_a) {
             var key = _a[0], _b = _a[1], title = _b.title, description = _b.description;
-            return (react_1.default.createElement(theme_1.FormElement, { form: form, name: "postupdateHooks-" + key, label: title, Input: theme_1.InputCheckbox, DescriptionInput: react_1.default.createElement("p", null, description) }));
+            return (react_1.default.createElement(theme_1.FormElement, { key: key, form: form, name: "postupdateHooks-" + key, label: title, Input: theme_1.InputCheckbox, DescriptionInput: react_1.default.createElement("p", null, description) }));
         }),
         error !== '' && (react_1.default.createElement(theme_1.FormFeedback, { type: theme_1.NOTICE_TYPES.ERROR, message: error })),
         react_1.default.createElement(theme_1.FormControls, { type: "submit", loading: loading, value: submit, align: "right" })));
