@@ -449,11 +449,7 @@ class GitPackages
             sprintf(
                 __('Archive %s could not be copied', 'shgi'),
                 '<code>' . $zipUrl . '</code>'
-            ), [
-                'code' => wp_remote_retrieve_response_code($request),
-                'request' => $request,
-                'args' => $args,
-            ]
+            )
         );
 
         file_put_contents($tempDir . $key . '.zip', wp_remote_retrieve_body($request));
