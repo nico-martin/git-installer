@@ -104,6 +104,7 @@ const RunInstallationForm: React.FC<AddRepositoryFormPropsI> = ({
         ([key, { title, description }]) => {
           return (
             <FormElement
+              key={key}
               form={form}
               name={`postupdateHooks-${key}`}
               label={title}

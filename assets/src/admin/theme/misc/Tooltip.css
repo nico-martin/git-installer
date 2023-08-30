@@ -1,4 +1,5 @@
 .tooltip {
+  display: block;
   will-change: opacity;
   transition: opacity 200ms ease-in-out;
   z-index: 9999;
@@ -12,6 +13,7 @@
 }
 
 .tooltipInner {
+  display: block;
   background-color: #000;
   color: #fff;
   border-radius: 0.4em;

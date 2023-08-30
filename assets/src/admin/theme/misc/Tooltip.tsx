@@ -59,7 +59,7 @@ const Tooltip: React.FC<{
   }, [tooltipRef?.current, customTriggerRef?.current]);
 
   return (
-    <div
+    <span
       ref={popperRef}
       className={cn(styles.tooltip, { [styles.tooltipShow]: show })}
       role="tooltip"
@@ -68,11 +68,11 @@ const Tooltip: React.FC<{
       style={{ ...popperStyles.popper, ...(maxWidth ? { maxWidth } : {}) }}
       {...attributes.popper}
     >
-      <div className={styles.tooltipInner}>
+      <span className={styles.tooltipInner}>
         {children}
-        <div className={styles.arrow} style={popperStyles.arrow} />
-      </div>
-    </div>
+        <span className={styles.arrow} style={popperStyles.arrow} />
+      </span>
+    </span>
   );
 };
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.1
+- Fix for maintenance mode on update error (issue #63)
+- Fix for timeout for wp_remote_get package zip (issue #63)
+- Fix for `validateDOMNesting` (issue #61)
+
 ## 1.3.0
 - New feature: Postupdate Hooks (issue #50)
 - New feature: If the Plugin/Theme is installed from a directory inside the repository, the directory name will be the Plugin/Theme-directory (issue #46)
