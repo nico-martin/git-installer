@@ -93,6 +93,7 @@ class Github extends Provider
     {
         $auth = self::authenticateRequest("https://api.github.com/repos/{$owner}/{$repo}/git/trees/{$branch}?recursive=1");
         $response = Helpers::getRestJson($auth[0], $auth[1]);
+        if (is_wp_error($response)) return [];
 
         $files = array_values(
             array_filter(

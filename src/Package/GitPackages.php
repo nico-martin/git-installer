@@ -332,7 +332,7 @@ class GitPackages
             return $package['headersFile'];
         }
 
-        $headers = $this->getPackageHeaders($package['baseUrl'], $package['activeBranch'], $package['dir']);
+        $headers = $this->getPackageHeaders($package['baseUrl'], $package['activeBranch'], array_key_exists('dir', $package) ? $package['dir'] : '');
         if (!$headers) {
             return null;
         }

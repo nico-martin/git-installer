@@ -108,6 +108,10 @@ class Gitlab extends Provider
             $page++;
             $auth = self::authenticateRequest("https://gitlab.com/api/v4/projects/{$id}/repository/tree/?ref={$branch}&recursive=1&per_page={$perPage}&page={$page}");
             $response = Helpers::getRestJson($auth[0], $auth[1]);
+            if (is_wp_error($response)) {
+                $allPagesParsed = true;
+            }
+
             if (count($response) < $perPage) {
                 $allPagesParsed = true;
             }
@@ -145,6 +149,7 @@ class Gitlab extends Provider
     {
         $auth = self::authenticateRequest($url);
         $response = Helpers::getRestJson($auth[0], $auth[1]);
+        if (is_wp_error($response)) return '';
 
         return base64_decode($response['content']);
     }
