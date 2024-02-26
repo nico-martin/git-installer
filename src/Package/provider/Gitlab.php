@@ -110,6 +110,7 @@ class Gitlab extends Provider
             $response = Helpers::getRestJson($auth[0], $auth[1]);
             if (is_wp_error($response)) {
                 $allPagesParsed = true;
+                continue;
             }
 
             if (count($response) < $perPage) {
