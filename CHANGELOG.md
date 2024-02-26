@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.3.3
+
 ## 1.3.2
 - Fix for issue #69
 
