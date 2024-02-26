@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.2
+- Fix for issue #69
+
 ## 1.3.1
 - Fix for maintenance mode on update error (issue #63)
 - Fix for timeout for wp_remote_get package zip (issue #63)

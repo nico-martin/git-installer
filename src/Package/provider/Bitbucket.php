@@ -98,6 +98,8 @@ class Bitbucket extends Provider
         //return "https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}/src/{$branchHash}";
         $auth = self::authenticateRequest("https://api.bitbucket.org/2.0/repositories/{$workspace}/{$repo}/src/{$branch}/$folder?pagelen=99");
         $response = Helpers::getRestJson($auth[0], $auth[1]);
+        if (is_wp_error($response)) return [];
+
         $files = array_values(
             array_filter(
                 $response['values'],
