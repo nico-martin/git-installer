@@ -54,10 +54,6 @@ sayhelloGitInstaller()->Settings->run();
 sayhelloGitInstaller()->AdminPage = new SayHello\GitInstaller\AdminPage();
 sayhelloGitInstaller()->AdminPage->run();
 
-/**
- * Packages
- */
-
 sayhelloGitInstaller()->UpdateLog = new SayHello\GitInstaller\Package\UpdateLog();
 sayhelloGitInstaller()->UpdateLog->run();
 

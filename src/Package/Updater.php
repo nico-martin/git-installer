@@ -10,19 +10,24 @@ class Updater
     public GitPackageManagement $packages;
     public static $packageHeadersTransient = 'shgi-git-packages-headers';
 
+    public function __construct()
+    {
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        $this->packages = new GitPackageManagement();
+    }
+
     public function run()
     {
         add_filter('plugins_api', [$this, 'info'], 20, 3);
-        add_filter('site_transient_update_plugins', [$this, 'updatePlugins']);
-        add_filter('site_transient_update_themes', [$this, 'updateThemes']);
 
-        add_filter('plugin_row_meta', [$this, 'rowIcon'], 15, 2);
-        add_filter('theme_row_meta', [$this, 'rowIcon'], 15, 2);
+        if (is_admin()) {
+            add_filter('site_transient_update_plugins', [$this, 'updatePlugins']);
+            add_filter('site_transient_update_themes', [$this, 'updateThemes']);
+            add_filter('plugin_row_meta', [$this, 'rowIcon'], 15, 2);
+            add_filter('theme_row_meta', [$this, 'rowIcon'], 15, 2);
+        }
 
         add_action('upgrader_process_complete', [$this, 'purge'], 10, 2);
-
-        require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        $this->packages = new GitPackageManagement();
     }
 
     private function getPackagePluginFiles(): array
@@ -214,7 +219,7 @@ class Updater
     {
         $package = $this->packages->getPackage($key);
         $provider = sayhelloGitInstaller()->GitPackages::getProvider($package['provider']);
-        if(!$provider) {
+        if (!$provider) {
             return;
         }
 
