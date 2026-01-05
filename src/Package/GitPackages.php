@@ -49,13 +49,13 @@ class GitPackages
 
         $settings['git-packages-bitbucket-token'] = [
             'default' => '',
-            'label' => __('App-Password', 'shgi'),
+            'label' => __('API token', 'shgi'),
             'validate' => null,
         ];
 
         $settings['git-packages-bitbucket-user'] = [
             'default' => '',
-            'label' => __('User', 'shgi'),
+            'label' => __('Atlassian Account Email', 'shgi'),
             'validate' => null,
         ];
 
