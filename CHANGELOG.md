@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.3.3
+- Fix for Bitbucket API changes: [App passwords has been replaced by API tokens](https://bitbucket.org/account/settings/app-passwords/)
 
 ## 1.3.2
 - Fix for issue #69

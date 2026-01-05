@@ -40,7 +40,7 @@ class Provider
 
     public static function trimString($string)
     {
-        return preg_replace('/[^a-zA-Z_\-0-9]/', '', $string);
+        return preg_replace('/[^a-zA-Z_\-0-9]=/', '', $string);
     }
 
     public static function isPluginMainFile($file)
