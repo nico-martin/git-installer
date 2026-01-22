@@ -169,8 +169,8 @@ const PageGitPackages = () => {
                 <p
                   dangerouslySetInnerHTML={{
                     __html: sprintf(
-                      __('You can generate your app password here: %s', 'shgi'),
-                      '<a href="https://bitbucket.org/account/settings/app-passwords/" target="_blank" rel="noreferrer">https://bitbucket.org/account/settings/app-passwords/</a>'
+                      __('You can generate your API token here: %s', 'shgi'),
+                      '<a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank" rel="noreferrer">https://id.atlassian.com/manage-profile/security/api-tokens</a>'
                     ),
                   }}
                 />
@@ -178,10 +178,10 @@ const PageGitPackages = () => {
                   dangerouslySetInnerHTML={{
                     __html: sprintf(
                       __(
-                        'The app password must have at least the permission %s.',
+                        'The API token must be an "API token with scopes", "app" needs to be "Bitbucket" and at least the following scope has to be checked %s.',
                         'shgi'
                       ),
-                      '<code>Repositorys: read</code>'
+                      '<code>read:repository:bitbucket</code>'
                     ),
                   }}
                 />

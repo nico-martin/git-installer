@@ -12,7 +12,6 @@ class AdminPage
     public function __construct()
     {
         $this->capability = 'administrator';
-        $this->menu_title = __('Git Installer', 'shgi');
         $this->menu = [];
     }
 
@@ -31,6 +30,7 @@ class AdminPage
         $icon = 'data:image/svg+xml;base64,' . base64_encode(sayhelloGitInstaller()->iconSvg);
         $menuItems = $this->getMenuItems();
         $this->settings_parent = sayhelloGitInstaller()->prefix . '-' . array_key_first($menuItems);
+        $this->menu_title = __('Git Installer', 'shgi');
 
         add_menu_page(
             sayhelloGitInstaller()->name,
