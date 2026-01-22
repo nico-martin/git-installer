@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.4
+- Fix for a PHP notice "Function _load_textdomain_just_in_time was called incorrectly"
+
 ## 1.3.3
 - Fix for Bitbucket API changes: [App passwords has been replaced by API tokens](https://bitbucket.org/account/settings/app-passwords/)
 
