@@ -32,7 +32,9 @@ class Updater
 
     private function getPackagePluginFiles(): array
     {
-        if (count($this->pluginFiles) !== 0) {
+        static $hasRun = false;
+        
+        if ($hasRun) {
             return $this->pluginFiles;
         }
 
@@ -51,6 +53,8 @@ class Updater
                 $return[$key] = $file;
             }
         }
+
+        $hasRun = true;
         $this->pluginFiles = $return;
         return $return;
     }
