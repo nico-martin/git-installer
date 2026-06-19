@@ -53,6 +53,16 @@ class Assets
 
     public function addAdminAssets()
     {
+
+        // Bail early if not on our admin page.
+        $screen = get_current_screen();
+        if ( ! $screen ) {
+            return;
+        }
+        if ( 'toplevel_page_shgi-git-packages' !== $screen->id ) {
+            return;
+        }
+
         $script_version = sayhelloGitInstaller()->version;
         $dir_uri = trailingslashit(plugin_dir_url(sayhelloGitInstaller()->file));
 
