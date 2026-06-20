@@ -79,16 +79,9 @@ class Assets
         );*/
 
         wp_enqueue_style(
-            sayhelloGitInstaller()->prefix . '-roboto',
-            $dir_uri . 'assets/fonts/roboto.css',
-            [],
-            $script_version
-        );
-
-        wp_enqueue_style(
             sayhelloGitInstaller()->prefix . '-admin-style',
             $dir_uri . 'assets/dist/admin.css',
-            [sayhelloGitInstaller()->prefix . '-roboto'],
+            [],
             $script_version
         );
 
