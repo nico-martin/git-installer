@@ -51,15 +51,9 @@ class Assets
         */
     }
 
-    public function addAdminAssets()
+    public function addAdminAssets($hook_suffix)
     {
-
-        // Bail early if not on our admin page.
-        $screen = get_current_screen();
-        if ( ! $screen ) {
-            return;
-        }
-        if ( 'toplevel_page_shgi-git-packages' !== $screen->id ) {
+        if ($hook_suffix !== sayhelloGitInstaller()->AdminPage->hook_suffix) {
             return;
         }
 
