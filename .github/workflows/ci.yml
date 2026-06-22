@@ -12,4 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
-      - uses: crate-ci/typos@master
+      - uses: crate-ci/typos@v1
+        with:
+          args: --exclude "*.min.js"
