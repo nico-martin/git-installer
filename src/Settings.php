@@ -64,7 +64,7 @@ class Settings
         return $return;
     }
 
-    public function regsterSettings($key, $default_value, $validation)
+    public function registerSettings($key, $default_value, $validation)
     {
         $this->getRegisteredSettings()[$key] = [
             'default' => $default_value,

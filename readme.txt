@@ -26,7 +26,7 @@ Install and update WordPress themes and plugins directly from your Git repositor
 * **Branches**: use any branch
 * **Multisite**
 * **Install from subdirectories**
-* **Check directory**: Validates a Repository and checks wether a valid WordPress theme or plugin is found.
+* **Check directory**: Validates a Repository and checks whether a valid WordPress theme or plugin is found.
 
 ### Webhook updates
 
