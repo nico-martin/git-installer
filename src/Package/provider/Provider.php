@@ -45,11 +45,11 @@ class Provider
 
     public static function isPluginMainFile($file)
     {
-        // parse the file (string) and check wether its a valid plugin header
+        // parse the file (string) and check whether its a valid plugin header
     }
 
     public static function isThemeStyleCSS($file)
     {
-        // parse the file (string) and check wether its a valid theme styles.css
+        // parse the file (string) and check whether its a valid theme styles.css
     }
 }

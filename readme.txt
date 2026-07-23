@@ -2,7 +2,7 @@
 Contributors: nico_martin, sayhellogmbh
 Donate link: https://github.com/sponsors/SayHelloGmbH/
 License: MIT
-Tags: Git, Github, Gitlab, Bitbucket
+Tags: Git, GitHub, Gitlab, Bitbucket
 Tested up to: 6.1
 Stable tag: 1.3.4
 Requires PHP: 7.4
@@ -26,7 +26,7 @@ Install and update WordPress themes and plugins directly from your Git repositor
 * **Branches**: use any branch
 * **Multisite**
 * **Install from subdirectories**
-* **Check directory**: Validates a Repository and checks wether a valid WordPress theme or plugin is found.
+* **Check directory**: Validates a Repository and checks whether a valid WordPress theme or plugin is found.
 
 ### Webhook updates
 
@@ -55,7 +55,7 @@ Install and update WordPress themes and plugins directly from your Git repositor
 - Triggers: Repository > Push
 
 ### Hooks
-Read more about the available hooks on Github: [https://github.com/SayHelloGmbH/git-installer#hooks](https://github.com/SayHelloGmbH/git-installer#hooks)
+Read more about the available hooks on GitHub: [https://github.com/SayHelloGmbH/git-installer#hooks](https://github.com/SayHelloGmbH/git-installer#hooks)
 
 == Frequently Asked Questions ==
 

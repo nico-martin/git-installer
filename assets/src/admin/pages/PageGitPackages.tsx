@@ -95,7 +95,7 @@ const PageGitPackages = () => {
                   dangerouslySetInnerHTML={{
                     __html: sprintf(
                       __(
-                        'You can generate your personal acces token here: %s',
+                        'You can generate your personal access token here: %s',
                         'shgi'
                       ),
                       '<a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer">https://github.com/settings/tokens</a>'
@@ -131,7 +131,7 @@ const PageGitPackages = () => {
                   dangerouslySetInnerHTML={{
                     __html: sprintf(
                       __(
-                        'You can generate your personal acces token here: %s',
+                        'You can generate your personal access token here: %s',
                         'shgi'
                       ),
                       '<a href="https://gitlab.com/-/profile/personal_access_tokens" target="_blank" rel="noreferrer">https://gitlab.com/-/profile/personal_access_tokens</a>'

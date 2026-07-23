@@ -33,7 +33,7 @@ require_once 'src/Package/Helpers/GitPackageManagement.php';
 require_once 'src/Package/UpdateLog.php';
 require_once 'src/Package/GitPackages.php';
 require_once 'src/Package/provider/Provider.php';
-require_once 'src/Package/provider/Github.php';
+require_once 'src/Package/provider/GitHub.php';
 require_once 'src/Package/provider/Gitlab.php';
 require_once 'src/Package/provider/Bitbucket.php';
 require_once 'src/Package/Updater.php';

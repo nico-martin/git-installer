@@ -43,11 +43,11 @@ class AdminPage
         );
 
         if (count($menuItems) === 1) {
-            foreach ($this->getMenuItems() as $slug => $menuElment) {
+            foreach ($this->getMenuItems() as $slug => $menuElement) {
                 add_submenu_page(
                     $this->settings_parent,
-                    $menuElment['title'],
-                    $menuElment['title'],
+                    $menuElement['title'],
+                    $menuElement['title'],
                     $this->capability,
                     sayhelloGitInstaller()->prefix . '-' . $slug,
                     [$this, 'page']

@@ -4,18 +4,18 @@ namespace SayHello\GitInstaller\Package\Provider;
 
 use SayHello\GitInstaller\Helpers;
 
-class Github extends Provider
+class GitHub extends Provider
 {
     public static string $provider = 'github';
 
     public static function validateUrl($url): bool
     {
         if (!$url) return false;
-        $parsed = self::parseGithubUrl($url);
+        $parsed = self::parseGitHubUrl($url);
         return $parsed['host'] === 'github.com' && isset($parsed['owner']) && isset($parsed['repo']);
     }
 
-    private static function parseGithubUrl($url)
+    private static function parseGitHubUrl($url)
     {
         $regex = '/^(?:https?:\/\/)?(?:ssh:\/\/)?(?:git@)?github.com(?::|\/)([^\/]+)\/([^\/\s]+)/';
         $match = preg_match($regex, $url, $matches);
@@ -44,7 +44,7 @@ class Github extends Provider
             );
         }
 
-        $parsedUrl = self::parseGithubUrl($url);
+        $parsedUrl = self::parseGitHubUrl($url);
         $apiUrl = "https://api.github.com/repos/{$parsedUrl['owner']}/{$parsedUrl['repo']}";
         $auth = self::authenticateRequest($apiUrl);
 
@@ -129,7 +129,7 @@ class Github extends Provider
 
     public static function validateDir($url, $branch, $dir)
     {
-        $parsed = self::parseGithubUrl($url);
+        $parsed = self::parseGitHubUrl($url);
         return self::getRepoFolderFiles($parsed['owner'], $parsed['repo'], $branch, $dir);
     }
 
@@ -169,35 +169,34 @@ class Github extends Provider
 
             public function validateUrl($url)
             {
-                return Github::validateUrl($url);
+                return GitHub::validateUrl($url);
             }
 
             public function getInfos($url, $dir)
             {
-                return Github::getInfos($url, $dir);
+                return GitHub::getInfos($url, $dir);
             }
 
             public function authenticateRequest($url, $args = [])
             {
-                return Github::authenticateRequest($url, $args);
+                return GitHub::authenticateRequest($url, $args);
             }
 
             public function validateDir($url, $branch, $dir = '')
             {
-                return Github::validateDir($url, $branch, $dir);
+                return GitHub::validateDir($url, $branch, $dir);
             }
 
             public function fetchFileContent($url)
             {
-                return Github::fetchFileContent($url);
+                return GitHub::fetchFileContent($url);
             }
 
             public function getAuthHeader()
             {
-                return Github::authHeader();
+                return GitHub::authHeader();
             }
         };
     }
 }
-
 
