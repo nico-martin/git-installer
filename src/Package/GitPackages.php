@@ -424,76 +424,94 @@ class GitPackages
             ),
         );
 
-        $tempDir = Helpers::getTempDir();
-
-        $zipUrl = $package['branches'][$package['activeBranch']]['zip'];
-        $provider = self::getProvider($package['provider']);
-        $request = $provider->authenticateRequest($zipUrl);
-
-        $args = $request[1];
-        $args['timeout'] = 200;
-        $request = wp_remote_get($request[0], $args);
-
-        if (is_wp_error($request) || wp_remote_retrieve_response_code($request) >= 300) return new \WP_Error(
-            'shgi_repo_not_fetched',
-            sprintf(
-                __('Archive %s could not be copied', 'shgi'),
-                '<code>' . $zipUrl . '</code>'
-            )
+        $tempDir = trailingslashit(Helpers::getTempDir('temp', false, true))
+            . $key . '-' . wp_generate_uuid4() . '/';
+        if (!mkdir($tempDir, 0700)) return new \WP_Error(
+            'shgi_temp_dir_failed',
+            __('A temporary package directory could not be created', 'shgi')
         );
 
-        file_put_contents($tempDir . $key . '.zip', wp_remote_retrieve_body($request));
+        try {
+            $zipUrl = $package['branches'][$package['activeBranch']]['zip'];
+            $provider = self::getProvider($package['provider']);
+            $request = $provider->authenticateRequest($zipUrl);
 
-        $unzip = FsHelpers::unzip($tempDir . $key . '.zip', $tempDir . $key . '/');
-        if (is_wp_error($unzip)) return $unzip;
+            $args = $request[1];
+            $args['timeout'] = 200;
+            $request = wp_remote_get($request[0], $args);
+            $responseCode = is_wp_error($request) ? 0 : wp_remote_retrieve_response_code($request);
 
-        $subDirs = glob($tempDir . $key . '/*', GLOB_ONLYDIR);
-        $packageDir = $subDirs[0];
-        $renamed = FsHelpers::moveDir(
-            trailingslashit($packageDir) . ($package['dir'] ? trailingslashit($package['dir']) : ''),
-            $target
-        );
-        FsHelpers::removeDir($tempDir);
+            if (is_wp_error($request) || $responseCode < 200 || $responseCode >= 300) return new \WP_Error(
+                'shgi_repo_not_fetched',
+                sprintf(
+                    __('Archive %s could not be copied', 'shgi'),
+                    '<code>' . $zipUrl . '</code>'
+                )
+            );
 
-        return $renamed;
+            $zipFile = $tempDir . $key . '.zip';
+            if (file_put_contents($zipFile, wp_remote_retrieve_body($request)) === false) return new \WP_Error(
+                'shgi_repo_archive_write_failed',
+                __('The package archive could not be written to the temporary directory', 'shgi')
+            );
+
+            $unpackDir = $tempDir . 'package/';
+            $unzip = FsHelpers::unzip($zipFile, $unpackDir);
+            if (is_wp_error($unzip)) return $unzip;
+
+            $subDirs = glob($unpackDir . '*', GLOB_ONLYDIR);
+            if (!$subDirs || count($subDirs) !== 1) return new \WP_Error(
+                'shgi_repo_archive_invalid',
+                __('The package archive does not contain exactly one root directory', 'shgi')
+            );
+
+            $source = trailingslashit($subDirs[0])
+                . (!empty($package['dir']) ? trailingslashit($package['dir']) : '');
+            if (!is_dir($source)) return new \WP_Error(
+                'shgi_repo_source_missing',
+                __('The selected package directory was not found in the archive', 'shgi')
+            );
+
+            if (!FsHelpers::moveDir($source, $target)) return new \WP_Error(
+                'shgi_repo_stage_failed',
+                __('The downloaded package could not be moved to the staging directory', 'shgi')
+            );
+
+            return true;
+        } finally {
+            FsHelpers::removeDir($tempDir);
+        }
     }
 
     private function updatePackage($key, $ref = '')
     {
+        $target = $this->getPackageDir($key);
+        $staged = $target . '.shgi-new-' . wp_generate_uuid4();
+        $package = $this->packages->getPackage($key, false, false);
+        $loaded = $this->loadNewPackageFiles($key, $staged);
+
+        if (is_wp_error($loaded)) {
+            do_action('shgi/GitPackages/updatePackage/error', $key, $ref, $loaded);
+            return $loaded;
+        }
+
         $alreadyInMaintMode = FsHelpers::isInMaintenanceMode();
         !$alreadyInMaintMode && FsHelpers::maintenanceMode(true);
 
-        $target = $this->getPackageDir($key);
-        if (is_dir($target)) {
-            FsHelpers::removeDir($target);
-        }
+        try {
+            $replaced = FsHelpers::replaceDir($staged, $target);
+            if (is_wp_error($replaced)) {
+                do_action('shgi/GitPackages/updatePackage/error', $key, $ref, $replaced);
+                return $replaced;
+            }
 
-        $package = $this->packages->getPackage($key, false, false);
-        $moved = $this->loadNewPackageFiles($key, $target);
+            $newPackages = $this->packages->getPackages(false);
+            do_action('shgi/GitPackages/updatePackage/success', $key, $ref, $package['version'], $newPackages[$key]['version']);
 
-        if (is_wp_error($moved)) {
-            do_action('shgi/GitPackages/updatePackage/error', $key, $ref, $moved);
+            return true;
+        } finally {
             !$alreadyInMaintMode && FsHelpers::maintenanceMode(false);
-            return $moved;
         }
-        if (!$moved) {
-            $error = new \WP_Error(
-                'rename_repo_failed',
-                __(
-                    'The folder could not be copied. Possibly the old folder could not be emptied completely.',
-                    'shgi',
-                ),
-            );
-            do_action('shgi/GitPackages/updatePackage/error', $key, $ref, $error);
-            !$alreadyInMaintMode && FsHelpers::maintenanceMode(false);
-            return $error;
-        }
-
-        $newPackages = $this->packages->getPackages(false);
-        do_action('shgi/GitPackages/updatePackage/success', $key, $ref, $package['version'], $newPackages[$key]['version']);
-        !$alreadyInMaintMode && FsHelpers::maintenanceMode(false);
-
-        return true;
     }
 
     public function getPackageDir($key)
