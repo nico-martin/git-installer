@@ -120,6 +120,9 @@ class FsHelpers
         $file = ABSPATH . '.maintenance';
         if ($enable) {
             $maintenance_string = '<?php $upgrading = ' . time() . '; ?>';
+            if (file_exists($file)) {
+                unlink($file);
+            }
             file_put_contents($file, $maintenance_string);
         } elseif (!$enable && file_exists($file)) {
             unlink($file);

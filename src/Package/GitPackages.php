@@ -14,7 +14,6 @@ class GitPackages
     public function run()
     {
         $this->packages = new GitPackageManagement();
-        add_filter('shgi/AdminPage/Menu', [$this, 'menu']);
         add_filter('shgi/Settings/register', [$this, 'settings']);
         add_filter('shgi/Assets/AdminFooterJS', [$this, 'footerJsVars']);
 
@@ -22,15 +21,6 @@ class GitPackages
          * Rest
          */
         add_action('rest_api_init', [$this, 'registerRoute']);
-    }
-
-    public function menu($menu)
-    {
-        $menu['git-packages'] = [
-            'title' => __('Git Packages', 'shgi'),
-        ];
-
-        return $menu;
     }
 
     public function settings($settings)
