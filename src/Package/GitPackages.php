@@ -27,13 +27,13 @@ class GitPackages
     {
         $settings['git-packages-gitlab-token'] = [
             'default' => '',
-            'label' => __('Acces Token', 'shgi'),
+            'label' => __('Access Token', 'shgi'),
             'validate' => null,
         ];
 
         $settings['git-packages-github-token'] = [
             'default' => '',
-            'label' => __('Personal Acces Token', 'shgi'),
+            'label' => __('Personal Access Token', 'shgi'),
             'validate' => null,
         ];
 
@@ -518,8 +518,8 @@ class GitPackages
 
     public static function getProvider($provider = '', $url = '')
     {
-        if ($provider === Provider\Github::$provider || Provider\Github::validateUrl($url)) {
-            return Provider\Github::export();
+        if ($provider === Provider\GitHub::$provider || Provider\GitHub::validateUrl($url)) {
+            return Provider\GitHub::export();
         } elseif ($provider === Provider\Gitlab::$provider || Provider\Gitlab::validateUrl($url)) {
             return Provider\Gitlab::export();
         } elseif ($provider === Provider\Bitbucket::$provider || Provider\Bitbucket::validateUrl($url)) {

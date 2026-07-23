@@ -1,0 +1,7 @@
+[files]
+extend-exclude = [
+    "assets/dist",
+    "assets/react-dom.production.min.js",
+    "assets/react.production.min.js",
+    "src/plugin-update-checker-5.0",
+]
