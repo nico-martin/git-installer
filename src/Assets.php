@@ -51,8 +51,12 @@ class Assets
         */
     }
 
-    public function addAdminAssets()
+    public function addAdminAssets($hook_suffix)
     {
+        if ($hook_suffix !== sayhelloGitInstaller()->AdminPage->hook_suffix) {
+            return;
+        }
+
         $script_version = sayhelloGitInstaller()->version;
         $dir_uri = trailingslashit(plugin_dir_url(sayhelloGitInstaller()->file));
 
@@ -75,16 +79,9 @@ class Assets
         );*/
 
         wp_enqueue_style(
-            sayhelloGitInstaller()->prefix . '-roboto',
-            $dir_uri . 'assets/fonts/roboto.css',
-            [],
-            $script_version
-        );
-
-        wp_enqueue_style(
             sayhelloGitInstaller()->prefix . '-admin-style',
             $dir_uri . 'assets/dist/admin.css',
-            [sayhelloGitInstaller()->prefix . '-roboto'],
+            [],
             $script_version
         );
 

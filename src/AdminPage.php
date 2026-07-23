@@ -4,16 +4,10 @@ namespace SayHello\GitInstaller;
 
 class AdminPage
 {
-    public string $capability = '';
-    public string $settings_parent = '';
+    public string $capability = 'administrator';
+    public string $settings_parent = 'shgi-git-packages';
     public string $menu_title = '';
-    private array $menu = [];
-
-    public function __construct()
-    {
-        $this->capability = 'administrator';
-        $this->menu = [];
-    }
+    public string $hook_suffix = '';
 
     public function run()
     {
@@ -28,11 +22,9 @@ class AdminPage
     public function menu()
     {
         $icon = 'data:image/svg+xml;base64,' . base64_encode(sayhelloGitInstaller()->iconSvg);
-        $menuItems = $this->getMenuItems();
-        $this->settings_parent = sayhelloGitInstaller()->prefix . '-' . array_key_first($menuItems);
         $this->menu_title = __('Git Installer', 'shgi');
 
-        add_menu_page(
+        $this->hook_suffix = add_menu_page(
             sayhelloGitInstaller()->name,
             $this->menu_title,
             $this->capability,
@@ -41,19 +33,6 @@ class AdminPage
             $icon,
             100
         );
-
-        if (count($menuItems) === 1) {
-            foreach ($this->getMenuItems() as $slug => $menuElement) {
-                add_submenu_page(
-                    $this->settings_parent,
-                    $menuElement['title'],
-                    $menuElement['title'],
-                    $this->capability,
-                    sayhelloGitInstaller()->prefix . '-' . $slug,
-                    [$this, 'page']
-                );
-            }
-        }
     }
 
     public function page()
@@ -63,20 +42,14 @@ class AdminPage
         <?php
     }
 
-    public function getMenuItems()
-    {
-        return apply_filters('shgi/AdminPage/Menu', $this->menu);
-    }
-
     public function footerVars($vars)
     {
-        /*
-        foreach ($this->getMenuItems() as $slug => $item) {
-          $this->menu[$slug]['submenu'] = apply_filters('pwp_submenu_' . $slug, $item['submenu']);
-        }
-        */
         $vars['settingsParentKey'] = $this->settings_parent;
-        $vars['menu'] = $this->getMenuItems();
+        $vars['menu'] = [
+            'git-packages' => [
+                'title' => __('Git Packages', 'shgi'),
+            ],
+        ];
         $vars['adminUrl'] = get_admin_url();
 
         return $vars;
