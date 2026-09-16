@@ -28,7 +28,7 @@ must use plugins and multisite installations.
 | **Branches**                                                                                                                                           | any branch |
 | **Multisite**                                                                                                                                          |     ✅      |
 | **Install from subdirectories**                                                                                                                        |     ✅      |
-| **Check directory**<br />Validates a Repository and checks wether a valid WordPress theme or plugin is found.                                          |     ✅      |
+| **Check directory**<br />Validates a Repository and checks whether a valid WordPress theme or plugin is found.                                          |     ✅      |
 | **Postupdate Hooks**<br />Run your composer, NPM or other builds after the update                                                                      |     ✅      |
 
 ## Webhook updates
@@ -113,7 +113,7 @@ This endpoint accepts an additional GET parameter called `ref` which is used for
 `${REST_API}/git-installer/v1/git-packages-deploy/${REPOSITORY_SLUG}/?key=${REPOSITORY_SECRET}&ref=webhook-update`
 ```
 
-If needed, further refferer values can be added via a filter.
+If needed, further referrer values can be added via a filter.
 
 ```php
 add_filter('shgi/UpdateLog/refOptions', function($refs){
@@ -139,11 +139,11 @@ add_filter('shgi/Hooks/PostupdateHooks', function($hooks){
     'title' => 'My Custom Hook',
     'description' => 'Describe what the hook will do',
     'function' => function($package){
-      // this function will run after a successfull update
+      // this function will run after a successful update
       // $package is the full Package-Object
     },
     'check' => function(){
-      // returns a boolean wether the system supports this hook (for example if npm/composer is installed)
+      // returns a boolean whether the system supports this hook (for example if npm/composer is installed)
       return true;
     }
   ];

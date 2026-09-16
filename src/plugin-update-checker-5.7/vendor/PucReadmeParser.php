@@ -218,7 +218,7 @@ class PucReadmeParser {
 		return $r;
 	}
 
-	function chop_string( $string, $chop ) { // chop a "prefix" from a string: Agressive! uses strstr not 0 === strpos
+	function chop_string( $string, $chop ) { // chop a "prefix" from a string: Aggressive! uses strstr not 0 === strpos
 		if ( $_string = strstr($string, $chop) ) {
 			$_string = substr($_string, strlen($chop));
 			return trim($_string);
