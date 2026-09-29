@@ -46,9 +46,8 @@ const RepositoryListView = ({
       })
       .catch((e) =>
         addToast({
-          message: sprintf(__('Update failed: %s', 'shgi'), e),
+          message: __('Update failed'),
           type: NOTICE_TYPES.ERROR,
-          timeout: 10000,
         })
       )
       .finally(() => setLoadingUpdate(false));
